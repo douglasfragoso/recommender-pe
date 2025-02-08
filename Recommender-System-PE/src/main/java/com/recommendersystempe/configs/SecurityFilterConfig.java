@@ -1,4 +1,4 @@
-package com.recommendersystempe.config;
+package com.recommendersystempe.configs;
 
 import java.io.IOException;
 import java.util.Objects;

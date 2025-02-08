@@ -1,4 +1,4 @@
-package com.recommendersystempe.controller;
+package com.recommendersystempe.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.recommendersystempe.dto.UserDTO;
+import com.recommendersystempe.dtos.UserDTO;
 import com.recommendersystempe.service.UserService;
 
 @RestController

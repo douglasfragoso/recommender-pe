@@ -1,4 +1,4 @@
-package com.recommendersystempe.config;
+package com.recommendersystempe.configs;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;

@@ -1,4 +1,4 @@
-package com.recommendersystempe.config;
+package com.recommendersystempe.configs;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

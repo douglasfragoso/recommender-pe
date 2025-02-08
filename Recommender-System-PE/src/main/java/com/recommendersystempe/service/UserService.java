@@ -6,7 +6,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.recommendersystempe.dto.UserDTO;
+import com.recommendersystempe.dtos.UserDTO;
 import com.recommendersystempe.enums.Roles;
 import com.recommendersystempe.models.Address;
 import com.recommendersystempe.models.User;

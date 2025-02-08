@@ -25,7 +25,7 @@ import lombok.ToString;
 @EqualsAndHashCode(of = "id")
 @ToString
 @NoArgsConstructor
-@Entity(name = "users")
+@Entity(name = "tb_users")
 public class User implements UserDetails {
 
     @Getter
@@ -88,15 +88,17 @@ public class User implements UserDetails {
      * Anotação de Composição
      */
 
-    public User(String firstName, String lastName, Integer age, String cpf, String phone, String email, String userPassword, Address adress, Integer role) {
+    public User(String firstName, String lastName, Integer age, String gender, String cpf, String phone, String email, String userPassword, Address adress, Roles role) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.age = age;
+        this.gender = gender;
         this.cpf = cpf;
         this.phone = phone;
         this.email = email;
         this.userPassword = userPassword;
         this.address = adress;
+        this.role = role;
     }
 
     public Roles getRole() {
@@ -109,14 +111,16 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        if (role.equals(3)){
-            return List.of(new SimpleGrantedAuthority("ROLE_MASTER"));
-        } else if (role.equals(1)) {
-            return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"));
-        } else if (role.equals(2)) {
-            return List.of(new SimpleGrantedAuthority("ROLE_USER"));
+        switch (role) {
+            case MASTER:
+                return List.of(new SimpleGrantedAuthority("ROLE_MASTER"));
+            case ADMIN:
+                return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"));
+            case USER:
+                return List.of(new SimpleGrantedAuthority("ROLE_USER"));
+            default:
+                return List.of(new SimpleGrantedAuthority("ROLE_GUEST"));
         }
-        return List.of(new SimpleGrantedAuthority("ROLE_GUEST"));
     }
 
     @Override

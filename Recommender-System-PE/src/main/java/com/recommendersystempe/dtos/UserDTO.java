@@ -1,4 +1,4 @@
-package com.recommendersystempe.dto;
+package com.recommendersystempe.dtos;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.recommendersystempe.enums.Roles;

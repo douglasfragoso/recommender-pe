@@ -1,4 +1,4 @@
-package com.recommendersystempe.dto;
+package com.recommendersystempe.dtos;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
