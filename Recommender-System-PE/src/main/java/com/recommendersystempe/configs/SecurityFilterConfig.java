@@ -31,7 +31,7 @@ public class SecurityFilterConfig extends OncePerRequestFilter {
 
     // Método para filtrar as requisições
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,  FilterChain filterChain)
+    protected void doFilterInternal(@SuppressWarnings("null") HttpServletRequest request, @SuppressWarnings("null") HttpServletResponse response,  @SuppressWarnings("null") FilterChain filterChain)
             throws ServletException, IOException {
 
         String token = _getTokenFromRequest(request);

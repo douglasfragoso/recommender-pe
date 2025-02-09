@@ -41,22 +41,36 @@ public class UserDTO {
     @Getter @Setter 
     private Address address;
 
-    @Getter 
+    @Setter @Getter 
     private Roles role;
 
     /*Composição dos atributos
      * Anotação Bean Validation
      * Anotação Swagger
      */
-
-     public UserDTO(String firstName, String lastName, Integer age, String cpf, String phone, String email, Roles role, Address address) {
+    public UserDTO(String firstName, String lastName, Integer age, String gender, String cpf, String phone, String email, String userPassword, Address address) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.age = age;
+        this.gender = gender;
         this.cpf = cpf;
         this.phone = phone;
         this.email = email;
-        this.role = role;
+        this.userPassword = userPassword;
         this.address = address;
+    }
+
+
+     public UserDTO(String firstName, String lastName, Integer age, String gender, String cpf, String phone, String email, String userPassword, Address address, Roles role) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.age = age;
+        this.gender = gender;
+        this.cpf = cpf;
+        this.phone = phone;
+        this.email = email;
+        this.userPassword = userPassword;
+        this.address = address;
+        this.role = role;
     }
 }

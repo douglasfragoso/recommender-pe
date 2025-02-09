@@ -17,12 +17,13 @@ import com.recommendersystempe.models.User;
 
 import jakarta.persistence.EntityManager;
 
-@DataJpaTest
+@DataJpaTest // annotation that configures the test to use an in-memory database
 public class UserRepositoryTest {
 
     @Autowired
     private UserRepository userRepository;
 
+    // EntityManager is used to interact with the persistence context
     @Autowired
     private EntityManager entityManager;
 
@@ -125,6 +126,7 @@ public class UserRepositoryTest {
 
         userRepository.update(user.getId(), "Lucas", "Fragoso1", 31, "Feminino", "81-98765-4322");
 
+        // Clear the persistence context, causing all managed entities to become detached
         entityManager.clear();
 
         User updatedUser = userRepository.findById(user.getId()).orElseThrow();
