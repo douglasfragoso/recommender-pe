@@ -39,7 +39,7 @@ public class AuthenticationController {
 
             String token = tokenService.generateToken(loggedUser);
 
-            UserLoginDTO userDTO = new UserLoginDTO(loggedUser.getId(), loggedUser.getFirstName(), token);
+            UserLoginDTO userDTO = new UserLoginDTO(loggedUser.getFirstName(), loggedUser.getLastName(), token);
 
             return ResponseEntity.status(HttpStatus.OK).body(userDTO);
     }

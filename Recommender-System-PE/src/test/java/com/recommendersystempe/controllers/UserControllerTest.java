@@ -8,12 +8,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
@@ -27,17 +25,18 @@ import com.recommendersystempe.service.TokenService;
 import com.recommendersystempe.service.UserService;
 
 @WebMvcTest(UserController.class) // Habilita o contexto do Spring MVC para testes
-@ExtendWith(SpringExtension.class) // Habilita a extensão do Spring no JUnit 5
 @Import(SecurityConfig.class) // Importa a configuração real
 public class UserControllerTest {
-
+    
+    // MockMvc é uma classe do Spring Test que permite simular requisições HTTP
     @Autowired
     private MockMvc mockMvc;
-
+    
+    // ObjectMapper é uma classe do Jackson que permite converter objetos Java em JSON e vice-versa
     @Autowired
     private ObjectMapper objectMapper;
 
-    @MockitoBean
+    @MockitoBean//anotação do Spring Test que cria um mock de um bean, precisa de contexto
     private UserService userService;
 
     @MockitoBean
@@ -51,6 +50,7 @@ public class UserControllerTest {
 
     @BeforeEach
     public void setUp() {
+        // given / arrange
         address = new Address(
                 "Rua Exemplo", 100, "Apto 202", "Boa Viagem",
                 "PE", "Brasil", "50000000");

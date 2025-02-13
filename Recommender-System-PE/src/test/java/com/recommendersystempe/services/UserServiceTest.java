@@ -23,7 +23,7 @@ import com.recommendersystempe.service.exception.GeneralException;
 @ExtendWith(MockitoExtension.class) // annotation that extends the MockitoExtension
 public class UserServiceTest {
 
-    @Mock
+    @Mock//anotação do Mockito que cria um mock
     private UserRepository userRepository;
 
     @Mock
@@ -32,7 +32,7 @@ public class UserServiceTest {
     @Mock
     private PasswordEncoder passwordEncoder;
 
-    @InjectMocks
+    @InjectMocks//anotação do Mockito que injeta os mocks criados
     private UserService userService;
 
     private UserDTO userDTO;
