@@ -48,6 +48,7 @@ public class UserDTO {
      * Anotação Bean Validation
      * Anotação Swagger
      */
+
     public UserDTO(String firstName, String lastName, Integer age, String gender, String cpf, String phone, String email, String userPassword, Address address) {
         this.firstName = firstName;
         this.lastName = lastName;
@@ -61,7 +62,8 @@ public class UserDTO {
     }
 
 
-     public UserDTO(String firstName, String lastName, Integer age, String gender, String cpf, String phone, String email, String userPassword, Address address, Roles role) {
+    public UserDTO(Long id, String firstName, String lastName, Integer age, String gender, String cpf, String phone, String email, Address address, Roles role) {
+        this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.age = age;
@@ -69,8 +71,25 @@ public class UserDTO {
         this.cpf = cpf;
         this.phone = phone;
         this.email = email;
-        this.userPassword = userPassword;
         this.address = address;
         this.role = role;
     }
+
+    public UserDTO(String firstName, String lastName, Integer age, String gender, String phone) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.age = age;
+        this.gender = gender;
+        this.phone = phone;
+    }
+
+    public UserDTO(Long id, String firstName, String lastName, Integer age, String gender, String phone) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.age = age;
+        this.gender = gender;
+        this.phone = phone;
+    }
+
 }

@@ -30,7 +30,7 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(customizer -> {
                     customizer.requestMatchers(HttpMethod.POST, "/auth/v1/login").permitAll();
-                    customizer.requestMatchers(HttpMethod.POST, "/user").permitAll();
+                    customizer.requestMatchers(HttpMethod.POST, "/user/register").permitAll();
                     customizer.requestMatchers(HttpMethod.GET, "/h2-console/**").permitAll();
                     customizer.requestMatchers(HttpMethod.POST, "/h2-console/**").permitAll();
                     // customizer.requestMatchers(AUTH_WHITELIST).permitAll();

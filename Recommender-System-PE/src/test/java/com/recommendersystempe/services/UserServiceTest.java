@@ -10,10 +10,10 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.modelmapper.ModelMapper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.recommendersystempe.dtos.UserDTO;
+import com.recommendersystempe.enums.Roles;
 import com.recommendersystempe.models.Address;
 import com.recommendersystempe.models.User;
 import com.recommendersystempe.repositories.UserRepository;
@@ -23,16 +23,13 @@ import com.recommendersystempe.service.exception.GeneralException;
 @ExtendWith(MockitoExtension.class) // annotation that extends the MockitoExtension
 public class UserServiceTest {
 
-    @Mock//anotação do Mockito que cria um mock
+    @Mock // anotação do Mockito que cria um mock
     private UserRepository userRepository;
-
-    @Mock
-    private ModelMapper modelMapper;
 
     @Mock
     private PasswordEncoder passwordEncoder;
 
-    @InjectMocks//anotação do Mockito que injeta os mocks criados
+    @InjectMocks // anotação do Mockito que injeta os mocks criados
     private UserService userService;
 
     private UserDTO userDTO;
@@ -47,7 +44,8 @@ public class UserServiceTest {
                 "Rua Exemplo", 100, "Apto 202", "Boa Viagem",
                 "PE", "Brasil", "50000000");
 
-        userDTO = new UserDTO("Douglas", "Fragoso", 30, "Masculino", "12345678900", "81-98765-4321", "douglas@example.com",
+        userDTO = new UserDTO("Douglas", "Fragoso", 30, "Masculino", "12345678900", "81-98765-4321",
+                "douglas@example.com",
                 "senha123", address);
     }
 
@@ -55,17 +53,27 @@ public class UserServiceTest {
     void testGivenValidUserDTO_whenInsert_ThenReturnUserDTO() {
         // given / arrange
         User user = new User();
+        user.setFirstName(userDTO.getFirstName());
+        user.setLastName(userDTO.getLastName());
+        user.setAge(userDTO.getAge());
+        user.setGender(userDTO.getGender());
+        user.setCpf(userDTO.getCpf());
+        user.setPhone(userDTO.getPhone());
+        user.setEmail(userDTO.getEmail());
+        user.setUserPassword("encodedPassword"); // A senha criptografada
+        user.setRole(Roles.USER);
+        user.setAddress(userDTO.getAddress());
+
         // Verificando se já existe um usuário com o CPF, Email ou Telefone informado
         given(userRepository.existsByCpf(userDTO.getCpf())).willReturn(false);
         given(userRepository.existsByEmail(userDTO.getEmail())).willReturn(false);
         given(userRepository.existsByPhone(userDTO.getPhone())).willReturn(false);
-        //criptografando senha
+
+        // Criptografando senha
         given(passwordEncoder.encode(userDTO.getUserPassword())).willReturn("encodedPassword");
-        //salvando usuário
-        given(userRepository.save(any(User.class))).willReturn(user);
-        //mapeando UserDTO para User
-        given(modelMapper.map(userDTO, User.class)).willReturn(user);
-        given(modelMapper.map(user, UserDTO.class)).willReturn(userDTO);
+
+        // Mockando o método save para retornar o usuário com o ID
+        given(userRepository.saveAndFlush(any(User.class))).willReturn(user);
 
         // when / act
         UserDTO result = userService.insert(userDTO);

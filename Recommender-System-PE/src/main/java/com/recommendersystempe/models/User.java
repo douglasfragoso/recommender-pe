@@ -13,6 +13,8 @@ import com.recommendersystempe.enums.Roles;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -64,14 +66,15 @@ public class User implements UserDetails {
     private String email;
 
     @Setter
-    @Column(name = "password", length = 100)
+    @Column(name = "user_password", length = 100)
     private String userPassword;
 
     @Getter @Setter
     @Embedded
     private Address address;
     
-    @Column(name = "role")
+    @Column(name = "roles")
+    @Enumerated(EnumType.ORDINAL)//anotação do JPA que indica que o atributo é um enum
     private Roles role;
 
     //@Getter

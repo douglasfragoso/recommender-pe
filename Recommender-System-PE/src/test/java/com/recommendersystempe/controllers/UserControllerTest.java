@@ -66,7 +66,7 @@ public class UserControllerTest {
         given(userService.insert(any(UserDTO.class))).willAnswer((invocation) -> invocation.getArgument(0));
 
         // when / act
-        ResultActions response = mockMvc.perform(post("/user")
+        ResultActions response = mockMvc.perform(post("/user/register")
                 .contentType("application/json")
                 .content(objectMapper.writeValueAsString(userDTO)));
 

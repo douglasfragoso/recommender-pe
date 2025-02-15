@@ -13,13 +13,13 @@ import lombok.NoArgsConstructor;
 public class Address {
     @Column(name = "street", length = 40)
     private String street;
-    @Column(name = "number")
+    @Column(name = "house_number")
     private Integer number;
     @Column(name = "complement", length = 20)
     private String complement;
     @Column(name = "neighborhood", length = 30)
     private String neighborhood;
-    @Column(name = "state", length = 2)
+    @Column(name = "states", length = 2)
     private String state;
     @Column(name = "country", length = 20)
     private String country;
