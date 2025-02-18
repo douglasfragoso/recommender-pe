@@ -1,5 +1,6 @@
 package com.recommendersystempe.models;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -18,6 +19,7 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -73,13 +75,14 @@ public class User implements UserDetails {
     @Embedded
     private Address address;
     
+    @Getter @Setter
     @Column(name = "roles")
     @Enumerated(EnumType.ORDINAL)//anotação do JPA que indica que o atributo é um enum
     private Roles role;
 
-    //@Getter
-    //@OneToMany(mappedBy = "user")
-    // private List<Preferences> preferences = new ArrayList<>();
+    @Getter
+    @OneToMany(mappedBy = "user")
+    private List<Preferences> preferences = new ArrayList<>();
 
     //@Getter
     //@OneToMany(mappedBy = "user")
@@ -101,14 +104,6 @@ public class User implements UserDetails {
         this.email = email;
         this.userPassword = userPassword;
         this.address = adress;
-        this.role = role;
-    }
-
-    public Roles getRole() {
-        return role;
-    }
-
-    public void setRole(Roles role) {
         this.role = role;
     }
 
