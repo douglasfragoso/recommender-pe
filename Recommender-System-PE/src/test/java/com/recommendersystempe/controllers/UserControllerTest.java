@@ -107,7 +107,7 @@ public class UserControllerTest {
         }
 
         @Test
-        void testListPersonObject_whenFindAlll_ThenReturnListPerson() throws JsonProcessingException, Exception {
+        void testListUserObject_whenFindAll_ThenReturnListUser() throws JsonProcessingException, Exception {
                 // given / arrange
                 Address address = new Address(
                                 "Rua Exemplo", 100, "Apto 202", "Boa Viagem",
@@ -162,5 +162,187 @@ public class UserControllerTest {
                 response.andExpect(status().isOk())
                                 .andDo(print())
                                 .andExpect(jsonPath("$.totalElements").value(userPage.getTotalElements()));
+        }
+
+        @Test
+        void testGivenUserId_whenFindbyId_ThenReturnUser() throws JsonProcessingException, Exception {
+                // given / arrange
+                Address address = new Address(
+                                "Rua Exemplo", 100, "Apto 202", "Boa Viagem",
+                                "PE", "Brasil", "50000000");
+
+                User user = new User("Douglas", "Fragoso", 30, "Masculino", "12345678900", "81-98765-4321",
+                                "douglas@example.com", "senha123", address, Roles.MASTER);
+                ReflectionTestUtils.setField(user, "id", 1L); // ID definido via reflection
+
+                // Configurar UserDetailsService mockado
+                UserDetails userDetails = new org.springframework.security.core.userdetails.User(
+                                user.getEmail(),
+                                user.getPassword(),
+                                Collections.singletonList(new SimpleGrantedAuthority("ROLE_MASTER")) // 👈 Prefixo
+                                                                                                     // obrigatório
+                );
+                // Mockar UserDetailsService
+                given(authenticationService.loadUserByUsername(user.getEmail())).willReturn(userDetails);
+                Long id = 1L;
+                given(userService.findById(id)).willReturn(new UserDTO(user.getId(), user.getFirstName(),
+                                user.getLastName(), user.getAge(), user.getGender(), user.getCpf(), user.getPhone(),
+                                user.getEmail(), user.getAddress(), user.getRole()));
+
+                // when / act
+                ResultActions response = mockMvc.perform(get("/user/id/{id}", id)
+                                .with(user("douglas@example.com").password("senha123").roles("MASTER")) // Autenticação
+                                .contentType("application/json"));
+
+                // then / assert
+                response.andDo(print())
+                                .andExpect(status().isOk())
+                                .andExpect(jsonPath("$.firstName").value(user.getFirstName()))
+                                .andExpect(jsonPath("$.lastName").value(user.getLastName()))
+                                .andExpect(jsonPath("$.address").value(user.getAddress()))
+                                .andExpect(jsonPath("$.gender").value(user.getGender()))
+                                .andExpect(jsonPath("$.email").value(user.getEmail()));
+        }
+
+        @Test
+        void testGivenUserId_whenDeleteById_ThenReturnNoContent() throws JsonProcessingException, Exception {
+                // given / arrange
+                Address address = new Address(
+                                "Rua Exemplo", 100, "Apto 202", "Boa Viagem",
+                                "PE", "Brasil", "50000000");
+
+                User user = new User("Douglas", "Fragoso", 30, "Masculino", "12345678900", "81-98765-4321",
+                                "douglas@example.com", "senha123", address, Roles.MASTER);
+                ReflectionTestUtils.setField(user, "id", 1L); // ID definido via reflection
+
+                Address address1 = new Address(
+                                "Rua Exemplo1", 101, "Apto 203", "Boa Viagem",
+                                "PE", "Brasil", "50000003");
+
+                User user1 = new User("Lucas", "Fragoso", 30, "Masculino", "12345678901", "81-98765-4322",
+                                "lucas@example.com", "senha123", address1, Roles.USER);
+
+                ReflectionTestUtils.setField(user, "id", 2L); // ID definido via reflection
+
+                // Configurar UserDetailsService mockado
+                UserDetails userDetails = new org.springframework.security.core.userdetails.User(
+                                user.getEmail(),
+                                user.getPassword(),
+                                Collections.singletonList(new SimpleGrantedAuthority("ROLE_MASTER")) // 👈 Prefixo
+                                                                                                     // obrigatório
+                );
+                // Mockar UserDetailsService
+                given(authenticationService.loadUserByUsername(user.getEmail())).willReturn(userDetails);
+
+                Long id = 2L;
+                willDoNothing().given(userService).deleteById(id);
+
+                // when / act
+
+                ResultActions response = mockMvc.perform(delete("/user/id/{id}", id)
+                                .with(user("douglas@example.com").password("senha123").roles("MASTER")) // Autenticação
+                                .contentType("application/json"));
+
+                // then / assert
+                response.andDo(print())
+                                .andExpect(status().isNoContent());
+        }
+
+        @Test
+        void testGivenUserDTO_whenUpdate_ThenReturnString() throws JsonProcessingException, Exception {
+                // given / arrange
+                Address address = new Address(
+                                "Rua Exemplo", 100, "Apto 202", "Boa Viagem",
+                                "PE", "Brasil", "50000000");
+
+                User user = new User("Douglas", "Fragoso", 30, "Masculino", "12345678900", "81-98765-4321",
+                                "douglas@example.com", "senha123", address, Roles.MASTER);
+                ReflectionTestUtils.setField(user, "id", 1L); // ID definido via reflection
+
+                Address address1 = new Address(
+                                "Rua Exemplo1", 101, "Apto 203", "Boa Viagem",
+                                "PE", "Brasil", "50000003");
+
+                User user1 = new User("Lucas", "Fragoso", 30, "Masculino", "12345678901", "81-98765-4322",
+                                "lucas@example.com", "senha123", address1, Roles.USER);
+
+                ReflectionTestUtils.setField(user, "id", 2L); // ID definido via reflection
+
+                // Configurar UserDetailsService mockado
+                UserDetails userDetails = new org.springframework.security.core.userdetails.User(
+                                user.getEmail(),
+                                user.getPassword(),
+                                Collections.singletonList(new SimpleGrantedAuthority("ROLE_MASTER")) // 👈 Prefixo
+                                                                                                     // obrigatório
+                );
+                // Mockar UserDetailsService
+                given(authenticationService.loadUserByUsername(user.getEmail())).willReturn(userDetails);
+
+                UserDTO userDTO = new UserDTO();
+                userDTO.setFirstName("John");
+                userDTO.setLastName("Doe");
+                userDTO.setAge(32);
+                userDTO.setGender("Feminino");
+                userDTO.setPhone("81-98765-4322");
+
+                willDoNothing().given(userService).update(any(UserDTO.class));
+
+                // when / act
+
+                ResultActions response = mockMvc.perform(put("/user")
+                                .with(user("douglas@example.com").password("senha123").roles("MASTER")) // Autenticação
+                                .contentType("application/json")
+                                .content(objectMapper.writeValueAsString(userDTO))); // Enviando JSON
+
+                // then / assert
+                response.andDo(print())
+                                .andExpect(status().isOk())
+                                .andExpect(content().string("Profile updated successfully"));
+        }
+
+        @Test
+        void testGivenUserId_whenUpdateRole_ThenReturnString() throws JsonProcessingException, Exception {
+                // given / arrange
+                Address address = new Address(
+                                "Rua Exemplo", 100, "Apto 202", "Boa Viagem",
+                                "PE", "Brasil", "50000000");
+
+                User user = new User("Douglas", "Fragoso", 30, "Masculino", "12345678900", "81-98765-4321",
+                                "douglas@example.com", "senha123", address, Roles.MASTER);
+                ReflectionTestUtils.setField(user, "id", 1L); // ID definido via reflection
+
+                Address address1 = new Address(
+                                "Rua Exemplo1", 101, "Apto 203", "Boa Viagem",
+                                "PE", "Brasil", "50000003");
+
+                User user1 = new User("Lucas", "Fragoso", 30, "Masculino", "12345678901", "81-98765-4322",
+                                "lucas@example.com", "senha123", address1, Roles.USER);
+
+                ReflectionTestUtils.setField(user1, "id", 2L); // ID definido via reflection
+
+                // Configurar UserDetailsService mockado
+                UserDetails userDetails = new org.springframework.security.core.userdetails.User(
+                                user.getEmail(),
+                                user.getPassword(),
+                                Collections.singletonList(new SimpleGrantedAuthority("ROLE_MASTER")) // 👈 Prefixo
+                                                                                                     // obrigatório
+                );
+                // Mockar UserDetailsService
+                given(authenticationService.loadUserByUsername(user.getEmail())).willReturn(userDetails);
+
+                Long id = 2L;
+
+                willDoNothing().given(userService).updateRole(id);
+
+                // when / act
+                ResultActions response = mockMvc.perform(put("/user/roles/id/{id}", id)
+                                .with(user("douglas@example.com").password("senha123").roles("MASTER"))
+                                .contentType("application/json"))
+                                .andDo(print()); // Print details for debugging
+
+                // then / assert
+                response.andDo(print())
+                                .andExpect(status().isOk())
+                                .andExpect(content().string("Role updated successfully"));
         }
 }
