@@ -4,6 +4,8 @@ import java.time.Instant;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -59,6 +61,21 @@ public class PreferencesService {
         // Retornando o DTO com as informações atualizadas
         return new PreferencesDTO(preferences.getId(), preferences.getUser().getId(), preferences.getDate(),
                 preferences.getMotivations(), preferences.getHobbies(), preferences.getThemes(), preferences.getCurrentLocation());
+    }
+
+    @Transactional(readOnly = true)
+    public Page<PreferencesDTO> findAll(Pageable pageable) {
+        Page<Preferences> list = preferencesRepository.findAll(pageable);
+        return list.map(x -> new PreferencesDTO(x.getId(), x.getUser().getId(), x.getDate(),
+        x.getMotivations(), x.getHobbies(), x.getThemes(), x.getCurrentLocation()));
+    }
+
+    @Transactional(readOnly = true)
+    public PreferencesDTO findById(Long id) {
+        Preferences preferences = preferencesRepository.findById(id)
+                .orElseThrow(() -> new GeneralException("Preferences not found, id does not exist: " + id));
+        return new PreferencesDTO(preferences.getId(), preferences.getUser().getId(), preferences.getDate(),
+        preferences.getMotivations(), preferences.getHobbies(), preferences.getThemes(), preferences.getCurrentLocation());
     }
 
     private User searchUser() {
