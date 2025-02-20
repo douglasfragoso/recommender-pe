@@ -64,4 +64,9 @@ public class PreferencesDTO {
     public void addTheme(List<Themes> themes) {
         this.themes.addAll(themes);
     }
+
+    public PreferencesDTO(List<Motivation> motivations, List<Hobbies> hobbies2, List<Themes> themes2,
+            Address currentLocation2) {
+        //TODO Auto-generated constructor stub
+    }
 }

@@ -68,11 +68,11 @@ public class UserRepositoryTest {
         userRepository.save(user1);
 
         // when / act
-        List<User> UserList = userRepository.findAll();
+        List<User> userList = userRepository.findAll();
 
         // then / assert
-        assertNotNull(UserList, "User list must not be null");
-        assertEquals(2, UserList.size(), "User list must have 2 users");
+        assertNotNull(userList, "User list must not be null");
+        assertEquals(2, userList.size(), "User list must have 2 users");
     }
 
     @Test

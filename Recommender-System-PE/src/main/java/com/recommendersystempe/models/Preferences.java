@@ -19,7 +19,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -29,7 +28,6 @@ import lombok.ToString;
 @EqualsAndHashCode(of = "id")
 @ToString
 @NoArgsConstructor
-@AllArgsConstructor
 @Entity(name = "tb_preferences")
 public class Preferences {
 
@@ -67,6 +65,15 @@ public class Preferences {
     @Getter @Setter
     @Embedded
     private Address currentLocation;
+
+    public Preferences(User user, Instant date, List<Motivation> motivations, List<Hobbies> hobbies, List<Themes> themes, Address currentLocation) {
+        this.user = user;
+        this.date = date;
+        this.motivations = motivations;
+        this.hobbies = hobbies;
+        this.themes = themes;
+        this.currentLocation = currentLocation;
+    }
     
     public void addMotivation(List<Motivation> motivations) {
         this.motivations.addAll(motivations);

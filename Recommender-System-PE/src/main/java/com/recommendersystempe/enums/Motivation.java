@@ -2,7 +2,6 @@ package com.recommendersystempe.enums;
 
 public enum Motivation {
 
-    ADVENTURE,
     CULTURE,
     ENTERTAINMENT,
     FAMILY,
