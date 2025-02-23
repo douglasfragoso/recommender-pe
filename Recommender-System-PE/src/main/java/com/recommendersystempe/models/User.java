@@ -84,9 +84,9 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "user")
     private List<Preferences> preferences = new ArrayList<>();
 
-    //@Getter
-    //@OneToMany(mappedBy = "user")
-    // private List<Recommendation> recommendations = new ArrayList<>();
+    @Getter
+    @OneToMany(mappedBy = "user")
+    private List<Recommendation> recommendations = new ArrayList<>();
 
     /*Composição dos atributos
      * Anotação Lombok
