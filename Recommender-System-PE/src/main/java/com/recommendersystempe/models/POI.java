@@ -62,6 +62,16 @@ public class POI {
     @Embedded
     private Address address;
 
+    public POI(String name, String descripition, List<Motivation> motivations, List<Hobbies> hobbies,
+    List<Themes> themes, Address address) {
+        this.name = name;
+        this.description = descripition;
+        this.motivations = motivations;
+        this.hobbies = hobbies;
+        this.themes = themes;
+        this.address = address;
+}
+
     public void addMotivation(List<Motivation> motivations) {
         this.motivations.addAll(motivations);
     }
