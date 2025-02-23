@@ -18,15 +18,12 @@ import lombok.Setter;
 public class PreferencesDTO {
 
     @Getter
-    @Setter
     private Long id;
 
-    @Getter
-    @Setter
+    @Getter @Setter
     private Long user;
 
-    @Getter
-    @Setter
+    @Getter @Setter
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "America/Sao_Paulo")
     private Instant date;
 
@@ -42,8 +39,7 @@ public class PreferencesDTO {
     @JsonFormat(shape = JsonFormat.Shape.STRING)
     private List<Themes> themes = new ArrayList<>();
 
-    @Getter
-    @Setter
+    @Getter @Setter
     private Address currentLocation;
 
     public PreferencesDTO(Long id, Long user, Instant date, List<Motivation> motivations, List<Hobbies> hobbies,

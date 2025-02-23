@@ -20,12 +20,10 @@ public class POIDTO {
     @Getter
     private Long id;
 
-    @Getter
-    @Setter
+    @Getter @Setter
     private String name;
 
-    @Getter
-    @Setter
+    @Getter @Setter
     private String description;
 
     @Getter
@@ -37,8 +35,7 @@ public class POIDTO {
     @Getter
     private List<Themes> themes = new ArrayList<>();
 
-    @Getter
-    @Setter
+    @Getter @Setter
     private Address address;
 
     public POIDTO(Long id, String name, String description) {

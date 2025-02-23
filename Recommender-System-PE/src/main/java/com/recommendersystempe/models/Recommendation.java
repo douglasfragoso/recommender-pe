@@ -29,8 +29,7 @@ public class Recommendation {
     @Column(name = "id")
     private Long id;
 
-    @Getter
-    @Setter
+    @Getter @Setter
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
