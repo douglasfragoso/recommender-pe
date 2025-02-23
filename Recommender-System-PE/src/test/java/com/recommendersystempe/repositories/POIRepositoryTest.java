@@ -60,8 +60,7 @@ public class POIRepositoryTest {
         themes = List.of(Themes.HISTORY, Themes.ADVENTURE);
         poiAddress = new Address("Rua Exemplo", 100, "Apto 202", "Boa Viagem", "PE", "Brasil", "50000000");
 
-        poi = new POI("Parque da Cidade", "Um grande parque urbano com áreas verdes, trilhas e lagos.", motivations,
-                hobbies, themes, poiAddress);
+        poi = new POI("Parque da Cidade", "Um grande parque urbano com áreas verdes, trilhas e lagos.", motivations,hobbies, themes, poiAddress);
     }
 
     @Test
@@ -85,7 +84,7 @@ public class POIRepositoryTest {
         List<Themes> themes1 = List.of(Themes.HISTORY, Themes.ADVENTURE);
         Address poiAddress1 = new Address("Rua Exemplo", 100, "Apto 202", "Boa Viagem", "PE", "Brasil", "50000000");
 
-        POI poi1 = new POI("Parque da Cidade", "Um grande parque urbano com áreas verdes, trilhas e lagos.",
+        POI poi1 = new POI("Parque da Cidade1", "Um grande parque urbano com áreas verdes, trilhas e lagos.",
                 motivations1, hobbies1, themes1, poiAddress1);
 
         userRepository.save(user);

@@ -47,6 +47,17 @@ public class POIDTO {
         this.description = description;
     }
 
+    
+    public POIDTO(String name, String description, List<Motivation> motivations, List<Hobbies> hobbies,
+            List<Themes> themes, Address poiAddress) {
+        this.name = name;
+        this.motivations.addAll(motivations);
+        this.hobbies.addAll(hobbies);
+        this.themes.addAll(themes);
+        this.themes = themes;
+        this.address = poiAddress;
+    }
+
     public void addMotivation(List<Motivation> motivations) {
         this.motivations.addAll(motivations);
     }

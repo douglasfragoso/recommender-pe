@@ -277,6 +277,5 @@ public class UserServiceTest {
 
         // then / assert
         verify(userRepository, times(1)).deleteById(userId);
-
     }
 }

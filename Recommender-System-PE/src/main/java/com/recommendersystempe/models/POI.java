@@ -36,7 +36,7 @@ public class POI {
     private Long id;
 
     @Getter @Setter
-    @Column(name = "name", length = 20)
+    @Column(name = "name", length = 20, unique = true)
     private String name;
 
     @Getter @Setter

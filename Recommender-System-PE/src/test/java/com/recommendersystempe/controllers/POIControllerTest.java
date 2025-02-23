@@ -7,7 +7,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-import java.time.Instant;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -32,26 +31,26 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.recommendersystempe.configs.SecurityConfig;
-import com.recommendersystempe.dtos.PreferencesDTO;
+import com.recommendersystempe.dtos.POIDTO;
 import com.recommendersystempe.dtos.UserDTO;
 import com.recommendersystempe.enums.Hobbies;
 import com.recommendersystempe.enums.Motivation;
 import com.recommendersystempe.enums.Roles;
 import com.recommendersystempe.enums.Themes;
 import com.recommendersystempe.models.Address;
-import com.recommendersystempe.models.Preferences;
+import com.recommendersystempe.models.POI;
 import com.recommendersystempe.models.User;
-import com.recommendersystempe.repositories.PreferencesRepository;
+import com.recommendersystempe.repositories.POIRepository;
 import com.recommendersystempe.repositories.UserRepository;
 import com.recommendersystempe.service.AuthenticationService;
-import com.recommendersystempe.service.PreferencesService;
+import com.recommendersystempe.service.POIService;
 import com.recommendersystempe.service.TokenService;
 import com.recommendersystempe.service.UserService;
 
 @SuppressWarnings("unused")
-@WebMvcTest(PreferencesController.class) // Habilita o contexto do Spring MVC para testes
+@WebMvcTest(POIController.class) // Habilita o contexto do Spring MVC para testes
 @Import(SecurityConfig.class) // Importa a configuração real
-public class PreferencesControllerTest {
+public class POIControllerTest {
 
         // MockMvc é uma classe do Spring Test que permite simular requisições HTTP
         @Autowired
@@ -66,7 +65,7 @@ public class PreferencesControllerTest {
         private UserService userService;
 
         @MockitoBean
-        private PreferencesService preferencesService;
+        private POIService poiService;
 
         @MockitoBean
         private AuthenticationService authenticationService;
@@ -78,15 +77,16 @@ public class PreferencesControllerTest {
         private UserRepository userRepository;
 
         @MockitoBean
-        private PreferencesRepository preferencesRepository;
+        private POIRepository poiRepository;
 
         private User user;
         private Address address;
-        private PreferencesDTO preferencesDTO;
+        private POIDTO poiDTO;
+        private POI poi;
         private List<Motivation> motivations;
         private List<Hobbies> hobbies;
         private List<Themes> themes;
-        private Address currentLocation;
+        private Address poiAddress;
 
         @BeforeEach
         public void setUp() {
@@ -110,31 +110,33 @@ public class PreferencesControllerTest {
         }
 
         @Test
-        void testGivenPreferencesDTO_whenSave_ThenReturnPreferencesDTO() throws JsonProcessingException, Exception {
+        void testGivenPOIDTO_whenSave_ThenReturnPOIDTO() throws JsonProcessingException, Exception {
                 // given / arrange
                 motivations = List.of(Motivation.CULTURE, Motivation.STUDY);
                 hobbies = List.of(Hobbies.PHOTOGRAPHY, Hobbies.MUSIC);
                 themes = List.of(Themes.HISTORY, Themes.ADVENTURE);
-                currentLocation = new Address("Rua Exemplo", 100, "Apto 202", "Boa Viagem", "PE", "Brasil", "50000000");
-                preferencesDTO = new PreferencesDTO(motivations, hobbies, themes, currentLocation);
+                poiAddress = new Address("Rua Exemplo", 100, "Apto 202", "Boa Viagem", "PE", "Brasil", "50000000");
 
-                given(preferencesService.insert(any(PreferencesDTO.class)))
+                poiDTO = new POIDTO("Parque da Cidade", "Um grande parque urbano com áreas verdes, trilhas e lagos.",
+                                motivations, hobbies, themes, poiAddress);
+
+                given(poiService.insert(any(POIDTO.class)))
                                 .willAnswer((invocation) -> invocation.getArgument(0));
 
                 // when / act
-                ResultActions response = mockMvc.perform(post("/preferences/register")
+                ResultActions response = mockMvc.perform(post("/poi/register")
                                 .contentType("application/json")
                                 .with(user("douglas@example.com").password("senha123").roles("MASTER")) // Autenticação
-                                .content(objectMapper.writeValueAsString(preferencesDTO)));
+                                .content(objectMapper.writeValueAsString(poiDTO)));
 
                 // then / assert
                 response.andDo(print())
                                 .andExpect(status().isCreated())
-                                .andExpect(jsonPath("$.motivations").value(preferencesDTO.getMotivations().stream()
+                                .andExpect(jsonPath("$.motivations").value(poiDTO.getMotivations().stream()
                                                 .map(Enum::name).collect(Collectors.toList())))
-                                .andExpect(jsonPath("$.hobbies").value(preferencesDTO.getHobbies().stream()
+                                .andExpect(jsonPath("$.hobbies").value(poiDTO.getHobbies().stream()
                                                 .map(Enum::name).collect(Collectors.toList())))
-                                .andExpect(jsonPath("$.themes").value(preferencesDTO.getThemes().stream()
+                                .andExpect(jsonPath("$.themes").value(poiDTO.getThemes().stream()
                                                 .map(Enum::name).collect(Collectors.toList())));
         }
 
@@ -145,43 +147,38 @@ public class PreferencesControllerTest {
                 motivations = List.of(Motivation.CULTURE, Motivation.STUDY);
                 hobbies = List.of(Hobbies.PHOTOGRAPHY, Hobbies.MUSIC);
                 themes = List.of(Themes.HISTORY, Themes.ADVENTURE);
-                currentLocation = new Address("Rua Exemplo", 100, "Apto 202", "Boa Viagem", "PE", "Brasil", "50000000");
+                poiAddress = new Address("Rua Exemplo", 100, "Apto 202", "Boa Viagem", "PE", "Brasil", "50000000");
 
-                Preferences preferences = new Preferences(user, Instant.now(), motivations, hobbies, themes,
-                                currentLocation);
+                poi = new POI("Parque da Cidade", "Um grande parque urbano com áreas verdes, trilhas e lagos.",
+                                motivations, hobbies, themes, poiAddress);
 
-                ReflectionTestUtils.setField(preferences, "id", 1L); // ID definido via reflection
-                ReflectionTestUtils.setField(preferences, "user", user); // User definido via reflection
+                ReflectionTestUtils.setField(poi, "id", 1L); // ID definido via reflection
 
                 List<Motivation> motivations1 = List.of(Motivation.CULTURE, Motivation.STUDY);
                 List<Hobbies> hobbies1 = List.of(Hobbies.PHOTOGRAPHY, Hobbies.MUSIC);
                 List<Themes> themes1 = List.of(Themes.HISTORY, Themes.ADVENTURE);
-                Address currentLocation1 = new Address("Rua Exemplo", 100, "Apto 202", "Boa Viagem", "PE", "Brasil",
+                Address poiAddress1 = new Address("Rua Exemplo", 100, "Apto 202", "Boa Viagem", "PE", "Brasil",
                                 "50000000");
 
-                Preferences preferences1 = new Preferences(user, Instant.now(), motivations1, hobbies1, themes1,
-                                currentLocation1);
-                ReflectionTestUtils.setField(preferences1, "id", 2L); // ID definido via reflection
-                ReflectionTestUtils.setField(preferences1, "user", user); // User definido via reflection
+                POI poi1 = new POI("Parque da Cidade", "Um grande parque urbano com áreas verdes, trilhas e lagos.",
+                                motivations1, hobbies1, themes1, poiAddress1);
+
+                ReflectionTestUtils.setField(poi1, "id", 2L); // ID definido via reflection
 
                 Pageable pageable = PageRequest.of(0, 10);
 
-                List<PreferencesDTO> preferencesDTOList = List.of(
-                                new PreferencesDTO(preferences.getId(), preferences.getUser().getId(),
-                                                preferences.getDate(),
-                                                preferences.getMotivations(), preferences.getHobbies(),
-                                                preferences.getThemes(), preferences.getCurrentLocation()), 
-                                new PreferencesDTO(preferences1.getId(), preferences1.getUser().getId(),
-                                                preferences1.getDate(),
-                                                preferences1.getMotivations(), preferences1.getHobbies(),
-                                                preferences1.getThemes(), preferences1.getCurrentLocation()));
+                List<POIDTO> poiDTOList = List.of(
+                                new POIDTO(poi.getId(), poi.getName(), poi.getDescription(), poi.getMotivations(), 
+                                poi.getHobbies(),poi.getThemes(), poi.getAddress()),
+                                new POIDTO(poi1.getId(), poi1.getName(), poi1.getDescription(), poi1.getMotivations(),
+                                poi1.getHobbies(), poi1.getThemes(), poi1.getAddress()));
 
-                Page<PreferencesDTO> preferencesPage = new PageImpl<>(preferencesDTOList, pageable, 2);
+                Page<POIDTO> poiPage = new PageImpl<>(poiDTOList, pageable, 2);
 
-                given(preferencesService.findAll(any(Pageable.class))).willReturn(preferencesPage);
+                given(poiService.findAll(any(Pageable.class))).willReturn(poiPage);
 
                 // when / act
-                ResultActions response = mockMvc.perform(get("/preferences")
+                ResultActions response = mockMvc.perform(get("/poi")
                                 .param("page", "0")
                                 .param("size", "10")
                                 .with(user("douglas@example.com").password("senha123").roles("MASTER")) // Autenticação
@@ -190,46 +187,101 @@ public class PreferencesControllerTest {
                 // then / assert
                 response.andExpect(status().isOk())
                                 .andDo(print())
-                                .andExpect(jsonPath("$.totalElements").value(preferencesPage.getTotalElements()));
+                                .andExpect(jsonPath("$.totalElements").value(poiPage.getTotalElements()));
         }
 
         @Test
-        void testGivenPreferencesId_whenFindbyId_ThenReturnPreferencesDTO() throws JsonProcessingException, Exception {
+        void testGivenPOIId_whenFindbyId_ThenReturnPOIDTO() throws JsonProcessingException, Exception {
                 // given / arrange
                 motivations = List.of(Motivation.CULTURE, Motivation.STUDY);
                 hobbies = List.of(Hobbies.PHOTOGRAPHY, Hobbies.MUSIC);
                 themes = List.of(Themes.HISTORY, Themes.ADVENTURE);
-                currentLocation = new Address("Rua Exemplo", 100, "Apto 202", "Boa Viagem", "PE", "Brasil", "50000000");
+                poiAddress = new Address("Rua Exemplo", 100, "Apto 202", "Boa Viagem", "PE", "Brasil", "50000000");
 
-                Preferences preferences = new Preferences(user, Instant.now(), motivations, hobbies, themes,
-                                currentLocation);
+                poi = new POI("Parque da Cidade", "Um grande parque urbano com áreas verdes, trilhas e lagos.",
+                                motivations, hobbies, themes, poiAddress);
 
-                ReflectionTestUtils.setField(preferences, "id", 1L); // ID definido via reflection
-                ReflectionTestUtils.setField(preferences, "user", user); // User definido via reflection
+                ReflectionTestUtils.setField(poi, "id", 1L); // ID definido via reflection
 
                 ObjectMapper objectMapper = new ObjectMapper();
                 objectMapper.configure(SerializationFeature.WRITE_ENUMS_USING_TO_STRING, true);
 
                 Long id = 1L;
-                given(preferencesService.findById(id)).willReturn(new PreferencesDTO(preferences.getId(),
-                                preferences.getUser().getId(),
-                                preferences.getDate(), preferences.getMotivations(), preferences.getHobbies(),
-                                preferences.getThemes(), preferences.getCurrentLocation()));
+                given(poiService.findById(id)).willReturn(new POIDTO(poi.getId(), poi.getName(), poi.getDescription(),
+                                poi.getMotivations(), poi.getHobbies(), poi.getThemes(), poi.getAddress()));
 
                 // when / act
-                ResultActions response = mockMvc.perform(get("/preferences/id/{id}", id)
+                ResultActions response = mockMvc.perform(get("/poi/id/{id}", id)
                                 .with(user("douglas@example.com").password("senha123").roles("MASTER")) // Autenticação
                                 .contentType("application/json"));
 
                 // then / assert
                 response.andDo(print())
                                 .andExpect(status().isOk())
-                                .andExpect(jsonPath("$.motivations").value(preferences.getMotivations().stream()
+                                .andExpect(jsonPath("$.motivations").value(poi.getMotivations().stream()
                                                 .map(Enum::name).collect(Collectors.toList())))
-                                .andExpect(jsonPath("$.hobbies").value(preferences.getHobbies().stream()
+                                .andExpect(jsonPath("$.hobbies").value(poi.getHobbies().stream()
                                                 .map(Enum::name).collect(Collectors.toList())))
-                                .andExpect(jsonPath("$.themes").value(preferences.getThemes().stream()
+                                .andExpect(jsonPath("$.themes").value(poi.getThemes().stream()
                                                 .map(Enum::name).collect(Collectors.toList())));
+        }
+
+         @Test
+        void testGivenPOIId_whenDeleteById_ThenReturnNoContent() throws JsonProcessingException, Exception {
+                // given / arrange
+                motivations = List.of(Motivation.CULTURE, Motivation.STUDY);
+                hobbies = List.of(Hobbies.PHOTOGRAPHY, Hobbies.MUSIC);
+                themes = List.of(Themes.HISTORY, Themes.ADVENTURE);
+                poiAddress = new Address("Rua Exemplo", 100, "Apto 202", "Boa Viagem", "PE", "Brasil", "50000000");
+
+                poi = new POI("Parque da Cidade", "Um grande parque urbano com áreas verdes, trilhas e lagos.",
+                                motivations, hobbies, themes, poiAddress);
+
+                ReflectionTestUtils.setField(poi, "id", 1L); // ID definido via reflection
+
+                Long id = 1L;
+                willDoNothing().given(poiService).deleteById(id);
+
+                // when / act
+
+                ResultActions response = mockMvc.perform(delete("/poi/id/{id}", id)
+                                .with(user("douglas@example.com").password("senha123").roles("MASTER")) // Autenticação
+                                .contentType("application/json"));
+
+                // then / assert
+                response.andDo(print())
+                                .andExpect(status().isNoContent());
+        }
+
+        @Test
+        void testGivenPOIDTO_whenUpdate_ThenReturnString() throws JsonProcessingException, Exception {
+                // given / arrange
+                motivations = List.of(Motivation.CULTURE, Motivation.STUDY);
+                hobbies = List.of(Hobbies.PHOTOGRAPHY, Hobbies.MUSIC);
+                themes = List.of(Themes.HISTORY, Themes.ADVENTURE);
+                poiAddress = new Address("Rua Exemplo", 100, "Apto 202", "Boa Viagem", "PE", "Brasil", "50000000");
+
+                poi = new POI("Parque da Cidade", "Um grande parque urbano com áreas verdes, trilhas e lagos.",
+                                motivations, hobbies, themes, poiAddress);
+
+                ReflectionTestUtils.setField(poi, "id", 1L); // ID definido via reflection
+
+                POIDTO poiDTO = new POIDTO(1L, "Parque da Cidade2",
+                "Um grande parque urbano com áreas verdes, trilhas e lagos.");
+
+                willDoNothing().given(poiService).update(any(POIDTO.class));
+
+                // when / act
+
+                ResultActions response = mockMvc.perform(put("/poi")
+                                .with(user("douglas@example.com").password("senha123").roles("MASTER")) // Autenticação
+                                .contentType("application/json")
+                                .content(objectMapper.writeValueAsString(poiDTO))); // Enviando JSON
+
+                // then / assert
+                response.andDo(print())
+                                .andExpect(status().isOk())
+                                .andExpect(content().string("POI updated successfully"));
         }
 
 }
