@@ -18,6 +18,7 @@ import lombok.Setter;
 public class PreferencesDTO {
 
     @Getter
+    @Setter
     private Long id;
 
     @Getter
@@ -30,31 +31,42 @@ public class PreferencesDTO {
     private Instant date;
 
     @Getter
-    private List<Motivation> motivation = new ArrayList<>();
+    @JsonFormat(shape = JsonFormat.Shape.STRING)
+    private List<Motivation> motivations = new ArrayList<>();
 
     @Getter
+    @JsonFormat(shape = JsonFormat.Shape.STRING)
     private List<Hobbies> hobbies = new ArrayList<>();
 
     @Getter
+    @JsonFormat(shape = JsonFormat.Shape.STRING)
     private List<Themes> themes = new ArrayList<>();
 
     @Getter
     @Setter
     private Address currentLocation;
 
-    public PreferencesDTO(Long id, Long user, Instant date, List<Motivation> motivation, List<Hobbies> hobbies,
+    public PreferencesDTO(Long id, Long user, Instant date, List<Motivation> motivations, List<Hobbies> hobbies,
             List<Themes> themes, Address currentLocation) {
         this.id = id;
         this.user = user;
         this.date = date;
-        this.motivation = motivation;
-        this.hobbies = hobbies;
-        this.themes = themes;
+        this.motivations.addAll(motivations);
+        this.hobbies.addAll(hobbies);
+        this.themes.addAll(themes);
+        this.currentLocation = currentLocation;
+    }
+
+    public PreferencesDTO(List<Motivation> motivations, List<Hobbies> hobbies, List<Themes> themes,
+            Address currentLocation) {
+        this.motivations.addAll(motivations);
+        this.hobbies.addAll(hobbies);
+        this.themes.addAll(themes);
         this.currentLocation = currentLocation;
     }
 
     public void addMotivation(List<Motivation> motivations) {
-        this.motivation.addAll(motivations);
+        this.motivations.addAll(motivations);
     }
 
     public void addHobbie(List<Hobbies> hobbies) {
@@ -65,8 +77,4 @@ public class PreferencesDTO {
         this.themes.addAll(themes);
     }
 
-    public PreferencesDTO(List<Motivation> motivations, List<Hobbies> hobbies2, List<Themes> themes2,
-            Address currentLocation2) {
-        //TODO Auto-generated constructor stub
-    }
 }

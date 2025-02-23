@@ -44,7 +44,7 @@ public class PreferencesService {
         preferencesRepository.save(preferences);
 
         // Adicionando as motivações
-        List<Motivation> motivations = dto.getMotivation();
+        List<Motivation> motivations = dto.getMotivations();
         preferences.addMotivation(motivations);
 
         // Adicionando os hobbies

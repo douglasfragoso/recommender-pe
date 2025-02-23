@@ -105,7 +105,7 @@ public class PreferencesServiceTest {
 
                 // then / assert
                 assertNotNull(result);
-                assertEquals(preferencesDTO.getMotivation(), result.getMotivation());
+                assertEquals(preferencesDTO.getMotivations(), result.getMotivations());
                 assertEquals(preferencesDTO.getCurrentLocation(), result.getCurrentLocation());
         }
 
