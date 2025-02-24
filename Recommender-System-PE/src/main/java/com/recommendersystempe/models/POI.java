@@ -15,6 +15,10 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -62,6 +66,15 @@ public class POI {
     @Embedded
     private Address address;
 
+    @Getter
+    @ManyToMany
+    @JoinTable(name = "recommendation_poi", joinColumns = @JoinColumn(name = "poi_id"), inverseJoinColumns = @JoinColumn(name = "recommendation_id"))
+    private List<Recommendation> recommendations = new ArrayList<>();
+
+    @Getter
+    @OneToMany(mappedBy = "poi")
+    private List<Score> scores = new ArrayList<>();
+
     public POI(String name, String descripition, List<Motivation> motivations, List<Hobbies> hobbies,
     List<Themes> themes, Address address) {
         this.name = name;
@@ -82,6 +95,10 @@ public class POI {
     
     public void addTheme(List<Themes> themes) {
         this.themes.addAll(themes);
+    }
+
+    public void addRecommendation(List<Recommendation> recommendations) {
+        this.recommendations.addAll(recommendations);
     }
 
 }

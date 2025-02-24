@@ -77,7 +77,7 @@ public class User implements UserDetails {
     
     @Getter @Setter
     @Column(name = "roles")
-    @Enumerated(EnumType.ORDINAL)//anotação do JPA que indica que o atributo é um enum
+    @Enumerated(EnumType.STRING)//anotação do JPA que indica que o atributo é um enum
     private Roles role;
 
     @Getter

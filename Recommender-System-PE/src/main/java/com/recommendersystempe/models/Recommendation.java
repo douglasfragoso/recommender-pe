@@ -4,13 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.Column;
-import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -35,15 +36,13 @@ public class Recommendation {
     private User user;
 
     @Getter
-    @ManyToOne
-    @JoinColumn(name = "poi_id")
-    List<POI> pois = new ArrayList<>();
+    @ManyToMany(mappedBy = "recommendations")
+    private List<POI> pois = new ArrayList<>();
 
     @Getter
-    @Embedded
-    @Column(name = "scores")
-    private List<Score> scores;
-
+    @OneToMany(mappedBy = "recommendation")
+    private List<Score> scores = new ArrayList<>();
+    
     public void addPOI(List<POI> pois) {
         this.pois.addAll(pois);
     }
