@@ -1,4 +1,4 @@
-package com.recommendersystempe.recommendation;
+package com.recommendersystempe.similarity;
 
 import org.apache.commons.math3.linear.RealVector;
 

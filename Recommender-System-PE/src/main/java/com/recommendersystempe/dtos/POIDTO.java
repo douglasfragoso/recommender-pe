@@ -44,6 +44,13 @@ public class POIDTO {
         this.description = description;
     }
 
+    public POIDTO(Long id, String name, String description, Address poiAddress) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.address = poiAddress;
+    }
+
     
     public POIDTO(String name, String description, List<Motivation> motivations, List<Hobbies> hobbies,
             List<Themes> themes, Address poiAddress) {
@@ -51,7 +58,6 @@ public class POIDTO {
         this.motivations.addAll(motivations);
         this.hobbies.addAll(hobbies);
         this.themes.addAll(themes);
-        this.themes = themes;
         this.address = poiAddress;
     }
 

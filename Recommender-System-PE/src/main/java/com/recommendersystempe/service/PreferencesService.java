@@ -12,6 +12,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.recommendersystempe.dtos.POIDTO;
 import com.recommendersystempe.dtos.PreferencesDTO;
 import com.recommendersystempe.enums.Hobbies;
 import com.recommendersystempe.enums.Motivation;
@@ -31,8 +32,11 @@ public class PreferencesService {
     @Autowired
     private PreferencesRepository preferencesRepository;
 
+    @Autowired
+    private RecommendationService recommendationService;
+
     @Transactional
-    public PreferencesDTO insert(PreferencesDTO dto) {
+    public List<POIDTO> insert(PreferencesDTO dto) {
         User user = searchUser();
 
         Preferences preferences = new Preferences();
@@ -59,8 +63,7 @@ public class PreferencesService {
         preferencesRepository.save(preferences);
 
         // Retornando o DTO com as informações atualizadas
-        return new PreferencesDTO(preferences.getId(), preferences.getUser().getId(), preferences.getDate(),
-                preferences.getMotivations(), preferences.getHobbies(), preferences.getThemes(), preferences.getCurrentLocation());
+        return recommendationService.recommendation(preferences);
     }
 
     @Transactional(readOnly = true)

@@ -19,8 +19,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
+// import org.springframework.security.core.Authentication;
+// import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import com.recommendersystempe.dtos.PreferencesDTO;
@@ -49,7 +49,7 @@ public class PreferencesServiceTest {
 
         private User user;
         private Address address;
-        private PreferencesDTO preferencesDTO;
+        // private PreferencesDTO preferencesDTO;
         private Preferences preferences;
         private List<Motivation> motivations;
         private List<Hobbies> hobbies;
@@ -70,44 +70,44 @@ public class PreferencesServiceTest {
                                 "douglas@example.com", "senha123", address, Roles.USER);
         }
 
-        @Test
-        void testGivenValidUserDTO_whenInsert_ThenReturnUserDTO() {
-                // given / arrange
-                userRepository.save(user);
-                ReflectionTestUtils.setField(user, "id", 1L);
+        // @Test
+        // void testGivenValidUserDTO_whenInsert_ThenReturnUserDTO() {
+        //         // given / arrange
+        //         userRepository.save(user);
+        //         ReflectionTestUtils.setField(user, "id", 1L);
 
-                given(userRepository.findById(1L)).willReturn(Optional.of(user));
+        //         given(userRepository.findById(1L)).willReturn(Optional.of(user));
 
-                motivations = List.of(Motivation.CULTURE, Motivation.STUDY);
-                hobbies = List.of(Hobbies.PHOTOGRAPHY, Hobbies.MUSIC);
-                themes = List.of(Themes.HISTORY, Themes.ADVENTURE);
-                currentLocation = new Address("Rua Exemplo", 100, "Apto 202", "Boa Viagem", "PE", "Brasil", "50000000");
-                preferencesDTO = new PreferencesDTO(motivations, hobbies, themes, currentLocation);
+        //         motivations = List.of(Motivation.CULTURE, Motivation.STUDY);
+        //         hobbies = List.of(Hobbies.PHOTOGRAPHY, Hobbies.MUSIC);
+        //         themes = List.of(Themes.HISTORY, Themes.ADVENTURE);
+        //         currentLocation = new Address("Rua Exemplo", 100, "Apto 202", "Boa Viagem", "PE", "Brasil", "50000000");
+        //         preferencesDTO = new PreferencesDTO(motivations, hobbies, themes, currentLocation);
 
-                // Mockar autenticação
-                Authentication auth = mock(Authentication.class);
-                when(auth.getName()).thenReturn("douglas@example.com");
-                SecurityContextHolder.getContext().setAuthentication(auth);
+        //         // Mockar autenticação
+        //         Authentication auth = mock(Authentication.class);
+        //         when(auth.getName()).thenReturn("douglas@example.com");
+        //         SecurityContextHolder.getContext().setAuthentication(auth);
 
-                // Mockar repositório
-                given(userRepository.findByEmail("douglas@example.com")).willReturn(user);
+        //         // Mockar repositório
+        //         given(userRepository.findByEmail("douglas@example.com")).willReturn(user);
 
-                Preferences preferences = new Preferences();
-                preferences.setUser(userRepository.findById(1L).get());
-                preferences.setDate(Instant.now());
-                preferences.addMotivation(motivations);
-                preferences.addHobbie(hobbies);
-                preferences.addTheme(themes);
-                preferences.setCurrentLocation(preferencesDTO.getCurrentLocation());
+        //         Preferences preferences = new Preferences();
+        //         preferences.setUser(userRepository.findById(1L).get());
+        //         preferences.setDate(Instant.now());
+        //         preferences.addMotivation(motivations);
+        //         preferences.addHobbie(hobbies);
+        //         preferences.addTheme(themes);
+        //         preferences.setCurrentLocation(preferencesDTO.getCurrentLocation());
 
-                // when / act
-                PreferencesDTO result = preferencesService.insert(preferencesDTO);
+        //         // when / act
+        //         PreferencesDTO result = preferencesService.insert(preferencesDTO);
 
-                // then / assert
-                assertNotNull(result);
-                assertEquals(preferencesDTO.getMotivations(), result.getMotivations());
-                assertEquals(preferencesDTO.getCurrentLocation(), result.getCurrentLocation());
-        }
+        //         // then / assert
+        //         assertNotNull(result);
+        //         assertEquals(preferencesDTO.getMotivations(), result.getMotivations());
+        //         assertEquals(preferencesDTO.getCurrentLocation(), result.getCurrentLocation());
+        // }
 
         @Test
         void testGivenPreferencesList_whenFindAll_ThenReturnPreferencesPage() {

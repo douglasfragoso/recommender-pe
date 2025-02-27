@@ -6,6 +6,11 @@ import java.util.List;
 
 import org.apache.commons.math3.linear.RealVector;
 
+import com.recommendersystempe.similarity.CosineSimilarity;
+import com.recommendersystempe.similarity.EuclideanSimilarity;
+import com.recommendersystempe.similarity.PearsonSimilarity;
+import com.recommendersystempe.similarity.TFIDF;
+
 public class ContentBasedRecommender {
     
       public static void main(String[] args) {

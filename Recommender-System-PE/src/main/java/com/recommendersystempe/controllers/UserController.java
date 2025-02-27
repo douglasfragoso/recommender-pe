@@ -25,7 +25,7 @@ import com.recommendersystempe.service.UserService;
 public class UserController {
 
     @Autowired
-    UserService userService;
+    private UserService userService;
 
     @PostMapping("/register")
     public ResponseEntity<UserDTO> insert(@RequestBody UserDTO dto) {
