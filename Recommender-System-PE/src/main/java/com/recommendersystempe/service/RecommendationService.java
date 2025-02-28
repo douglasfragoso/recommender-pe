@@ -180,6 +180,13 @@ public class RecommendationService {
         return convertToDTO(recommendation);
     }
 
+    @Transactional(readOnly = true)
+    public Page<RecommendationDTO> findAllByUserId(Pageable pageable) {
+        User user = searchUser(); // Obtém o usuário autenticado
+        Page<Recommendation> recommendations = recommendationRepository.findAllByUserId(user.getId(), pageable);
+        return recommendations.map(this::convertToDTO);
+    }
+
     private List<String> getFeaturesFromPreferences(Preferences preferences) {
         List<String> features = new ArrayList<>();
         features.addAll(preferences.getMotivations().stream().map(Enum::toString).toList());

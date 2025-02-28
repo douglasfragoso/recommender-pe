@@ -59,4 +59,11 @@ public class RecommendationController {
         return ResponseEntity.status(HttpStatus.OK).body(recommendationService.findById(id));
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN', 'MASTER', 'USER')")
+    @GetMapping("/user")
+    public ResponseEntity<Page<RecommendationDTO>> findAllByUser(
+            @PageableDefault(size = 10, page = 0, sort = { "id" }, direction = Direction.ASC) Pageable peageable) {
+        return ResponseEntity.status(HttpStatus.OK).body(recommendationService.findAllByUserId(peageable));
+    }
+
 }
