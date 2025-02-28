@@ -7,7 +7,9 @@ import com.recommendersystempe.enums.Hobbies;
 import com.recommendersystempe.enums.Motivation;
 import com.recommendersystempe.enums.Themes;
 
+import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -48,18 +50,24 @@ public class POI {
     private String description;
 
     @Getter
+    @ElementCollection(targetClass = Motivation.class)
+    @Enumerated(EnumType.STRING)
+    @CollectionTable(name = "pois_motivations", joinColumns = @JoinColumn(name = "poi_id"))
     @Column(name = "motivation")
-    @Enumerated(EnumType.ORDINAL)
     private List<Motivation> motivations = new ArrayList<>();
 
     @Getter
-    @Column(name = "hobbies")
-    @Enumerated(EnumType.ORDINAL)
+    @ElementCollection(targetClass = Hobbies.class)
+    @Enumerated(EnumType.STRING)
+    @CollectionTable(name = "pois_hobbies", joinColumns = @JoinColumn(name = "poi_id"))
+    @Column(name = "hobbie")
     private List<Hobbies> hobbies = new ArrayList<>();
 
     @Getter
-    @Column(name = "themes")
-    @Enumerated(EnumType.ORDINAL)
+    @ElementCollection(targetClass = Themes.class)
+    @Enumerated(EnumType.STRING)
+    @CollectionTable(name = "pois_themes", joinColumns = @JoinColumn(name = "poi_id"))
+    @Column(name = "theme")
     private List<Themes> themes = new ArrayList<>();
 
     @Getter @Setter
