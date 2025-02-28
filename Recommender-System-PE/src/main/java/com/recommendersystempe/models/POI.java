@@ -18,7 +18,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
@@ -35,17 +34,19 @@ import lombok.ToString;
 @Entity(name = "tb_pois")
 public class POI {
 
-    @Getter 
+    @Getter
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
-    @Getter @Setter
+    @Getter
+    @Setter
     @Column(name = "poi_name", length = 20, unique = true)
     private String name;
 
-    @Getter @Setter
+    @Getter
+    @Setter
     @Column(name = "poi_description", length = 500)
     private String description;
 
@@ -70,13 +71,13 @@ public class POI {
     @Column(name = "theme")
     private List<Themes> themes = new ArrayList<>();
 
-    @Getter @Setter
+    @Getter
+    @Setter
     @Embedded
     private Address address;
 
     @Getter
-    @ManyToMany
-    @JoinTable(name = "recommendation_poi", joinColumns = @JoinColumn(name = "poi_id"), inverseJoinColumns = @JoinColumn(name = "recommendation_id"))
+    @ManyToMany(mappedBy = "pois")
     private List<Recommendation> recommendations = new ArrayList<>();
 
     @Getter
@@ -84,29 +85,30 @@ public class POI {
     private List<Score> scores = new ArrayList<>();
 
     public POI(String name, String descripition, List<Motivation> motivations, List<Hobbies> hobbies,
-    List<Themes> themes, Address address) {
+            List<Themes> themes, Address address) {
         this.name = name;
         this.description = descripition;
         this.motivations = motivations;
         this.hobbies = hobbies;
         this.themes = themes;
         this.address = address;
-}
+    }
 
     public void addMotivation(List<Motivation> motivations) {
         this.motivations.addAll(motivations);
     }
-    
+
     public void addHobbie(List<Hobbies> hobbies) {
         this.hobbies.addAll(hobbies);
     }
-    
+
     public void addTheme(List<Themes> themes) {
         this.themes.addAll(themes);
     }
 
-    public void addRecommendation(List<Recommendation> recommendations) {
-        this.recommendations.addAll(recommendations);
+    public void addRecommendation(Recommendation recommendation) {
+        this.recommendations.add(recommendation);
+        recommendation.getPois().add(this); // Sincroniza o lado inverso
     }
 
     public double getAverageScore() {

@@ -10,12 +10,16 @@ import java.util.stream.Collectors;
 
 import org.apache.commons.math3.linear.RealVector;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.recommendersystempe.dtos.POIDTO;
+import com.recommendersystempe.dtos.RecommendationDTO;
 import com.recommendersystempe.dtos.ScoreDTO;
 import com.recommendersystempe.models.POI;
 import com.recommendersystempe.models.Preferences;
@@ -43,6 +47,7 @@ public class RecommendationService {
     @Autowired
     private UserRepository userRepository;
 
+    @Transactional
     public List<POIDTO> recommendation(Preferences userPreferences) {
         User user = searchUser();
 
@@ -95,9 +100,10 @@ public class RecommendationService {
                 .collect(Collectors.toList());
 
         // 8. Salvar recomendação no banco de dados
+        // 8. Salvar recomendação no banco de dados
         Recommendation recommendation = new Recommendation();
         recommendation.setUser(user);
-        recommendation.addPOI(sortedPois);
+        recommendation.getPois().addAll(sortedPois); // Adiciona os POIs à Recommendation
         recommendationRepository.save(recommendation);
 
         // 9. Converter para DTO e retornar top N
@@ -107,18 +113,19 @@ public class RecommendationService {
                 .collect(Collectors.toList());
     }
 
+    @Transactional
     public void score(Long recommendationId, List<ScoreDTO> scoreDTOs) {
         // Validar lista de DTOs
         if (scoreDTOs == null || scoreDTOs.isEmpty()) {
             throw new IllegalArgumentException("ScoreDTOs list cannot be null or empty");
         }
-    
+
         // Buscar recommendation
         Recommendation recommendation = recommendationRepository.findById(recommendationId)
                 .orElseThrow(() -> new EntityNotFoundException("Recommendation not found"));
-    
+
         List<Score> savedScores = new ArrayList<>();
-    
+
         for (ScoreDTO dto : scoreDTOs) {
             // Validar DTO
             if (dto.getPoiId() == null) {
@@ -127,37 +134,50 @@ public class RecommendationService {
             if (dto.getScoreValue() == null) {
                 throw new IllegalArgumentException("Score value is required");
             }
-    
+
             // Validar pontuação binária
             if (dto.getScoreValue() != 0 && dto.getScoreValue() != 1) {
                 throw new IllegalArgumentException("Score must be binary (0 or 1) for POI ID: " + dto.getPoiId());
             }
-    
+
             // Buscar POI
             POI poi = poiRepository.findById(dto.getPoiId())
                     .orElseThrow(() -> new EntityNotFoundException("POI not found with ID: " + dto.getPoiId()));
-    
+
             // Verificar se o POI já foi pontuado nesta recommendation
             boolean alreadyScored = recommendation.getScores().stream()
                     .anyMatch(s -> s.getPoi().getId().equals(dto.getPoiId()));
-    
+
             if (alreadyScored) {
                 throw new IllegalStateException("POI ID " + dto.getPoiId() + " already scored in this recommendation");
             }
-    
+
             // Criar e configurar Score
             Score score = new Score();
             score.setPoi(poi);
             score.setScore(dto.getScoreValue());
             score.setRecommendation(recommendation);
-    
+
             // Adicionar à lista
             savedScores.add(score);
             recommendation.getScores().add(score);
         }
-    
+
         // Salvar tudo
         recommendationRepository.save(recommendation);
+    }
+
+    @Transactional(readOnly = true)
+    public Page<RecommendationDTO> findAll(Pageable pageable) {
+        Page<Recommendation> list = recommendationRepository.findAll(pageable);
+        return list.map(this::convertToDTO);
+    }
+
+    @Transactional(readOnly = true)
+    public RecommendationDTO findById(Long id) {
+        Recommendation recommendation = recommendationRepository.findById(id)
+                .orElseThrow(() -> new GeneralException("Recommendation not found, id does not exist: " + id));
+        return convertToDTO(recommendation);
     }
 
     private List<String> getFeaturesFromPreferences(Preferences preferences) {
@@ -174,6 +194,19 @@ public class RecommendationService {
         features.addAll(poi.getHobbies().stream().map(Enum::toString).toList());
         features.addAll(poi.getThemes().stream().map(Enum::toString).toList());
         return features;
+    }
+
+    private RecommendationDTO convertToDTO(Recommendation recommendation) {
+        // Mapear os POIs para POIDTO
+        List<POIDTO> poiDTOs = recommendation.getPois().stream()
+                .map(this::convertToDTO)
+                .collect(Collectors.toList());
+
+        return new RecommendationDTO(
+                recommendation.getId(),
+                recommendation.getUser().getId(), // Apenas o ID do usuário
+                poiDTOs // Lista de POIDTO
+        );
     }
 
     private POIDTO convertToDTO(POI poi) {

@@ -10,6 +10,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
@@ -31,23 +32,26 @@ public class Recommendation {
     @Column(name = "id")
     private Long id;
 
-    @Getter @Setter
+    @Getter
+    @Setter
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 
     @Getter
-    @ManyToMany(mappedBy = "recommendations")
+    @ManyToMany
+    @JoinTable(name = "recommendation_poi", joinColumns = @JoinColumn(name = "recommendation_id"), inverseJoinColumns = @JoinColumn(name = "poi_id"))
     private List<POI> pois = new ArrayList<>();
 
     @Getter
-    @OneToMany(mappedBy = "recommendation",  cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "recommendation", cascade = CascadeType.ALL)
     private List<Score> scores = new ArrayList<>();
-    
-    public void addPOI(List<POI> pois) {
-        this.pois.addAll(pois);
+
+    public void addPOI(POI poi) {
+        this.pois.add(poi);
+        poi.getRecommendations().add(this); // Sincroniza o lado inverso
     }
-    
+
     public void addScore(List<Score> scores) {
         this.scores.addAll(scores);
     }
