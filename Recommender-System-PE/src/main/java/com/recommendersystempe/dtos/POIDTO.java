@@ -3,6 +3,7 @@ package com.recommendersystempe.dtos;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.recommendersystempe.enums.Hobbies;
 import com.recommendersystempe.enums.Motivation;
 import com.recommendersystempe.enums.Themes;
@@ -13,6 +14,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+@JsonInclude(JsonInclude.Include.NON_EMPTY) // Ignora listas vazias
 @NoArgsConstructor
 @AllArgsConstructor
 public class POIDTO {
@@ -20,10 +22,12 @@ public class POIDTO {
     @Getter
     private Long id;
 
-    @Getter @Setter
+    @Getter
+    @Setter
     private String name;
 
-    @Getter @Setter
+    @Getter
+    @Setter
     private String description;
 
     @Getter
@@ -35,7 +39,8 @@ public class POIDTO {
     @Getter
     private List<Themes> themes = new ArrayList<>();
 
-    @Getter @Setter
+    @Getter
+    @Setter
     private Address address;
 
     public POIDTO(Long id, String name, String description) {
@@ -51,7 +56,6 @@ public class POIDTO {
         this.address = poiAddress;
     }
 
-    
     public POIDTO(String name, String description, List<Motivation> motivations, List<Hobbies> hobbies,
             List<Themes> themes, Address poiAddress) {
         this.name = name;
