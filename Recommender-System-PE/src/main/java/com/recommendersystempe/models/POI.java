@@ -40,11 +40,11 @@ public class POI {
     private Long id;
 
     @Getter @Setter
-    @Column(name = "name", length = 20, unique = true)
+    @Column(name = "poi_name", length = 20, unique = true)
     private String name;
 
     @Getter @Setter
-    @Column(name = "description", length = 500)
+    @Column(name = "poi_description", length = 500)
     private String description;
 
     @Getter
@@ -99,6 +99,16 @@ public class POI {
 
     public void addRecommendation(List<Recommendation> recommendations) {
         this.recommendations.addAll(recommendations);
+    }
+
+    public double getAverageScore() {
+        if (scores == null || scores.isEmpty()) {
+            return 0.0;
+        }
+        return scores.stream()
+                .mapToInt(Score::getScore)
+                .average()
+                .orElse(0.0);
     }
 
 }

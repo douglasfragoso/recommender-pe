@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.recommendersystempe.dtos.POIDTO;
 import com.recommendersystempe.dtos.PreferencesDTO;
+import com.recommendersystempe.dtos.ScoreDTO;
 import com.recommendersystempe.service.PreferencesService;
 
 @RestController
@@ -27,4 +29,11 @@ public class RecommendationController {
     public ResponseEntity<List<POIDTO>> insert(@RequestBody PreferencesDTO dto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(preferencesService.insert(dto));
     }
+
+    @PreAuthorize("hasAnyRole('ADMIN', 'MASTER', 'USER')")
+    @PostMapping("{recommendationId}/score/")
+    public ResponseEntity<String> score(@PathVariable("recommendationId") Long id, @RequestBody List<ScoreDTO> dto) {
+        return ResponseEntity.status(HttpStatus.CREATED).body("Scored successfully, thank you!");
+    }
+
 }

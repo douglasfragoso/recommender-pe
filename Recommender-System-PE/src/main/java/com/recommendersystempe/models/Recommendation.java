@@ -3,6 +3,7 @@ package com.recommendersystempe.models;
 import java.util.ArrayList;
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -40,7 +41,7 @@ public class Recommendation {
     private List<POI> pois = new ArrayList<>();
 
     @Getter
-    @OneToMany(mappedBy = "recommendation")
+    @OneToMany(mappedBy = "recommendation",  cascade = CascadeType.ALL)
     private List<Score> scores = new ArrayList<>();
     
     public void addPOI(List<POI> pois) {

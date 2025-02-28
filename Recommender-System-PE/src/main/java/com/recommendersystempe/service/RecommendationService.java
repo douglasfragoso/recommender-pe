@@ -16,9 +16,11 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.recommendersystempe.dtos.POIDTO;
+import com.recommendersystempe.dtos.ScoreDTO;
 import com.recommendersystempe.models.POI;
 import com.recommendersystempe.models.Preferences;
 import com.recommendersystempe.models.Recommendation;
+import com.recommendersystempe.models.Score;
 import com.recommendersystempe.models.User;
 import com.recommendersystempe.repositories.POIRepository;
 import com.recommendersystempe.repositories.RecommendationRepository;
@@ -26,6 +28,8 @@ import com.recommendersystempe.repositories.UserRepository;
 import com.recommendersystempe.service.exception.GeneralException;
 import com.recommendersystempe.similarity.SimilarityCalculator;
 import com.recommendersystempe.similarity.TFIDF;
+
+import jakarta.persistence.EntityNotFoundException;
 
 @Service
 public class RecommendationService {
@@ -103,6 +107,59 @@ public class RecommendationService {
                 .collect(Collectors.toList());
     }
 
+    public void score(Long recommendationId, List<ScoreDTO> scoreDTOs) {
+        // Validar lista de DTOs
+        if (scoreDTOs == null || scoreDTOs.isEmpty()) {
+            throw new IllegalArgumentException("ScoreDTOs list cannot be null or empty");
+        }
+    
+        // Buscar recommendation
+        Recommendation recommendation = recommendationRepository.findById(recommendationId)
+                .orElseThrow(() -> new EntityNotFoundException("Recommendation not found"));
+    
+        List<Score> savedScores = new ArrayList<>();
+    
+        for (ScoreDTO dto : scoreDTOs) {
+            // Validar DTO
+            if (dto.getPoiId() == null) {
+                throw new IllegalArgumentException("POI ID is required");
+            }
+            if (dto.getScoreValue() == null) {
+                throw new IllegalArgumentException("Score value is required");
+            }
+    
+            // Validar pontuação binária
+            if (dto.getScoreValue() != 0 && dto.getScoreValue() != 1) {
+                throw new IllegalArgumentException("Score must be binary (0 or 1) for POI ID: " + dto.getPoiId());
+            }
+    
+            // Buscar POI
+            POI poi = poiRepository.findById(dto.getPoiId())
+                    .orElseThrow(() -> new EntityNotFoundException("POI not found with ID: " + dto.getPoiId()));
+    
+            // Verificar se o POI já foi pontuado nesta recommendation
+            boolean alreadyScored = recommendation.getScores().stream()
+                    .anyMatch(s -> s.getPoi().getId().equals(dto.getPoiId()));
+    
+            if (alreadyScored) {
+                throw new IllegalStateException("POI ID " + dto.getPoiId() + " already scored in this recommendation");
+            }
+    
+            // Criar e configurar Score
+            Score score = new Score();
+            score.setPoi(poi);
+            score.setScore(dto.getScoreValue());
+            score.setRecommendation(recommendation);
+    
+            // Adicionar à lista
+            savedScores.add(score);
+            recommendation.getScores().add(score);
+        }
+    
+        // Salvar tudo
+        recommendationRepository.save(recommendation);
+    }
+
     private List<String> getFeaturesFromPreferences(Preferences preferences) {
         List<String> features = new ArrayList<>();
         features.addAll(preferences.getMotivations().stream().map(Enum::toString).toList());
@@ -126,7 +183,6 @@ public class RecommendationService {
                 poi.getDescription(),
                 poi.getAddress());
     }
-
 
     private User searchUser() {
         Authentication autenticado = SecurityContextHolder.getContext().getAuthentication();
