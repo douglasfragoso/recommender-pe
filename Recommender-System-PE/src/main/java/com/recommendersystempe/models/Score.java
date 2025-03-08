@@ -1,5 +1,6 @@
 package com.recommendersystempe.models;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -33,7 +34,7 @@ public class Score {
     private Integer score;
 
     @Getter @Setter
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST) 
     @JoinColumn(name = "recommendation_id")
     private Recommendation recommendation;
 

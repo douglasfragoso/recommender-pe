@@ -43,6 +43,7 @@ public class RecommendationController {
     @PreAuthorize("hasAnyRole('ADMIN', 'MASTER', 'USER')")
     @PostMapping("{recommendationId}/score")
     public ResponseEntity<String> score(@PathVariable("recommendationId") Long id, @RequestBody List<ScoreDTO> dto) {
+        recommendationService.score(id, dto);
         return ResponseEntity.status(HttpStatus.CREATED).body("Scored successfully, thank you!");
     }
 

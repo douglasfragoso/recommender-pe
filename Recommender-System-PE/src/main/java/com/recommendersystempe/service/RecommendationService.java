@@ -28,6 +28,7 @@ import com.recommendersystempe.models.Score;
 import com.recommendersystempe.models.User;
 import com.recommendersystempe.repositories.POIRepository;
 import com.recommendersystempe.repositories.RecommendationRepository;
+import com.recommendersystempe.repositories.ScoreRepository;
 import com.recommendersystempe.repositories.UserRepository;
 import com.recommendersystempe.service.exception.GeneralException;
 import com.recommendersystempe.similarity.SimilarityCalculator;
@@ -46,6 +47,9 @@ public class RecommendationService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private ScoreRepository scoreRepository;
 
     @Transactional
     public List<POIDTO> recommendation(Preferences userPreferences) {
@@ -99,72 +103,64 @@ public class RecommendationService {
                 .map(Map.Entry::getKey)
                 .collect(Collectors.toList());
 
-        // 8. Salvar recomendação no banco de dados
-        // 8. Salvar recomendação no banco de dados
+        // 8. Limitar aos 5 primeiros POIs (para salvar e retornar)
+        List<POI> top5Pois = sortedPois.stream()
+                .limit(5) // ⬅️ Limite aqui
+                .collect(Collectors.toList());
+
+        // 9. Salvar recomendação (apenas os 5 POIs)
         Recommendation recommendation = new Recommendation();
         recommendation.setUser(user);
-        recommendation.getPois().addAll(sortedPois); // Adiciona os POIs à Recommendation
+        recommendation.getPois().addAll(top5Pois); // ⬅️ Adiciona só os 5
         recommendationRepository.save(recommendation);
 
-        // 9. Converter para DTO e retornar top N
-        return sortedPois.stream()
+        // 10. Converter para DTO e retornar
+        return top5Pois.stream()
                 .map(this::convertToDTO)
-                .limit(6) // Top 6 recomendações
                 .collect(Collectors.toList());
     }
 
     @Transactional
     public void score(Long recommendationId, List<ScoreDTO> scoreDTOs) {
-        // Validar lista de DTOs
+        // Validações iniciais
         if (scoreDTOs == null || scoreDTOs.isEmpty()) {
-            throw new IllegalArgumentException("ScoreDTOs list cannot be null or empty");
+            throw new IllegalArgumentException("Scores list is empty");
         }
 
-        // Buscar recommendation
         Recommendation recommendation = recommendationRepository.findById(recommendationId)
                 .orElseThrow(() -> new EntityNotFoundException("Recommendation not found"));
 
-        List<Score> savedScores = new ArrayList<>();
+        User user = searchUser();
+        if (!recommendation.getUser().getId().equals(user.getId())) {
+            throw new GeneralException("Unauthorized to score this recommendation");
+        }
 
-        for (ScoreDTO dto : scoreDTOs) {
-            // Validar DTO
-            if (dto.getPoiId() == null) {
-                throw new IllegalArgumentException("POI ID is required");
+        scoreDTOs.forEach(dto -> {
+            if (dto.getPoiId() == null || dto.getScoreValue() == null) {
+                throw new IllegalArgumentException("Invalid score data");
             }
-            if (dto.getScoreValue() == null) {
-                throw new IllegalArgumentException("Score value is required");
-            }
-
-            // Validar pontuação binária
             if (dto.getScoreValue() != 0 && dto.getScoreValue() != 1) {
-                throw new IllegalArgumentException("Score must be binary (0 or 1) for POI ID: " + dto.getPoiId());
+                throw new IllegalArgumentException("Score must be 0 or 1");
             }
+        });
 
-            // Buscar POI
+        // Processar scores
+        scoreDTOs.forEach(dto -> {
             POI poi = poiRepository.findById(dto.getPoiId())
-                    .orElseThrow(() -> new EntityNotFoundException("POI not found with ID: " + dto.getPoiId()));
+                    .orElseThrow(() -> new EntityNotFoundException("POI not found"));
 
-            // Verificar se o POI já foi pontuado nesta recommendation
-            boolean alreadyScored = recommendation.getScores().stream()
-                    .anyMatch(s -> s.getPoi().getId().equals(dto.getPoiId()));
-
-            if (alreadyScored) {
-                throw new IllegalStateException("POI ID " + dto.getPoiId() + " already scored in this recommendation");
+            if (recommendation.getScores().stream().anyMatch(s -> s.getPoi().equals(poi))) {
+                throw new IllegalStateException("POI already scored");
             }
 
-            // Criar e configurar Score
             Score score = new Score();
             score.setPoi(poi);
             score.setScore(dto.getScoreValue());
             score.setRecommendation(recommendation);
 
-            // Adicionar à lista
-            savedScores.add(score);
+            scoreRepository.save(score); 
             recommendation.getScores().add(score);
-        }
-
-        // Salvar tudo
-        recommendationRepository.save(recommendation);
+        });
     }
 
     @Transactional(readOnly = true)

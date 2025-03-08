@@ -28,11 +28,10 @@ public class TFIDF {
             for (String word : doc) {
                 if (term.equalsIgnoreCase(word)) {
                     n++;
-                    break;
                 }
             }
         }
-        return Math.log(docs.size() / n);
+        return Math.log((docs.size() + 1) / (n + 1)); // Suavização de Laplace
     }
 
     // Calcula o TF-IDF

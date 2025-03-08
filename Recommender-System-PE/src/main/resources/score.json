@@ -1,0 +1,26 @@
+[
+    {
+        "poiId": 5,
+        "scoreValue": 1
+    },
+    {
+        "poiId": 6,
+        "scoreValue": 0
+    },
+    {
+        "poiId": 7,
+        "scoreValue": 0
+    },
+    {
+        "poiId": 8,
+        "scoreValue": 1
+    },
+    {
+        "poiId": 9,
+        "scoreValue": 1
+    },
+     {
+        "poiId": 10,
+        "scoreValue": 1
+    }
+]
