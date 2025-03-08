@@ -7,12 +7,9 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import com.recommendersystempe.models.Score;
-import com.recommendersystempe.models.User;
 
 public interface ScoreRepository extends JpaRepository<Score, Long> {
 
-    // Método para buscar pontuações por usuário
-    @Query("SELECT s FROM Score s WHERE s.recommendation.user = :user")
-    List<Score> findByUser(@Param("user") User user);
-    
+    @Query(value = "SELECT s.* FROM tb_scores s JOIN tb_recommendation r ON s.recommendation_id = r.id WHERE r.user_id = :userId", nativeQuery = true)
+    List<Score> findByUser(@Param("userId") Long userId);
 }

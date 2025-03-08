@@ -48,7 +48,7 @@ public class EvaluationService {
                 .orElseThrow(() -> new GeneralException("User not found with ID: " + userId));
 
         // Busca as recomendações para o usuário
-        List<Recommendation> recommendations = recommendationRepository.findByUser(user);
+        List<Recommendation> recommendations = recommendationRepository.findByUser(user.getId());
 
         // Extrai os POIs recomendados
         List<POI> recommendedPois = recommendations.stream()
@@ -56,7 +56,7 @@ public class EvaluationService {
                 .collect(Collectors.toList());
 
         // Busca os POIs relevantes para o usuário (ex.: POIs que o usuário pontuou)
-        Set<POI> relevantItems = scoreRepository.findByUser(user).stream()
+        Set<POI> relevantItems = scoreRepository.findByUser(user.getId()).stream()
                 .map(Score::getPoi)
                 .collect(Collectors.toSet());
 
@@ -79,14 +79,14 @@ public class EvaluationService {
 
         for (User user : users) {
             // Busca as recomendações para o usuário
-            List<Recommendation> recommendations = recommendationRepository.findByUser(user);
+            List<Recommendation> recommendations = recommendationRepository.findByUser(user.getId());
             List<POI> recommendedPois = recommendations.stream()
                     .flatMap(r -> r.getPois().stream())
                     .collect(Collectors.toList());
             allRecommendations.add(recommendedPois);
 
             // Busca os POIs relevantes para o usuário
-            Set<POI> relevantItems = scoreRepository.findByUser(user).stream()
+            Set<POI> relevantItems = scoreRepository.findByUser(user.getId()).stream()
                     .map(Score::getPoi)
                     .collect(Collectors.toSet());
             allRelevantItems.add(relevantItems);

@@ -11,7 +11,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import com.recommendersystempe.models.Recommendation;
-import com.recommendersystempe.models.User;
 
 public interface RecommendationRepository extends JpaRepository<Recommendation, Long> {
 
@@ -26,7 +25,6 @@ public interface RecommendationRepository extends JpaRepository<Recommendation, 
     @EntityGraph(attributePaths = { "user", "pois" })
     Page<Recommendation> findAllByUserId(Long userId, Pageable pageable);
 
-    // Método para buscar recomendações por usuário
-    @Query("SELECT r FROM Recommendation r WHERE r.user = :user")
-    List<Recommendation> findByUser(@Param("user") User user);
+    @Query(value = "SELECT * FROM tb_recommendation WHERE user_id = :userId", nativeQuery = true)
+    List<Recommendation> findByUser(@Param("userId") Long userId);
 }
