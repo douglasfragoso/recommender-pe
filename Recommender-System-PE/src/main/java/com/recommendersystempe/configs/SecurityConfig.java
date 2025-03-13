@@ -29,11 +29,11 @@ public class SecurityConfig {
         return http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(customizer -> {
+                    customizer.requestMatchers(AUTH_WHITELIST).permitAll();
                     customizer.requestMatchers(HttpMethod.POST, "/auth/v1/login").permitAll();
                     customizer.requestMatchers(HttpMethod.POST, "/user/register").permitAll();
                     customizer.requestMatchers(HttpMethod.GET, "/h2-console/**").permitAll();
                     customizer.requestMatchers(HttpMethod.POST, "/h2-console/**").permitAll();
-                    // customizer.requestMatchers(AUTH_WHITELIST).permitAll();
                     customizer.anyRequest().authenticated();
                 })
                 .headers(headers -> headers.frameOptions(options -> options.sameOrigin())) // Permite o uso do H2 - iframe
@@ -41,17 +41,17 @@ public class SecurityConfig {
                 .build();
     }
 
-    // private static final String[] AUTH_WHITELIST = {
-    //         "/v2/api-docs",
-    //         "/swagger-resources",
-    //         "/swagger-resources/**",
-    //         "/configuration/ui",
-    //         "/configuration/security",
-    //         "/swagger-ui.html",
-    //         "/webjars/**",
-    //         "/v3/api-docs/**",
-    //         "/swagger-ui/**"
-    // };
+    private static final String[] AUTH_WHITELIST = {
+            "/v2/api-docs",
+            "/swagger-resources",
+            "/swagger-resources/**",
+            "/configuration/ui",
+            "/configuration/security",
+            "/swagger-ui.html",
+            "/webjars/**",
+            "/v3/api-docs/**",
+            "/swagger-ui/**"
+    };
 
     //faz o AuthenticationManager ser injetado no SecurityFilter - usado no AuthenticationController	
     @Bean

@@ -22,13 +22,13 @@ import jakarta.servlet.http.HttpServletRequest;
 @ControllerAdvice
 public class ControllerExceptionHandler {
 
-    @ExceptionHandler(GeneralException.class)
-    public ResponseEntity<StandartError> handleGeneralException(GeneralException e,
+    @ExceptionHandler(GeneralException.class) 
+    public ResponseEntity<StandardError> handleGeneralException(GeneralException e,
             HttpServletRequest request) {
         String error = "General Error";
         HttpStatus status = HttpStatus.BAD_REQUEST;
 
-        StandartError err = new StandartError(Instant.now(), status.value(), error, e.getMessage(),
+        StandardError err = new StandardError(Instant.now(), status.value(), error, e.getMessage(),
                 request.getRequestURI());
         return ResponseEntity.status(status).body(err);
     }
@@ -48,7 +48,7 @@ public class ControllerExceptionHandler {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ValidationError> MethodArgumentNotValidException(MethodArgumentNotValidException ex,
             HttpServletRequest request) {
-        String error = "Validation Error";
+        String error = "Not Found";
         HttpStatus status = HttpStatus.BAD_REQUEST;
         List<String> errors = ex.getBindingResult().getAllErrors().stream()
                 .map(DefaultMessageSourceResolvable::getDefaultMessage)

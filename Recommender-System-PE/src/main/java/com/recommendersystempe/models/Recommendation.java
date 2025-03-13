@@ -39,7 +39,7 @@ public class Recommendation {
     private User user;
 
     @Getter
-    @ManyToMany(cascade = CascadeType.PERSIST)
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "recommendation_poi", joinColumns = @JoinColumn(name = "recommendation_id"), inverseJoinColumns = @JoinColumn(name = "poi_id"))
     private List<POI> pois = new ArrayList<>();
 

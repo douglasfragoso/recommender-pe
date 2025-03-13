@@ -34,7 +34,7 @@ public class Score {
     private Integer score;
 
     @Getter @Setter
-    @ManyToOne(cascade = CascadeType.PERSIST) 
+    @ManyToOne(cascade = CascadeType.ALL) 
     @JoinColumn(name = "recommendation_id")
     private Recommendation recommendation;
 
