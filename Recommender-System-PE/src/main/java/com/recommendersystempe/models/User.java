@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import org.hibernate.validator.constraints.br.CPF;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -41,68 +42,46 @@ public class User implements UserDetails {
 
     @Getter @Setter
     @Column(name = "first_name", length = 20)
-    @NotBlank(message = "The field firstname is required")
-    @Size(min = 3, max = 20, message = "The field firstname must be between 3 and 20 characters")
     private String firstName;
 
     @Getter @Setter
     @Column(name = "last_name", length = 20)
-    @NotBlank(message = "The field lastname is required")
-    @Size(min = 3, max = 20, message = "The field lastname must be between 3 and 20 characters")
     private String lastName;
    
     @Getter @Setter
     @Column(name = "age")
-    @Min(value = 1, message = "Age must be at least 1")
-    @Max(value = 120, message = "Age must be at most 120")
     private Integer age;
 
     @Getter @Setter
     @Column(name = "gender", length = 9)
-    @NotBlank(message = "The field gender is required")
-    @Size(min = 6, max = 9, message = "The field gender must be between 6 and 9 characters")
-    @Pattern(regexp = "^(Masculino|Feminino|Outro)$", message = "Gender must be Male, Female, or Other")
     private String gender;
 
     @Getter @Setter
     @Column(name = "cpf", length = 11, unique = true, updatable = false)
-    @NotBlank(message = "The field CPF is required")
-    @Size(min = 11, max = 11, message = "CPF must be exactly 11 digits")
-    @Pattern(regexp = "\\d{11}", message = "CPF must be exactly 11 digits")
+    @CPF
     private String cpf;
 
     @Getter @Setter
     @JsonFormat(pattern = "^(\\d{2})-(\\d{4,5})-(\\d{4})$")
     @Column(name = "phone", length = 15, unique = true)
-    @NotBlank(message = "The field phone is required")
-    @Size(min = 12, max = 13, message = "Phone number must be between 12 and 13 characters")
-    @Pattern(regexp = "^(\\d{2})-(\\d{4,5})-(\\d{4})$", message = "Phone number must be in the format XX-XXXXX-XXXX or XX-XXXX-XXXX")
     private String phone;
 
     @Getter @Setter
     @Column(name = "email", unique = true, length = 50)
-    @NotBlank(message = "The field email is required")
-    @Size(max = 50, message = "The field email must be up to 50 characters")
-    @Email(message = "Email should be valid")
+    @Email
     private String email;
 
     @Setter
     @Column(name = "user_password", length = 50)
-    @NotBlank(message = "The field password is required")
-    @Size(min = 8, max = 50, message = "Password must be between 8 and 50 characters")
-    @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$", 
-             message = "Password must contain at least one digit, one lowercase, one uppercase, one special character and no whitespace")
     private String userPassword;
 
     @Getter @Setter
     @Embedded
-    @NotNull(message = "The field address is required")
     private Address address;
     
     @Getter @Setter
     @Column(name = "roles")
     @Enumerated(EnumType.STRING)
-    @NotNull(message = "The field role is required")
     private Roles role;
 
     @Getter
