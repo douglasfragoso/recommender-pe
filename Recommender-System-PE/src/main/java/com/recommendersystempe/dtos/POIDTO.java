@@ -3,6 +3,7 @@ package com.recommendersystempe.dtos;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.recommendersystempe.enums.Hobbies;
 import com.recommendersystempe.enums.Motivation;
@@ -45,21 +46,24 @@ public class POIDTO {
     private String description;
 
     @Getter
-    @Schema(description = "List of motivations associated with the preferences", required = true)
+    @JsonFormat(shape = JsonFormat.Shape.STRING)
+    @Schema(description = "List of motivations associated with the preferences", example = "[\"CULTURE\", \"ENTERTAINMENT\"]", required = true)
     @NotNull(message = "The field motivations is required")
-    @Size(min = 5, max = 5, message = "The field motivation must have exactly 5 elements")
+    @Size(min = 1, max = 5, message = "The field motivation must have 1 to 5 elements")
     private List<Motivation> motivations = new ArrayList<>();
 
     @Getter
-    @Schema(description = "List of hobbies associated with the preferences", required = true)
+    @JsonFormat(shape = JsonFormat.Shape.STRING)
+    @Schema(description = "List of hobbies associated with the preferences", example = "[\"ADVENTURE\", \"ART\"]", required = true)
     @NotNull(message = "The field hobbies is required")
-    @Size(min = 1, max = 5, message = "The field hobbies must have exactly 5 elements")
+    @Size(min = 1, max = 5, message = "The field hobbies must have 1 to 5 elements")
     private List<Hobbies> hobbies = new ArrayList<>();
 
     @Getter
-    @Schema(description = "List of themes associated with the preferences", required = true)
+    @JsonFormat(shape = JsonFormat.Shape.STRING)
+    @Schema(description = "List of themes associated with the preferences", example = "[\"ADVENTURE\", \"CULTURAL\"]", required = true)
     @NotNull(message = "The field themes is required")
-    @Size(min = 1, max = 5, message = "The field themes must have exactly 5 elements")
+    @Size(min = 1, max = 5, message = "The field themes must have 1 to 5 elements")
     private List<Themes> themes = new ArrayList<>();
 
     @Getter

@@ -17,11 +17,22 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.recommendersystempe.controllers.exception.StandardError;
+import com.recommendersystempe.controllers.exception.ValidationError;
 import com.recommendersystempe.dtos.POIDTO;
 import com.recommendersystempe.service.POIService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping(value = "/poi", produces = "application/json")
+@Tag(name = "POI", description = "API to management Point of Interest")
 public class POIController {
 
     @Autowired
@@ -29,12 +40,23 @@ public class POIController {
 
     @PreAuthorize("hasAnyRole('ADMIN', 'MASTER')")
     @PostMapping("/register")
-    public ResponseEntity<POIDTO> insert(@RequestBody POIDTO dto) {
+    @ApiResponses({
+            @ApiResponse(responseCode = "201", description = "Successfully created", content = @Content(schema = @Schema(implementation = POIDTO.class))),
+            @ApiResponse(responseCode = "400", description = "Invalid request", content = @Content(schema = @Schema(implementation = ValidationError.class))),
+            @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content(schema = @Schema(implementation = StandardError.class))) })
+    @Operation(summary = "Insert POI", description = "Insert a new Point of Interest (POI). Only accessible by ADMIN and MASTER roles.", tags = {
+        "Auth" })
+    public ResponseEntity<POIDTO> insert(@Valid @RequestBody POIDTO dto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(poiService.insert(dto));
     }
 
     @PreAuthorize("hasAnyRole('ADMIN', 'MASTER')")
     @GetMapping
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Successfully find all", content = @Content(schema = @Schema(implementation = POIDTO.class))),
+            @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content(schema = @Schema(implementation = StandardError.class))) })
+    @Operation(summary = "Find All POI", description = "Retrieve a paginated list of all POI. Only accessible by ADMIN and MASTER roles.", tags = {
+            "GET" })
     public ResponseEntity<Page<POIDTO>> findAll(
             @PageableDefault(size = 10, page = 0, sort = { "id" }, direction = Direction.ASC) Pageable peageable) {
         return ResponseEntity.status(HttpStatus.OK).body(poiService.findAll(peageable));
@@ -42,20 +64,41 @@ public class POIController {
 
     @PreAuthorize("hasAnyRole('ADMIN', 'MASTER')")
     @GetMapping("/id/{id}")
-    public ResponseEntity<POIDTO> findById(@PathVariable("id") Long id) {
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Successfully find by id", content = @Content(schema = @Schema(implementation = POIDTO.class))),
+            @ApiResponse(responseCode = "400", description = "Invalid request", content = @Content(schema = @Schema(implementation = ValidationError.class))),
+            @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content(schema = @Schema(implementation = StandardError.class))),
+            @ApiResponse(responseCode = "404", description = "Not found", content = @Content(schema = @Schema(implementation = StandardError.class))) })
+    @Operation(summary = "Find by POI id", description = "Find by POI id, only for Admin and Master", tags = {
+        "Auth" })
+    public ResponseEntity<POIDTO> findById(@Valid @PathVariable("id") Long id) {
         return ResponseEntity.status(HttpStatus.OK).body(poiService.findById(id));
     }
 
     @PreAuthorize("hasAnyRole('ADMIN', 'MASTER', 'USER')")
     @PutMapping
-    public ResponseEntity<String> update(@RequestBody POIDTO dto) {
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Successfully update", content = @Content(schema = @Schema(implementation = String.class))),
+            @ApiResponse(responseCode = "400", description = "Invalid request", content = @Content(schema = @Schema(implementation = ValidationError.class))),
+            @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content(schema = @Schema(implementation = StandardError.class))),
+            @ApiResponse(responseCode = "404", description = "Not found", content = @Content(schema = @Schema(implementation = StandardError.class))) })
+    @Operation(summary = "Update POI", description = "Update POI, only for Admin and Master", tags = {
+        "Auth" })
+    public ResponseEntity<String> update(@Valid @RequestBody POIDTO dto) {
         poiService.update(dto);
         return ResponseEntity.status(HttpStatus.OK).body("POI updated successfully");
     }
-    
+
     @PreAuthorize("hasAnyRole('ADMIN', 'MASTER')")
     @DeleteMapping("/id/{id}")
-    public ResponseEntity<String> deleteById(@PathVariable("id") Long id) {
+    @ApiResponses({
+            @ApiResponse(responseCode = "204", content = @Content(schema = @Schema(implementation = POIDTO.class))),
+            @ApiResponse(responseCode = "400", description = "Invalid request", content = @Content(schema = @Schema(implementation = ValidationError.class))),
+            @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content(schema = @Schema(implementation = StandardError.class))),
+            @ApiResponse(responseCode = "404", description = "Not found", content = @Content(schema = @Schema(implementation = StandardError.class))) })
+    @Operation(summary = "Delete POI", description = "Delete a Point of Interest (POI) by its ID. Only accessible by ADMIN and MASTER roles.", tags = {
+        "Auth" })
+    public ResponseEntity<String> deleteById(@Valid @PathVariable("id") Long id) {
         poiService.deleteById(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body("POI deleted successfully");
     }

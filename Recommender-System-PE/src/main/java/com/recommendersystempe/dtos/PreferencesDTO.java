@@ -43,21 +43,21 @@ public class PreferencesDTO {
 
     @Getter
     @JsonFormat(shape = JsonFormat.Shape.STRING)
-    @Schema(description = "List of motivations associated with the preferences", required = true)
+    @Schema(description = "List of motivations associated with the preferences", example = "[\"CULTURE\", \"ENTERTAINMENT\"]", required = true)
     @NotNull(message = "The field motivations is required")
     @Size(min = 1, max = 5, message = "The field motivation must have 1 to 5 elements")
     private List<Motivation> motivations = new ArrayList<>();
 
     @Getter
     @JsonFormat(shape = JsonFormat.Shape.STRING)
-    @Schema(description = "List of hobbies associated with the preferences", required = true)
+    @Schema(description = "List of hobbies associated with the preferences", example = "[\"ADVENTURE\", \"ART\"]", required = true)
     @NotNull(message = "The field hobbies is required")
     @Size(min = 1, max = 5, message = "The field hobbies must have 1 to 5 elements")
     private List<Hobbies> hobbies = new ArrayList<>();
 
     @Getter
     @JsonFormat(shape = JsonFormat.Shape.STRING)
-    @Schema(description = "List of themes associated with the preferences", required = true)
+    @Schema(description = "List of themes associated with the preferences", example = "[\"ADVENTURE\", \"CULTURAL\"]", required = true)
     @NotNull(message = "The field themes is required")
     @Size(min = 1, max = 5, message = "The field themes must have 1 to 5 elements")
     private List<Themes> themes = new ArrayList<>();

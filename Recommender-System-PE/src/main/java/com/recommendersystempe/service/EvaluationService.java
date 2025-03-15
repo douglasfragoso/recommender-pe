@@ -40,7 +40,6 @@ public class EvaluationService {
     @Autowired
     private ScoreRepository scoreRepository;
 
-     
     @Transactional(readOnly = true)
     public Map<String, Double> evaluateUserRecommendations(Long userId, int k) {
         // Busca o usuário

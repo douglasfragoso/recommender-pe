@@ -14,8 +14,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.recommendersystempe.service.EvaluationService;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 @RestController
 @RequestMapping(value = "/evaluation", produces = "application/json")
+@Tag(name = "Evaluation", description = "Evaluation API")
 public class EvaluationController {
 
     @Autowired
