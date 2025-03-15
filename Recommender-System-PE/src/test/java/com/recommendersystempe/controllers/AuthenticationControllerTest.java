@@ -56,7 +56,7 @@ public class AuthenticationControllerTest {
     public void setUp() {
         // given / arrange
         address = new Address(
-            "Rua Exemplo", 100, "Apto 202", "Boa Viagem", 
+            "Rua Exemplo", 100, "Apto 202", "Boa Viagem", "Recife",
             "PE", "Brasil", "50000000");
 
         user = new User("Douglas", "Fragoso", 30, "Masculino", "12345678900", "81-98765-4321", "douglas@example.com", "senha123", address, Roles.USER); 

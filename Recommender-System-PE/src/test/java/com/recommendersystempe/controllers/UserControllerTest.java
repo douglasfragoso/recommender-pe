@@ -75,7 +75,7 @@ public class UserControllerTest {
         public void setUp() {
                 // given / arrange
                 address = new Address(
-                                "Rua Exemplo", 100, "Apto 202", "Boa Viagem",
+                                "Rua Exemplo", 100, "Apto 202", "Boa Viagem","Recife",
                                 "PE", "Brasil", "50000000");
 
                 userDTO = new UserDTO("Douglas", "Fragoso", 30, "Masculino", "12345678900", "81-98765-4321",
@@ -110,7 +110,7 @@ public class UserControllerTest {
         void testListUserObject_whenFindAll_ThenReturnListUser() throws JsonProcessingException, Exception {
                 // given / arrange
                 Address address = new Address(
-                                "Rua Exemplo", 100, "Apto 202", "Boa Viagem",
+                                "Rua Exemplo", 100, "Apto 202", "Boa Viagem","Recife",
                                 "PE", "Brasil", "50000000");
 
                 User user = new User("Douglas", "Fragoso", 30, "Masculino", "12345678900", "81-98765-4321",
@@ -118,7 +118,7 @@ public class UserControllerTest {
                 ReflectionTestUtils.setField(user, "id", 1L); // ID definido via reflection
 
                 Address address1 = new Address(
-                                "Rua Exemplo1", 101, "Apto 203", "Boa Viagem",
+                                "Rua Exemplo1", 101, "Apto 203", "Boa Viagem","Recife",
                                 "PE", "Brasil", "50000003");
 
                 User user1 = new User("Lucas", "Fragoso", 30, "Masculino", "12345678901", "81-98765-4322",
@@ -168,7 +168,7 @@ public class UserControllerTest {
         void testGivenUserId_whenFindbyId_ThenReturnUser() throws JsonProcessingException, Exception {
                 // given / arrange
                 Address address = new Address(
-                                "Rua Exemplo", 100, "Apto 202", "Boa Viagem",
+                                "Rua Exemplo", 100, "Apto 202", "Boa Viagem","Recife",
                                 "PE", "Brasil", "50000000");
 
                 User user = new User("Douglas", "Fragoso", 30, "Masculino", "12345678900", "81-98765-4321",
@@ -208,7 +208,7 @@ public class UserControllerTest {
         void testGivenUserId_whenDeleteById_ThenReturnNoContent() throws JsonProcessingException, Exception {
                 // given / arrange
                 Address address = new Address(
-                                "Rua Exemplo", 100, "Apto 202", "Boa Viagem",
+                                "Rua Exemplo", 100, "Apto 202", "Boa Viagem","Recife",
                                 "PE", "Brasil", "50000000");
 
                 User user = new User("Douglas", "Fragoso", 30, "Masculino", "12345678900", "81-98765-4321",
@@ -216,7 +216,7 @@ public class UserControllerTest {
                 ReflectionTestUtils.setField(user, "id", 1L); // ID definido via reflection
 
                 Address address1 = new Address(
-                                "Rua Exemplo1", 101, "Apto 203", "Boa Viagem",
+                                "Rua Exemplo1", 101, "Apto 203", "Boa Viagem","Recife",
                                 "PE", "Brasil", "50000003");
 
                 User user1 = new User("Lucas", "Fragoso", 30, "Masculino", "12345678901", "81-98765-4322",
@@ -252,7 +252,7 @@ public class UserControllerTest {
         void testGivenUserDTO_whenUpdate_ThenReturnString() throws JsonProcessingException, Exception {
                 // given / arrange
                 Address address = new Address(
-                                "Rua Exemplo", 100, "Apto 202", "Boa Viagem",
+                                "Rua Exemplo", 100, "Apto 202", "Boa Viagem","Recife",
                                 "PE", "Brasil", "50000000");
 
                 User user = new User("Douglas", "Fragoso", 30, "Masculino", "12345678900", "81-98765-4321",
@@ -260,7 +260,7 @@ public class UserControllerTest {
                 ReflectionTestUtils.setField(user, "id", 1L); // ID definido via reflection
 
                 Address address1 = new Address(
-                                "Rua Exemplo1", 101, "Apto 203", "Boa Viagem",
+                                "Rua Exemplo1", 101, "Apto 203", "Boa Viagem","Recife",
                                 "PE", "Brasil", "50000003");
 
                 User user1 = new User("Lucas", "Fragoso", 30, "Masculino", "12345678901", "81-98765-4322",
@@ -304,7 +304,7 @@ public class UserControllerTest {
         void testGivenUserId_whenUpdateRole_ThenReturnString() throws JsonProcessingException, Exception {
                 // given / arrange
                 Address address = new Address(
-                                "Rua Exemplo", 100, "Apto 202", "Boa Viagem",
+                                "Rua Exemplo", 100, "Apto 202", "Boa Viagem","Recife",
                                 "PE", "Brasil", "50000000");
 
                 User user = new User("Douglas", "Fragoso", 30, "Masculino", "12345678900", "81-98765-4321",
@@ -312,7 +312,7 @@ public class UserControllerTest {
                 ReflectionTestUtils.setField(user, "id", 1L); // ID definido via reflection
 
                 Address address1 = new Address(
-                                "Rua Exemplo1", 101, "Apto 203", "Boa Viagem",
+                                "Rua Exemplo1", 101, "Apto 203", "Boa Viagem","Recife",
                                 "PE", "Brasil", "50000003");
 
                 User user1 = new User("Lucas", "Fragoso", 30, "Masculino", "12345678901", "81-98765-4322",

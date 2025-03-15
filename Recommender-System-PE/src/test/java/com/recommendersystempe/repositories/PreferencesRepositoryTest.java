@@ -45,7 +45,7 @@ public class PreferencesRepositoryTest {
         preferencesRepository.deleteAll();
 
         address = new Address(
-            "Rua Exemplo", 100, "Apto 202", "Boa Viagem", 
+            "Rua Exemplo", 100, "Apto 202", "Boa Viagem", "Recife",
             "PE", "Brasil", "50000000");
 
         user = new User("Douglas", "Fragoso", 30, "Masculino", "12345678900", "81-98765-4321", "douglas@example.com", "senha123", address, Roles.USER); 
@@ -53,7 +53,7 @@ public class PreferencesRepositoryTest {
         motivations = List.of(Motivations.CULTURE, Motivations.STUDY);
         hobbies = List.of(Hobbies.PHOTOGRAPHY, Hobbies.MUSIC);   
         themes = List.of(Themes.HISTORY, Themes.ADVENTURE);
-        currentLocation = new Address("Rua Exemplo", 100, "Apto 202", "Boa Viagem", "PE", "Brasil", "50000000");
+        currentLocation = new Address("Rua Exemplo", 100, "Apto 202", "Boa Viagem", "Recife","PE", "Brasil", "50000000");
         
         preferences = new Preferences(user, Instant.now(), motivations, hobbies, themes, currentLocation);
     }
@@ -78,7 +78,7 @@ public class PreferencesRepositoryTest {
         List<Motivations> motivations1 = List.of(Motivations.CULTURE, Motivations.STUDY);
         List<Hobbies> hobbies1 = List.of(Hobbies.PHOTOGRAPHY, Hobbies.MUSIC);   
         List<Themes> themes1 = List.of(Themes.HISTORY, Themes.ADVENTURE);
-        Address currentLocation1 = new Address("Rua Exemplo", 100, "Apto 202", "Boa Viagem", "PE", "Brasil", "50000000");
+        Address currentLocation1 = new Address("Rua Exemplo", 100, "Apto 202", "Boa Viagem","Recife", "PE", "Brasil", "50000000");
         
         Preferences preferences1 = new Preferences(user, Instant.now(), motivations1, hobbies1, themes1, currentLocation1); 
 

@@ -31,6 +31,11 @@ public class Address {
     @Size(max = 30, message = "Neighborhood must be at most 30 characters")
     private String neighborhood;
 
+    @Column(name = "city", length = 30)
+    @NotBlank(message = "The field city is required")
+    @Size(max = 30, message = "city must be at most 30 characters")
+    private String city;
+
     @Column(name = "states", length = 2)
     @NotBlank(message = "The field state is required")
     @Size(min = 2, max = 2, message = "State must be exactly 2 characters")

@@ -92,7 +92,7 @@ public class POIControllerTest {
         public void setUp() {
                 // given / arrange
                 address = new Address(
-                                "Rua Exemplo", 100, "Apto 202", "Boa Viagem",
+                                "Rua Exemplo", 100, "Apto 202", "Boa Viagem","Recife",
                                 "PE", "Brasil", "50000000");
 
                 user = new User("Douglas", "Fragoso", 30, "Masculino", "12345678900", "81-98765-4321",
@@ -115,7 +115,7 @@ public class POIControllerTest {
                 motivations = List.of(Motivations.CULTURE, Motivations.STUDY);
                 hobbies = List.of(Hobbies.PHOTOGRAPHY, Hobbies.MUSIC);
                 themes = List.of(Themes.HISTORY, Themes.ADVENTURE);
-                poiAddress = new Address("Rua Exemplo", 100, "Apto 202", "Boa Viagem", "PE", "Brasil", "50000000");
+                poiAddress = new Address("Rua Exemplo", 100, "Apto 202", "Boa Viagem", "Recife","PE", "Brasil", "50000000");
 
                 poiDTO = new POIDTO("Parque da Cidade", "Um grande parque urbano com áreas verdes, trilhas e lagos.",
                                 motivations, hobbies, themes, poiAddress);
@@ -147,7 +147,7 @@ public class POIControllerTest {
                 motivations = List.of(Motivations.CULTURE, Motivations.STUDY);
                 hobbies = List.of(Hobbies.PHOTOGRAPHY, Hobbies.MUSIC);
                 themes = List.of(Themes.HISTORY, Themes.ADVENTURE);
-                poiAddress = new Address("Rua Exemplo", 100, "Apto 202", "Boa Viagem", "PE", "Brasil", "50000000");
+                poiAddress = new Address("Rua Exemplo", 100, "Apto 202", "Boa Viagem", "Recife","PE", "Brasil", "50000000");
 
                 poi = new POI("Parque da Cidade", "Um grande parque urbano com áreas verdes, trilhas e lagos.",
                                 motivations, hobbies, themes, poiAddress);
@@ -157,7 +157,7 @@ public class POIControllerTest {
                 List<Motivations> motivations1 = List.of(Motivations.CULTURE, Motivations.STUDY);
                 List<Hobbies> hobbies1 = List.of(Hobbies.PHOTOGRAPHY, Hobbies.MUSIC);
                 List<Themes> themes1 = List.of(Themes.HISTORY, Themes.ADVENTURE);
-                Address poiAddress1 = new Address("Rua Exemplo", 100, "Apto 202", "Boa Viagem", "PE", "Brasil",
+                Address poiAddress1 = new Address("Rua Exemplo", 100, "Apto 202", "Boa Viagem", "Recife","PE", "Brasil",
                                 "50000000");
 
                 POI poi1 = new POI("Parque da Cidade", "Um grande parque urbano com áreas verdes, trilhas e lagos.",
@@ -196,7 +196,7 @@ public class POIControllerTest {
                 motivations = List.of(Motivations.CULTURE, Motivations.STUDY);
                 hobbies = List.of(Hobbies.PHOTOGRAPHY, Hobbies.MUSIC);
                 themes = List.of(Themes.HISTORY, Themes.ADVENTURE);
-                poiAddress = new Address("Rua Exemplo", 100, "Apto 202", "Boa Viagem", "PE", "Brasil", "50000000");
+                poiAddress = new Address("Rua Exemplo", 100, "Apto 202", "Boa Viagem", "Recife","PE", "Brasil", "50000000");
 
                 poi = new POI("Parque da Cidade", "Um grande parque urbano com áreas verdes, trilhas e lagos.",
                                 motivations, hobbies, themes, poiAddress);
@@ -232,7 +232,7 @@ public class POIControllerTest {
                 motivations = List.of(Motivations.CULTURE, Motivations.STUDY);
                 hobbies = List.of(Hobbies.PHOTOGRAPHY, Hobbies.MUSIC);
                 themes = List.of(Themes.HISTORY, Themes.ADVENTURE);
-                poiAddress = new Address("Rua Exemplo", 100, "Apto 202", "Boa Viagem", "PE", "Brasil", "50000000");
+                poiAddress = new Address("Rua Exemplo", 100, "Apto 202", "Boa Viagem","Recife", "PE", "Brasil", "50000000");
 
                 poi = new POI("Parque da Cidade", "Um grande parque urbano com áreas verdes, trilhas e lagos.",
                                 motivations, hobbies, themes, poiAddress);
@@ -259,7 +259,7 @@ public class POIControllerTest {
                 motivations = List.of(Motivations.CULTURE, Motivations.STUDY);
                 hobbies = List.of(Hobbies.PHOTOGRAPHY, Hobbies.MUSIC);
                 themes = List.of(Themes.HISTORY, Themes.ADVENTURE);
-                poiAddress = new Address("Rua Exemplo", 100, "Apto 202", "Boa Viagem", "PE", "Brasil", "50000000");
+                poiAddress = new Address("Rua Exemplo", 100, "Apto 202", "Boa Viagem", "Recife","PE", "Brasil", "50000000");
 
                 poi = new POI("Parque da Cidade", "Um grande parque urbano com áreas verdes, trilhas e lagos.",
                                 motivations, hobbies, themes, poiAddress);

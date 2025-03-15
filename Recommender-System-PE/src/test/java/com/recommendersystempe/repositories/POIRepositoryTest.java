@@ -49,7 +49,7 @@ public class POIRepositoryTest {
         poiRepository.deleteAll();
 
         address = new Address(
-                "Rua Exemplo", 100, "Apto 202", "Boa Viagem",
+                "Rua Exemplo", 100, "Apto 202", "Boa Viagem","Recife",
                 "PE", "Brasil", "50000000");
 
         user = new User("Douglas", "Fragoso", 30, "Masculino", "12345678900", "81-98765-4321", "douglas@example.com",
@@ -58,7 +58,7 @@ public class POIRepositoryTest {
         motivations = List.of(Motivations.CULTURE, Motivations.STUDY);
         hobbies = List.of(Hobbies.PHOTOGRAPHY, Hobbies.MUSIC);
         themes = List.of(Themes.HISTORY, Themes.ADVENTURE);
-        poiAddress = new Address("Rua Exemplo", 100, "Apto 202", "Boa Viagem", "PE", "Brasil", "50000000");
+        poiAddress = new Address("Rua Exemplo", 100, "Apto 202", "Boa Viagem","Recife", "PE", "Brasil", "50000000");
 
         poi = new POI("Parque da Cidade", "Um grande parque urbano com áreas verdes, trilhas e lagos.", motivations,hobbies, themes, poiAddress);
     }
@@ -82,7 +82,7 @@ public class POIRepositoryTest {
         List<Motivations> motivations1 = List.of(Motivations.CULTURE, Motivations.STUDY);
         List<Hobbies> hobbies1 = List.of(Hobbies.PHOTOGRAPHY, Hobbies.MUSIC);
         List<Themes> themes1 = List.of(Themes.HISTORY, Themes.ADVENTURE);
-        Address poiAddress1 = new Address("Rua Exemplo", 100, "Apto 202", "Boa Viagem", "PE", "Brasil", "50000000");
+        Address poiAddress1 = new Address("Rua Exemplo", 100, "Apto 202", "Boa Viagem","Recife", "PE", "Brasil", "50000000");
 
         POI poi1 = new POI("Parque da Cidade1", "Um grande parque urbano com áreas verdes, trilhas e lagos.",
                 motivations1, hobbies1, themes1, poiAddress1);

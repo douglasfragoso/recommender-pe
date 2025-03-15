@@ -36,7 +36,7 @@ public class UserRepositoryTest {
         userRepository.deleteAll();
 
         address = new Address(
-            "Rua Exemplo", 100, "Apto 202", "Boa Viagem", 
+            "Rua Exemplo", 100, "Apto 202", "Boa Viagem","Recife", 
             "PE", "Brasil", "50000000");
 
         user = new User("Douglas", "Fragoso", 30, "Masculino", "12345678900", "81-98765-4321", "douglas@example.com", "senha123", address, Roles.USER); 
@@ -59,7 +59,7 @@ public class UserRepositoryTest {
     void testGivenUserList_whenFindAll_ThenReturnUserList() {
         // given / arrange
         Address address1 = new Address(
-            "Rua Exemplo1", 101, "Apto 203", "Boa Viagem", 
+            "Rua Exemplo1", 101, "Apto 203", "Boa Viagem", "Recife",
             "PE", "Brasil", "50000003");
 
         User user1 = new User("Lucas", "Fragoso", 30, "Masculino", "12345678901", "81-98765-4322", "lucas@example.com", "senha123", address1, Roles.USER); 

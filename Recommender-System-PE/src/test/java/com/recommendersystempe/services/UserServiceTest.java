@@ -55,7 +55,7 @@ public class UserServiceTest {
     void testGivenValidUserDTO_whenInsert_ThenReturnUserDTO() {
         // given / arrange
         address = new Address(
-                "Rua Exemplo", 100, "Apto 202", "Boa Viagem",
+                "Rua Exemplo", 100, "Apto 202", "Boa Viagem", "Recife",
                 "PE", "Brasil", "50000000");
 
         userDTO = new UserDTO("Douglas", "Fragoso", 30, "Masculino", "12345678900", "81-98765-4321",
@@ -97,7 +97,7 @@ public class UserServiceTest {
     void testGivenUserWithExistingCpf_whenInsert_ThenThrowGeneralException() {
         // given / arrange
         address = new Address(
-                "Rua Exemplo", 100, "Apto 202", "Boa Viagem",
+                "Rua Exemplo", 100, "Apto 202", "Boa Viagem", "Recife",
                 "PE", "Brasil", "50000000");
 
         userDTO = new UserDTO("Douglas", "Fragoso", 30, "Masculino", "12345678900", "81-98765-4321",
@@ -114,7 +114,7 @@ public class UserServiceTest {
     void testGivenUserWithExistingEmail_whenInsert_ThenThrowGeneralException() {
         // given / arrange
         address = new Address(
-                "Rua Exemplo", 100, "Apto 202", "Boa Viagem",
+                "Rua Exemplo", 100, "Apto 202", "Boa Viagem", "Recife",
                 "PE", "Brasil", "50000000");
 
         userDTO = new UserDTO("Douglas", "Fragoso", 30, "Masculino", "12345678900", "81-98765-4321",
@@ -131,7 +131,7 @@ public class UserServiceTest {
     void testGivenUserWithExistingPhone_whenInsert_ThenThrowGeneralException() {
         // given / arrange
         address = new Address(
-                "Rua Exemplo", 100, "Apto 202", "Boa Viagem",
+                "Rua Exemplo", 100, "Apto 202", "Boa Viagem", "Recife",
                 "PE", "Brasil", "50000000");
 
         userDTO = new UserDTO("Douglas", "Fragoso", 30, "Masculino", "12345678900", "81-98765-4321",
@@ -148,13 +148,13 @@ public class UserServiceTest {
     void testGivenUserList_whenFindAll_ThenReturnUserPage() {
         // given / arrange
         address = new Address(
-                "Rua Exemplo", 100, "Apto 202", "Boa Viagem",
+                "Rua Exemplo", 100, "Apto 202", "Boa Viagem", "Recife",
                 "PE", "Brasil", "50000000");
 
         user = new User("Douglas", "Fragoso", 30, "Masculino", "12345678900", "81-98765-4321",
                 "douglas@example.com", "senha123", address, Roles.USER);
         Address address1 = new Address(
-                "Rua Exemplo1", 101, "Apto 203", "Boa Viagem",
+                "Rua Exemplo1", 101, "Apto 203", "Boa Viagem", "Recife",
                 "PE", "Brasil", "50000003");
 
         User user1 = new User("Lucas", "Fragoso", 30, "Masculino", "12345678901", "81-98765-4322", "lucas@example.com",
@@ -177,7 +177,7 @@ public class UserServiceTest {
     void testGivenId_whenFindById_ThenReturUserDTO() {
         // given / arrange
         address = new Address(
-                "Rua Exemplo", 100, "Apto 202", "Boa Viagem",
+                "Rua Exemplo", 100, "Apto 202", "Boa Viagem", "Recife",
                 "PE", "Brasil", "50000000");
 
         user = new User("Douglas", "Fragoso", 30, "Masculino", "12345678900", "81-98765-4321",
@@ -197,7 +197,7 @@ public class UserServiceTest {
     void testGivenPerson_whenUpdate_thenReturnNothing() {
         // given / arrange
         Address address = new Address(
-                "Rua Exemplo", 100, "Apto 202", "Boa Viagem",
+                "Rua Exemplo", 100, "Apto 202", "Boa Viagem", "Recife",
                 "PE", "Brasil", "50000000");
 
         User user = new User("Douglas", "Fragoso", 30, "Masculino", "12345678900", "81-98765-4321",
@@ -237,7 +237,7 @@ public class UserServiceTest {
     void testGivenPersonId_whenUpdateRole_thenReturnNothing() {
         // given / arrange
         Address address = new Address(
-                "Rua Exemplo", 100, "Apto 202", "Boa Viagem",
+                "Rua Exemplo", 100, "Apto 202", "Boa Viagem", "Recife",
                 "PE", "Brasil", "50000000");
 
         User user = new User("Douglas", "Fragoso", 30, "Masculino", "12345678900", "81-98765-4321",
@@ -263,7 +263,7 @@ public class UserServiceTest {
     void testGivenUserId_whenDeleteById_thenReturnNothing() {
         // given / arrange
         address = new Address(
-                "Rua Exemplo", 100, "Apto 202", "Boa Viagem",
+                "Rua Exemplo", 100, "Apto 202", "Boa Viagem", "Recife",
                 "PE", "Brasil", "50000000");
 
         user = new User("Douglas", "Fragoso", 30, "Masculino", "12345678900", "81-98765-4321",

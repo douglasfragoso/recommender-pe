@@ -92,7 +92,7 @@ public class PreferencesControllerTest {
         public void setUp() {
                 // given / arrange
                 address = new Address(
-                                "Rua Exemplo", 100, "Apto 202", "Boa Viagem",
+                                "Rua Exemplo", 100, "Apto 202", "Boa Viagem","Recife",
                                 "PE", "Brasil", "50000000");
 
                 user = new User("Douglas", "Fragoso", 30, "Masculino", "12345678900", "81-98765-4321",
@@ -115,7 +115,7 @@ public class PreferencesControllerTest {
                 motivations = List.of(Motivations.CULTURE, Motivations.STUDY);
                 hobbies = List.of(Hobbies.PHOTOGRAPHY, Hobbies.MUSIC);
                 themes = List.of(Themes.HISTORY, Themes.ADVENTURE);
-                currentLocation = new Address("Rua Exemplo", 100, "Apto 202", "Boa Viagem", "PE", "Brasil", "50000000");
+                currentLocation = new Address("Rua Exemplo", 100, "Apto 202", "Boa Viagem", "Recife","PE", "Brasil", "50000000");
                 preferencesDTO = new PreferencesDTO(motivations, hobbies, themes, currentLocation);
 
                 given(preferencesService.insert(any(PreferencesDTO.class)))
@@ -145,7 +145,7 @@ public class PreferencesControllerTest {
                 motivations = List.of(Motivations.CULTURE, Motivations.STUDY);
                 hobbies = List.of(Hobbies.PHOTOGRAPHY, Hobbies.MUSIC);
                 themes = List.of(Themes.HISTORY, Themes.ADVENTURE);
-                currentLocation = new Address("Rua Exemplo", 100, "Apto 202", "Boa Viagem", "PE", "Brasil", "50000000");
+                currentLocation = new Address("Rua Exemplo", 100, "Apto 202", "Boa Viagem", "Recife","PE", "Brasil", "50000000");
 
                 Preferences preferences = new Preferences(user, Instant.now(), motivations, hobbies, themes,
                                 currentLocation);
@@ -156,7 +156,7 @@ public class PreferencesControllerTest {
                 List<Motivations> motivations1 = List.of(Motivations.CULTURE, Motivations.STUDY);
                 List<Hobbies> hobbies1 = List.of(Hobbies.PHOTOGRAPHY, Hobbies.MUSIC);
                 List<Themes> themes1 = List.of(Themes.HISTORY, Themes.ADVENTURE);
-                Address currentLocation1 = new Address("Rua Exemplo", 100, "Apto 202", "Boa Viagem", "PE", "Brasil",
+                Address currentLocation1 = new Address("Rua Exemplo", 100, "Apto 202", "Boa Viagem", "Recife","PE", "Brasil",
                                 "50000000");
 
                 Preferences preferences1 = new Preferences(user, Instant.now(), motivations1, hobbies1, themes1,
@@ -199,7 +199,7 @@ public class PreferencesControllerTest {
                 motivations = List.of(Motivations.CULTURE, Motivations.STUDY);
                 hobbies = List.of(Hobbies.PHOTOGRAPHY, Hobbies.MUSIC);
                 themes = List.of(Themes.HISTORY, Themes.ADVENTURE);
-                currentLocation = new Address("Rua Exemplo", 100, "Apto 202", "Boa Viagem", "PE", "Brasil", "50000000");
+                currentLocation = new Address("Rua Exemplo", 100, "Apto 202", "Boa Viagem", "Recife","PE", "Brasil", "50000000");
 
                 Preferences preferences = new Preferences(user, Instant.now(), motivations, hobbies, themes,
                                 currentLocation);
