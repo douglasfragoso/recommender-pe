@@ -1,11 +1,11 @@
 ## License
 
-This project is licensed under the [MIT License](https://github.com/douglasfragoso/intensivo-java-spring/blob/main/LICENSE), with the following additional restrictions:
+This project is licensed under the [MIT License](https://github.com/douglasfragoso/recommender-pe?tab=License-1-ov-file), with the following additional restrictions:
 
 - **Copying the code** for use in other projects without prior authorization is **not permitted**.
 - **This project is not open source**, meaning the source code cannot be redistributed or modified without explicit permission.
 
-[![NPM](https://img.shields.io/npm/l/react)](https://github.com/douglasfragoso/intensivo-java-spring/blob/main/LICENSE)
+[![NPM](https://img.shields.io/npm/l/react)](https://github.com/douglasfragoso/recommender-pe?tab=License-1-ov-file)
 
 # A Point of Interest Recommendation System in Pernambuco with Java and Spring Boot
 
