@@ -2,7 +2,6 @@ package com.recommendersystempe.service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -10,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.recommendersystempe.dtos.GlobalEvaluationMetricsDTO;
+import com.recommendersystempe.dtos.UserEvaluationMetricsDTO;
 import com.recommendersystempe.evaluation.F1Score;
 import com.recommendersystempe.evaluation.HitRate;
 import com.recommendersystempe.evaluation.ItemCovarage;
@@ -27,7 +28,7 @@ import com.recommendersystempe.service.exception.GeneralException;
 
 @Service
 public class EvaluationService {
-    
+
     @Autowired
     private RecommendationRepository recommendationRepository;
 
@@ -41,7 +42,7 @@ public class EvaluationService {
     private ScoreRepository scoreRepository;
 
     @Transactional(readOnly = true)
-    public Map<String, Double> evaluateUserRecommendations(Long userId, int k) {
+    public UserEvaluationMetricsDTO evaluateUserRecommendations(Long userId, int k) {
         // Busca o usuário
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new GeneralException("User not found with ID: " + userId));
@@ -60,15 +61,15 @@ public class EvaluationService {
                 .collect(Collectors.toSet());
 
         // Calcula as métricas
-        return Map.of(
-            "Precision@" + k, Precision.precisionAtK(recommendedPois, relevantItems, k),
-            "Recall@" + k, Recall.recallAtK(recommendedPois, relevantItems, k),
-            "F1-Score@" + k, F1Score.f1ScoreAtK(recommendedPois, relevantItems, k)
-        );
+        double precisionAtK = Precision.precisionAtK(recommendedPois, relevantItems, k);
+        double recallAtK = Recall.recallAtK(recommendedPois, relevantItems, k);
+        double f1ScoreAtK = F1Score.f1ScoreAtK(recommendedPois, relevantItems, k);
+
+        return new UserEvaluationMetricsDTO(precisionAtK, recallAtK, f1ScoreAtK);
     }
 
     @Transactional(readOnly = true)
-    public Map<String, Double> evaluateGlobalMetrics(int k) {
+    public GlobalEvaluationMetricsDTO evaluateGlobalMetrics(int k) {
         // Busca todos os usuários
         List<User> users = userRepository.findAll();
 
@@ -95,9 +96,9 @@ public class EvaluationService {
         int totalItemsAvailable = (int) poiRepository.count();
 
         // Calcula as métricas globais
-        return Map.of(
-            "HitRate@" + k, HitRate.hitRateAtK(allRecommendations, allRelevantItems, k),
-            "ItemCoverage", ItemCovarage.itemCoverage(allRecommendations, totalItemsAvailable)
-        );
+        double hitRateAtK = HitRate.hitRateAtK(allRecommendations, allRelevantItems, k);
+        double itemCoverage = ItemCovarage.itemCoverage(allRecommendations, totalItemsAvailable);
+
+        return new GlobalEvaluationMetricsDTO(hitRateAtK, itemCoverage);
     }
 }
