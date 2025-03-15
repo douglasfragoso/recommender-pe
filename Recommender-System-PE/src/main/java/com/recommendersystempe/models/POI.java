@@ -47,7 +47,7 @@ public class POI {
 
     @Getter
     @Setter
-    @Column(name = "poi_description", length = 500)
+    @Column(name = "poi_description", length = 1000)
     private String description;
 
     @Getter
