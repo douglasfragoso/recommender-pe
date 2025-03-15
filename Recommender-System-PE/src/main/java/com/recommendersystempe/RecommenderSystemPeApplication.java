@@ -12,7 +12,7 @@ import io.swagger.v3.oas.annotations.security.SecurityScheme;
 import io.swagger.v3.oas.annotations.security.SecuritySchemes;
 
 @SpringBootApplication
-@OpenAPIDefinition(info = @Info(title = "Recommendation System PE API", version = "1.0", description = "Final paper for the Software Engineering course at the University of São Paulo (USP)",
+@OpenAPIDefinition(info = @Info(title = "Recommendation System PE API", version = "1.0", description = "Final paper for the MBA in Software Engineering at the University of São Paulo (USP)",
 contact = @Contact(name = "Douglas Fragoso", email = "douglas.iff@gmail.com", url = "https://github.com/douglasfragoso"), 
 license = @License(name = "MIT License", url = "https://opensource.org/licenses/MIT")))
 @SecuritySchemes({@SecurityScheme(name = "Bearer Token", type = SecuritySchemeType.HTTP, scheme = "bearer", bearerFormat = "JWT", description = "Autenticação JWT usando o esquema Bearer")})
