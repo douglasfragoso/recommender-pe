@@ -144,6 +144,16 @@ Salton, G.; Buckley, C. 1988. Term-Weighting Approaches in Automatic Text Retrie
 
 Sondur, S. D.; Chigadani, A. P. 2016. Similarity Measures for Recommender Systems: A Comparative Study. Journal for Resarch 2(3): 76-80
 
+# UML CLASSES
+
+## Classes
+![Classes](<UML - Classes.jpeg>)
+
+## Evaluation Calculator
+![Evaluation Calculator](<UML - Evaluation Calculator.jpeg>)
+
+## Similarity Calculator
+![Similarity Calculator](<UML - Similarity Calculator.jpeg>)
 
 # Project Profiles
 
