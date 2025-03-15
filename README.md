@@ -5,7 +5,7 @@ This project is licensed under the [MIT License](https://github.com/douglasfrago
 - **Copying the code** for use in other projects without prior authorization is **not permitted**.
 - **This project is not open source**, meaning the source code cannot be redistributed or modified without explicit permission.
 
-[![NPM](https://img.shields.io/npm/l/react)](https://github.com/douglasfragoso/recommender-pe?tab=License-1-ov-file)
+[![License](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/douglasfragoso/recommender-pe?tab=License-1-ov-file)
 
 # A Point of Interest Recommendation System in Pernambuco with Java and Spring Boot
 
@@ -15,8 +15,6 @@ This project is licensed under the [MIT License](https://github.com/douglasfrago
 2. School of Electrical and Computer Engineering, State University of Campinas (FEEC/UNICAMP). PhD in Computer Science.
 
 \*Corresponding author: douglas.iff@gmail.com
-
-To calculate similarity metrics, a combination of TF-IDF, ED, COS, and PCC is used, along with evaluation metrics composed of Precision@k, Recall@k, F1 Score@k, Hit Rate@k, and Item Coverage. These metrics are described in detail in the subsections below.
 
 ---
 
@@ -37,6 +35,17 @@ To calculate similarity metrics, a combination of TF-IDF, ED, COS, and PCC is us
 | Visual Studio Code                 | For code editing                                                            |
 
 ---
+
+
+# Content-Based Filtering
+
+Content-based filtering uses descriptive information to recommend items to users. This approach combines user information and item information to generate personalized preferences (Aggarwal, 2016; Borràs et al., 2014; Gao et al., 2010; Li et al., 2021).
+
+Typically, ranking in content-based filtering is done based on the distance between candidate items and user preferences, focusing on two types of information: the user's preference model and/or the user's interaction history (Li et al., 2021). There are several ways to analyze descriptive data in content-based filtering, where traditionally, term weighting and similarity computation are used, such as **Term Frequency - Inverse Document Frequency (TF-IDF)** and similarity metrics like **Euclidean Distance (ED)**, **Cosine Similarity (COS)**, **Pearson Correlation Coefficient (PCC)**, and **Jaccard Coefficient** (Castells & Jannach, 2023; Sondur & Chigadani, 2016).
+
+In this way, the algorithm helps compare user preferences with the description of Points of Interest (POIs). For example, if a user prefers "beach," TF-IDF will identify POIs where the term is relevant. TF-IDF creates vectors, and the similarity between these vectors is calculated to measure how close they are, ranging from 0 to +1 (0 indicating complete opposition and +1 indicating identical vectors), with **Cosine Similarity (COS)** being the standard (Gao et al., 2010; Salton & Buckley, 1988).
+
+In this study, to calculate similarity metrics is used a combination of TF-IDF, ED, COS, and PCC is used, along with evaluation metrics composed of Precision@k, Recall@k, F1 Score@k, Hit Rate@k, and Item Coverage. These metrics are described in detail in the subsections below.
 
 ## Similarity Metrics
 
@@ -111,6 +120,57 @@ Finally, the **Item Coverage** metric focuses on the diversity of recommendation
 
     Item Coverage = (Number of Unique Recommended Items) / (Total Available Items) (18)
 
+# Passaporte Pernambuco
+
+The consumption of Points of Interest (POIs) in the SR in question corresponds to that of **Passaporte Pernambuco**, a symbolic document created by the **Secretariat of Tourism and Leisure of the State of Pernambuco (Setur)** in 2020, with the aim of promoting tourism in the state. With this passport in hand, visitors can register their visits to tourist attractions in Pernambuco cities through a stamp (Fonseca, 2020; Valença, 2022). In the case of the SR in this MVP, only POIs in the capital of Pernambuco, **Recife**, will be considered.
+
+The capital has a diversified economy, with a focus on exports, business, technology, culture, and more recently, tourism, which has become an important strategy for local development (Morais et al., 2022). During Carnival alone, the city attracted over 3.4 million people in 2024, generating approximately 2.4 billion reais (Costa, 2024). Recife is also known for its museums, parks, bridges, squares, and buildings considered historical heritage sites (Morais et al., 2022).
+
+The capital of Pernambuco approaches tourism with creativity and sustainability, envisioning it as "a new way of doing tourism," particularly through strategies that immerse tourists in the city's culture (Campos et al., 2022). With the passport, visitors can stamp at least 36 different tourist attractions in Recife, as shown in **Table 3**:
+
+### Tourist Attractions in Recife
+
+| Number | Description |
+|--------|-------------|
+| 1      | Basílica Nossa Senhora do Carmo |
+| 2      | Bistrô Negra Linda |
+| 3      | Cachaçaria Carvalheira |
+| 4      | Cais do Sertão |
+| 5      | Caixa Cultural |
+| 6      | Capela Dourada |
+| 7      | Casa da Cultura |
+| 8      | Catamaran Tours |
+| 9      | Centro de Artesanato de Pernambuco |
+| 10     | Concatedral de São Pedro dos Clérigos |
+| 11     | Embaixada de Pernambuco |
+| 12     | Embaixada dos Bonecos Gigantes |
+| 13     | Forte das Cinco Pontas – Museu da Cidade |
+| 14     | Forte do Brum |
+| 15     | Fundação Gilberto Freyre |
+| 16     | Igreja de Santa Tereza D’Avila |
+| 17     | Igreja Madre de Deus |
+| 18     | Igreja Nossa Senhora do Rosário dos Homens Pretos |
+| 19     | Instituto Ricardo Brennand |
+| 20     | Jardim Botânico |
+| 21     | Museu da Abolição |
+| 22     | Museu de Arte Moderna Aloísio Magalhães |
+| 23     | Museu do Estado de Pernambuco |
+| 24     | Museu do Homem do Nordeste |
+| 25     | Museu do Trem |
+| 26     | Museu Murilo La Greca |
+| 27     | Oficina Francisco Brennand |
+| 28     | Paço do Frevo |
+| 29     | Palácio da Justiça |
+| 30     | Palácio do Campo das Princesas |
+| 31     | Pracinha de Boa Viagem |
+| 32     | Sede do Galo da Madrugada |
+| 33     | Sinagoga Kahal Zur Israel |
+| 34     | Teatro de Santa Isabel |
+| 35     | Teatro do Parque |
+| 36     | Torre Malakoff |
+
+**Source:** Adapted from Secretaria de Turismo e Lazer (2020).
+
 ## Results of the project
 
 The MVP of this project implemented a Point of Interest (POI) Recommender System (RS) in Recife, focusing on General POI Recommendation. The recommendations are based on the content of POI attributes and the user's profile, considering their preference model.
@@ -124,25 +184,42 @@ The POIs (such as museums, churches, and restaurants) are registered with attrib
 With the TF-IDF values, it is possible to calculate the **Similarity Metrics**, composed of **COS**, **ED**, and **PCC**, and then obtain the average of the three metrics. The resulting values are used to measure the proximity between the user's profile and the POIs. Subsequently, the most relevant POIs are ranked and returned as a top-k list to the user.
 
 The user evaluates the recommended POIs as **like** or **dislike**. These evaluations are stored in the database and can be analyzed using the metrics **Precision@k**, **Recall@k**, **F1-Score@k**, **Hit Rate@k**, and **Item Coverage**.
+
 ## References
 
-Castells, P.; Jannach, D. 2023. Recommeder Systems: A Primer. In Alonso, O. & Baeza-Yates, R. (Eds.). Advanced Topics for Information Retrieval. ACM Press.
+Aggarwal, C. C. 2016. *Recommender Systems: The Textbook*. Springer, Switzerland.
 
-Danielsson, P. 1980. Euclidean Distance Mapping. Computer Graphics and Image Processing 14: 227-248.
+Borràs, J.; Moreno, A.; Valls, A. 2014. Intelligent tourism recommender systems: A survey. *Expert Systems with Applications* 41(16): 7370-7389.
 
-Deshpande, M.; Karypis, G. 2004. Item-based top-N recommendation algorithms. Transactions on Information Systems 22(1): 143-177.
+Campos, J.; Roldão, I. de; Alves, P.; Dias, M.; Moura, B.; Freire, K.; Santos, N. C. dos; Freitas, P.; Braga, A.; Galvão, B.; Simões, F.; Jarocki, I.; Paulo, J.; Almeida, L.; Marques, P.; Rayane, S.; Xavier, S.; Instituto de Assessoria para o Desenvolvimento Humano (IADH); Rede Nacional de Experiências e Turismo Criativo (RECRIA); Almeida, L. F. de L.; Araújo, A. B. de; Silva, J. P. da; Heraclio, E.; Bekemball, F. 2022. *Plano de Turismo Criativo 2022-2024*. Prefeitura do Recife, Recife, PE. Brasil.
 
-Gao, M; Liu, K.; Wu, Z. 2010. Personalisation in web computing and informatics: The techniques, applications, and future research. Information Systems Frontiers 12: 607-629.
+Castells, P.; Jannach, D. 2023. Recommender Systems: A Primer. In Alonso, O. & Baeza-Yates, R. (Eds.). *Advanced Topics for Information Retrieval*. ACM Press.
 
-Li, Y.; Liu, K.; Wang, S.; Cambria, E. 2021. Recent Developments in Recommender Systems: A Survey. Journal of Latex Class Files 14(8).
+Costa, I. 2024. Carnaval do Recife movimentou R$2,4 bilhões e recebeu mais de 3,4 milhões de foliões; prefeitura cogita juntar Data Magna aos dias oficiais de folia em 2025. In: *G1*, 2024, Brasil. Disponível em: https://g1.globo.com/pe/pernambuco/carnaval/2024/noticia/2024/02/14/balanco-do-carnaval-do-recife.ghtml. Acesso em: 04 de dezembro de 2024.
 
-Qaiser, S.; Ali, R. 2018. Text Mining: Use of TF-IDF to Examine the Relevance of Words to Documents. International Journal of Computer Applications 181(1): 25-29.
+Danielsson, P. 1980. Euclidean Distance Mapping. *Computer Graphics and Image Processing* 14: 227-248.
 
-Ramos, J. 2003. Using TF-IDF to Determine Word Relevance in Document Queries. 
+Deshpande, M.; Karypis, G. 2004. Item-based top-N recommendation algorithms. *Transactions on Information Systems* 22(1): 143-177.
 
-Salton, G.; Buckley, C. 1988. Term-Weighting Approaches in Automatic Text Retrieval. Information Processing & Management 24 (5): 513-523
+Fonseca, D. 2020. Pernambuco lança passaporte para incentivar turismo no estado entre moradores e turistas. In: *G1*, 2020, Brasil. Disponível em: https://g1.globo.com/pe/pernambuco/noticia/2020/12/21/passaporte-pernambuco-busca-incentivar-turismo-no-estado-entre-moradores-e-turistas.ghtml. Acesso em: 28 de setembro de 2024.
 
-Sondur, S. D.; Chigadani, A. P. 2016. Similarity Measures for Recommender Systems: A Comparative Study. Journal for Resarch 2(3): 76-80
+Gao, M.; Liu, K.; Wu, Z. 2010. Personalisation in web computing and informatics: The techniques, applications, and future research. *Information Systems Frontiers* 12: 607-629.
+
+Li, Y.; Liu, K.; Wang, S.; Cambria, E. 2021. Recent Developments in Recommender Systems: A Survey. *Journal of Latex Class Files* 14(8).
+
+Morais, I.; Mendonça, E.; Santos, E. 2022. Novas formas de fazer turismo: desde a prática às políticas na construção do Plano de Turismo Criativo do Recife (Pernambuco-Brasil). *Interações* 23(3): 669-684.
+
+Qaiser, S.; Ali, R. 2018. Text Mining: Use of TF-IDF to Examine the Relevance of Words to Documents. *International Journal of Computer Applications* 181(1): 25-29.
+
+Ramos, J. 2003. Using TF-IDF to Determine Word Relevance in Document Queries.
+
+Salton, G.; Buckley, C. 1988. Term-Weighting Approaches in Automatic Text Retrieval. *Information Processing & Management* 24 (5): 513-523.
+
+Secretaria de Turismo e Lazer. 2020. Principais atrativos da cidade já contam com carimbos para o Passaporte Pernambuco. Recife. Disponível em: https://www2.recife.pe.gov.br/noticias/08/12/2020/principais-atrativos-da-cidade-ja-contam-com-carimbos-para-o-passaporte. Acesso em: 04 de dezembro de 2024.
+
+Sondur, S. D.; Chigadani, A. P. 2016. Similarity Measures for Recommender Systems: A Comparative Study. *Journal for Research* 2(3): 76-80.
+
+Valença, J. 2022. Passaporte Pernambuco: saiba onde e como conseguir o caderno turístico. In: *JC*, 2022, Pernambuco. Disponível em: https://jc.ne10.uol.com.br/blogs/turismo-de-valor/2022/02/14952400-passaporte-pernambuco-saiba-onde-e-como-conseguir-o-caderno-turistico.html. Acesso em: 04 de dezembro de 2024.
 
 # UML CLASSES
 
