@@ -35,7 +35,7 @@ import com.recommendersystempe.configs.SecurityConfig;
 import com.recommendersystempe.dtos.PreferencesDTO;
 import com.recommendersystempe.dtos.UserDTO;
 import com.recommendersystempe.enums.Hobbies;
-import com.recommendersystempe.enums.Motivation;
+import com.recommendersystempe.enums.Motivations;
 import com.recommendersystempe.enums.Roles;
 import com.recommendersystempe.enums.Themes;
 import com.recommendersystempe.models.Address;
@@ -83,7 +83,7 @@ public class PreferencesControllerTest {
         private User user;
         private Address address;
         private PreferencesDTO preferencesDTO;
-        private List<Motivation> motivations;
+        private List<Motivations> motivations;
         private List<Hobbies> hobbies;
         private List<Themes> themes;
         private Address currentLocation;
@@ -112,7 +112,7 @@ public class PreferencesControllerTest {
         @Test
         void testGivenPreferencesDTO_whenSave_ThenReturnPreferencesDTO() throws JsonProcessingException, Exception {
                 // given / arrange
-                motivations = List.of(Motivation.CULTURE, Motivation.STUDY);
+                motivations = List.of(Motivations.CULTURE, Motivations.STUDY);
                 hobbies = List.of(Hobbies.PHOTOGRAPHY, Hobbies.MUSIC);
                 themes = List.of(Themes.HISTORY, Themes.ADVENTURE);
                 currentLocation = new Address("Rua Exemplo", 100, "Apto 202", "Boa Viagem", "PE", "Brasil", "50000000");
@@ -142,7 +142,7 @@ public class PreferencesControllerTest {
         void testListPreferencesObject_whenFindAll_ThenReturnListPreferences()
                         throws JsonProcessingException, Exception {
                 // given / arrange
-                motivations = List.of(Motivation.CULTURE, Motivation.STUDY);
+                motivations = List.of(Motivations.CULTURE, Motivations.STUDY);
                 hobbies = List.of(Hobbies.PHOTOGRAPHY, Hobbies.MUSIC);
                 themes = List.of(Themes.HISTORY, Themes.ADVENTURE);
                 currentLocation = new Address("Rua Exemplo", 100, "Apto 202", "Boa Viagem", "PE", "Brasil", "50000000");
@@ -153,7 +153,7 @@ public class PreferencesControllerTest {
                 ReflectionTestUtils.setField(preferences, "id", 1L); // ID definido via reflection
                 ReflectionTestUtils.setField(preferences, "user", user); // User definido via reflection
 
-                List<Motivation> motivations1 = List.of(Motivation.CULTURE, Motivation.STUDY);
+                List<Motivations> motivations1 = List.of(Motivations.CULTURE, Motivations.STUDY);
                 List<Hobbies> hobbies1 = List.of(Hobbies.PHOTOGRAPHY, Hobbies.MUSIC);
                 List<Themes> themes1 = List.of(Themes.HISTORY, Themes.ADVENTURE);
                 Address currentLocation1 = new Address("Rua Exemplo", 100, "Apto 202", "Boa Viagem", "PE", "Brasil",
@@ -196,7 +196,7 @@ public class PreferencesControllerTest {
         @Test
         void testGivenPreferencesId_whenFindbyId_ThenReturnPreferencesDTO() throws JsonProcessingException, Exception {
                 // given / arrange
-                motivations = List.of(Motivation.CULTURE, Motivation.STUDY);
+                motivations = List.of(Motivations.CULTURE, Motivations.STUDY);
                 hobbies = List.of(Hobbies.PHOTOGRAPHY, Hobbies.MUSIC);
                 themes = List.of(Themes.HISTORY, Themes.ADVENTURE);
                 currentLocation = new Address("Rua Exemplo", 100, "Apto 202", "Boa Viagem", "PE", "Brasil", "50000000");

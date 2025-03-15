@@ -20,7 +20,7 @@ import org.springframework.test.util.ReflectionTestUtils;
 
 import com.recommendersystempe.dtos.POIDTO;
 import com.recommendersystempe.enums.Hobbies;
-import com.recommendersystempe.enums.Motivation;
+import com.recommendersystempe.enums.Motivations;
 import com.recommendersystempe.enums.Themes;
 import com.recommendersystempe.models.Address;
 import com.recommendersystempe.models.POI;
@@ -42,7 +42,7 @@ public class POIServiceTest {
 
         private POIDTO poiDTO;
         private POI poi;
-        private List<Motivation> motivations;
+        private List<Motivations> motivations;
         private List<Hobbies> hobbies;
         private List<Themes> themes;
         private Address poiAddress;
@@ -56,7 +56,7 @@ public class POIServiceTest {
         @Test
         void testGivenValidPOIDTO_whenInsert_ThenReturnPOIDTO() {
                 // given / arrange
-                motivations = List.of(Motivation.CULTURE, Motivation.STUDY);
+                motivations = List.of(Motivations.CULTURE, Motivations.STUDY);
                 hobbies = List.of(Hobbies.PHOTOGRAPHY, Hobbies.MUSIC);
                 themes = List.of(Themes.HISTORY, Themes.ADVENTURE);
                 poiAddress = new Address("Rua Exemplo", 100, "Apto 202", "Boa Viagem", "PE", "Brasil", "50000000");
@@ -83,7 +83,7 @@ public class POIServiceTest {
         @Test
         void testGivenPOIList_whenFindAll_ThenReturnPOIPage() {
                 // given / arrange
-                motivations = List.of(Motivation.CULTURE, Motivation.STUDY);
+                motivations = List.of(Motivations.CULTURE, Motivations.STUDY);
                 hobbies = List.of(Hobbies.PHOTOGRAPHY, Hobbies.MUSIC);
                 themes = List.of(Themes.HISTORY, Themes.ADVENTURE);
                 poiAddress = new Address("Rua Exemplo", 100, "Apto 202", "Boa Viagem", "PE", "Brasil", "50000000");
@@ -91,7 +91,7 @@ public class POIServiceTest {
                 poi = new POI("Parque da Cidade", "Um grande parque urbano com áreas verdes, trilhas e lagos.",
                                 motivations, hobbies, themes, poiAddress);
 
-                List<Motivation> motivations1 = List.of(Motivation.CULTURE, Motivation.STUDY);
+                List<Motivations> motivations1 = List.of(Motivations.CULTURE, Motivations.STUDY);
                 List<Hobbies> hobbies1 = List.of(Hobbies.PHOTOGRAPHY, Hobbies.MUSIC);
                 List<Themes> themes1 = List.of(Themes.HISTORY, Themes.ADVENTURE);
                 Address poiAddress1 = new Address("Rua Exemplo", 100, "Apto 202", "Boa Viagem", "PE", "Brasil",
@@ -116,7 +116,7 @@ public class POIServiceTest {
         @Test
         void testGivenId_whenFindById_ThenReturUserDTO() {
                 // given / arrange
-                motivations = List.of(Motivation.CULTURE, Motivation.STUDY);
+                motivations = List.of(Motivations.CULTURE, Motivations.STUDY);
                 hobbies = List.of(Hobbies.PHOTOGRAPHY, Hobbies.MUSIC);
                 themes = List.of(Themes.HISTORY, Themes.ADVENTURE);
                 poiAddress = new Address("Rua Exemplo", 100, "Apto 202", "Boa Viagem", "PE", "Brasil", "50000000");
@@ -138,7 +138,7 @@ public class POIServiceTest {
         @Test
         void testGivenPerson_whenUpdate_thenReturnNothing() {
                 // given / arrange
-                motivations = List.of(Motivation.CULTURE, Motivation.STUDY);
+                motivations = List.of(Motivations.CULTURE, Motivations.STUDY);
                 hobbies = List.of(Hobbies.PHOTOGRAPHY, Hobbies.MUSIC);
                 themes = List.of(Themes.HISTORY, Themes.ADVENTURE);
                 poiAddress = new Address("Rua Exemplo", 100, "Apto 202", "Boa Viagem", "PE", "Brasil", "50000000");
@@ -165,7 +165,7 @@ public class POIServiceTest {
         @Test
         void testGivenUserId_whenDeleteById_thenReturnNothing() {
                 // given / arrange
-                motivations = List.of(Motivation.CULTURE, Motivation.STUDY);
+                motivations = List.of(Motivations.CULTURE, Motivations.STUDY);
                 hobbies = List.of(Hobbies.PHOTOGRAPHY, Hobbies.MUSIC);
                 themes = List.of(Themes.HISTORY, Themes.ADVENTURE);
                 poiAddress = new Address("Rua Exemplo", 100, "Apto 202", "Boa Viagem", "PE", "Brasil", "50000000");

@@ -11,11 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.recommendersystempe.dtos.GlobalEvaluationMetricsDTO;
 import com.recommendersystempe.dtos.UserEvaluationMetricsDTO;
-import com.recommendersystempe.evaluation.F1Score;
-import com.recommendersystempe.evaluation.HitRate;
-import com.recommendersystempe.evaluation.ItemCovarage;
-import com.recommendersystempe.evaluation.Precision;
-import com.recommendersystempe.evaluation.Recall;
+import com.recommendersystempe.evaluation.EvaluationCalculator;
 import com.recommendersystempe.models.POI;
 import com.recommendersystempe.models.Recommendation;
 import com.recommendersystempe.models.Score;
@@ -60,12 +56,8 @@ public class EvaluationService {
                 .map(Score::getPoi)
                 .collect(Collectors.toSet());
 
-        // Calcula as métricas
-        double precisionAtK = Precision.precisionAtK(recommendedPois, relevantItems, k);
-        double recallAtK = Recall.recallAtK(recommendedPois, relevantItems, k);
-        double f1ScoreAtK = F1Score.f1ScoreAtK(recommendedPois, relevantItems, k);
-
-        return new UserEvaluationMetricsDTO(precisionAtK, recallAtK, f1ScoreAtK);
+        // Calcula as métricas usando a classe EvaluationCalculator
+        return EvaluationCalculator.calculateUserMetrics(recommendedPois, relevantItems, k);
     }
 
     @Transactional(readOnly = true)
@@ -95,10 +87,7 @@ public class EvaluationService {
         // Busca o número total de POIs disponíveis
         int totalItemsAvailable = (int) poiRepository.count();
 
-        // Calcula as métricas globais
-        double hitRateAtK = HitRate.hitRateAtK(allRecommendations, allRelevantItems, k);
-        double itemCoverage = ItemCovarage.itemCoverage(allRecommendations, totalItemsAvailable);
-
-        return new GlobalEvaluationMetricsDTO(hitRateAtK, itemCoverage);
+        // Calcula as métricas globais usando a classe EvaluationCalculator
+        return EvaluationCalculator.calculateGlobalMetrics(allRecommendations, allRelevantItems, totalItemsAvailable, k);
     }
 }

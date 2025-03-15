@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.recommendersystempe.enums.Hobbies;
-import com.recommendersystempe.enums.Motivation;
+import com.recommendersystempe.enums.Motivations;
 import com.recommendersystempe.enums.Themes;
 
 import jakarta.persistence.CollectionTable;
@@ -51,11 +51,11 @@ public class POI {
     private String description;
 
     @Getter
-    @ElementCollection(targetClass = Motivation.class)
+    @ElementCollection(targetClass = Motivations.class)
     @Enumerated(EnumType.STRING)
     @CollectionTable(name = "pois_motivations", joinColumns = @JoinColumn(name = "poi_id"))
     @Column(name = "motivation")
-    private List<Motivation> motivations = new ArrayList<>();
+    private List<Motivations> motivations = new ArrayList<>();
 
     @Getter
     @ElementCollection(targetClass = Hobbies.class)
@@ -84,7 +84,7 @@ public class POI {
     @OneToMany(mappedBy = "poi")
     private List<Score> scores = new ArrayList<>();
 
-    public POI(String name, String descripition, List<Motivation> motivations, List<Hobbies> hobbies,
+    public POI(String name, String descripition, List<Motivations> motivations, List<Hobbies> hobbies,
             List<Themes> themes, Address address) {
         this.name = name;
         this.description = descripition;
@@ -94,7 +94,7 @@ public class POI {
         this.address = address;
     }
 
-    public void addMotivation(List<Motivation> motivations) {
+    public void addMotivation(List<Motivations> motivations) {
         this.motivations.addAll(motivations);
     }
 
@@ -111,7 +111,7 @@ public class POI {
         recommendation.getPois().add(this); // Sincroniza o lado inverso
     }
 
-    public double getAverageScore() {
+    public double getAverageScore() { 
         if (scores == null || scores.isEmpty()) {
             return 0.0;
         }

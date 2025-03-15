@@ -6,7 +6,7 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.recommendersystempe.enums.Hobbies;
-import com.recommendersystempe.enums.Motivation;
+import com.recommendersystempe.enums.Motivations;
 import com.recommendersystempe.enums.Themes;
 import com.recommendersystempe.models.Address;
 
@@ -50,7 +50,7 @@ public class POIDTO {
     @Schema(description = "List of motivations associated with the preferences", example = "[\"CULTURE\", \"ENTERTAINMENT\"]", required = true)
     @NotNull(message = "The field motivations is required")
     @Size(min = 1, max = 5, message = "The field motivation must have 1 to 5 elements")
-    private List<Motivation> motivations = new ArrayList<>();
+    private List<Motivations> motivations = new ArrayList<>();
 
     @Getter
     @JsonFormat(shape = JsonFormat.Shape.STRING)
@@ -85,7 +85,7 @@ public class POIDTO {
         this.address = poiAddress;
     }
 
-    public POIDTO(String name, String description, List<Motivation> motivations, List<Hobbies> hobbies,
+    public POIDTO(String name, String description, List<Motivations> motivations, List<Hobbies> hobbies,
             List<Themes> themes, Address poiAddress) {
         this.name = name;
         this.motivations.addAll(motivations);
@@ -94,7 +94,7 @@ public class POIDTO {
         this.address = poiAddress;
     }
 
-    public void addMotivation(List<Motivation> motivations) {
+    public void addMotivation(List<Motivations> motivations) {
         this.motivations.addAll(motivations);
     }
 

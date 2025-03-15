@@ -25,7 +25,7 @@ import org.springframework.test.util.ReflectionTestUtils;
 
 import com.recommendersystempe.dtos.PreferencesDTO;
 import com.recommendersystempe.enums.Hobbies;
-import com.recommendersystempe.enums.Motivation;
+import com.recommendersystempe.enums.Motivations;
 import com.recommendersystempe.enums.Roles;
 import com.recommendersystempe.enums.Themes;
 import com.recommendersystempe.models.Address;
@@ -51,7 +51,7 @@ public class PreferencesServiceTest {
         private Address address;
         // private PreferencesDTO preferencesDTO;
         private Preferences preferences;
-        private List<Motivation> motivations;
+        private List<Motivations> motivations;
         private List<Hobbies> hobbies;
         private List<Themes> themes;
         private Address currentLocation;
@@ -112,14 +112,14 @@ public class PreferencesServiceTest {
         @Test
         void testGivenPreferencesList_whenFindAll_ThenReturnPreferencesPage() {
                 // given / arrange
-                motivations = List.of(Motivation.CULTURE, Motivation.STUDY);
+                motivations = List.of(Motivations.CULTURE, Motivations.STUDY);
                 hobbies = List.of(Hobbies.PHOTOGRAPHY, Hobbies.MUSIC);
                 themes = List.of(Themes.HISTORY, Themes.ADVENTURE);
                 currentLocation = new Address("Rua Exemplo", 100, "Apto 202", "Boa Viagem", "PE", "Brasil", "50000000");
 
                 preferences = new Preferences(user, Instant.now(), motivations, hobbies, themes, currentLocation);
 
-                List<Motivation> motivations1 = List.of(Motivation.CULTURE, Motivation.STUDY);
+                List<Motivations> motivations1 = List.of(Motivations.CULTURE, Motivations.STUDY);
                 List<Hobbies> hobbies1 = List.of(Hobbies.PHOTOGRAPHY, Hobbies.MUSIC);
                 List<Themes> themes1 = List.of(Themes.HISTORY, Themes.ADVENTURE);
                 Address currentLocation1 = new Address("Rua Exemplo", 100, "Apto 202", "Boa Viagem", "PE", "Brasil",
@@ -147,7 +147,7 @@ public class PreferencesServiceTest {
                 userRepository.save(user);
                 ReflectionTestUtils.setField(user, "id", 1L);
 
-                motivations = List.of(Motivation.CULTURE, Motivation.STUDY);
+                motivations = List.of(Motivations.CULTURE, Motivations.STUDY);
                 hobbies = List.of(Hobbies.PHOTOGRAPHY, Hobbies.MUSIC);
                 themes = List.of(Themes.HISTORY, Themes.ADVENTURE);
                 currentLocation = new Address("Rua Exemplo", 100, "Apto 202", "Boa Viagem", "PE", "Brasil", "50000000");

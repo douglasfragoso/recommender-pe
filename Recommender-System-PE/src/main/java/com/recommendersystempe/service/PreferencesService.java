@@ -15,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.recommendersystempe.dtos.POIDTO;
 import com.recommendersystempe.dtos.PreferencesDTO;
 import com.recommendersystempe.enums.Hobbies;
-import com.recommendersystempe.enums.Motivation;
+import com.recommendersystempe.enums.Motivations;
 import com.recommendersystempe.enums.Themes;
 import com.recommendersystempe.models.Preferences;
 import com.recommendersystempe.models.User;
@@ -48,7 +48,7 @@ public class PreferencesService {
         preferencesRepository.save(preferences);
 
         // Adicionando as motivações
-        List<Motivation> motivations = dto.getMotivations();
+        List<Motivations> motivations = dto.getMotivations();
         preferences.addMotivation(motivations);
 
         // Adicionando os hobbies

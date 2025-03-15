@@ -6,7 +6,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.recommendersystempe.enums.Hobbies;
-import com.recommendersystempe.enums.Motivation;
+import com.recommendersystempe.enums.Motivations;
 import com.recommendersystempe.enums.Themes;
 
 import jakarta.persistence.CollectionTable;
@@ -50,11 +50,11 @@ public class Preferences {
     private Instant date;
 
     @Getter
-    @ElementCollection(targetClass = Motivation.class)
+    @ElementCollection(targetClass = Motivations.class)
     @Enumerated(EnumType.STRING)
     @CollectionTable(name = "preferences_motivations", joinColumns = @JoinColumn(name = "preference_id"))
     @Column(name = "motivation")
-    private List<Motivation> motivations = new ArrayList<>();
+    private List<Motivations> motivations = new ArrayList<>();
 
     @Getter
     @ElementCollection(targetClass = Hobbies.class)
@@ -74,7 +74,7 @@ public class Preferences {
     @Embedded
     private Address currentLocation;
 
-    public Preferences(User user, Instant date, List<Motivation> motivations, List<Hobbies> hobbies, List<Themes> themes, Address currentLocation) {
+    public Preferences(User user, Instant date, List<Motivations> motivations, List<Hobbies> hobbies, List<Themes> themes, Address currentLocation) {
         this.user = user;
         this.date = date;
         this.motivations = motivations;
@@ -83,7 +83,7 @@ public class Preferences {
         this.currentLocation = currentLocation;
     }
     
-    public void addMotivation(List<Motivation> motivations) {
+    public void addMotivation(List<Motivations> motivations) {
         this.motivations.addAll(motivations);
     }
     

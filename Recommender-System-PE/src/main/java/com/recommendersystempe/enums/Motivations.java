@@ -1,6 +1,6 @@
 package com.recommendersystempe.enums;
 
-public enum Motivation {
+public enum Motivations {
 
     CULTURE,
     ENTERTAINMENT,

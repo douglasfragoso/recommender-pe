@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.recommendersystempe.dtos.POIDTO;
 import com.recommendersystempe.enums.Hobbies;
-import com.recommendersystempe.enums.Motivation;
+import com.recommendersystempe.enums.Motivations;
 import com.recommendersystempe.enums.Themes;
 import com.recommendersystempe.models.POI;
 import com.recommendersystempe.repositories.POIRepository;
@@ -35,7 +35,7 @@ public class POIService {
         poiRepository.save(poi);
 
         // Adicionando as motivações
-        List<Motivation> motivations = dto.getMotivations();
+        List<Motivations> motivations = dto.getMotivations();
         poi.addMotivation(motivations);
 
         // Adicionando os hobbies

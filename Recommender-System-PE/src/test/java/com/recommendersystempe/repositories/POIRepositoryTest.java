@@ -12,7 +12,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.recommendersystempe.enums.Hobbies;
-import com.recommendersystempe.enums.Motivation;
+import com.recommendersystempe.enums.Motivations;
 import com.recommendersystempe.enums.Roles;
 import com.recommendersystempe.enums.Themes;
 import com.recommendersystempe.models.Address;
@@ -37,7 +37,7 @@ public class POIRepositoryTest {
     private User user;
     private Address address;
     private POI poi;
-    private List<Motivation> motivations;
+    private List<Motivations> motivations;
     private List<Hobbies> hobbies;
     private List<Themes> themes;
     private Address poiAddress;
@@ -55,7 +55,7 @@ public class POIRepositoryTest {
         user = new User("Douglas", "Fragoso", 30, "Masculino", "12345678900", "81-98765-4321", "douglas@example.com",
                 "senha123", address, Roles.USER);
 
-        motivations = List.of(Motivation.CULTURE, Motivation.STUDY);
+        motivations = List.of(Motivations.CULTURE, Motivations.STUDY);
         hobbies = List.of(Hobbies.PHOTOGRAPHY, Hobbies.MUSIC);
         themes = List.of(Themes.HISTORY, Themes.ADVENTURE);
         poiAddress = new Address("Rua Exemplo", 100, "Apto 202", "Boa Viagem", "PE", "Brasil", "50000000");
@@ -79,7 +79,7 @@ public class POIRepositoryTest {
     @Test
     void testGivenPOIList_whenFindAll_ThenReturnPOIList() {
         // given / arrange
-        List<Motivation> motivations1 = List.of(Motivation.CULTURE, Motivation.STUDY);
+        List<Motivations> motivations1 = List.of(Motivations.CULTURE, Motivations.STUDY);
         List<Hobbies> hobbies1 = List.of(Hobbies.PHOTOGRAPHY, Hobbies.MUSIC);
         List<Themes> themes1 = List.of(Themes.HISTORY, Themes.ADVENTURE);
         Address poiAddress1 = new Address("Rua Exemplo", 100, "Apto 202", "Boa Viagem", "PE", "Brasil", "50000000");

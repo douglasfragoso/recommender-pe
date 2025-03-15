@@ -6,7 +6,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.recommendersystempe.enums.Hobbies;
-import com.recommendersystempe.enums.Motivation;
+import com.recommendersystempe.enums.Motivations;
 import com.recommendersystempe.enums.Themes;
 import com.recommendersystempe.models.Address;
 
@@ -46,7 +46,7 @@ public class PreferencesDTO {
     @Schema(description = "List of motivations associated with the preferences", example = "[\"CULTURE\", \"ENTERTAINMENT\"]", required = true)
     @NotNull(message = "The field motivations is required")
     @Size(min = 1, max = 5, message = "The field motivation must have 1 to 5 elements")
-    private List<Motivation> motivations = new ArrayList<>();
+    private List<Motivations> motivations = new ArrayList<>();
 
     @Getter
     @JsonFormat(shape = JsonFormat.Shape.STRING)
@@ -68,7 +68,7 @@ public class PreferencesDTO {
     @NotNull(message = "The field address is required")
     private Address currentLocation;
 
-    public PreferencesDTO(Long id, Long user, Instant date, List<Motivation> motivations, List<Hobbies> hobbies,
+    public PreferencesDTO(Long id, Long user, Instant date, List<Motivations> motivations, List<Hobbies> hobbies,
             List<Themes> themes, Address currentLocation) {
         this.id = id;
         this.user = user;
@@ -79,7 +79,7 @@ public class PreferencesDTO {
         this.currentLocation = currentLocation;
     }
 
-    public PreferencesDTO(List<Motivation> motivations, List<Hobbies> hobbies, List<Themes> themes,
+    public PreferencesDTO(List<Motivations> motivations, List<Hobbies> hobbies, List<Themes> themes,
             Address currentLocation) {
         this.motivations.addAll(motivations);
         this.hobbies.addAll(hobbies);
@@ -87,7 +87,7 @@ public class PreferencesDTO {
         this.currentLocation = currentLocation;
     }
 
-    public void addMotivation(List<Motivation> motivations) {
+    public void addMotivation(List<Motivations> motivations) {
         this.motivations.addAll(motivations);
     }
 

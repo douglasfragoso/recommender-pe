@@ -10,6 +10,7 @@ public enum Themes {
     MODERN,
     NATURE,
     RELIGIOUS,
-    ROMANTIC;
+    ROMANTIC,
+    GASTRONOMIC;
 
 }
