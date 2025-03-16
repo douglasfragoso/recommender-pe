@@ -43,29 +43,28 @@ import com.recommendersystempe.service.TokenService;
 import com.recommendersystempe.service.UserService;
 
 @SuppressWarnings("unused")
-@WebMvcTest(UserController.class) // Habilita o contexto do Spring MVC para testes
-@Import(SecurityConfig.class) // Importa a configuração real
+@WebMvcTest(UserController.class) // Habilita o contexto do Spring MVC para testes - Enables the Spring MVC context for testing
+@Import(SecurityConfig.class) // Importa a configuração real - Imports the real configuration
 public class UserControllerTest {
 
-        // MockMvc é uma classe do Spring Test que permite simular requisições HTTP
+        // MockMvc é uma classe do Spring Test que permite simular requisições HTTP - MockMvc is a Spring Test class that allows you to simulate HTTP requests
         @Autowired
         private MockMvc mockMvc;
 
-        // ObjectMapper é uma classe do Jackson que permite converter objetos Java em
-        // JSON e vice-versa
+        // ObjectMapper é uma classe do Jackson que permite converter objetos Java em JSON e vice-versa - ObjectMapper is a Jackson class that allows you to convert Java objects to JSON and vice versa
         @Autowired
         private ObjectMapper objectMapper;
 
-        @MockitoBean // anotação do Spring Test que cria um mock de um bean, precisa de contexto
+        @MockitoBean // anotação do Spring Test que cria um mock de um bean, precisa de contexto - Spring Test annotation that creates a mock of a bean, needs context
         private UserService userService;
 
-        @MockitoBean // anotação do Spring Test que cria um mock de um bean, precisa de contexto
+        @MockitoBean // anotação do Spring Test que cria um mock de um bean, precisa de contexto - Spring Test annotation that creates a mock of a bean, needs context
         private AuthenticationService authenticationService;
 
         @MockitoBean
         private TokenService tokenService;
 
-        @MockitoBean // Apenas se o UserRepository for usado indiretamente
+        @MockitoBean // Apenas se o UserRepository for usado indiretamente - Only if UserRepository is used indirectly
         private UserRepository userRepository;
 
         private UserDTO userDTO;
@@ -115,7 +114,7 @@ public class UserControllerTest {
 
                 User user = new User("Douglas", "Fragoso", 30, "Masculino", "12345678900", "81-98765-4321",
                                 "douglas@example.com", "senha123", address, Roles.MASTER);
-                ReflectionTestUtils.setField(user, "id", 1L); // ID definido via reflection
+                ReflectionTestUtils.setField(user, "id", 1L); // ID definido via reflection - ID defined via reflection
 
                 Address address1 = new Address(
                                 "Rua Exemplo1", 101, "Apto 203", "Boa Viagem","Recife",
@@ -124,19 +123,18 @@ public class UserControllerTest {
                 User user1 = new User("Lucas", "Fragoso", 30, "Masculino", "12345678901", "81-98765-4322",
                                 "lucas@example.com",
                                 "senha123", address1, Roles.USER);
-                ReflectionTestUtils.setField(user, "id", 2L); // ID definido via reflection
+                ReflectionTestUtils.setField(user, "id", 2L); // ID definido via reflection - ID defined via reflection
 
                 Pageable pageable = PageRequest.of(0, 10);
 
-                // Configurar UserDetailsService mockado
+                // Configurar UserDetailsService mockado - Configure mocked UserDetailsService
                 UserDetails userDetails = new org.springframework.security.core.userdetails.User(
                                 user.getEmail(),
                                 user.getPassword(),
-                                Collections.singletonList(new SimpleGrantedAuthority("ROLE_MASTER")) // 👈 Prefixo
-                                                                                                     // obrigatório
+                                Collections.singletonList(new SimpleGrantedAuthority("ROLE_MASTER")) 
                 );
 
-                // Mockar UserDetailsService
+                // Mockar UserDetailsService - Mock UserDetailsService
                 given(authenticationService.loadUserByUsername(user.getEmail())).willReturn(userDetails);
 
                 List<UserDTO> userDTOList = List.of(
@@ -173,16 +171,15 @@ public class UserControllerTest {
 
                 User user = new User("Douglas", "Fragoso", 30, "Masculino", "12345678900", "81-98765-4321",
                                 "douglas@example.com", "senha123", address, Roles.MASTER);
-                ReflectionTestUtils.setField(user, "id", 1L); // ID definido via reflection
+                ReflectionTestUtils.setField(user, "id", 1L); // ID definido via reflection - ID defined via reflection
 
-                // Configurar UserDetailsService mockado
+                // Configurar UserDetailsService mockado - Configure mocked UserDetailsService
                 UserDetails userDetails = new org.springframework.security.core.userdetails.User(
                                 user.getEmail(),
                                 user.getPassword(),
-                                Collections.singletonList(new SimpleGrantedAuthority("ROLE_MASTER")) // 👈 Prefixo
-                                                                                                     // obrigatório
+                                Collections.singletonList(new SimpleGrantedAuthority("ROLE_MASTER")) 
                 );
-                // Mockar UserDetailsService
+                // Mockar UserDetailsService - Mock UserDetailsService
                 given(authenticationService.loadUserByUsername(user.getEmail())).willReturn(userDetails);
                 Long id = 1L;
                 given(userService.findById(id)).willReturn(new UserDTO(user.getId(), user.getFirstName(),
@@ -213,7 +210,7 @@ public class UserControllerTest {
 
                 User user = new User("Douglas", "Fragoso", 30, "Masculino", "12345678900", "81-98765-4321",
                                 "douglas@example.com", "senha123", address, Roles.MASTER);
-                ReflectionTestUtils.setField(user, "id", 1L); // ID definido via reflection
+                ReflectionTestUtils.setField(user, "id", 1L); // ID definido via reflection - ID defined via reflection
 
                 Address address1 = new Address(
                                 "Rua Exemplo1", 101, "Apto 203", "Boa Viagem","Recife",
@@ -222,16 +219,15 @@ public class UserControllerTest {
                 User user1 = new User("Lucas", "Fragoso", 30, "Masculino", "12345678901", "81-98765-4322",
                                 "lucas@example.com", "senha123", address1, Roles.USER);
 
-                ReflectionTestUtils.setField(user, "id", 2L); // ID definido via reflection
+                ReflectionTestUtils.setField(user, "id", 2L); // ID definido via reflection - ID defined via reflection
 
-                // Configurar UserDetailsService mockado
+                // Configurar UserDetailsService mockado - Configure mocked UserDetailsService
                 UserDetails userDetails = new org.springframework.security.core.userdetails.User(
                                 user.getEmail(),
                                 user.getPassword(),
-                                Collections.singletonList(new SimpleGrantedAuthority("ROLE_MASTER")) // 👈 Prefixo
-                                                                                                     // obrigatório
+                                Collections.singletonList(new SimpleGrantedAuthority("ROLE_MASTER")) 
                 );
-                // Mockar UserDetailsService
+                // Mockar UserDetailsService - Mock UserDetailsService
                 given(authenticationService.loadUserByUsername(user.getEmail())).willReturn(userDetails);
 
                 Long id = 2L;
@@ -257,7 +253,7 @@ public class UserControllerTest {
 
                 User user = new User("Douglas", "Fragoso", 30, "Masculino", "12345678900", "81-98765-4321",
                                 "douglas@example.com", "senha123", address, Roles.MASTER);
-                ReflectionTestUtils.setField(user, "id", 1L); // ID definido via reflection
+                ReflectionTestUtils.setField(user, "id", 1L); // ID definido via reflection - ID defined via reflection
 
                 Address address1 = new Address(
                                 "Rua Exemplo1", 101, "Apto 203", "Boa Viagem","Recife",
@@ -266,16 +262,15 @@ public class UserControllerTest {
                 User user1 = new User("Lucas", "Fragoso", 30, "Masculino", "12345678901", "81-98765-4322",
                                 "lucas@example.com", "senha123", address1, Roles.USER);
 
-                ReflectionTestUtils.setField(user, "id", 2L); // ID definido via reflection
+                ReflectionTestUtils.setField(user, "id", 2L); // ID definido via reflection - ID defined via reflection
 
-                // Configurar UserDetailsService mockado
+                // Configurar UserDetailsService mockado - Configure mocked UserDetailsService
                 UserDetails userDetails = new org.springframework.security.core.userdetails.User(
                                 user.getEmail(),
                                 user.getPassword(),
-                                Collections.singletonList(new SimpleGrantedAuthority("ROLE_MASTER")) // 👈 Prefixo
-                                                                                                     // obrigatório
+                                Collections.singletonList(new SimpleGrantedAuthority("ROLE_MASTER")) 
                 );
-                // Mockar UserDetailsService
+                // Mockar UserDetailsService - Mock UserDetailsService
                 given(authenticationService.loadUserByUsername(user.getEmail())).willReturn(userDetails);
 
                 UserDTO userDTO = new UserDTO();
@@ -290,9 +285,9 @@ public class UserControllerTest {
                 // when / act
 
                 ResultActions response = mockMvc.perform(put("/user")
-                                .with(user("douglas@example.com").password("senha123").roles("MASTER")) // Autenticação
-                                .contentType("application/json")
-                                .content(objectMapper.writeValueAsString(userDTO))); // Enviando JSON
+                                .with(user("douglas@example.com").password("senha123").roles("MASTER")) // Autenticação - Authentication
+                                .contentType("application/json") 
+                                .content(objectMapper.writeValueAsString(userDTO))); // Enviando JSON - Sending JSON
 
                 // then / assert
                 response.andDo(print())
@@ -309,7 +304,7 @@ public class UserControllerTest {
 
                 User user = new User("Douglas", "Fragoso", 30, "Masculino", "12345678900", "81-98765-4321",
                                 "douglas@example.com", "senha123", address, Roles.MASTER);
-                ReflectionTestUtils.setField(user, "id", 1L); // ID definido via reflection
+                ReflectionTestUtils.setField(user, "id", 1L); // ID definido via reflection - ID defined via reflection
 
                 Address address1 = new Address(
                                 "Rua Exemplo1", 101, "Apto 203", "Boa Viagem","Recife",
@@ -318,16 +313,15 @@ public class UserControllerTest {
                 User user1 = new User("Lucas", "Fragoso", 30, "Masculino", "12345678901", "81-98765-4322",
                                 "lucas@example.com", "senha123", address1, Roles.USER);
 
-                ReflectionTestUtils.setField(user1, "id", 2L); // ID definido via reflection
+                ReflectionTestUtils.setField(user1, "id", 2L); // ID definido via reflection - ID defined via reflection
 
-                // Configurar UserDetailsService mockado
+                // Configurar UserDetailsService mockado - Configure mocked UserDetailsService
                 UserDetails userDetails = new org.springframework.security.core.userdetails.User(
                                 user.getEmail(),
                                 user.getPassword(),
-                                Collections.singletonList(new SimpleGrantedAuthority("ROLE_MASTER")) // 👈 Prefixo
-                                                                                                     // obrigatório
+                                Collections.singletonList(new SimpleGrantedAuthority("ROLE_MASTER")) 
                 );
-                // Mockar UserDetailsService
+                // Mockar UserDetailsService - Mock UserDetailsService
                 given(authenticationService.loadUserByUsername(user.getEmail())).willReturn(userDetails);
 
                 Long id = 2L;
@@ -338,8 +332,7 @@ public class UserControllerTest {
                 ResultActions response = mockMvc.perform(put("/user/roles/id/{id}", id)
                                 .with(user("douglas@example.com").password("senha123").roles("MASTER"))
                                 .contentType("application/json"))
-                                .andDo(print()); // Print details for debugging
-
+                                .andExpect(status().isOk());
                 // then / assert
                 response.andDo(print())
                                 .andExpect(status().isOk())

@@ -21,7 +21,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 @Component
 public class SecurityFilterConfig extends OncePerRequestFilter { 
-    // OncePerRequestFilter é um filtro que garante que o filtro seja chamado apenas uma vez por requisição
+    // OncePerRequestFilter é um filtro que garante a chamada apenas uma vez por requisição - OncePerRequestFilter is a filter that guarantees that it is called only once per request.
 
     @Autowired
     private TokenService tokenService;
@@ -29,7 +29,7 @@ public class SecurityFilterConfig extends OncePerRequestFilter {
     @Autowired
     private UserRepository userRepository;
 
-    // Método para filtrar as requisições
+    // Método para filtrar as requisições - Method to filter requests
     @Override
     protected void doFilterInternal(@SuppressWarnings("null") HttpServletRequest request, @SuppressWarnings("null") HttpServletResponse response,  @SuppressWarnings("null") FilterChain filterChain)
             throws ServletException, IOException {
@@ -50,7 +50,7 @@ public class SecurityFilterConfig extends OncePerRequestFilter {
         filterChain.doFilter(request, response);
     }
 
-    // Método para obter o token do cabeçalho da requisição
+    // Método para obter o token do cabeçalho da requisição - Method to get the token from the request header
     private String _getTokenFromRequest(HttpServletRequest request) {
         String authHeader = request.getHeader("Authorization");
 

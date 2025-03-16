@@ -20,7 +20,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY) // Ignora listas vazias
+@JsonInclude(JsonInclude.Include.NON_EMPTY) // Ignora listas vazias - Ignore empty lists
 @NoArgsConstructor
 @AllArgsConstructor
 @Schema(description = "Represents the POIDTO in the system")

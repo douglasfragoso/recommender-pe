@@ -48,20 +48,19 @@ import com.recommendersystempe.service.TokenService;
 import com.recommendersystempe.service.UserService;
 
 @SuppressWarnings("unused")
-@WebMvcTest(POIController.class) // Habilita o contexto do Spring MVC para testes
-@Import(SecurityConfig.class) // Importa a configuração real
+@WebMvcTest(POIController.class) // Habilita o contexto do Spring MVC para testes - Enables the Spring MVC context for testing
+@Import(SecurityConfig.class) // Importa a configuração real - Imports the real configuration - Importa a configuração real
 public class POIControllerTest {
 
-        // MockMvc é uma classe do Spring Test que permite simular requisições HTTP
+        // MockMvc é uma classe do Spring Test que permite simular requisições HTTP - MockMvc is a Spring Test class that allows you to simulate HTTP requests - 
         @Autowired
         private MockMvc mockMvc;
 
-        // ObjectMapper é uma classe do Jackson que permite converter objetos Java em
-        // JSON e vice-versa
+        // ObjectMapper é uma classe do Jackson que permite converter objetos Java em JSON e vice-versa - ObjectMapper is a Jackson class that allows you to convert Java objects to JSON and vice versa
         @Autowired
         private ObjectMapper objectMapper;
 
-        @MockitoBean // anotação do Spring Test que cria um mock de um bean, precisa de contexto
+        @MockitoBean // Anotação do Spring Test que cria um mock de um bean, precisa de contexto - Spring Test annotation that creates a mock of a bean, needs context
         private UserService userService;
 
         @MockitoBean
@@ -73,7 +72,7 @@ public class POIControllerTest {
         @MockitoBean
         private TokenService tokenService;
 
-        @MockitoBean // Apenas se o UserRepository for usado indiretamente
+        @MockitoBean // Apenas se o UserRepository for usado indiretamente - Only if UserRepository is used indirectly
         private UserRepository userRepository;
 
         @MockitoBean
@@ -97,15 +96,15 @@ public class POIControllerTest {
 
                 user = new User("Douglas", "Fragoso", 30, "Masculino", "12345678900", "81-98765-4321",
                                 "douglas@example.com", "senha123", address, Roles.MASTER);
-                ReflectionTestUtils.setField(user, "id", 1L); // ID definido via reflection
+                ReflectionTestUtils.setField(user, "id", 1L); // ID definido via reflection - ID defined via reflection
 
-                // Configurar UserDetailsService mockado
+                // Configurar UserDetailsService mockado - Configure mocked UserDetailsService
                 UserDetails userDetails = new org.springframework.security.core.userdetails.User(
                                 user.getEmail(),
                                 user.getPassword(),
                                 Collections.singletonList(new SimpleGrantedAuthority("ROLE_MASTER")));
 
-                // Mockar UserDetailsService
+                // Mockar UserDetailsService - Mock UserDetailsService
                 given(authenticationService.loadUserByUsername(user.getEmail())).willReturn(userDetails);
         }
 
@@ -126,7 +125,7 @@ public class POIControllerTest {
                 // when / act
                 ResultActions response = mockMvc.perform(post("/poi/register")
                                 .contentType("application/json")
-                                .with(user("douglas@example.com").password("senha123").roles("MASTER")) // Autenticação
+                                .with(user("douglas@example.com").password("senha123").roles("MASTER")) // Autenticação - Authentication
                                 .content(objectMapper.writeValueAsString(poiDTO)));
 
                 // then / assert
@@ -152,7 +151,7 @@ public class POIControllerTest {
                 poi = new POI("Parque da Cidade", "Um grande parque urbano com áreas verdes, trilhas e lagos.",
                                 motivations, hobbies, themes, poiAddress);
 
-                ReflectionTestUtils.setField(poi, "id", 1L); // ID definido via reflection
+                ReflectionTestUtils.setField(poi, "id", 1L); // ID definido via reflection - ID defined via reflection
 
                 List<Motivations> motivations1 = List.of(Motivations.CULTURE, Motivations.STUDY);
                 List<Hobbies> hobbies1 = List.of(Hobbies.PHOTOGRAPHY, Hobbies.MUSIC);
@@ -163,7 +162,7 @@ public class POIControllerTest {
                 POI poi1 = new POI("Parque da Cidade", "Um grande parque urbano com áreas verdes, trilhas e lagos.",
                                 motivations1, hobbies1, themes1, poiAddress1);
 
-                ReflectionTestUtils.setField(poi1, "id", 2L); // ID definido via reflection
+                ReflectionTestUtils.setField(poi1, "id", 2L); // ID definido via reflection - ID defined via reflection
 
                 Pageable pageable = PageRequest.of(0, 10);
 
@@ -181,7 +180,7 @@ public class POIControllerTest {
                 ResultActions response = mockMvc.perform(get("/poi")
                                 .param("page", "0")
                                 .param("size", "10")
-                                .with(user("douglas@example.com").password("senha123").roles("MASTER")) // Autenticação
+                                .with(user("douglas@example.com").password("senha123").roles("MASTER")) // Autenticação - Authentication
                                 .contentType("application/json"));
 
                 // then / assert
@@ -201,7 +200,7 @@ public class POIControllerTest {
                 poi = new POI("Parque da Cidade", "Um grande parque urbano com áreas verdes, trilhas e lagos.",
                                 motivations, hobbies, themes, poiAddress);
 
-                ReflectionTestUtils.setField(poi, "id", 1L); // ID definido via reflection
+                ReflectionTestUtils.setField(poi, "id", 1L); // ID definido via reflection - ID defined via reflection
 
                 ObjectMapper objectMapper = new ObjectMapper();
                 objectMapper.configure(SerializationFeature.WRITE_ENUMS_USING_TO_STRING, true);
@@ -212,7 +211,7 @@ public class POIControllerTest {
 
                 // when / act
                 ResultActions response = mockMvc.perform(get("/poi/id/{id}", id)
-                                .with(user("douglas@example.com").password("senha123").roles("MASTER")) // Autenticação
+                                .with(user("douglas@example.com").password("senha123").roles("MASTER")) // Autenticação - Authentication
                                 .contentType("application/json"));
 
                 // then / assert
@@ -237,7 +236,7 @@ public class POIControllerTest {
                 poi = new POI("Parque da Cidade", "Um grande parque urbano com áreas verdes, trilhas e lagos.",
                                 motivations, hobbies, themes, poiAddress);
 
-                ReflectionTestUtils.setField(poi, "id", 1L); // ID definido via reflection
+                ReflectionTestUtils.setField(poi, "id", 1L); // ID definido via reflection - ID defined via reflection
 
                 Long id = 1L;
                 willDoNothing().given(poiService).deleteById(id);
@@ -245,7 +244,7 @@ public class POIControllerTest {
                 // when / act
 
                 ResultActions response = mockMvc.perform(delete("/poi/id/{id}", id)
-                                .with(user("douglas@example.com").password("senha123").roles("MASTER")) // Autenticação
+                                .with(user("douglas@example.com").password("senha123").roles("MASTER")) // Autenticação - Authentication
                                 .contentType("application/json"));
 
                 // then / assert
@@ -264,7 +263,7 @@ public class POIControllerTest {
                 poi = new POI("Parque da Cidade", "Um grande parque urbano com áreas verdes, trilhas e lagos.",
                                 motivations, hobbies, themes, poiAddress);
 
-                ReflectionTestUtils.setField(poi, "id", 1L); // ID definido via reflection
+                ReflectionTestUtils.setField(poi, "id", 1L); // ID definido via reflection - ID defined via reflection
 
                 POIDTO poiDTO = new POIDTO(1L, "Parque da Cidade2",
                 "Um grande parque urbano com áreas verdes, trilhas e lagos.");
@@ -274,9 +273,9 @@ public class POIControllerTest {
                 // when / act
 
                 ResultActions response = mockMvc.perform(put("/poi")
-                                .with(user("douglas@example.com").password("senha123").roles("MASTER")) // Autenticação
+                                .with(user("douglas@example.com").password("senha123").roles("MASTER")) // Autenticação - Authentication
                                 .contentType("application/json")
-                                .content(objectMapper.writeValueAsString(poiDTO))); // Enviando JSON
+                                .content(objectMapper.writeValueAsString(poiDTO))); // Enviando JSON - Sending JSON
 
                 // then / assert
                 response.andDo(print())

@@ -49,7 +49,7 @@ public class Recommendation {
 
     public void addPOI(POI poi) {
         this.pois.add(poi);
-        poi.getRecommendations().add(this); // Sincroniza o lado inverso
+        poi.getRecommendations().add(this); // Sincroniza o lado inverso - Synchronizes the reverse side
     }
 
     public void addScore(List<Score> scores) {

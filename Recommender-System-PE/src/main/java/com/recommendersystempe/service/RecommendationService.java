@@ -55,66 +55,66 @@ public class RecommendationService {
     public List<POIDTO> recommendation(Preferences userPreferences) {
         User user = searchUser();
 
-        // 1. Coletar todas as características do usuário
+        // Coletar todas as características do usuário - Collect all user features
         List<String> userFeatures = getFeaturesFromPreferences(userPreferences);
 
-        // 2. Coletar todos os POIs e suas características
+        // Coletar todos os POIs e suas características - Collect all POIs and their features
         List<POI> allPois = poiRepository.findAll();
         List<List<String>> allPoiFeatures = allPois.stream()
                 .map(this::getFeaturesFromPOI)
                 .collect(Collectors.toList());
 
-        // 3. Coletar todos os termos únicos
+        // Coletar todos os termos únicos - Collect all unique terms
         Set<String> allTerms = new HashSet<>(userFeatures);
         allPoiFeatures.forEach(allTerms::addAll);
         List<String> terms = new ArrayList<>(allTerms);
 
-        // 4. Gerar vetor TF-IDF do usuário
+        // Gerar vetor TF-IDF do usuário - Generate user's TF-IDF vector
         RealVector userVector = TFIDF.toTFIDFVector(
                 userFeatures,
                 allPoiFeatures,
                 terms);
 
-        // 5. Normalizar vetor do usuário
+        // Normalizar vetor do usuário - Normalize user's vector
         userVector = SimilarityCalculator.normalize(userVector);
 
-        // 6. Calcular similaridade para cada POI
+        // Calcular similaridade para cada POI - Calculate similarity for each POI
         Map<POI, Double> poiScores = new HashMap<>();
         for (int i = 0; i < allPois.size(); i++) {
             POI poi = allPois.get(i);
 
-            // Gerar vetor TF-IDF do POI
+            // Gerar vetor TF-IDF do POI - Generate POI's TF-IDF vector
             RealVector poiVector = TFIDF.toTFIDFVector(
                     allPoiFeatures.get(i),
                     allPoiFeatures,
                     terms);
 
-            // Normalizar vetor do POI
+            // Normalizar vetor do POI - Normalize POI's vector
             poiVector = SimilarityCalculator.normalize(poiVector);
 
-            // Calcular similaridade combinada
+            // Calcular similaridade combinada - Calculate combined similarity
             double similarity = SimilarityCalculator.combinedSimilarity(userVector, poiVector);
             poiScores.put(poi, similarity);
         }
 
-        // 7. Ordenar POIs pela similaridade
+        // Ordenar POIs pela similaridade - Sort POIs by similarity
         List<POI> sortedPois = poiScores.entrySet().stream()
                 .sorted(Map.Entry.<POI, Double>comparingByValue().reversed())
                 .map(Map.Entry::getKey)
                 .collect(Collectors.toList());
 
-        // 8. Limitar aos 5 primeiros POIs (para salvar e retornar)
+        // Limitar aos 5 primeiros POIs (para salvar e retornar) - Limit to the top 5 POIs (to save and return)
         List<POI> top5Pois = sortedPois.stream()
                 .limit(5) // ⬅️ Limite aqui
                 .collect(Collectors.toList());
 
-        // 9. Salvar recomendação (apenas os 5 POIs)
+        // Salvar recomendação (apenas os 5 POIs) - Save recommendation (only the top 5 POIs)
         Recommendation recommendation = new Recommendation();
         recommendation.setUser(user);
-        recommendation.getPois().addAll(top5Pois); // ⬅️ Adiciona só os 5
+        recommendation.getPois().addAll(top5Pois); 
         recommendationRepository.save(recommendation);
 
-        // 10. Converter para DTO e retornar
+        // Converter para DTO e retornar - Convert to DTO and return
         return top5Pois.stream()
                 .map(this::convertToDTO)
                 .collect(Collectors.toList());
@@ -122,7 +122,7 @@ public class RecommendationService {
 
     @Transactional
     public void score(Long recommendationId, List<ScoreDTO> scoreDTOs) {
-        // Validações iniciais
+        // Validações iniciais - Initial validations
         if (scoreDTOs == null || scoreDTOs.isEmpty()) {
             throw new IllegalArgumentException("Scores list is empty");
         }
@@ -144,7 +144,7 @@ public class RecommendationService {
             }
         });
 
-        // Processar scores
+        // Processar scores - Process scores
         scoreDTOs.forEach(dto -> {
             POI poi = poiRepository.findById(dto.getPoiId())
                     .orElseThrow(() -> new EntityNotFoundException("POI not found"));
@@ -178,7 +178,7 @@ public class RecommendationService {
 
     @Transactional(readOnly = true)
     public Page<RecommendationDTO> findAllByUserId(Pageable pageable) {
-        User user = searchUser(); // Obtém o usuário autenticado
+        User user = searchUser();
         Page<Recommendation> recommendations = recommendationRepository.findAllByUserId(user.getId(), pageable);
         return recommendations.map(this::convertToDTO);
     }
@@ -200,15 +200,14 @@ public class RecommendationService {
     }
 
     private RecommendationDTO convertToDTO(Recommendation recommendation) {
-        // Mapear os POIs para POIDTO
         List<POIDTO> poiDTOs = recommendation.getPois().stream()
                 .map(this::convertToDTO)
                 .collect(Collectors.toList());
 
         return new RecommendationDTO(
                 recommendation.getId(),
-                recommendation.getUser().getId(), // Apenas o ID do usuário
-                poiDTOs // Lista de POIDTO
+                recommendation.getUser().getId(), 
+                poiDTOs 
         );
     }
 

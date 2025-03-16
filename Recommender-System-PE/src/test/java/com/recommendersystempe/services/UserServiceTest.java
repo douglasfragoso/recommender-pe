@@ -29,16 +29,16 @@ import com.recommendersystempe.repositories.UserRepository;
 import com.recommendersystempe.service.UserService;
 import com.recommendersystempe.service.exception.GeneralException;
 
-@ExtendWith(MockitoExtension.class) // annotation that extends the MockitoExtension
+@ExtendWith(MockitoExtension.class) // Anotação que estende o MockitoExtension - Annotation that extends the MockitoExtension 
 public class UserServiceTest {
 
-    @Mock // anotação do Mockito que cria um mock
+    @Mock // Anotação do Mockito que cria um mock - Mockito annotation that creates a mock
     private UserRepository userRepository;
 
     @Mock
     private PasswordEncoder passwordEncoder;
 
-    @InjectMocks // anotação do Mockito que injeta os mocks criados
+    @InjectMocks // Anotação do Mockito que injeta os mocks criados - Mockito annotation that injects the created mocks
     private UserService userService;
 
     private User user;
@@ -62,7 +62,7 @@ public class UserServiceTest {
                 "douglas@example.com",
                 "senha123", address);
 
-        // Verificando se já existe um usuário com o CPF, Email ou Telefone informado
+        // Verificando se já existe um usuário com o CPF, Email ou Telefone informado - Checking if there is already a user with the informed CPF, Email or Phone
         given(userRepository.existsByCpf(userDTO.getCpf())).willReturn(false);
         given(userRepository.existsByEmail(userDTO.getEmail())).willReturn(false);
         given(userRepository.existsByPhone(userDTO.getPhone())).willReturn(false);
@@ -77,11 +77,11 @@ public class UserServiceTest {
         user.setEmail(userDTO.getEmail());
         // Criptografando senha
         given(passwordEncoder.encode(userDTO.getUserPassword())).willReturn("encodedPassword");
-        user.setUserPassword("encodedPassword"); // A senha criptografada
+        user.setUserPassword("encodedPassword"); // A senha criptografada - The encrypted password
         user.setRole(Roles.USER);
         user.setAddress(userDTO.getAddress());
 
-        // Mockando o método save para retornar o usuário com o ID
+        // Mockando o método save para retornar o usuário com o ID - Mocking the save method to return the user with the ID
         given(userRepository.saveAndFlush(any(User.class))).willReturn(user);
 
         // when / act
@@ -202,9 +202,9 @@ public class UserServiceTest {
 
         User user = new User("Douglas", "Fragoso", 30, "Masculino", "12345678900", "81-98765-4321",
                 "douglas@example.com", "senha123", address, Roles.USER);
-        ReflectionTestUtils.setField(user, "id", 1L); // ID definido via reflection
-
-        // Mockar autenticação
+        ReflectionTestUtils.setField(user, "id", 1L); // ID definido via reflection - ID set via reflection
+ 
+        // Mockar autenticação - Mock authentication
         Authentication auth = mock(Authentication.class);
         when(auth.getName()).thenReturn("douglas@example.com");
         SecurityContextHolder.getContext().setAuthentication(auth);
@@ -212,7 +212,7 @@ public class UserServiceTest {
         // Mockar repositório
         given(userRepository.findByEmail("douglas@example.com")).willReturn(user);
 
-        // DTO sem ID (não é necessário para o update)
+        // DTO sem ID (não é necessário para o update) - DTO without ID (not necessary for update)
         UserDTO userDTO = new UserDTO();
         userDTO.setFirstName("John");
         userDTO.setLastName("Doe");
@@ -225,10 +225,10 @@ public class UserServiceTest {
 
         // then / assert
         verify(userRepository, times(1)).update(
-                1L, // ID do usuário autenticado
-                "John", // Novo first name
-                "Doe", // Novo last name
-                32, // Nova idade
+                1L,
+                "John", 
+                "Doe", 
+                32, 
                 "Feminino",
                 "81-98765-4322");
     }
@@ -242,20 +242,20 @@ public class UserServiceTest {
 
         User user = new User("Douglas", "Fragoso", 30, "Masculino", "12345678900", "81-98765-4321",
                 "douglas@example.com", "senha123", address, Roles.USER);
-        ReflectionTestUtils.setField(user, "id", 1L); // ID definido via reflection
+        ReflectionTestUtils.setField(user, "id", 1L); // ID definido via reflection - ID set via reflection
         given(userRepository.findById(2L)).willReturn(Optional.of(user));
 
-        // 3. Mockar saveAndFlush
+        // 3. Mockar saveAndFlush - Mock saveAndFlush
         given(userRepository.saveAndFlush(any(User.class))).willReturn(user);
 
         // when / act
-        userService.updateRole(2L); // 👈 Chama o serviço
+        userService.updateRole(2L);
 
         // then / assert
-        // Verifica se o role foi atualizado
+        // Verifica se o role foi atualizado para ADMIN - Check if the role was updated to ADMIN
         assertEquals(Roles.ADMIN, user.getRole());
 
-        // Verifica se saveAndFlush foi chamado
+        // Verifica se saveAndFlush foi chamado - Check if saveAndFlush was called
         verify(userRepository, times(1)).saveAndFlush(user);
     }
 

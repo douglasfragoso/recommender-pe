@@ -19,7 +19,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     User findByEmail(String subject);
 
     @Transactional
-    @Modifying(clearAutomatically = true) // Limpa o cache do EntityManager
+    @Modifying(clearAutomatically = true) // Limpa o cache do EntityManager - Clears the EntityManager cache
     @Query(value = "UPDATE tb_users SET first_name = :firstName, last_name = :lastName, age = :age, gender = :gender, phone = :phone WHERE id = :id", nativeQuery = true)
     void update(
             @Param("id") Long id,

@@ -9,7 +9,7 @@ import com.recommendersystempe.models.POI;
 
 public class EvaluationCalculator {
 
-    // Método para calcular as métricas de avaliação de um usuário específico
+    // Método para calcular as métricas de avaliação de um usuário específico - Method to calculate the evaluation metrics of a specific user
     public static UserEvaluationMetricsDTO calculateUserMetrics(List<POI> recommendedPois, Set<POI> relevantItems, int k) {
         double precisionAtK = Precision.precisionAtK(recommendedPois, relevantItems, k);
         double recallAtK = Recall.recallAtK(recommendedPois, relevantItems, k);
@@ -18,7 +18,7 @@ public class EvaluationCalculator {
         return new UserEvaluationMetricsDTO(precisionAtK, recallAtK, f1ScoreAtK);
     }
 
-    // Método para calcular as métricas globais de avaliação
+    // Método para calcular as métricas globais de avaliação - Method to calculate the global evaluation metrics
     public static GlobalEvaluationMetricsDTO calculateGlobalMetrics(List<List<POI>> allRecommendations, 
                                                                    List<Set<POI>> allRelevantItems, 
                                                                    int totalItemsAvailable, 

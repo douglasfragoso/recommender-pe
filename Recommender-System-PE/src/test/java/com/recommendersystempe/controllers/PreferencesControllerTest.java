@@ -49,20 +49,19 @@ import com.recommendersystempe.service.TokenService;
 import com.recommendersystempe.service.UserService;
 
 @SuppressWarnings("unused")
-@WebMvcTest(PreferencesController.class) // Habilita o contexto do Spring MVC para testes
-@Import(SecurityConfig.class) // Importa a configuração real
+@WebMvcTest(PreferencesController.class) // Habilita o contexto do Spring MVC para testes - Enables the Spring MVC context for testing
+@Import(SecurityConfig.class) // Importa a configuração real - Imports the real configuration
 public class PreferencesControllerTest {
 
-        // MockMvc é uma classe do Spring Test que permite simular requisições HTTP
+        // MockMvc é uma classe do Spring Test que permite simular requisições HTTP - MockMvc is a Spring Test class that allows you to simulate HTTP requests
         @Autowired
         private MockMvc mockMvc;
 
-        // ObjectMapper é uma classe do Jackson que permite converter objetos Java em
-        // JSON e vice-versa
+        // ObjectMapper é uma classe do Jackson que permite converter objetos Java em JSON e vice-versa - ObjectMapper is a Jackson class that allows you to convert Java objects to JSON and vice versa
         @Autowired
         private ObjectMapper objectMapper;
 
-        @MockitoBean // anotação do Spring Test que cria um mock de um bean, precisa de contexto
+        @MockitoBean // Anotação do Spring Test que cria um mock de um bean, precisa de contexto - Spring Test annotation that creates a mock of a bean, needs context
         private UserService userService;
 
         @MockitoBean
@@ -74,7 +73,7 @@ public class PreferencesControllerTest {
         @MockitoBean
         private TokenService tokenService;
 
-        @MockitoBean // Apenas se o UserRepository for usado indiretamente
+        @MockitoBean // Apenas se o UserRepository for usado indiretamente - Only if UserRepository is used indirectly
         private UserRepository userRepository;
 
         @MockitoBean
@@ -97,15 +96,15 @@ public class PreferencesControllerTest {
 
                 user = new User("Douglas", "Fragoso", 30, "Masculino", "12345678900", "81-98765-4321",
                                 "douglas@example.com", "senha123", address, Roles.MASTER);
-                ReflectionTestUtils.setField(user, "id", 1L); // ID definido via reflection
+                ReflectionTestUtils.setField(user, "id", 1L); // ID definido via reflection - ID defined via reflection
 
-                // Configurar UserDetailsService mockado
+                // Configurar UserDetailsService mockado - Configure mocked UserDetailsService
                 UserDetails userDetails = new org.springframework.security.core.userdetails.User(
                                 user.getEmail(),
                                 user.getPassword(),
                                 Collections.singletonList(new SimpleGrantedAuthority("ROLE_MASTER")));
 
-                // Mockar UserDetailsService
+                // Mockar UserDetailsService - Mock UserDetailsService
                 given(authenticationService.loadUserByUsername(user.getEmail())).willReturn(userDetails);
         }
 
@@ -150,8 +149,8 @@ public class PreferencesControllerTest {
                 Preferences preferences = new Preferences(user, Instant.now(), motivations, hobbies, themes,
                                 currentLocation);
 
-                ReflectionTestUtils.setField(preferences, "id", 1L); // ID definido via reflection
-                ReflectionTestUtils.setField(preferences, "user", user); // User definido via reflection
+                ReflectionTestUtils.setField(preferences, "id", 1L); // ID definido via reflection - ID defined via reflection
+                ReflectionTestUtils.setField(preferences, "user", user); // User definido via reflection - User defined via reflection
 
                 List<Motivations> motivations1 = List.of(Motivations.CULTURE, Motivations.STUDY);
                 List<Hobbies> hobbies1 = List.of(Hobbies.PHOTOGRAPHY, Hobbies.MUSIC);
@@ -161,8 +160,8 @@ public class PreferencesControllerTest {
 
                 Preferences preferences1 = new Preferences(user, Instant.now(), motivations1, hobbies1, themes1,
                                 currentLocation1);
-                ReflectionTestUtils.setField(preferences1, "id", 2L); // ID definido via reflection
-                ReflectionTestUtils.setField(preferences1, "user", user); // User definido via reflection
+                ReflectionTestUtils.setField(preferences1, "id", 2L); // ID definido via reflection - ID defined via reflection
+                ReflectionTestUtils.setField(preferences1, "user", user); // User definido via reflection - User defined via reflection
 
                 Pageable pageable = PageRequest.of(0, 10);
 
@@ -184,7 +183,7 @@ public class PreferencesControllerTest {
                 ResultActions response = mockMvc.perform(get("/preferences")
                                 .param("page", "0")
                                 .param("size", "10")
-                                .with(user("douglas@example.com").password("senha123").roles("MASTER")) // Autenticação
+                                .with(user("douglas@example.com").password("senha123").roles("MASTER")) // Autenticação - Authentication
                                 .contentType("application/json"));
 
                 // then / assert
@@ -204,8 +203,8 @@ public class PreferencesControllerTest {
                 Preferences preferences = new Preferences(user, Instant.now(), motivations, hobbies, themes,
                                 currentLocation);
 
-                ReflectionTestUtils.setField(preferences, "id", 1L); // ID definido via reflection
-                ReflectionTestUtils.setField(preferences, "user", user); // User definido via reflection
+                ReflectionTestUtils.setField(preferences, "id", 1L); // ID definido via reflection - ID defined via reflection
+                ReflectionTestUtils.setField(preferences, "user", user); // User definido via reflection - User defined via reflection
 
                 ObjectMapper objectMapper = new ObjectMapper();
                 objectMapper.configure(SerializationFeature.WRITE_ENUMS_USING_TO_STRING, true);
@@ -218,7 +217,7 @@ public class PreferencesControllerTest {
 
                 // when / act
                 ResultActions response = mockMvc.perform(get("/preferences/id/{id}", id)
-                                .with(user("douglas@example.com").password("senha123").roles("MASTER")) // Autenticação
+                                .with(user("douglas@example.com").password("senha123").roles("MASTER")) // Autenticação - Authentication
                                 .contentType("application/json"));
 
                 // then / assert

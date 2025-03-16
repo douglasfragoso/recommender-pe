@@ -16,14 +16,14 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
-@EnableWebSecurity // Habilita a segurança baseada em web
-@EnableMethodSecurity(securedEnabled = true) // Habilita a segurança baseada em anotações
+@EnableWebSecurity // Habilita a segurança baseada em web - Enables web-based security
+@EnableMethodSecurity(securedEnabled = true) // Habilita a segurança baseada em anotações - Enables annotation-based security
 public class SecurityConfig {
 
     @Autowired
     private SecurityFilterConfig securityFilter;
 
-    // Configuração de segurança
+    // Configuração de segurança - Security configuration
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
@@ -53,13 +53,13 @@ public class SecurityConfig {
             "/swagger-ui/**"
     };
 
-    //faz o AuthenticationManager ser injetado no SecurityFilter - usado no AuthenticationController	
+    //Faz o AuthenticationManager ser injetado no SecurityFilter, usado no AuthenticationController - Causes AuthenticationManager to be injected into SecurityFilter, used in AuthenticationController
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
         return configuration.getAuthenticationManager();
     }
 
-    //Bean para criptografar a senha - usado no UserService 
+    //Bean para criptografar a senha, usado no UserService - Bean to encrypt password - used in UserService
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();

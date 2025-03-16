@@ -7,7 +7,7 @@ import com.recommendersystempe.models.POI;
 
 public class F1Score {
     
-    // Combina Precision@k e Recall@k em uma única métrica, refletindo o equilíbrio entre qualidade e cobertura
+    // Combina Precision@k e Recall@k em uma única métrica, refletindo o equilíbrio entre qualidade e cobertura - Combines Precision@k and Recall@k into a single metric, reflecting the balance between quality and coverage
     // F1-Score@k = 2*(Precision@k * Recall@k)/(Precision@k+ Recall@k) 
     public static double f1ScoreAtK(List<POI> recommended, Set<POI> relevant, int k) {;
         double precisionAtK = Precision.precisionAtK(recommended, relevant, k);

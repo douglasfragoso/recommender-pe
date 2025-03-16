@@ -29,16 +29,16 @@ import com.recommendersystempe.repositories.POIRepository;
 import com.recommendersystempe.repositories.UserRepository;
 import com.recommendersystempe.service.POIService;
 
-@ExtendWith(MockitoExtension.class) // annotation that extends the MockitoExtension
+@ExtendWith(MockitoExtension.class) // Annotation that extends the MockitoExtension - Anotação que estende o MockitoExtension
 public class POIServiceTest {
 
-        @Mock // anotação do Mockito que cria um mock
+        @Mock // Anotação do Mockito que cria um mock - Mockito annotation that creates a mock
         private UserRepository userRepository;
 
         @Mock
         private POIRepository poiRepository;
 
-        @InjectMocks // anotação do Mockito que injeta os mocks criados
+        @InjectMocks // Anotação do Mockito que injeta os mocks criados - Mockito annotation that injects the created mocks
         private POIService poiService;
 
         private POIDTO poiDTO;

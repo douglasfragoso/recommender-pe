@@ -44,25 +44,25 @@ public class PreferencesService {
         preferences.setDate(Instant.now());
         preferences.setCurrentLocation(dto.getCurrentLocation());
 
-        // Salvando as preferências no banco
+        // Salvando as preferências no banco - Saving preferences in the database
         preferencesRepository.save(preferences);
 
-        // Adicionando as motivações
+        // Adicionando as motivações - Adding motivations 
         List<Motivations> motivations = dto.getMotivations();
         preferences.addMotivation(motivations);
 
-        // Adicionando os hobbies
+        // Adicionando os hobbies - Adding hobbies
         List<Hobbies> hobbies = dto.getHobbies();
         preferences.addHobbie(hobbies);
 
-        // Adicionando os temas
+        // Adicionando os temas - Adding themes
         List<Themes> themes = dto.getThemes();
         preferences.addTheme(themes);
 
-        // Salvando as alterações após adicionar as listas
+        // Salvando as alterações após adicionar as listas - Saving the changes after adding the lists
         preferencesRepository.save(preferences);
 
-        // Retornando o DTO com as informações atualizadas
+        // Retornando o DTO com as informações atualizadas - Returning the DTO with the updated information
         return recommendationService.recommendation(preferences);
     }
 

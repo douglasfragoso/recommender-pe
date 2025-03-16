@@ -108,7 +108,7 @@ public class POI {
 
     public void addRecommendation(Recommendation recommendation) {
         this.recommendations.add(recommendation);
-        recommendation.getPois().add(this); // Sincroniza o lado inverso
+        recommendation.getPois().add(this); // Sincroniza o lado inverso - Synchronizes the reverse side
     }
 
     public double getAverageScore() { 

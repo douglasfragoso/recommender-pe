@@ -16,10 +16,10 @@ import com.recommendersystempe.models.User;
 @Service
 public class TokenService {
     
-    // Gera um token JWT com o email do usuário
+    // Gera um token JWT com o email do usuário - Generates a JWT token with the user's email
     public String generateToken(User user) {
         try {
-            //algorithm usado para assinar o token
+            //Algoritimo usado para assinar o token - Algorithm used to sign the token
             Algorithm algorithm = Algorithm.HMAC256(SECRET_KEY);
 
             return JWT.create()
@@ -33,10 +33,10 @@ public class TokenService {
         }
     }
 
-    // Verifica se o token é válido e retorna o email do usuário
+    // Verifica se o token é válido e retorna o email do usuário - Checks if the token is valid and returns the user's email
     public String getSubject(String token) {
         try {
-            //algorithm usado para verificar a assinatura do token
+            //Algoritmo usado para verificar a assinartura do token - Algorithm used to verify the token signature
             Algorithm algorithm = Algorithm.HMAC256(SECRET_KEY);
 
             return JWT.require(algorithm)
@@ -50,11 +50,11 @@ public class TokenService {
     }
 
     private Instant _expirationDate() {
-        // O token expira em 10 minutos de acordo com o fuso horário do Brasil
+        // O token expira em 10 minutos de acordo com o fuso horário do Brasil - The token expires in 10 minutes according to the Brazil time zone
         return LocalDateTime.now().plusMinutes(10).toInstant(ZoneOffset.of("-03:00"));
     }
 
-    // Propriedades definida no application.properties
+    // Propriedades definida no application.properties - Properties defined in application.properties
     @Value("${api.security.token.secret.key}")
     private String SECRET_KEY;
 

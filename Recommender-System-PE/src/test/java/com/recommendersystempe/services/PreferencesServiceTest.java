@@ -35,16 +35,16 @@ import com.recommendersystempe.repositories.PreferencesRepository;
 import com.recommendersystempe.repositories.UserRepository;
 import com.recommendersystempe.service.PreferencesService;
 
-@ExtendWith(MockitoExtension.class) // annotation that extends the MockitoExtension
+@ExtendWith(MockitoExtension.class) // Anotação que estende o MockitoExtension - Annotation that extends the MockitoExtension 
 public class PreferencesServiceTest {
 
-        @Mock // anotação do Mockito que cria um mock
+        @Mock // Anotação do Mockito que cria um mock - Mockito annotation that creates a mock
         private UserRepository userRepository;
 
         @Mock
         private PreferencesRepository preferencesRepository;
 
-        @InjectMocks // anotação do Mockito que injeta os mocks criados
+        @InjectMocks // Anotação do Mockito que injeta os mocks criados - Mockito annotation that injects the created mocks
         private PreferencesService preferencesService;
 
         private User user;

@@ -11,7 +11,7 @@ import com.recommendersystempe.models.POI;
 public interface POIRepository extends JpaRepository<POI, Long> {
     
     @Transactional
-    @Modifying(clearAutomatically = true) // Limpa o cache do EntityManager
+    @Modifying(clearAutomatically = true) // Limpa o cache do EntityManager - Clears the EntityManager cache
     @Query(value = "UPDATE tb_pois SET name = :name, description = :description WHERE id = :id", nativeQuery = true)
     void update(
             @Param("id") Long id,

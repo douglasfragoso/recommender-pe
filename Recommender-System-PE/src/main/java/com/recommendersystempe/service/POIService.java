@@ -25,28 +25,28 @@ public class POIService {
 
     @Transactional
     public POIDTO insert(POIDTO dto) {
-        // Mapeando POIDTO para POI
+        // Mapeando POIDTO para POI - Mapping POIDTO to POI
         POI poi = new POI();
         poi.setName(dto.getName());
         poi.setDescription(dto.getDescription());
         poi.setAddress(dto.getAddress());
 
-        // Salvando o POI no banco
+        // Salvando o POI no banco - Saving the POI in the database
         poiRepository.save(poi);
 
-        // Adicionando as motivações
+        // Adicionando as motivações - Adding motivations
         List<Motivations> motivations = dto.getMotivations();
         poi.addMotivation(motivations);
 
-        // Adicionando os hobbies
+        // Adicionando os hobbies - Adding hobbies
         List<Hobbies> hobbies = dto.getHobbies();
         poi.addHobbie(hobbies);
 
-        // Adicionando os temas
+        // Adicionando os temas - Adding themes
         List<Themes> themes = dto.getThemes();
         poi.addTheme(themes);
 
-        // Salvando as alterações após adicionar as listas
+        // Salvando as alterações após adicionar as listas - Saving the changes after adding the lists
         poiRepository.save(poi);
 
         return new POIDTO(poi.getId(), poi.getName(), poi.getDescription(), poi.getMotivations(), poi.getHobbies(),

@@ -9,14 +9,14 @@ import org.springframework.stereotype.Service;
 
 import com.recommendersystempe.repositories.UserRepository;
 
-//usado implicitamente pelo Spring Security para autenticação
+//Usado implicitamente pelo Spring Security para autenticação - Used implicitly by Spring Security for authentication
 @Service
 public class AuthenticationService implements UserDetailsService {
 
     @Autowired
     private UserRepository userRepository;
 
-    //permite a busca de um usuário por email
+    //Permite a busca de um usuário por email - Allows the search for a user by email
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return userRepository.findByEmail(username);

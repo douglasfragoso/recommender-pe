@@ -29,7 +29,7 @@ public class UserService {
 
     @Transactional
     public UserDTO insert(UserDTO dto) {
-        // Verificando se já existe um usuário com o CPF, Email ou Telefone informado
+        // Verificando se já existe um usuário com o CPF, Email ou Telefone informado - Checking if there is already a user with the informed CPF, Email or Phone
         if (userRepository.existsByCpf(dto.getCpf())) {
             throw new GeneralException("CPF already registered");
         }
@@ -40,7 +40,7 @@ public class UserService {
             throw new GeneralException("Phone already registered");
         }
 
-        // Mapeando UserDTO para User
+        // Mapeando UserDTO para User - Mapping UserDTO to User
         User user = new User();
         user.setFirstName(dto.getFirstName());
         user.setLastName(dto.getLastName());
@@ -50,21 +50,21 @@ public class UserService {
         user.setPhone(dto.getPhone());
         user.setEmail(dto.getEmail());
 
-        // criptografando senha
+        // Criptografando senha - encrypting password
         String codePassaword = passwordEncoder.encode(dto.getUserPassword());
         user.setUserPassword(codePassaword);
 
-        // definindo o papel do usuário
+        // Definindo o papel do usuário - Defining the user's role
         user.setRole(Roles.USER);
 
-        // Mapeando AddressDTO para Address
+        // Mapeando AddressDTO para Address - Mapping AddressDTO to Address
         Address address = dto.getAddress();
         user.setAddress(address);
 
-        // Salvando User
+        // Salvando User - Saving User
         user = userRepository.saveAndFlush(user);
 
-        // Mapeando User para UserDTO
+        // Mapeando User para UserDTO - Mapping User to UserDTO
         return new UserDTO(user.getId(), user.getFirstName(), user.getLastName(), user.getAge(), user.getGender(),
                 user.getCpf(), user.getPhone(), user.getEmail(), user.getAddress(), user.getRole());
     }
