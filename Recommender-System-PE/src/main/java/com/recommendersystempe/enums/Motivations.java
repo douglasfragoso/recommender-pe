@@ -10,6 +10,11 @@ public enum Motivations {
     SOCIAL,
     SPERITUALITY,
     SPORT,
-    WORK;
+    WORK,
+    APPRECIATION, 
+    EXPLORATION,  
+    NETWORKING,   
+    TRADITION,  
+    SENSORY
     
 }

@@ -42,28 +42,28 @@ public class POIDTO {
     @Setter
     @Schema(description = "Description of a POI", example = "Lake", required = true)
     @NotBlank(message = "The field description is required")
-    @Size(min = 50, max = 500, message = "The field description must be between 50 and 500 characters")
+    @Size(min = 50, max = 1000, message = "The field description must be between 50 and 1000 characters")
     private String description;
 
     @Getter
     @JsonFormat(shape = JsonFormat.Shape.STRING)
     @Schema(description = "List of motivations associated with the preferences", example = "[\"CULTURE\", \"ENTERTAINMENT\"]", required = true)
     @NotNull(message = "The field motivations is required")
-    @Size(min = 1, max = 5, message = "The field motivation must have 1 to 5 elements")
+    @Size(min = 5, max = 5, message = "The field motivation must have 1 to 5 elements")
     private List<Motivations> motivations = new ArrayList<>();
 
     @Getter
     @JsonFormat(shape = JsonFormat.Shape.STRING)
     @Schema(description = "List of hobbies associated with the preferences", example = "[\"ADVENTURE\", \"ART\"]", required = true)
     @NotNull(message = "The field hobbies is required")
-    @Size(min = 1, max = 5, message = "The field hobbies must have 1 to 5 elements")
+    @Size(min = 5, max = 5, message = "The field hobbies must have 1 to 5 elements")
     private List<Hobbies> hobbies = new ArrayList<>();
 
     @Getter
     @JsonFormat(shape = JsonFormat.Shape.STRING)
     @Schema(description = "List of themes associated with the preferences", example = "[\"ADVENTURE\", \"CULTURAL\"]", required = true)
     @NotNull(message = "The field themes is required")
-    @Size(min = 1, max = 5, message = "The field themes must have 1 to 5 elements")
+    @Size(min = 5, max = 5, message = "The field themes must have 1 to 5 elements")
     private List<Themes> themes = new ArrayList<>();
 
     @Getter
