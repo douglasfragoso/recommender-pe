@@ -256,7 +256,7 @@ Valença, J. 2022. Passaporte Pernambuco: saiba onde e como conseguir o caderno 
 
 1. Clone the project to your preferred IDE.
 2. Open MySQL Workbench
-   - Ensure the properties in [application-dev.properties](src/main/resources/application-dev.properties) are correct.
+   - Ensure the properties in `application-dev.properties` are correct.
 3. Run the Spring Boot project with `spring.profiles.active=${APP_PROFILE:dev}` in the `application.properties`.
 4. Create the available [SEED](<import.sql>).
 5. Import the collection into Postman using the file [Collection](<Recommender-System-PE/postman/Recommender-System-PE.postman_collection.json>).
