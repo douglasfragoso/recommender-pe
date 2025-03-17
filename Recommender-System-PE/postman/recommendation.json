@@ -1,0 +1,32 @@
+{
+    "motivations": [
+        "CULTURE",
+        "RELAXATION",
+        "ENTERTAINMENT",
+        "FAMILY",
+        "EXPLORATION"
+    ],
+    "hobbies": [
+        "TRAVELING",
+        "READING",
+        "PHOTOGRAPHY",
+        "GARDENING",
+        "LEARNING"
+    ],
+    "themes": [
+        "ADVENTURE",
+        "NATURE",
+        "CULTURAL",
+        "FAMILY_FRIENDLY",
+        "HISTORY"
+    ],
+    "currentLocation": {
+        "street": "Rua das Flores",
+        "number": 123,
+        "complement": "Casa 5",
+        "neighborhood": "Centro",
+        "state": "SP",
+        "country": "Brasil",
+        "zipCode": "01000000"
+    }
+}

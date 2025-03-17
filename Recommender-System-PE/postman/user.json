@@ -1,0 +1,19 @@
+{
+    "firstName": "Mariana",
+    "lastName": "Silva",
+    "age": 28,
+    "gender": "Feminino",
+    "cpf": "98765432100",
+    "phone": "11-99876-5432",
+    "email": "mariana@example.com",
+    "userPassword": "Segura456*",
+    "address": {
+        "street": "Avenida Central",
+        "number": 250,
+        "complement": "Casa 5",
+        "neighborhood": "Centro",
+        "state": "SP",
+        "country": "Brasil",
+        "zipCode": "01000000"
+    }
+}

@@ -72,7 +72,7 @@ public class User implements UserDetails {
     private String email;
 
     @Setter
-    @Column(name = "user_password", length = 50)
+    @Column(name = "user_password", length = 100)
     private String userPassword;
 
     @Getter @Setter

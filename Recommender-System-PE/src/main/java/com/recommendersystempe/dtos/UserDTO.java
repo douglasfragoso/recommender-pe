@@ -85,7 +85,7 @@ public class UserDTO {
     @Setter
     @Schema(description = "Password of a user", example = "Password123!", required = true)
     @NotBlank(message = "The field password is required")
-    @Size(min = 8, max = 50, message = "Password must be between 8 and 50 characters")
+    @Size(min = 8, max = 100, message = "Password must be between 8 and 100 characters")
     @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$",
     message = "Password must contain at least one digit, one lowercase, one uppercase, one special character and no whitespace")
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY) // Atributo não será exibido - Attribute will not be displayed
@@ -99,7 +99,6 @@ public class UserDTO {
 
     @Setter
     @Getter
-    @NotNull(message = "The field role is required")
     private Roles role;
 
     public UserDTO(String firstName, String lastName, Integer age, String gender, String cpf, String phone,

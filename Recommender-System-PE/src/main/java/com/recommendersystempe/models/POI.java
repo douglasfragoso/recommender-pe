@@ -14,6 +14,7 @@ import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -42,7 +43,7 @@ public class POI {
 
     @Getter
     @Setter
-    @Column(name = "poi_name", length = 20, unique = true)
+    @Column(name = "poi_name", length = 50, unique = true)
     private String name;
 
     @Getter
@@ -51,21 +52,21 @@ public class POI {
     private String description;
 
     @Getter
-    @ElementCollection(targetClass = Motivations.class)
+    @ElementCollection(targetClass = Motivations.class, fetch = FetchType.EAGER)
     @Enumerated(EnumType.STRING)
     @CollectionTable(name = "pois_motivations", joinColumns = @JoinColumn(name = "poi_id"))
     @Column(name = "motivation")
     private List<Motivations> motivations = new ArrayList<>();
 
     @Getter
-    @ElementCollection(targetClass = Hobbies.class)
+    @ElementCollection(targetClass = Hobbies.class, fetch = FetchType.EAGER)
     @Enumerated(EnumType.STRING)
     @CollectionTable(name = "pois_hobbies", joinColumns = @JoinColumn(name = "poi_id"))
     @Column(name = "hobbie")
     private List<Hobbies> hobbies = new ArrayList<>();
 
     @Getter
-    @ElementCollection(targetClass = Themes.class)
+    @ElementCollection(targetClass = Themes.class, fetch = FetchType.EAGER)
     @Enumerated(EnumType.STRING)
     @CollectionTable(name = "pois_themes", joinColumns = @JoinColumn(name = "poi_id"))
     @Column(name = "theme")

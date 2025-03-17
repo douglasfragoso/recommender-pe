@@ -242,9 +242,10 @@ Valença, J. 2022. Passaporte Pernambuco: saiba onde e como conseguir o caderno 
 
 1. Clone the project to your preferred IDE.
 2. Run the Spring Boot project with `spring.profiles.active=${APP_PROFILE:test}` in the `application.properties`.
-3. Import the collection into Postman using the file [Collection](<Recommender-System-PE.postman_collection.json>).
-4. Use the provided routes to make requests to the system, remembering to pass the token generated during authentication.
-5. Check the documentation on Swagger by accessing: [Swagger UI](http://localhost:8080/swagger-ui/index.html).
+3. Create the available [SEED](<import.sql>).
+4. Import the collection into Postman using the file [Collection](<Recommender-System-PE/postman/Recommender-System-PE.postman_collection.json>).
+5. Use the provided routes to make requests to the system, remembering to pass the token generated during authentication.
+6. Check the documentation on Swagger by accessing: [Swagger UI](http://localhost:8080/swagger-ui/index.html).
 
 
 ## Staging Profile
@@ -257,8 +258,8 @@ Valença, J. 2022. Passaporte Pernambuco: saiba onde e como conseguir o caderno 
 2. Open MySQL Workbench
    - Ensure the properties in [application-dev.properties](src/main/resources/application-dev.properties) are correct.
 3. Run the Spring Boot project with `spring.profiles.active=${APP_PROFILE:dev}` in the `application.properties`.
-4. Create the available seed.
-5. Import the collection into Postman using the file [Collection](<Recommender-System-PE.postman_collection.json>).
+4. Create the available [SEED](<import.sql>).
+5. Import the collection into Postman using the file [Collection](<Recommender-System-PE/postman/Recommender-System-PE.postman_collection.json>).
 6. Use the provided routes to make requests to the system, remembering to pass the token generated during authentication.
 7. Check the documentation on Swagger by accessing: [Swagger UI](http://localhost:8080/swagger-ui/index.html).
 

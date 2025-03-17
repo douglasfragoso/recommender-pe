@@ -1,9 +1,0 @@
--- INSERT INTO tb_users (
---     age, house_number, roles, states, zip_code, gender, cpf, phone, complement, country,
---     first_name, last_name, neighborhood, street, user_password, email
--- ) 
--- VALUES (
---     30, 100, 2, 'PE', '50000000', 'Masculino', '12345678900', '81-98765-4321', 'Apto 202', 
---     'Brasil', 'Douglas', 'Fragoso', 'Boa Viagem', 'Rua Exemplo', 
---     '$2a$12$FcKTXENesUDof7vlZVw45ushn17yVb6TpE7XXm2J9OR0TC1wQazea', 'douglas@example.com'
--- );

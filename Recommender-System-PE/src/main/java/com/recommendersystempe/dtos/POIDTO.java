@@ -35,7 +35,7 @@ public class POIDTO {
     @Setter
     @Schema(description = "Name of a POI", example = "Lake", required = true)
     @NotBlank(message = "The field name is required")
-    @Size(min = 3, max = 20, message = "The field name must be between 3 and 20 characters")
+    @Size(min = 3, max = 50, message = "The field name must be between 3 and 50 characters")
     private String name;
 
     @Getter

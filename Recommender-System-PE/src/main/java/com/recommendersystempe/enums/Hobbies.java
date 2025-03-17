@@ -1,34 +1,20 @@
 package com.recommendersystempe.enums;
 
 public enum Hobbies {
-
     ADVENTURE,
     ART,
     BIRD_WATCHING,
-    BLOGGING,
-    BOARD_GAMES,
-    COOKING,
     COLLECTING,
     DANCING,
-    FISHING,
-    FITNESS,
-    GAMING,
-    GARDENING,
+    GASTRONOMY,      
+    GARDENING, 
     HIKING,
     LEARNING,
-    MARTIAL_ARTS,
-    MEDITATION,
-    MOVIES,
     MUSIC,
     PHOTOGRAPHY,
     READING,
-    RELAXATION,
-    SOCIAL,
-    SPORTS,
+    SOCIAL,    
     TECH,
     THEATER,
-    TRAVELING,
-    VOLUNTEERING,
-    WRITING;
-    
+    TRAVELING
 }

@@ -30,9 +30,9 @@ public class Address {
     @Min(value = 1, message = "House number must be at least 1")
     private Integer number;
 
-    @Column(name = "complement", length = 20)
+    @Column(name = "complement", length = 50)
     @Schema(description = "Complement of the address", example = "Apto 202")
-    @Size(max = 20, message = "Complement must be at most 20 characters")
+    @Size(max = 50, message = "Complement must be at most 50 characters")
     private String complement;
 
     @Column(name = "neighborhood", length = 30)
