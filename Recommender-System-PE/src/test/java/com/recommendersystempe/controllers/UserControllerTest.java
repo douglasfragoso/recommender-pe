@@ -79,7 +79,7 @@ public class UserControllerTest {
 
                 userDTO = new UserDTO("Douglas", "Fragoso", 30, "Masculino", "12345678900", "81-98765-4321",
                                 "douglas@example.com",
-                                "senha123", address);
+                                "Senha123*", address);
         }
 
         @Test

@@ -12,7 +12,7 @@ public interface POIRepository extends JpaRepository<POI, Long> {
     
     @Transactional
     @Modifying(clearAutomatically = true) // Limpa o cache do EntityManager - Clears the EntityManager cache
-    @Query(value = "UPDATE tb_pois SET name = :name, description = :description WHERE id = :id", nativeQuery = true)
+    @Query(value = "UPDATE tb_pois SET poi_name = :name, poi_description = :description WHERE id = :id", nativeQuery = true)
     void update(
             @Param("id") Long id,
             @Param("name") String name,

@@ -246,7 +246,29 @@ Valença, J. 2022. Passaporte Pernambuco: saiba onde e como conseguir o caderno 
 4. Import the collection into Postman using the file [Collection](<Recommender-System-PE/postman/Recommender-System-PE.postman_collection.json>).
 5. Use the provided routes to make requests to the system, remembering to pass the token generated during authentication.
 6. Check the documentation on Swagger by accessing: [Swagger UI](http://localhost:8080/swagger-ui/index.html).
+7. In the terminal, navigate to the repository folder and run the following Maven command to execute the tests:
 
+```sh
+mvn clean test
+```
+
+The JaCoCo reports, including the HTML version, and the Surefire reports in XML will be automatically generated.
+ 
+ JaCoCo Report Path:
+    
+    Recommender-System-PE/target/site/jacoco/index.html
+
+ In the terminal, run the following Maven command to generate the Surefire HTML report:
+
+```sh
+mvn site 
+```
+
+Surefire Report Path:
+
+    Recommender-System-PE/target/site/surefire-report.html
+
+The first time you run mvn site, it may take a while to download the Maven dependencies. 
 
 ## Staging Profile
  - dev
@@ -262,5 +284,28 @@ Valença, J. 2022. Passaporte Pernambuco: saiba onde e como conseguir o caderno 
 5. Import the collection into Postman using the file [Collection](<Recommender-System-PE/postman/Recommender-System-PE.postman_collection.json>).
 6. Use the provided routes to make requests to the system, remembering to pass the token generated during authentication.
 7. Check the documentation on Swagger by accessing: [Swagger UI](http://localhost:8080/swagger-ui/index.html).
+8. In the terminal, navigate to the repository folder and run the following Maven command to execute the tests:
+
+```sh
+mvn clean test
+```
+
+The JaCoCo reports, including the HTML version, and the Surefire reports in XML will be automatically generated.
+ 
+ JaCoCo Report Path:
+    
+    Recommender-System-PE/target/site/jacoco/index.html
+
+ In the terminal, run the following Maven command to generate the Surefire HTML report:
+
+```sh
+mvn site 
+```
+
+Surefire Report Path:
+
+    Recommender-System-PE/target/site/surefire-report.html
+
+The first time you run mvn site, it may take a while to download the Maven dependencies. 
 
 Made with care by Douglas Fragoso 👊

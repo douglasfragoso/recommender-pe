@@ -32,14 +32,25 @@ public class UserRepositoryTest {
 
     @BeforeEach
     public void setUp() {
-        // given / arrange
+        
         userRepository.deleteAll();
 
         address = new Address(
-            "Rua Exemplo", 100, "Apto 202", "Boa Viagem","Recife", 
-            "PE", "Brasil", "50000000");
+                "Avenida Central", 250, "Casa 5", "Boa Viagem", "Recife",
+                "PE", "Brasil", "01000000");
 
-        user = new User("Douglas", "Fragoso", 30, "Masculino", "12345678900", "81-98765-4321", "douglas@example.com", "senha123", address, Roles.USER); 
+        user = new User(
+                "Mariana", 
+                "Silva", 
+                28,
+                "Feminino", 
+                "98765432100", 
+                "11-99876-5432", 
+                "mariana@example.com", 
+                "Segura456*", 
+                address, 
+                Roles.USER 
+        );
     }
 
     @Test
@@ -59,10 +70,11 @@ public class UserRepositoryTest {
     void testGivenUserList_whenFindAll_ThenReturnUserList() {
         // given / arrange
         Address address1 = new Address(
-            "Rua Exemplo1", 101, "Apto 203", "Boa Viagem", "Recife",
-            "PE", "Brasil", "50000003");
+                "Rua Exemplo1", 101, "Apto 203", "Boa Viagem", "Recife",
+                "PE", "Brasil", "50000003");
 
-        User user1 = new User("Lucas", "Fragoso", 30, "Masculino", "12345678901", "81-98765-4322", "lucas@example.com", "senha123", address1, Roles.USER); 
+        User user1 = new User("Lucas", "Fragoso", 30, "Masculino", "12345678909", "81-98765-4322", "lucas@example.com",
+                "senha123", address1, Roles.USER);
 
         userRepository.save(user);
         userRepository.save(user1);
@@ -126,7 +138,8 @@ public class UserRepositoryTest {
 
         userRepository.update(user.getId(), "Lucas", "Fragoso1", 31, "Feminino", "81-98765-4322");
 
-        // Clear the persistence context, causing all managed entities to become detached
+        // Clear the persistence context, causing all managed entities to become
+        // detached
         entityManager.clear();
 
         User updatedUser = userRepository.findById(user.getId()).orElseThrow();

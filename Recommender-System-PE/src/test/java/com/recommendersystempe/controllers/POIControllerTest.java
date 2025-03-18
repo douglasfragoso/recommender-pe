@@ -48,19 +48,25 @@ import com.recommendersystempe.service.TokenService;
 import com.recommendersystempe.service.UserService;
 
 @SuppressWarnings("unused")
-@WebMvcTest(POIController.class) // Habilita o contexto do Spring MVC para testes - Enables the Spring MVC context for testing
-@Import(SecurityConfig.class) // Importa a configuração real - Imports the real configuration - Importa a configuração real
+@WebMvcTest(POIController.class) // Habilita o contexto do Spring MVC para testes - Enables the Spring MVC
+                                 // context for testing
+@Import(SecurityConfig.class) // Importa a configuração real - Imports the real configuration - Importa a
+                              // configuração real
 public class POIControllerTest {
 
-        // MockMvc é uma classe do Spring Test que permite simular requisições HTTP - MockMvc is a Spring Test class that allows you to simulate HTTP requests - 
+        // MockMvc é uma classe do Spring Test que permite simular requisições HTTP -
+        // MockMvc is a Spring Test class that allows you to simulate HTTP requests -
         @Autowired
         private MockMvc mockMvc;
 
-        // ObjectMapper é uma classe do Jackson que permite converter objetos Java em JSON e vice-versa - ObjectMapper is a Jackson class that allows you to convert Java objects to JSON and vice versa
+        // ObjectMapper é uma classe do Jackson que permite converter objetos Java em
+        // JSON e vice-versa - ObjectMapper is a Jackson class that allows you to
+        // convert Java objects to JSON and vice versa
         @Autowired
         private ObjectMapper objectMapper;
 
-        @MockitoBean // Anotação do Spring Test que cria um mock de um bean, precisa de contexto - Spring Test annotation that creates a mock of a bean, needs context
+        @MockitoBean // Anotação do Spring Test que cria um mock de um bean, precisa de contexto -
+                     // Spring Test annotation that creates a mock of a bean, needs context
         private UserService userService;
 
         @MockitoBean
@@ -72,7 +78,8 @@ public class POIControllerTest {
         @MockitoBean
         private TokenService tokenService;
 
-        @MockitoBean // Apenas se o UserRepository for usado indiretamente - Only if UserRepository is used indirectly
+        @MockitoBean // Apenas se o UserRepository for usado indiretamente - Only if UserRepository
+                     // is used indirectly
         private UserRepository userRepository;
 
         @MockitoBean
@@ -91,11 +98,20 @@ public class POIControllerTest {
         public void setUp() {
                 // given / arrange
                 address = new Address(
-                                "Rua Exemplo", 100, "Apto 202", "Boa Viagem","Recife",
+                                "Rua Exemplo", 100, "Apto 202", "Boa Viagem", "Recife",
                                 "PE", "Brasil", "50000000");
 
-                user = new User("Douglas", "Fragoso", 30, "Masculino", "12345678900", "81-98765-4321",
-                                "douglas@example.com", "senha123", address, Roles.MASTER);
+                user = new User(
+                                "Douglas",
+                                "Fragoso",
+                                30,
+                                "Masculino",
+                                "12345678909",
+                                "81-98765-4321",
+                                "douglas@example.com",
+                                "Senha123*",
+                                address,
+                                Roles.MASTER);
                 ReflectionTestUtils.setField(user, "id", 1L); // ID definido via reflection - ID defined via reflection
 
                 // Configurar UserDetailsService mockado - Configure mocked UserDetailsService
@@ -111,10 +127,13 @@ public class POIControllerTest {
         @Test
         void testGivenPOIDTO_whenSave_ThenReturnPOIDTO() throws JsonProcessingException, Exception {
                 // given / arrange
-                motivations = List.of(Motivations.CULTURE, Motivations.STUDY);
-                hobbies = List.of(Hobbies.PHOTOGRAPHY, Hobbies.MUSIC);
-                themes = List.of(Themes.HISTORY, Themes.ADVENTURE);
-                poiAddress = new Address("Rua Exemplo", 100, "Apto 202", "Boa Viagem", "Recife","PE", "Brasil", "50000000");
+                motivations = List.of(Motivations.CULTURE, Motivations.STUDY, Motivations.APPRECIATION,
+                                Motivations.RELAXATION, Motivations.SOCIAL);
+                hobbies = List.of(Hobbies.PHOTOGRAPHY, Hobbies.MUSIC, Hobbies.ADVENTURE, Hobbies.ART, Hobbies.READING);
+                themes = List.of(Themes.HISTORY, Themes.ADVENTURE, Themes.NATURE, Themes.CULTURAL,
+                                Themes.AFRO_BRAZILIAN);
+                poiAddress = new Address("Rua Exemplo", 100, "Apto 202", "Boa Viagem", "Recife", "PE", "Brasil",
+                                "50000000");
 
                 poiDTO = new POIDTO("Parque da Cidade", "Um grande parque urbano com áreas verdes, trilhas e lagos.",
                                 motivations, hobbies, themes, poiAddress);
@@ -125,7 +144,9 @@ public class POIControllerTest {
                 // when / act
                 ResultActions response = mockMvc.perform(post("/poi/register")
                                 .contentType("application/json")
-                                .with(user("douglas@example.com").password("senha123").roles("MASTER")) // Autenticação - Authentication
+                                .with(user("douglas@example.com").password("Senha123*").roles("MASTER")) // Autenticação
+                                                                                                         // -
+                                                                                                         // Authentication
                                 .content(objectMapper.writeValueAsString(poiDTO)));
 
                 // then / assert
@@ -143,10 +164,13 @@ public class POIControllerTest {
         void testListPreferencesObject_whenFindAll_ThenReturnListPreferences()
                         throws JsonProcessingException, Exception {
                 // given / arrange
-                motivations = List.of(Motivations.CULTURE, Motivations.STUDY);
-                hobbies = List.of(Hobbies.PHOTOGRAPHY, Hobbies.MUSIC);
-                themes = List.of(Themes.HISTORY, Themes.ADVENTURE);
-                poiAddress = new Address("Rua Exemplo", 100, "Apto 202", "Boa Viagem", "Recife","PE", "Brasil", "50000000");
+                motivations = List.of(Motivations.CULTURE, Motivations.STUDY, Motivations.APPRECIATION,
+                                Motivations.RELAXATION, Motivations.SOCIAL);
+                hobbies = List.of(Hobbies.PHOTOGRAPHY, Hobbies.MUSIC, Hobbies.ADVENTURE, Hobbies.ART, Hobbies.READING);
+                themes = List.of(Themes.HISTORY, Themes.ADVENTURE, Themes.NATURE, Themes.CULTURAL,
+                                Themes.AFRO_BRAZILIAN);
+                poiAddress = new Address("Rua Exemplo", 100, "Apto 202", "Boa Viagem", "Recife", "PE", "Brasil",
+                                "50000000");
 
                 poi = new POI("Parque da Cidade", "Um grande parque urbano com áreas verdes, trilhas e lagos.",
                                 motivations, hobbies, themes, poiAddress);
@@ -156,7 +180,8 @@ public class POIControllerTest {
                 List<Motivations> motivations1 = List.of(Motivations.CULTURE, Motivations.STUDY);
                 List<Hobbies> hobbies1 = List.of(Hobbies.PHOTOGRAPHY, Hobbies.MUSIC);
                 List<Themes> themes1 = List.of(Themes.HISTORY, Themes.ADVENTURE);
-                Address poiAddress1 = new Address("Rua Exemplo", 100, "Apto 202", "Boa Viagem", "Recife","PE", "Brasil",
+                Address poiAddress1 = new Address("Rua Exemplo", 100, "Apto 202", "Boa Viagem", "Recife", "PE",
+                                "Brasil",
                                 "50000000");
 
                 POI poi1 = new POI("Parque da Cidade", "Um grande parque urbano com áreas verdes, trilhas e lagos.",
@@ -167,10 +192,10 @@ public class POIControllerTest {
                 Pageable pageable = PageRequest.of(0, 10);
 
                 List<POIDTO> poiDTOList = List.of(
-                                new POIDTO(poi.getId(), poi.getName(), poi.getDescription(), poi.getMotivations(), 
-                                poi.getHobbies(),poi.getThemes(), poi.getAddress()),
+                                new POIDTO(poi.getId(), poi.getName(), poi.getDescription(), poi.getMotivations(),
+                                                poi.getHobbies(), poi.getThemes(), poi.getAddress()),
                                 new POIDTO(poi1.getId(), poi1.getName(), poi1.getDescription(), poi1.getMotivations(),
-                                poi1.getHobbies(), poi1.getThemes(), poi1.getAddress()));
+                                                poi1.getHobbies(), poi1.getThemes(), poi1.getAddress()));
 
                 Page<POIDTO> poiPage = new PageImpl<>(poiDTOList, pageable, 2);
 
@@ -180,7 +205,9 @@ public class POIControllerTest {
                 ResultActions response = mockMvc.perform(get("/poi")
                                 .param("page", "0")
                                 .param("size", "10")
-                                .with(user("douglas@example.com").password("senha123").roles("MASTER")) // Autenticação - Authentication
+                                .with(user("douglas@example.com").password("senha123").roles("MASTER")) // Autenticação
+                                                                                                        // -
+                                                                                                        // Authentication
                                 .contentType("application/json"));
 
                 // then / assert
@@ -192,10 +219,13 @@ public class POIControllerTest {
         @Test
         void testGivenPOIId_whenFindbyId_ThenReturnPOIDTO() throws JsonProcessingException, Exception {
                 // given / arrange
-                motivations = List.of(Motivations.CULTURE, Motivations.STUDY);
-                hobbies = List.of(Hobbies.PHOTOGRAPHY, Hobbies.MUSIC);
-                themes = List.of(Themes.HISTORY, Themes.ADVENTURE);
-                poiAddress = new Address("Rua Exemplo", 100, "Apto 202", "Boa Viagem", "Recife","PE", "Brasil", "50000000");
+                motivations = List.of(Motivations.CULTURE, Motivations.STUDY, Motivations.APPRECIATION,
+                                Motivations.RELAXATION, Motivations.SOCIAL);
+                hobbies = List.of(Hobbies.PHOTOGRAPHY, Hobbies.MUSIC, Hobbies.ADVENTURE, Hobbies.ART, Hobbies.READING);
+                themes = List.of(Themes.HISTORY, Themes.ADVENTURE, Themes.NATURE, Themes.CULTURAL,
+                                Themes.AFRO_BRAZILIAN);
+                poiAddress = new Address("Rua Exemplo", 100, "Apto 202", "Boa Viagem", "Recife", "PE", "Brasil",
+                                "50000000");
 
                 poi = new POI("Parque da Cidade", "Um grande parque urbano com áreas verdes, trilhas e lagos.",
                                 motivations, hobbies, themes, poiAddress);
@@ -211,7 +241,9 @@ public class POIControllerTest {
 
                 // when / act
                 ResultActions response = mockMvc.perform(get("/poi/id/{id}", id)
-                                .with(user("douglas@example.com").password("senha123").roles("MASTER")) // Autenticação - Authentication
+                                .with(user("douglas@example.com").password("senha123").roles("MASTER")) // Autenticação
+                                                                                                        // -
+                                                                                                        // Authentication
                                 .contentType("application/json"));
 
                 // then / assert
@@ -225,13 +257,16 @@ public class POIControllerTest {
                                                 .map(Enum::name).collect(Collectors.toList())));
         }
 
-         @Test
+        @Test
         void testGivenPOIId_whenDeleteById_ThenReturnNoContent() throws JsonProcessingException, Exception {
                 // given / arrange
-                motivations = List.of(Motivations.CULTURE, Motivations.STUDY);
-                hobbies = List.of(Hobbies.PHOTOGRAPHY, Hobbies.MUSIC);
-                themes = List.of(Themes.HISTORY, Themes.ADVENTURE);
-                poiAddress = new Address("Rua Exemplo", 100, "Apto 202", "Boa Viagem","Recife", "PE", "Brasil", "50000000");
+                motivations = List.of(Motivations.CULTURE, Motivations.STUDY, Motivations.APPRECIATION,
+                                Motivations.RELAXATION, Motivations.SOCIAL);
+                hobbies = List.of(Hobbies.PHOTOGRAPHY, Hobbies.MUSIC, Hobbies.ADVENTURE, Hobbies.ART, Hobbies.READING);
+                themes = List.of(Themes.HISTORY, Themes.ADVENTURE, Themes.NATURE, Themes.CULTURAL,
+                                Themes.AFRO_BRAZILIAN);
+                poiAddress = new Address("Rua Exemplo", 100, "Apto 202", "Boa Viagem", "Recife", "PE", "Brasil",
+                                "50000000");
 
                 poi = new POI("Parque da Cidade", "Um grande parque urbano com áreas verdes, trilhas e lagos.",
                                 motivations, hobbies, themes, poiAddress);
@@ -244,7 +279,9 @@ public class POIControllerTest {
                 // when / act
 
                 ResultActions response = mockMvc.perform(delete("/poi/id/{id}", id)
-                                .with(user("douglas@example.com").password("senha123").roles("MASTER")) // Autenticação - Authentication
+                                .with(user("douglas@example.com").password("senha123").roles("MASTER")) // Autenticação
+                                                                                                        // -
+                                                                                                        // Authentication
                                 .contentType("application/json"));
 
                 // then / assert
@@ -255,10 +292,13 @@ public class POIControllerTest {
         @Test
         void testGivenPOIDTO_whenUpdate_ThenReturnString() throws JsonProcessingException, Exception {
                 // given / arrange
-                motivations = List.of(Motivations.CULTURE, Motivations.STUDY);
-                hobbies = List.of(Hobbies.PHOTOGRAPHY, Hobbies.MUSIC);
-                themes = List.of(Themes.HISTORY, Themes.ADVENTURE);
-                poiAddress = new Address("Rua Exemplo", 100, "Apto 202", "Boa Viagem", "Recife","PE", "Brasil", "50000000");
+                motivations = List.of(Motivations.CULTURE, Motivations.STUDY, Motivations.APPRECIATION,
+                                Motivations.RELAXATION, Motivations.SOCIAL);
+                hobbies = List.of(Hobbies.PHOTOGRAPHY, Hobbies.MUSIC, Hobbies.ADVENTURE, Hobbies.ART, Hobbies.READING);
+                themes = List.of(Themes.HISTORY, Themes.ADVENTURE, Themes.NATURE, Themes.CULTURAL,
+                                Themes.AFRO_BRAZILIAN);
+                poiAddress = new Address("Rua Exemplo", 100, "Apto 202", "Boa Viagem", "Recife", "PE", "Brasil",
+                                "50000000");
 
                 poi = new POI("Parque da Cidade", "Um grande parque urbano com áreas verdes, trilhas e lagos.",
                                 motivations, hobbies, themes, poiAddress);
@@ -266,14 +306,17 @@ public class POIControllerTest {
                 ReflectionTestUtils.setField(poi, "id", 1L); // ID definido via reflection - ID defined via reflection
 
                 POIDTO poiDTO = new POIDTO(1L, "Parque da Cidade2",
-                "Um grande parque urbano com áreas verdes, trilhas e lagos.");
+                                "Um grande parque urbano com áreas verdes, trilhas e lagos.", motivations, hobbies,
+                                themes, poiAddress);
 
                 willDoNothing().given(poiService).update(any(POIDTO.class));
 
                 // when / act
 
                 ResultActions response = mockMvc.perform(put("/poi")
-                                .with(user("douglas@example.com").password("senha123").roles("MASTER")) // Autenticação - Authentication
+                                .with(user("douglas@example.com").password("Senha123*").roles("MASTER"))  // Autenticação
+                                                                                                        // -
+                                                                                                        // Authentication
                                 .contentType("application/json")
                                 .content(objectMapper.writeValueAsString(poiDTO))); // Enviando JSON - Sending JSON
 

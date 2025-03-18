@@ -49,11 +49,21 @@ public class POIRepositoryTest {
         poiRepository.deleteAll();
 
         address = new Address(
-                "Rua Exemplo", 100, "Apto 202", "Boa Viagem","Recife",
-                "PE", "Brasil", "50000000");
+                "Avenida Central", 250, "Casa 5", "Boa Viagem", "Recife",
+                "PE", "Brasil", "01000000");
 
-        user = new User("Douglas", "Fragoso", 30, "Masculino", "12345678900", "81-98765-4321", "douglas@example.com",
-                "senha123", address, Roles.USER);
+        user = new User(
+                "Mariana", 
+                "Silva", 
+                28,
+                "Feminino", 
+                "98765432100", 
+                "11-99876-5432", 
+                "mariana@example.com", 
+                "Segura456*", 
+                address, 
+                Roles.USER 
+        );
 
         motivations = List.of(Motivations.CULTURE, Motivations.STUDY);
         hobbies = List.of(Hobbies.PHOTOGRAPHY, Hobbies.MUSIC);

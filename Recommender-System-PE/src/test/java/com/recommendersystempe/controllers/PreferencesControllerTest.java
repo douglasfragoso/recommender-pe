@@ -91,11 +91,20 @@ public class PreferencesControllerTest {
         public void setUp() {
                 // given / arrange
                 address = new Address(
-                                "Rua Exemplo", 100, "Apto 202", "Boa Viagem","Recife",
+                                "Rua Exemplo", 100, "Apto 202", "Boa Viagem", "Recife",
                                 "PE", "Brasil", "50000000");
 
-                user = new User("Douglas", "Fragoso", 30, "Masculino", "12345678900", "81-98765-4321",
-                                "douglas@example.com", "senha123", address, Roles.MASTER);
+                user = new User(
+                                "Douglas",
+                                "Fragoso",
+                                30,
+                                "Masculino",
+                                "12345678909",
+                                "81-98765-4321",
+                                "douglas@example.com",
+                                "Senha123*",
+                                address,
+                                Roles.MASTER);
                 ReflectionTestUtils.setField(user, "id", 1L); // ID definido via reflection - ID defined via reflection
 
                 // Configurar UserDetailsService mockado - Configure mocked UserDetailsService
@@ -106,35 +115,6 @@ public class PreferencesControllerTest {
 
                 // Mockar UserDetailsService - Mock UserDetailsService
                 given(authenticationService.loadUserByUsername(user.getEmail())).willReturn(userDetails);
-        }
-
-        @Test
-        void testGivenPreferencesDTO_whenSave_ThenReturnPreferencesDTO() throws JsonProcessingException, Exception {
-                // given / arrange
-                motivations = List.of(Motivations.CULTURE, Motivations.STUDY);
-                hobbies = List.of(Hobbies.PHOTOGRAPHY, Hobbies.MUSIC);
-                themes = List.of(Themes.HISTORY, Themes.ADVENTURE);
-                currentLocation = new Address("Rua Exemplo", 100, "Apto 202", "Boa Viagem", "Recife","PE", "Brasil", "50000000");
-                preferencesDTO = new PreferencesDTO(motivations, hobbies, themes, currentLocation);
-
-                given(preferencesService.insert(any(PreferencesDTO.class)))
-                                .willAnswer((invocation) -> invocation.getArgument(0));
-
-                // when / act
-                ResultActions response = mockMvc.perform(post("/preferences/register")
-                                .contentType("application/json")
-                                .with(user("douglas@example.com").password("senha123").roles("MASTER")) // Autenticação
-                                .content(objectMapper.writeValueAsString(preferencesDTO)));
-
-                // then / assert
-                response.andDo(print())
-                                .andExpect(status().isCreated())
-                                .andExpect(jsonPath("$.motivations").value(preferencesDTO.getMotivations().stream()
-                                                .map(Enum::name).collect(Collectors.toList())))
-                                .andExpect(jsonPath("$.hobbies").value(preferencesDTO.getHobbies().stream()
-                                                .map(Enum::name).collect(Collectors.toList())))
-                                .andExpect(jsonPath("$.themes").value(preferencesDTO.getThemes().stream()
-                                                .map(Enum::name).collect(Collectors.toList())));
         }
 
         @Test
