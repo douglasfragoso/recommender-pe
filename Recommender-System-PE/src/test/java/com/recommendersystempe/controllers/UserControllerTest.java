@@ -2,15 +2,14 @@ package com.recommendersystempe.controllers;
 
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.BDDMockito.*;
-import static org.mockito.Mockito.*;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import java.util.Collections;
 import java.util.List;
-import org.springframework.security.core.userdetails.UserDetailsService;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,10 +19,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.util.ReflectionTestUtils;
@@ -42,300 +38,189 @@ import com.recommendersystempe.service.AuthenticationService;
 import com.recommendersystempe.service.TokenService;
 import com.recommendersystempe.service.UserService;
 
-@SuppressWarnings("unused")
-@WebMvcTest(UserController.class) // Habilita o contexto do Spring MVC para testes - Enables the Spring MVC context for testing
-@Import(SecurityConfig.class) // Importa a configuração real - Imports the real configuration
+@WebMvcTest(UserController.class)
+@Import(SecurityConfig.class)
 public class UserControllerTest {
 
-        // MockMvc é uma classe do Spring Test que permite simular requisições HTTP - MockMvc is a Spring Test class that allows you to simulate HTTP requests
-        @Autowired
-        private MockMvc mockMvc;
+    private static final Address ADDRESS = new Address(
+            "Rua Exemplo", 100, "Apto 202", "Boa Viagem", "Recife",
+            "PE", "Brasil", "50000000");
+    private static final User USER = new User(
+            "Douglas",
+            "Fragoso",
+            30,
+            "Masculino",
+            "12345678900",
+            "81-98765-4321",
+            "douglas@example.com",
+            "Senha123*",
+            ADDRESS,
+            Roles.MASTER);
 
-        // ObjectMapper é uma classe do Jackson que permite converter objetos Java em JSON e vice-versa - ObjectMapper is a Jackson class that allows you to convert Java objects to JSON and vice versa
-        @Autowired
-        private ObjectMapper objectMapper;
+    @Autowired
+    private MockMvc mockMvc;
 
-        @MockitoBean // anotação do Spring Test que cria um mock de um bean, precisa de contexto - Spring Test annotation that creates a mock of a bean, needs context
-        private UserService userService;
+    @Autowired
+    private ObjectMapper objectMapper;
 
-        @MockitoBean // anotação do Spring Test que cria um mock de um bean, precisa de contexto - Spring Test annotation that creates a mock of a bean, needs context
-        private AuthenticationService authenticationService;
+    @MockitoBean
+    private UserService userService;
 
-        @MockitoBean
-        private TokenService tokenService;
+    @MockitoBean
+    private AuthenticationService authenticationService;
 
-        @MockitoBean // Apenas se o UserRepository for usado indiretamente - Only if UserRepository is used indirectly
-        private UserRepository userRepository;
+    @MockitoBean
+    private TokenService tokenService;
 
-        private UserDTO userDTO;
-        private Address address;
+    @MockitoBean
+    private UserRepository userRepository;
 
-        @BeforeEach
-        public void setUp() {
-                // given / arrange
-                address = new Address(
-                                "Rua Exemplo", 100, "Apto 202", "Boa Viagem","Recife",
-                                "PE", "Brasil", "50000000");
+    @BeforeEach
+    public void setUp() {
+        ReflectionTestUtils.setField(USER, "id", 1L); 
+        UserDetails userDetails = new org.springframework.security.core.userdetails.User(
+                USER.getEmail(),
+                USER.getPassword(),
+                Collections.singletonList(new SimpleGrantedAuthority("ROLE_MASTER"))
+        );
+        given(authenticationService.loadUserByUsername(USER.getEmail())).willReturn(userDetails);
+    }
 
-                userDTO = new UserDTO("Douglas", "Fragoso", 30, "Masculino", "12345678900", "81-98765-4321",
-                                "douglas@example.com",
-                                "Senha123*", address);
-        }
+    @Test
+    void testGivenUserDTO_whenSave_ThenReturnUserDTO() throws JsonProcessingException, Exception {
+        // given / arrange
+        UserDTO userDTO = new UserDTO("Douglas", "Fragoso", 30, "Masculino", "12345678900", "81-98765-4321",
+                "douglas@example.com", "Senha123*", ADDRESS);
 
-        @Test
-        void testGivenUserDTO_whenSave_ThenReturnUserDTO() throws JsonProcessingException, Exception {
-                // given / arrange
-                given(userService.insert(any(UserDTO.class))).willAnswer((invocation) -> invocation.getArgument(0));
+        given(userService.insert(any(UserDTO.class))).willAnswer((invocation) -> invocation.getArgument(0));
 
-                // when / act
-                ResultActions response = mockMvc.perform(post("/user/register")
-                                .contentType("application/json")
-                                .content(objectMapper.writeValueAsString(userDTO)));
+        // when / act
+        ResultActions response = mockMvc.perform(post("/user/register")
+                .contentType("application/json")
+                .content(objectMapper.writeValueAsString(userDTO)));
 
-                // then / assert
-                response.andDo(print())
-                                .andExpect(status().isCreated())
-                                .andExpect(jsonPath("$.firstName").value(userDTO.getFirstName()))
-                                .andExpect(jsonPath("$.lastName").value(userDTO.getLastName()))
-                                .andExpect(jsonPath("$.address.street").value(userDTO.getAddress().getStreet()))
-                                .andExpect(jsonPath("$.address.number").value(userDTO.getAddress().getNumber()))
-                                .andExpect(jsonPath("$.gender").value(userDTO.getGender()))
-                                .andExpect(jsonPath("$.cpf").value(userDTO.getCpf()))
-                                .andExpect(jsonPath("$.email").value(userDTO.getEmail()))
-                                .andExpect(jsonPath("$.phone").value(userDTO.getPhone()));
-        }
+        // then / assert
+        response.andDo(print())
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.firstName").value(userDTO.getFirstName()))
+                .andExpect(jsonPath("$.lastName").value(userDTO.getLastName()))
+                .andExpect(jsonPath("$.address.street").value(userDTO.getAddress().getStreet()))
+                .andExpect(jsonPath("$.address.number").value(userDTO.getAddress().getNumber()))
+                .andExpect(jsonPath("$.gender").value(userDTO.getGender()))
+                .andExpect(jsonPath("$.cpf").value(userDTO.getCpf()))
+                .andExpect(jsonPath("$.email").value(userDTO.getEmail()))
+                .andExpect(jsonPath("$.phone").value(userDTO.getPhone()));
+    }
 
-        @Test
-        void testListUserObject_whenFindAll_ThenReturnListUser() throws JsonProcessingException, Exception {
-                // given / arrange
-                Address address = new Address(
-                                "Rua Exemplo", 100, "Apto 202", "Boa Viagem","Recife",
-                                "PE", "Brasil", "50000000");
+    @Test
+    void testListUserObject_whenFindAll_ThenReturnListUser() throws JsonProcessingException, Exception {
+        // given / arrange
+        Address address1 = new Address("Rua Exemplo1", 101, "Apto 203", "Boa Viagem", "Recife", "PE", "Brasil", "50000003");
 
-                User user = new User("Douglas", "Fragoso", 30, "Masculino", "12345678900", "81-98765-4321",
-                                "douglas@example.com", "senha123", address, Roles.MASTER);
-                ReflectionTestUtils.setField(user, "id", 1L); // ID definido via reflection - ID defined via reflection
+        UserDTO userDTO1 = new UserDTO("Douglas", "Fragoso", 30, "Masculino", "12345678900", "81-98765-4321",
+                "douglas@example.com", "Senha123*", ADDRESS);
+        UserDTO userDTO2 = new UserDTO("Lucas", "Fragoso", 30, "Masculino", "12345678901", "81-98765-4322",
+                "lucas@example.com", "Senha123*", address1);
 
-                Address address1 = new Address(
-                                "Rua Exemplo1", 101, "Apto 203", "Boa Viagem","Recife",
-                                "PE", "Brasil", "50000003");
+        Pageable pageable = PageRequest.of(0, 10);
+        List<UserDTO> userDTOList = List.of(
+                                new UserDTO(userDTO1.getFirstName(), userDTO1.getLastName(), userDTO1.getAge(), userDTO1.getGender(),
+                                                userDTO1.getCpf(), userDTO1.getPhone(), userDTO1.getEmail(), userDTO1.getUserPassword(),
+                                                userDTO1.getAddress()),
+                                new UserDTO(userDTO2.getFirstName(), userDTO2.getLastName(), userDTO2.getAge(),
+                                                userDTO2.getGender(), userDTO2.getCpf(), userDTO2.getPhone(), userDTO2.getEmail(),
+                                                userDTO2.getUserPassword(), userDTO2.getAddress()));
+        Page<UserDTO> userPage = new PageImpl<>(userDTOList, pageable, 2);
 
-                User user1 = new User("Lucas", "Fragoso", 30, "Masculino", "12345678901", "81-98765-4322",
-                                "lucas@example.com",
-                                "senha123", address1, Roles.USER);
-                ReflectionTestUtils.setField(user, "id", 2L); // ID definido via reflection - ID defined via reflection
+        given(userService.findAll(any(Pageable.class))).willReturn(userPage);
 
-                Pageable pageable = PageRequest.of(0, 10);
+        // when / act
+        ResultActions response = mockMvc.perform(get("/user")
+                .param("page", "0")
+                .param("size", "10")
+                .with(user(USER.getEmail()).password(USER.getPassword()).roles("MASTER"))
+                .contentType("application/json"));
 
-                // Configurar UserDetailsService mockado - Configure mocked UserDetailsService
-                UserDetails userDetails = new org.springframework.security.core.userdetails.User(
-                                user.getEmail(),
-                                user.getPassword(),
-                                Collections.singletonList(new SimpleGrantedAuthority("ROLE_MASTER")) 
-                );
+        // then / assert
+        response.andExpect(status().isOk())
+                .andDo(print())
+                .andExpect(jsonPath("$.totalElements").value(userPage.getTotalElements()));
+    }
 
-                // Mockar UserDetailsService - Mock UserDetailsService
-                given(authenticationService.loadUserByUsername(user.getEmail())).willReturn(userDetails);
+    @Test
+    void testGivenUserId_whenFindbyId_ThenReturnUser() throws JsonProcessingException, Exception {
+        // given / arrange
+        UserDTO userDTO = new UserDTO("Douglas", "Fragoso", 30, "Masculino", "12345678900", "81-98765-4321",
+                "douglas@example.com", "Senha123*", ADDRESS);
 
-                List<UserDTO> userDTOList = List.of(
-                                new UserDTO(user.getFirstName(), user.getLastName(), user.getAge(), user.getGender(),
-                                                user.getCpf(), user.getPhone(), user.getEmail(), user.getPassword(),
-                                                user.getAddress()),
-                                new UserDTO(user1.getFirstName(), user1.getLastName(), user1.getAge(),
-                                                user1.getGender(), user1.getCpf(), user1.getPhone(), user1.getEmail(),
-                                                user1.getPassword(), user1.getAddress()));
+        Long id = 1L;
+        given(userService.findById(id)).willReturn(userDTO);
 
-                Page<UserDTO> userPage = new PageImpl<>(userDTOList, pageable, 2);
+        // when / act
+        ResultActions response = mockMvc.perform(get("/user/id/{id}", id)
+                .with(user(USER.getEmail()).password(USER.getPassword()).roles("MASTER"))
+                .contentType("application/json"));
 
-                given(userService.findAll(any(Pageable.class))).willReturn(userPage);
+        // then / assert
+        response.andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.firstName").value(userDTO.getFirstName()))
+                .andExpect(jsonPath("$.lastName").value(userDTO.getLastName()))
+                .andExpect(jsonPath("$.address").value(userDTO.getAddress()))
+                .andExpect(jsonPath("$.gender").value(userDTO.getGender()))
+                .andExpect(jsonPath("$.email").value(userDTO.getEmail()));
+    }
 
-                // when / act
-                ResultActions response = mockMvc.perform(get("/user")
-                                .param("page", "0")
-                                .param("size", "10")
-                                .with(user("douglas@example.com").password("senha123").roles("MASTER")) // Autenticação
-                                .contentType("application/json"));
+    @Test
+    void testGivenUserId_whenDeleteById_ThenReturnNoContent() throws JsonProcessingException, Exception {
+        // given / arrange
+        Long id = 1L;
+        willDoNothing().given(userService).deleteById(id);
 
-                // then / assert
-                response.andExpect(status().isOk())
-                                .andDo(print())
-                                .andExpect(jsonPath("$.totalElements").value(userPage.getTotalElements()));
-        }
+        // when / act
+        ResultActions response = mockMvc.perform(delete("/user/id/{id}", id)
+                .with(user(USER.getEmail()).password(USER.getPassword()).roles("MASTER"))
+                .contentType("application/json"));
 
-        @Test
-        void testGivenUserId_whenFindbyId_ThenReturnUser() throws JsonProcessingException, Exception {
-                // given / arrange
-                Address address = new Address(
-                                "Rua Exemplo", 100, "Apto 202", "Boa Viagem","Recife",
-                                "PE", "Brasil", "50000000");
+        // then / assert
+        response.andDo(print())
+                .andExpect(status().isNoContent());
+    }
 
-                User user = new User("Douglas", "Fragoso", 30, "Masculino", "12345678900", "81-98765-4321",
-                                "douglas@example.com", "senha123", address, Roles.MASTER);
-                ReflectionTestUtils.setField(user, "id", 1L); // ID definido via reflection - ID defined via reflection
+    @Test
+    void testGivenUserDTO_whenUpdate_ThenReturnString() throws JsonProcessingException, Exception {
+        // given / arrange
+        UserDTO userDTO = new UserDTO("John", "Doe", 32, "Feminino", "12345678900", "81-98765-4322",
+                "douglas@example.com", "Senha123*", ADDRESS);
 
-                // Configurar UserDetailsService mockado - Configure mocked UserDetailsService
-                UserDetails userDetails = new org.springframework.security.core.userdetails.User(
-                                user.getEmail(),
-                                user.getPassword(),
-                                Collections.singletonList(new SimpleGrantedAuthority("ROLE_MASTER")) 
-                );
-                // Mockar UserDetailsService - Mock UserDetailsService
-                given(authenticationService.loadUserByUsername(user.getEmail())).willReturn(userDetails);
-                Long id = 1L;
-                given(userService.findById(id)).willReturn(new UserDTO(user.getId(), user.getFirstName(),
-                                user.getLastName(), user.getAge(), user.getGender(), user.getCpf(), user.getPhone(),
-                                user.getEmail(), user.getAddress(), user.getRole()));
+        willDoNothing().given(userService).update(any(UserDTO.class));
 
-                // when / act
-                ResultActions response = mockMvc.perform(get("/user/id/{id}", id)
-                                .with(user("douglas@example.com").password("senha123").roles("MASTER")) // Autenticação
-                                .contentType("application/json"));
+        // when / act
+        ResultActions response = mockMvc.perform(put("/user")
+                .with(user(USER.getEmail()).password(USER.getPassword()).roles("MASTER"))
+                .contentType("application/json")
+                .content(objectMapper.writeValueAsString(userDTO)));
 
-                // then / assert
-                response.andDo(print())
-                                .andExpect(status().isOk())
-                                .andExpect(jsonPath("$.firstName").value(user.getFirstName()))
-                                .andExpect(jsonPath("$.lastName").value(user.getLastName()))
-                                .andExpect(jsonPath("$.address").value(user.getAddress()))
-                                .andExpect(jsonPath("$.gender").value(user.getGender()))
-                                .andExpect(jsonPath("$.email").value(user.getEmail()));
-        }
+        // then / assert
+        response.andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().string("Profile updated successfully"));
+    }
 
-        @Test
-        void testGivenUserId_whenDeleteById_ThenReturnNoContent() throws JsonProcessingException, Exception {
-                // given / arrange
-                Address address = new Address(
-                                "Rua Exemplo", 100, "Apto 202", "Boa Viagem","Recife",
-                                "PE", "Brasil", "50000000");
+    @Test
+    void testGivenUserId_whenUpdateRole_ThenReturnString() throws JsonProcessingException, Exception {
+        // given / arrange
+        Long id = 2L;
+        willDoNothing().given(userService).updateRole(id);
 
-                User user = new User("Douglas", "Fragoso", 30, "Masculino", "12345678900", "81-98765-4321",
-                                "douglas@example.com", "senha123", address, Roles.MASTER);
-                ReflectionTestUtils.setField(user, "id", 1L); // ID definido via reflection - ID defined via reflection
+        // when / act
+        ResultActions response = mockMvc.perform(put("/user/roles/id/{id}", id)
+                .with(user(USER.getEmail()).password(USER.getPassword()).roles("MASTER"))
+                .contentType("application/json"));
 
-                Address address1 = new Address(
-                                "Rua Exemplo1", 101, "Apto 203", "Boa Viagem","Recife",
-                                "PE", "Brasil", "50000003");
-
-                User user1 = new User("Lucas", "Fragoso", 30, "Masculino", "12345678901", "81-98765-4322",
-                                "lucas@example.com", "senha123", address1, Roles.USER);
-
-                ReflectionTestUtils.setField(user, "id", 2L); // ID definido via reflection - ID defined via reflection
-
-                // Configurar UserDetailsService mockado - Configure mocked UserDetailsService
-                UserDetails userDetails = new org.springframework.security.core.userdetails.User(
-                                user.getEmail(),
-                                user.getPassword(),
-                                Collections.singletonList(new SimpleGrantedAuthority("ROLE_MASTER")) 
-                );
-                // Mockar UserDetailsService - Mock UserDetailsService
-                given(authenticationService.loadUserByUsername(user.getEmail())).willReturn(userDetails);
-
-                Long id = 2L;
-                willDoNothing().given(userService).deleteById(id);
-
-                // when / act
-
-                ResultActions response = mockMvc.perform(delete("/user/id/{id}", id)
-                                .with(user("douglas@example.com").password("senha123").roles("MASTER")) // Autenticação
-                                .contentType("application/json"));
-
-                // then / assert
-                response.andDo(print())
-                                .andExpect(status().isNoContent());
-        }
-
-        @Test
-        void testGivenUserDTO_whenUpdate_ThenReturnString() throws JsonProcessingException, Exception {
-                // given / arrange
-                Address address = new Address(
-                                "Rua Exemplo", 100, "Apto 202", "Boa Viagem","Recife",
-                                "PE", "Brasil", "50000000");
-
-                User user = new User("Douglas", "Fragoso", 30, "Masculino", "12345678900", "81-98765-4321",
-                                "douglas@example.com", "senha123", address, Roles.MASTER);
-                ReflectionTestUtils.setField(user, "id", 1L); // ID definido via reflection - ID defined via reflection
-
-                Address address1 = new Address(
-                                "Rua Exemplo1", 101, "Apto 203", "Boa Viagem","Recife",
-                                "PE", "Brasil", "50000003");
-
-                User user1 = new User("Lucas", "Fragoso", 30, "Masculino", "12345678901", "81-98765-4322",
-                                "lucas@example.com", "senha123", address1, Roles.USER);
-
-                ReflectionTestUtils.setField(user, "id", 2L); // ID definido via reflection - ID defined via reflection
-
-                // Configurar UserDetailsService mockado - Configure mocked UserDetailsService
-                UserDetails userDetails = new org.springframework.security.core.userdetails.User(
-                                user.getEmail(),
-                                user.getPassword(),
-                                Collections.singletonList(new SimpleGrantedAuthority("ROLE_MASTER")) 
-                );
-                // Mockar UserDetailsService - Mock UserDetailsService
-                given(authenticationService.loadUserByUsername(user.getEmail())).willReturn(userDetails);
-
-                UserDTO userDTO = new UserDTO();
-                userDTO.setFirstName("John");
-                userDTO.setLastName("Doe");
-                userDTO.setAge(32);
-                userDTO.setGender("Feminino");
-                userDTO.setPhone("81-98765-4322");
-
-                willDoNothing().given(userService).update(any(UserDTO.class));
-
-                // when / act
-
-                ResultActions response = mockMvc.perform(put("/user")
-                                .with(user("douglas@example.com").password("senha123").roles("MASTER")) // Autenticação - Authentication
-                                .contentType("application/json") 
-                                .content(objectMapper.writeValueAsString(userDTO))); // Enviando JSON - Sending JSON
-
-                // then / assert
-                response.andDo(print())
-                                .andExpect(status().isOk())
-                                .andExpect(content().string("Profile updated successfully"));
-        }
-
-        @Test
-        void testGivenUserId_whenUpdateRole_ThenReturnString() throws JsonProcessingException, Exception {
-                // given / arrange
-                Address address = new Address(
-                                "Rua Exemplo", 100, "Apto 202", "Boa Viagem","Recife",
-                                "PE", "Brasil", "50000000");
-
-                User user = new User("Douglas", "Fragoso", 30, "Masculino", "12345678900", "81-98765-4321",
-                                "douglas@example.com", "senha123", address, Roles.MASTER);
-                ReflectionTestUtils.setField(user, "id", 1L); // ID definido via reflection - ID defined via reflection
-
-                Address address1 = new Address(
-                                "Rua Exemplo1", 101, "Apto 203", "Boa Viagem","Recife",
-                                "PE", "Brasil", "50000003");
-
-                User user1 = new User("Lucas", "Fragoso", 30, "Masculino", "12345678901", "81-98765-4322",
-                                "lucas@example.com", "senha123", address1, Roles.USER);
-
-                ReflectionTestUtils.setField(user1, "id", 2L); // ID definido via reflection - ID defined via reflection
-
-                // Configurar UserDetailsService mockado - Configure mocked UserDetailsService
-                UserDetails userDetails = new org.springframework.security.core.userdetails.User(
-                                user.getEmail(),
-                                user.getPassword(),
-                                Collections.singletonList(new SimpleGrantedAuthority("ROLE_MASTER")) 
-                );
-                // Mockar UserDetailsService - Mock UserDetailsService
-                given(authenticationService.loadUserByUsername(user.getEmail())).willReturn(userDetails);
-
-                Long id = 2L;
-
-                willDoNothing().given(userService).updateRole(id);
-
-                // when / act
-                ResultActions response = mockMvc.perform(put("/user/roles/id/{id}", id)
-                                .with(user("douglas@example.com").password("senha123").roles("MASTER"))
-                                .contentType("application/json"))
-                                .andExpect(status().isOk());
-                // then / assert
-                response.andDo(print())
-                                .andExpect(status().isOk())
-                                .andExpect(content().string("Role updated successfully"));
-        }
+        // then / assert
+        response.andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().string("Role updated successfully"));
+    }
 }
