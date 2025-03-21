@@ -9,155 +9,124 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.recommendersystempe.enums.Hobbies;
 import com.recommendersystempe.enums.Motivations;
-import com.recommendersystempe.enums.Roles;
 import com.recommendersystempe.enums.Themes;
 import com.recommendersystempe.models.Address;
 import com.recommendersystempe.models.POI;
-import com.recommendersystempe.models.User;
 
-import jakarta.persistence.EntityManager;
-
-@DataJpaTest // annotation that configures the test to use an in-memory database
+@DataJpaTest
 public class POIRepositoryTest {
+
+    private static final List<Motivations> MOTIVATIONS = List.of(
+            Motivations.CULTURE, Motivations.STUDY, Motivations.APPRECIATION,
+            Motivations.RELAXATION, Motivations.SOCIAL);
+    private static final List<Hobbies> HOBBIES = List.of(
+            Hobbies.PHOTOGRAPHY, Hobbies.MUSIC, Hobbies.ADVENTURE,
+            Hobbies.ART, Hobbies.READING);
+    private static final List<Themes> THEMES = List.of(
+            Themes.HISTORY, Themes.ADVENTURE, Themes.NATURE,
+            Themes.CULTURAL, Themes.AFRO_BRAZILIAN);
 
     @Autowired
     private POIRepository poiRepository;
 
-    @Autowired
-    private UserRepository userRepository;
-
-    // EntityManager is used to interact with the persistence context
-    @Autowired
-    private EntityManager entityManager;
-
-    private User user;
-    private Address address;
     private POI poi;
     private List<Motivations> motivations;
     private List<Hobbies> hobbies;
     private List<Themes> themes;
     private Address poiAddress;
 
+    private POI createPOI(String name, String description, List<Motivations> motivations, List<Hobbies> hobbies,
+            List<Themes> themes, Address address) {
+        return new POI(name, description, MOTIVATIONS, HOBBIES, THEMES, address);
+    }
+
+    private Address createAddress(String street, int number, String complement, String neighborhood, String city,
+            String state, String country, String zipCode) {
+        return new Address(street, number, complement, neighborhood, city, state, country, zipCode);
+    }
+
     @BeforeEach
     public void setUp() {
-        // given / arrange
-        userRepository.deleteAll();
+        // Clear repositories before each test
         poiRepository.deleteAll();
 
-        address = new Address(
-                "Avenida Central", 250, "Casa 5", "Boa Viagem", "Recife",
-                "PE", "Brasil", "01000000");
-
-        user = new User(
-                "Mariana", 
-                "Silva", 
-                28,
-                "Feminino", 
-                "98765432100", 
-                "11-99876-5432", 
-                "mariana@example.com", 
-                "Segura456*", 
-                address, 
-                Roles.USER 
-        );
-
-        motivations = List.of(Motivations.CULTURE, Motivations.STUDY);
-        hobbies = List.of(Hobbies.PHOTOGRAPHY, Hobbies.MUSIC);
-        themes = List.of(Themes.HISTORY, Themes.ADVENTURE);
-        poiAddress = new Address("Rua Exemplo", 100, "Apto 202", "Boa Viagem","Recife", "PE", "Brasil", "50000000");
-
-        poi = new POI("Parque da Cidade", "Um grande parque urbano com áreas verdes, trilhas e lagos.", motivations,hobbies, themes, poiAddress);
+        // Create common test data
+        motivations = MOTIVATIONS;
+        hobbies = HOBBIES;
+        themes = THEMES;
+        poiAddress = createAddress("Rua Exemplo", 100, "Apto 202", "Boa Viagem", "Recife", "PE", "Brasil", "50000000");
+        poi = createPOI("Parque da Cidade", "Um grande parque urbano com áreas verdes, trilhas e lagos.", motivations,
+                hobbies, themes, poiAddress);
     }
 
     @Test
-    @Transactional
-    void testGivenPOI_whenSave_ThenReturPOI() {
+    void testSavePOI_ShouldReturnSavedPOI() {
         // when / act
         POI savedPOI = poiRepository.save(poi);
         Optional<POI> foundPOI = poiRepository.findById(savedPOI.getId());
 
         // then / assert
-        assertNotNull(savedPOI, "POI must not be null");
-        assertTrue(savedPOI.getId() > 0, "POI id must be greater than 0");
-        assertNotNull(foundPOI, "POI must be present in the database");
+        assertTrue(foundPOI.isPresent(), "POI must be present in the database");
+        assertEquals(savedPOI.getId(), foundPOI.get().getId(), "POI id must match");
     }
 
     @Test
-    void testGivenPOIList_whenFindAll_ThenReturnPOIList() {
+    void testFindAllPOIs_ShouldReturnListOfPOIs() {
         // given / arrange
-        List<Motivations> motivations1 = List.of(Motivations.CULTURE, Motivations.STUDY);
-        List<Hobbies> hobbies1 = List.of(Hobbies.PHOTOGRAPHY, Hobbies.MUSIC);
-        List<Themes> themes1 = List.of(Themes.HISTORY, Themes.ADVENTURE);
-        Address poiAddress1 = new Address("Rua Exemplo", 100, "Apto 202", "Boa Viagem","Recife", "PE", "Brasil", "50000000");
+        POI poi1 = createPOI("Parque da Cidade1", "Descrição do Parque 1", motivations, hobbies, themes, poiAddress);
+        POI poi2 = createPOI("Parque da Cidade2", "Descrição do Parque 2", motivations, hobbies, themes, poiAddress);
 
-        POI poi1 = new POI("Parque da Cidade1", "Um grande parque urbano com áreas verdes, trilhas e lagos.",
-                motivations1, hobbies1, themes1, poiAddress1);
-
-        userRepository.save(user);
-        poiRepository.save(poi);
         poiRepository.save(poi1);
+        poiRepository.save(poi2);
 
         // when / act
         List<POI> poiList = poiRepository.findAll();
 
         // then / assert
-        assertNotNull(poiList, "POI list must not be null");
-        assertEquals(2, poiList.size(), "POI list must have 2 POI");
+        assertEquals(2, poiList.size(), "POI list must have 2 POIs");
     }
 
     @Test
-    void testGivenSavePOI_whenFindById_ThenReturnPOI() {
+    void testFindPOIById_ShouldReturnPOI() {
         // given / arrange
-        userRepository.save(user);
-        poiRepository.save(poi);
+        POI savedPOI = poiRepository.save(poi);
 
         // when / act
-        Optional<POI> foundPOI = poiRepository.findById(poi.getId());
+        Optional<POI> foundPOI = poiRepository.findById(savedPOI.getId());
 
         // then / assert
-        assertNotNull(foundPOI, "POI must not be null");
         assertTrue(foundPOI.isPresent(), "POI must be present in the database");
-        assertEquals(foundPOI.get().getId(), poi.getId(), "POI id must be the same");
+        assertEquals(savedPOI.getId(), foundPOI.get().getId(), "POI id must match");
     }
 
     @Test
-    @Transactional
-    void testGivenPOI_whenDeleteById_ThenReturnNull() {
+    void testDeletePOIById_ShouldRemovePOI() {
         // given / arrange
-        poiRepository.save(poi);
+        POI savedPOI = poiRepository.save(poi);
 
         // when / act
-        poiRepository.deleteById(poi.getId());
-        Optional<POI> poi1 = poiRepository.findById(poi.getId());
+        poiRepository.deleteById(savedPOI.getId());
+        Optional<POI> foundPOI = poiRepository.findById(savedPOI.getId());
 
         // then / assert
-        assertTrue(poi1.isEmpty(), "User must be deleted");
+        assertTrue(foundPOI.isEmpty(), "POI must be deleted from the database");
     }
 
     @Test
-    @Transactional
-    void testGivenPOIList_whenUpdate_ThenReturnNothing() {
+    void testUpdatePOI_ShouldUpdateNameAndDescription() {
         // given / arrange
-        poiRepository.save(poi);
+        POI savedPOI = poiRepository.save(poi);
 
         // when / act
-
-        poiRepository.update(poi.getId(), "Outro POI", "Outra Descricao");
-
-        // Clear the persistence context, causing all managed entities to become
-        // detached
-        entityManager.clear();
-
-        POI updatedPOI = poiRepository.findById(poi.getId()).orElseThrow();
+        poiRepository.update(savedPOI.getId(), "Outro POI", "Outra Descricao");
+        POI updatedPOI = poiRepository.findById(savedPOI.getId()).orElseThrow();
 
         // then / assert
-        assertNotNull(updatedPOI, "POI must not be null");
-        assertEquals("Outro POI", updatedPOI.getName(), "POI name name must be Outro 'POI'");
-        assertEquals("Outra Descricao", updatedPOI.getDescription(), "POI gender must be 'Outra Descricao'");
+        assertEquals("Outro POI", updatedPOI.getName(), "POI name must be updated");
+        assertEquals("Outra Descricao", updatedPOI.getDescription(), "POI description must be updated");
     }
 
 }
