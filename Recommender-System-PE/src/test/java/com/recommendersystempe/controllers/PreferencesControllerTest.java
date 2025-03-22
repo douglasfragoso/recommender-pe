@@ -108,7 +108,7 @@ public class PreferencesControllerTest {
     }
 
     @Test
-    void testListPreferencesObject_whenFindAll_ThenReturnListPreferences() throws Exception {
+    void testListPreferencesObject_whenFindAllReturnListPreferences() throws Exception {
      
         Preferences preferences = createPreferences(USER, MOTIVATIONS, HOBBIES, THEMES, CURRENT_LOCATION);
         Preferences preferences1 = createPreferences(USER, MOTIVATIONS, HOBBIES, THEMES, CURRENT_LOCATION);
@@ -138,7 +138,7 @@ public class PreferencesControllerTest {
     }
 
     @Test
-    void testGivenPreferencesId_whenFindbyId_ThenReturnPreferencesDTO() throws Exception {
+    void testGivenPreferencesId_whenFindbyIdReturnPreferencesDTO() throws Exception {
 
         Preferences preferences = createPreferences(USER, MOTIVATIONS, HOBBIES, THEMES, CURRENT_LOCATION);
 

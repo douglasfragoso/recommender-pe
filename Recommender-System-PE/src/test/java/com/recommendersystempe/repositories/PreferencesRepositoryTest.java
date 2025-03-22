@@ -69,7 +69,7 @@ public class PreferencesRepositoryTest {
         }
 
         @Test
-        void testGivenPreferences_whenSave_ThenReturPreferences() {
+        void testGivenPreferences_whenSaveReturNothing() {
                 // when / act
                 userRepository.save(user);
                 Preferences savedPreferences = preferencesRepository.save(preferences);
@@ -83,7 +83,7 @@ public class PreferencesRepositoryTest {
         }
 
         @Test
-        void testGivenPreferencesList_whenFindAll_ThenReturnPreferencesList() {
+        void testFindAllPreferences_ShouldReturnListOfPreferences() {
                 // given / arrange
 
                 Preferences preferences1 = new Preferences(user, Instant.now(), MOTIVATIONS, HOBBIES, THEMES,
@@ -103,7 +103,7 @@ public class PreferencesRepositoryTest {
         }
 
         @Test
-        void testGivenSavePreferences_whenFindById_ThenReturnPreferences() {
+        void testFindPreferencesById_ShouldReturnPreferences() {
                 // given / arrange
                 userRepository.save(user);
                 preferencesRepository.save(preferences);

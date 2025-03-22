@@ -50,7 +50,7 @@ public class UserRepositoryTest {
     }
 
     @Test
-    void testGivenUser_whenSave_ThenReturUser() {
+    void testGivenUser_whenSaveReturUser() {
         // when / act
         User savedUser = userRepository.save(user);
         Optional<User> foundUser = userRepository.findById(savedUser.getId());
@@ -63,7 +63,7 @@ public class UserRepositoryTest {
     }
 
     @Test
-    void testGivenUserList_whenFindAll_ThenReturnUserList() {
+    void testGivenUserList_whenFindAllReturnUserList() {
         // given / arrange
         Address address1 = new Address(
                 "Rua Exemplo1", 101, "Apto 203", "Boa Viagem", "Recife",
@@ -86,7 +86,7 @@ public class UserRepositoryTest {
     }
 
     @Test
-    void testGivenSaveUser_whenFindById_ThenReturnUser() {
+    void testGivenSaveUser_whenFindByIdReturnUser() {
         // given / arrange
         userRepository.save(user);
 
@@ -102,7 +102,7 @@ public class UserRepositoryTest {
     }
 
     @Test
-    void testGivenSaveUser_whenFindByEmail_ThenReturnUser() {
+    void testGivenSaveUser_whenFindByEmailReturnUser() {
         // given / arrange
         userRepository.save(user);
 
@@ -116,7 +116,7 @@ public class UserRepositoryTest {
     }
 
     @Test
-    void testGivenUser_whenDeleteById_ThenReturnNull() {
+    void testGivenUser_whenDeleteByIdReturnNull() {
         // given / arrange
         userRepository.save(user);
 
@@ -129,7 +129,7 @@ public class UserRepositoryTest {
     }
 
     @Test
-    void testGivenPersonList_whenUpdate_ThenReturnNothing() {
+    void testGivenPersonList_whenUpdateReturnNothing() {
         // given / arrange
         userRepository.save(user);
 

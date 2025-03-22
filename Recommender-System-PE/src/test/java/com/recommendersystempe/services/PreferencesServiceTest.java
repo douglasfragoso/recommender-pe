@@ -51,7 +51,7 @@ public class PreferencesServiceTest {
                         "PE", "Brasil", "50000000");
         private static final User USER = new User(
                         "Douglas", "Fragoso", 30, "Masculino", "12345678900", "81-98765-4321",
-                        "douglas@example.com", "senha123", ADDRESS, Roles.USER);
+                        "douglas@example.com", "Senha123*", ADDRESS, Roles.USER);
 
         @Mock
         private UserRepository userRepository;

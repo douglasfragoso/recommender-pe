@@ -115,7 +115,7 @@ public class POIControllerTest {
 
 
         @Test
-        void testGivenPOIDTO_whenSave_ThenReturnPOIDTO() throws JsonProcessingException, Exception {
+        void testGivenPOIDTO_whenSaveReturnPOIDTO() throws JsonProcessingException, Exception {
                 poiAddress = new Address("Rua Exemplo", 100, "Apto 202", "Boa Viagem", "Recife", "PE", "Brasil",
                                 "50000000");
 
@@ -143,7 +143,7 @@ public class POIControllerTest {
         }
 
         @Test
-        void testListPOIObject_whenFindAll_ThenReturnListPOIDTO()
+        void testListPOIObject_whenFindAllReturnListPOIDTO()
                         throws JsonProcessingException, Exception {
                 poiAddress = new Address("Rua Exemplo", 100, "Apto 202", "Boa Viagem", "Recife", "PE", "Brasil",
                                 "50000000");
@@ -188,7 +188,7 @@ public class POIControllerTest {
         }
 
         @Test
-        void testGivenPOIId_whenFindbyId_ThenReturnPOIDTO() throws JsonProcessingException, Exception {
+        void testGivenPOIId_whenFindbyIdReturnPOIDTO() throws JsonProcessingException, Exception {
                 poiAddress = new Address("Rua Exemplo", 100, "Apto 202", "Boa Viagem", "Recife", "PE", "Brasil",
                                 "50000000");
 
@@ -221,7 +221,7 @@ public class POIControllerTest {
         }
 
         @Test
-        void testGivenPOIId_whenDeleteById_ThenReturnNoContent() throws JsonProcessingException, Exception {
+        void testGivenPOIId_whenDeleteByIdReturnNoContent() throws JsonProcessingException, Exception {
                 poiAddress = new Address("Rua Exemplo", 100, "Apto 202", "Boa Viagem", "Recife", "PE", "Brasil",
                                 "50000000");
 
@@ -244,7 +244,7 @@ public class POIControllerTest {
         }
 
         @Test
-        void testGivenPOIDTO_whenUpdate_ThenReturnString() throws JsonProcessingException, Exception {
+        void testGivenPOIDTO_whenUpdateReturnString() throws JsonProcessingException, Exception {
                 poiAddress = new Address("Rua Exemplo", 100, "Apto 202", "Boa Viagem", "Recife", "PE", "Brasil",
                                 "50000000");
 
