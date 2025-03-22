@@ -9,7 +9,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.recommendersystempe.enums.Roles;
 import com.recommendersystempe.models.Address;
@@ -17,27 +16,25 @@ import com.recommendersystempe.models.User;
 
 import jakarta.persistence.EntityManager;
 
-@DataJpaTest // annotation that configures the test to use an in-memory database
+@DataJpaTest 
 public class UserRepositoryTest {
+
+    private static final Address ADDRESS = new Address(
+            "Avenida Central", 250, "Casa 5", "Boa Viagem", "Recife",
+            "PE", "Brasil", "01000000");
 
     @Autowired
     private UserRepository userRepository;
 
-    // EntityManager is used to interact with the persistence context
     @Autowired
     private EntityManager entityManager;
 
     private User user;
-    private Address address;
 
     @BeforeEach
     public void setUp() {
         
         userRepository.deleteAll();
-
-        address = new Address(
-                "Avenida Central", 250, "Casa 5", "Boa Viagem", "Recife",
-                "PE", "Brasil", "01000000");
 
         user = new User(
                 "Mariana", 
@@ -48,13 +45,12 @@ public class UserRepositoryTest {
                 "11-99876-5432", 
                 "mariana@example.com", 
                 "Segura456*", 
-                address, 
+                ADDRESS, 
                 Roles.USER 
         );
     }
 
     @Test
-    @Transactional
     void testGivenUser_whenSave_ThenReturUser() {
         // when / act
         User savedUser = userRepository.save(user);
@@ -115,7 +111,6 @@ public class UserRepositoryTest {
     }
 
     @Test
-    @Transactional
     void testGivenUser_whenDeleteById_ThenReturnNull() {
         // given / arrange
         userRepository.save(user);
@@ -129,7 +124,6 @@ public class UserRepositoryTest {
     }
 
     @Test
-    @Transactional
     void testGivenPersonList_whenUpdate_ThenReturnNothing() {
         // given / arrange
         userRepository.save(user);

@@ -28,38 +28,20 @@ public class POIRepositoryTest {
     private static final List<Themes> THEMES = List.of(
             Themes.HISTORY, Themes.ADVENTURE, Themes.NATURE,
             Themes.CULTURAL, Themes.AFRO_BRAZILIAN);
+    private static final Address ADDRESS = new Address(
+            "Avenida Central", 250, "Casa 5", "Boa Viagem", "Recife",
+            "PE", "Brasil", "01000000");
 
     @Autowired
     private POIRepository poiRepository;
 
     private POI poi;
-    private List<Motivations> motivations;
-    private List<Hobbies> hobbies;
-    private List<Themes> themes;
-    private Address poiAddress;
-
-    private POI createPOI(String name, String description, List<Motivations> motivations, List<Hobbies> hobbies,
-            List<Themes> themes, Address address) {
-        return new POI(name, description, MOTIVATIONS, HOBBIES, THEMES, address);
-    }
-
-    private Address createAddress(String street, int number, String complement, String neighborhood, String city,
-            String state, String country, String zipCode) {
-        return new Address(street, number, complement, neighborhood, city, state, country, zipCode);
-    }
 
     @BeforeEach
     public void setUp() {
-        // Clear repositories before each test
         poiRepository.deleteAll();
 
-        // Create common test data
-        motivations = MOTIVATIONS;
-        hobbies = HOBBIES;
-        themes = THEMES;
-        poiAddress = createAddress("Rua Exemplo", 100, "Apto 202", "Boa Viagem", "Recife", "PE", "Brasil", "50000000");
-        poi = createPOI("Parque da Cidade", "Um grande parque urbano com áreas verdes, trilhas e lagos.", motivations,
-                hobbies, themes, poiAddress);
+        poi = new POI("Parque da Cidade", "Um grande parque urbano com áreas verdes, trilhas e lagos.", MOTIVATIONS, HOBBIES, THEMES, ADDRESS);
     }
 
     @Test
@@ -76,8 +58,8 @@ public class POIRepositoryTest {
     @Test
     void testFindAllPOIs_ShouldReturnListOfPOIs() {
         // given / arrange
-        POI poi1 = createPOI("Parque da Cidade1", "Descrição do Parque 1", motivations, hobbies, themes, poiAddress);
-        POI poi2 = createPOI("Parque da Cidade2", "Descrição do Parque 2", motivations, hobbies, themes, poiAddress);
+        POI poi1 = new POI("Parque da Cidade1", "Descrição do Parque 1", MOTIVATIONS, HOBBIES, THEMES, ADDRESS);
+        POI poi2 = new POI("Parque da Cidade2", "Descrição do Parque 2", MOTIVATIONS, HOBBIES, THEMES, ADDRESS);
 
         poiRepository.save(poi1);
         poiRepository.save(poi2);

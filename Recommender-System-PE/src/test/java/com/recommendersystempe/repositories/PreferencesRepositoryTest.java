@@ -10,7 +10,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.recommendersystempe.enums.Hobbies;
 import com.recommendersystempe.enums.Motivations;
@@ -20,8 +19,24 @@ import com.recommendersystempe.models.Address;
 import com.recommendersystempe.models.Preferences;
 import com.recommendersystempe.models.User;
 
-@DataJpaTest // annotation that configures the test to use an in-memory database
+@DataJpaTest 
 public class PreferencesRepositoryTest {
+
+    private static final List<Motivations> MOTIVATIONS = List.of(
+            Motivations.CULTURE, Motivations.STUDY, Motivations.APPRECIATION,
+            Motivations.RELAXATION, Motivations.SOCIAL);
+    private static final List<Hobbies> HOBBIES = List.of(
+            Hobbies.PHOTOGRAPHY, Hobbies.MUSIC, Hobbies.ADVENTURE,
+            Hobbies.ART, Hobbies.READING);
+    private static final List<Themes> THEMES = List.of(
+            Themes.HISTORY, Themes.ADVENTURE, Themes.NATURE,
+            Themes.CULTURAL, Themes.AFRO_BRAZILIAN);
+    private static final Address ADDRESS = new Address(
+            "Avenida Central", 250, "Casa 5", "Boa Viagem", "Recife",
+            "PE", "Brasil", "01000000");
+    private static final Address CURRENT_LOCATION = new Address(
+            "Rua Exemplo", 100, "Apto 202", "Boa Viagem", "Recife",
+            "PE", "Brasil", "50000000");
 
     @Autowired
     private PreferencesRepository preferencesRepository;
@@ -31,22 +46,13 @@ public class PreferencesRepositoryTest {
 
     
     private User user;
-    private Address address;
     private Preferences preferences;
-    private List<Motivations> motivations;
-    private List<Hobbies> hobbies;
-    private List<Themes> themes;
-    private Address currentLocation;
 
     @BeforeEach
     public void setUp() {
         // given / arrange
         userRepository.deleteAll();
         preferencesRepository.deleteAll();
-
-        address = new Address(
-                "Avenida Central", 250, "Casa 5", "Boa Viagem", "Recife",
-                "PE", "Brasil", "01000000");
 
         user = new User(
                 "Mariana", 
@@ -57,22 +63,17 @@ public class PreferencesRepositoryTest {
                 "11-99876-5432", 
                 "mariana@example.com", 
                 "Segura456*", 
-                address, 
+                ADDRESS, 
                 Roles.USER 
         );
-
-        motivations = List.of(Motivations.CULTURE, Motivations.STUDY);
-        hobbies = List.of(Hobbies.PHOTOGRAPHY, Hobbies.MUSIC);   
-        themes = List.of(Themes.HISTORY, Themes.ADVENTURE);
-        currentLocation = new Address("Rua Exemplo", 100, "Apto 202", "Boa Viagem", "Recife","PE", "Brasil", "50000000");
         
-        preferences = new Preferences(user, Instant.now(), motivations, hobbies, themes, currentLocation);
+        preferences = new Preferences(user, Instant.now(), MOTIVATIONS, HOBBIES, THEMES, CURRENT_LOCATION);
     }
 
     @Test
-    @Transactional
     void testGivenPreferences_whenSave_ThenReturPreferences() {
         // when / act
+        userRepository.save(user);
         Preferences savedPreferences = preferencesRepository.save(preferences);
         Optional<Preferences> foundPreferences = preferencesRepository.findById(savedPreferences.getId());
 
@@ -86,12 +87,7 @@ public class PreferencesRepositoryTest {
     void testGivenPreferencesList_whenFindAll_ThenReturnPreferencesList() {
         // given / arrange
 
-        List<Motivations> motivations1 = List.of(Motivations.CULTURE, Motivations.STUDY);
-        List<Hobbies> hobbies1 = List.of(Hobbies.PHOTOGRAPHY, Hobbies.MUSIC);   
-        List<Themes> themes1 = List.of(Themes.HISTORY, Themes.ADVENTURE);
-        Address currentLocation1 = new Address("Rua Exemplo", 100, "Apto 202", "Boa Viagem","Recife", "PE", "Brasil", "50000000");
-        
-        Preferences preferences1 = new Preferences(user, Instant.now(), motivations1, hobbies1, themes1, currentLocation1); 
+        Preferences preferences1 = new Preferences(user, Instant.now(), MOTIVATIONS, HOBBIES, THEMES, CURRENT_LOCATION); 
 
         userRepository.save(user);
         preferencesRepository.save(preferences);
