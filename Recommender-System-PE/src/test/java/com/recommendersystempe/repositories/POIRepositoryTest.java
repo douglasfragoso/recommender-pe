@@ -31,7 +31,7 @@ public class POIRepositoryTest {
     private static final Address ADDRESS = new Address(
             "Avenida Central", 250, "Casa 5", "Boa Viagem", "Recife",
             "PE", "Brasil", "01000000");
-
+            
     @Autowired
     private POIRepository poiRepository;
 
@@ -41,7 +41,8 @@ public class POIRepositoryTest {
     public void setUp() {
         poiRepository.deleteAll();
 
-        poi = new POI("Parque da Cidade", "Um grande parque urbano com áreas verdes, trilhas e lagos.", MOTIVATIONS, HOBBIES, THEMES, ADDRESS);
+        poi = new POI("Parque da Cidade", "Um grande parque urbano com áreas verdes, trilhas e lagos.", MOTIVATIONS,
+                HOBBIES, THEMES, ADDRESS);
     }
 
     @Test
@@ -51,8 +52,9 @@ public class POIRepositoryTest {
         Optional<POI> foundPOI = poiRepository.findById(savedPOI.getId());
 
         // then / assert
-        assertTrue(foundPOI.isPresent(), "POI must be present in the database");
-        assertEquals(savedPOI.getId(), foundPOI.get().getId(), "POI id must match");
+        assertAll(
+                () -> assertTrue(foundPOI.isPresent(), "POI must be present in the database"),
+                () -> assertEquals(savedPOI.getId(), foundPOI.get().getId(), "POI id must match"));
     }
 
     @Test
@@ -80,8 +82,9 @@ public class POIRepositoryTest {
         Optional<POI> foundPOI = poiRepository.findById(savedPOI.getId());
 
         // then / assert
-        assertTrue(foundPOI.isPresent(), "POI must be present in the database");
-        assertEquals(savedPOI.getId(), foundPOI.get().getId(), "POI id must match");
+        assertAll(
+                () -> assertTrue(foundPOI.isPresent(), "POI must be present in the database"),
+                () -> assertEquals(savedPOI.getId(), foundPOI.get().getId(), "POI id must match"));
     }
 
     @Test
@@ -107,8 +110,9 @@ public class POIRepositoryTest {
         POI updatedPOI = poiRepository.findById(savedPOI.getId()).orElseThrow();
 
         // then / assert
-        assertEquals("Outro POI", updatedPOI.getName(), "POI name must be updated");
-        assertEquals("Outra Descricao", updatedPOI.getDescription(), "POI description must be updated");
+        assertAll(
+                () -> assertEquals("Outro POI", updatedPOI.getName(), "POI name must be updated"),
+                () -> assertEquals("Outra Descricao", updatedPOI.getDescription(), "POI description must be updated"));
     }
 
 }

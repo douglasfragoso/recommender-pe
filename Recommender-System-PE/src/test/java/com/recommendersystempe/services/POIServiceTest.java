@@ -3,11 +3,11 @@ package com.recommendersystempe.services;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.BDDMockito.*;
+// import static org.mockito.Mockito.*;
 
 import java.util.List;
 import java.util.Optional;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -29,160 +29,127 @@ import com.recommendersystempe.repositories.POIRepository;
 import com.recommendersystempe.repositories.UserRepository;
 import com.recommendersystempe.service.POIService;
 
-@ExtendWith(MockitoExtension.class) // Annotation that extends the MockitoExtension - Anotação que estende o MockitoExtension
+@ExtendWith(MockitoExtension.class)
 public class POIServiceTest {
 
-        @Mock // Anotação do Mockito que cria um mock - Mockito annotation that creates a mock
-        private UserRepository userRepository;
+    private static final List<Motivations> MOTIVATIONS = List.of(
+            Motivations.CULTURE, Motivations.STUDY, Motivations.APPRECIATION,
+            Motivations.RELAXATION, Motivations.SOCIAL);
+    private static final List<Hobbies> HOBBIES = List.of(
+            Hobbies.PHOTOGRAPHY, Hobbies.MUSIC, Hobbies.ADVENTURE,
+            Hobbies.ART, Hobbies.READING);
+    private static final List<Themes> THEMES = List.of(
+            Themes.HISTORY, Themes.ADVENTURE, Themes.NATURE,
+            Themes.CULTURAL, Themes.AFRO_BRAZILIAN);
+    private static final Address ADDRESS = new Address(
+            "Avenida Central", 250, "Casa 5", "Boa Viagem", "Recife",
+            "PE", "Brasil", "01000000");
+    private static final POIDTO POI_DTO = new POIDTO(
+            "Parque da Cidade", "Um grande parque urbano com áreas verdes, trilhas e lagos.",
+            MOTIVATIONS, HOBBIES, THEMES, ADDRESS);
 
-        @Mock
-        private POIRepository poiRepository;
+    @Mock
+    private UserRepository userRepository;
 
-        @InjectMocks // Anotação do Mockito que injeta os mocks criados - Mockito annotation that injects the created mocks
-        private POIService poiService;
+    @Mock
+    private POIRepository poiRepository;
 
-        private POIDTO poiDTO;
-        private POI poi;
-        private List<Motivations> motivations;
-        private List<Hobbies> hobbies;
-        private List<Themes> themes;
-        private Address poiAddress;
+    @InjectMocks
+    private POIService poiService;
 
-        @BeforeEach
-        public void setUp() {
-                // given / arrange
-                poiRepository.deleteAll();
-        }
+    @Test
+    void testInsertPOI_ShouldReturnPOIDTO() {
+        // given / arrange
+        given(poiRepository.save(any(POI.class))).willAnswer(invocation -> {
+            POI poi = invocation.getArgument(0);
+            ReflectionTestUtils.setField(poi, "id", 1L);
+            return poi;
+        });
 
-        @Test
-        void testGivenValidPOIDTO_whenInsert_ThenReturnPOIDTO() {
-                // given / arrange
-                motivations = List.of(Motivations.CULTURE, Motivations.STUDY);
-                hobbies = List.of(Hobbies.PHOTOGRAPHY, Hobbies.MUSIC);
-                themes = List.of(Themes.HISTORY, Themes.ADVENTURE);
-                poiAddress = new Address("Rua Exemplo", 100, "Apto 202", "Boa Viagem", "Recife", "PE", "Brasil", "50000000");
+        // when / act
+        POIDTO result = poiService.insert(POI_DTO);
 
-                poiDTO = new POIDTO("Parque da Cidade", "Um grande parque urbano com áreas verdes, trilhas e lagos.",
-                                motivations, hobbies, themes, poiAddress);
-                                
-                POI poi = new POI();
-                poi.setName(poiDTO.getName());
-                poi.setDescription(poiDTO.getDescription());
-                poi.addHobbie(hobbies);
-                poi.addTheme(themes);
-                poi.setAddress(poiDTO.getAddress());
+        // then / assert
+        assertAll(
+                () -> assertNotNull(result, "POI must not be null"),
+                () -> assertEquals(POI_DTO.getName(), result.getName(), "POI name must match"),
+                () -> assertEquals(POI_DTO.getDescription(), result.getDescription(), "POI description must match"),
+                () -> assertEquals(POI_DTO.getThemes(), result.getThemes(), "POI themes must match"),
+                () -> assertEquals(POI_DTO.getHobbies(), result.getHobbies(), "POI hobbies must match"),
+                () -> assertEquals(POI_DTO.getMotivations(), result.getMotivations(), "POI motivations must match"),
+                () -> assertEquals(POI_DTO.getAddress(), result.getAddress(), "POI address must match")
+        );
+    }
 
-                // when / act
-                POIDTO result = poiService.insert(poiDTO);
+    @Test
+    void testFindAllPOIs_ShouldReturnPage() {
+        // given / arrange
+        POI poi = new POI( "Parque da Cidade", "Um grande parque urbano com áreas verdes, trilhas e lagos.", MOTIVATIONS, HOBBIES, THEMES, ADDRESS);
+        POI poi1 = new POI("Parque da Cidade", "Um grande parque urbano com áreas verdes, trilhas e lagos.", MOTIVATIONS, HOBBIES, THEMES, ADDRESS);
+        ReflectionTestUtils.setField(poi, "id", 1L);
+        ReflectionTestUtils.setField(poi1, "id", 2L);
 
-                // then / assert
-                assertNotNull(result);
-                assertEquals(poiDTO.getMotivations(), result.getMotivations());
-                assertEquals(poiDTO.getAddress(), result.getAddress());
-        }
+        Pageable pageable = PageRequest.of(0, 10);
+        Page<POI> poiPage = new PageImpl<>(List.of(poi, poi1), pageable, 2);
 
-        @Test
-        void testGivenPOIList_whenFindAll_ThenReturnPOIPage() {
-                // given / arrange
-                motivations = List.of(Motivations.CULTURE, Motivations.STUDY);
-                hobbies = List.of(Hobbies.PHOTOGRAPHY, Hobbies.MUSIC);
-                themes = List.of(Themes.HISTORY, Themes.ADVENTURE);
-                poiAddress = new Address("Rua Exemplo", 100, "Apto 202", "Boa Viagem", "Recife","PE", "Brasil", "50000000");
+        given(poiRepository.findAll(pageable)).willReturn(poiPage);
 
-                poi = new POI("Parque da Cidade", "Um grande parque urbano com áreas verdes, trilhas e lagos.",
-                                motivations, hobbies, themes, poiAddress);
+        // when / act
+        Page<POIDTO> result = poiService.findAll(pageable);
 
-                List<Motivations> motivations1 = List.of(Motivations.CULTURE, Motivations.STUDY);
-                List<Hobbies> hobbies1 = List.of(Hobbies.PHOTOGRAPHY, Hobbies.MUSIC);
-                List<Themes> themes1 = List.of(Themes.HISTORY, Themes.ADVENTURE);
-                Address poiAddress1 = new Address("Rua Exemplo", 100, "Apto 202", "Boa Viagem","Recife", "PE", "Brasil",
-                                "50000000");
+        // then / assert
+        assertAll(
+                () -> assertNotNull(result, "POI list must not be null"),
+                () -> assertEquals(2, result.getTotalElements(), "Total elements must match")
+        );
+    }
 
-                POI poi1 = new POI("Parque da Cidade", "Um grande parque urbano com áreas verdes, trilhas e lagos.",
-                                motivations1, hobbies1, themes1, poiAddress1);
+    @Test
+    void testFindPOIById_ShouldReturnPOIDTO() {
+        // given / arrange
+        POI poi = new POI("Parque da Cidade", "Um grande parque urbano com áreas verdes, trilhas e lagos.", MOTIVATIONS, HOBBIES, THEMES, ADDRESS);
+        ReflectionTestUtils.setField(poi, "id", 1L);
+        given(poiRepository.findById(anyLong())).willReturn(Optional.of(poi));
 
-                Pageable pageable = PageRequest.of(0, 10);
-                Page<POI> poiPage = new PageImpl<>(List.of(poi, poi1), pageable, 2);
+        // when / act
+        POIDTO result = poiService.findById(1L);
 
-                given(poiRepository.findAll(pageable)).willReturn(poiPage);
+        // then / assert
+        assertAll(
+                () -> assertNotNull(result, "POI must not be null"),
+                () -> assertEquals(1L, result.getId(), "POI ID must match")
+        );
+    }
 
-                // when / act
-                Page<POIDTO> poiList = poiService.findAll(pageable);
+    @Test
+    void testUpdatePOI_ShouldUpdatePOI() {
+        // given / arrange
+        POI poi = new POI("Parque da Cidade", "Um grande parque urbano com áreas verdes, trilhas e lagos.", MOTIVATIONS, HOBBIES, THEMES, ADDRESS);
+        ReflectionTestUtils.setField(poi, "id", 1L);
+        POIDTO poiDTO = new POIDTO(1L, "Parque da Cidade2", "Um grande parque urbano com áreas verdes, trilhas e lagos.", MOTIVATIONS, HOBBIES, THEMES, ADDRESS);
 
-                // then / assert
-                assertNotNull(poiList);
-                assertEquals(2, poiList.getTotalElements());
-        }
+        given(poiRepository.findById(1L)).willReturn(Optional.of(poi));
 
-        @Test
-        void testGivenId_whenFindById_ThenReturUserDTO() {
-                // given / arrange
-                motivations = List.of(Motivations.CULTURE, Motivations.STUDY);
-                hobbies = List.of(Hobbies.PHOTOGRAPHY, Hobbies.MUSIC);
-                themes = List.of(Themes.HISTORY, Themes.ADVENTURE);
-                poiAddress = new Address("Rua Exemplo", 100, "Apto 202", "Boa Viagem","Recife", "PE", "Brasil", "50000000");
+        // when / act
+        poiService.update(poiDTO);
 
-                poi = new POI("Parque da Cidade", "Um grande parque urbano com áreas verdes, trilhas e lagos.",
-                                motivations, hobbies, themes, poiAddress);
-                ReflectionTestUtils.setField(poi, "id", 1L);
+        // then / assert
+        verify(poiRepository, times(1)).update(
+                1L,
+                "Parque da Cidade2",
+                "Um grande parque urbano com áreas verdes, trilhas e lagos."
+        );
+    }
 
-                given(poiRepository.findById(anyLong())).willReturn(Optional.of(poi));
+    @Test
+    void testDeletePOIById_ShouldDeletePOI() {
+        // given / arrange
+        Long poiId = 1L;
 
-                // when / act
-                POIDTO savedPOI = poiService.findById(1L);
+        // when / act
+        poiService.deleteById(poiId);
 
-                // then / assert
-                assertNotNull(savedPOI);
-                assertEquals(1, savedPOI.getId());
-        }
-
-        @Test
-        void testGivenPerson_whenUpdate_thenReturnNothing() {
-                // given / arrange
-                motivations = List.of(Motivations.CULTURE, Motivations.STUDY);
-                hobbies = List.of(Hobbies.PHOTOGRAPHY, Hobbies.MUSIC);
-                themes = List.of(Themes.HISTORY, Themes.ADVENTURE);
-                poiAddress = new Address("Rua Exemplo", 100, "Apto 202", "Boa Viagem","Recife", "PE", "Brasil", "50000000");
-
-                poi = new POI("Parque da Cidade", "Um grande parque urbano com áreas verdes, trilhas e lagos.",
-                                motivations, hobbies, themes, poiAddress);
-                ReflectionTestUtils.setField(poi, "id", 1L);
-
-                POIDTO poiDTO = new POIDTO(1L, "Parque da Cidade2",
-                                "Um grande parque urbano com áreas verdes, trilhas e lagos.");
-
-                when(poiRepository.findById(1L)).thenReturn(Optional.of(poi));
-
-                // when / act
-                poiService.update(poiDTO);
-
-                // then / assert
-                verify(poiRepository, times(1)).update(
-                                1L, // ID do usuário autenticado
-                                "Parque da Cidade2", // Novo first name
-                                "Um grande parque urbano com áreas verdes, trilhas e lagos.");
-        }
-
-        @Test
-        void testGivenUserId_whenDeleteById_thenReturnNothing() {
-                // given / arrange
-                motivations = List.of(Motivations.CULTURE, Motivations.STUDY);
-                hobbies = List.of(Hobbies.PHOTOGRAPHY, Hobbies.MUSIC);
-                themes = List.of(Themes.HISTORY, Themes.ADVENTURE);
-                poiAddress = new Address("Rua Exemplo", 100, "Apto 202", "Boa Viagem", "Recife","PE", "Brasil", "50000000");
-
-                poi = new POI("Parque da Cidade", "Um grande parque urbano com áreas verdes, trilhas e lagos.",
-                                motivations, hobbies, themes, poiAddress);
-                ReflectionTestUtils.setField(poi, "id", 1L);
-
-                Long poiId = 1L;
-
-                // when / act
-                poiService.deleteById(poiId);
-
-                // then / assert
-                verify(poiRepository, times(1)).deleteById(poiId);
-
-        }
-
+        // then / assert
+        verify(poiRepository, times(1)).deleteById(poiId);
+    }
 }

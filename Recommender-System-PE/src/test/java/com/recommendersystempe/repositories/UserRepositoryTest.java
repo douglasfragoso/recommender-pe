@@ -16,7 +16,7 @@ import com.recommendersystempe.models.User;
 
 import jakarta.persistence.EntityManager;
 
-@DataJpaTest 
+@DataJpaTest
 public class UserRepositoryTest {
 
     private static final Address ADDRESS = new Address(
@@ -33,21 +33,20 @@ public class UserRepositoryTest {
 
     @BeforeEach
     public void setUp() {
-        
+
         userRepository.deleteAll();
 
         user = new User(
-                "Mariana", 
-                "Silva", 
+                "Mariana",
+                "Silva",
                 28,
-                "Feminino", 
-                "98765432100", 
-                "11-99876-5432", 
-                "mariana@example.com", 
-                "Segura456*", 
-                ADDRESS, 
-                Roles.USER 
-        );
+                "Feminino",
+                "98765432100",
+                "11-99876-5432",
+                "mariana@example.com",
+                "Segura456*",
+                ADDRESS,
+                Roles.USER);
     }
 
     @Test
@@ -57,9 +56,10 @@ public class UserRepositoryTest {
         Optional<User> foundUser = userRepository.findById(savedUser.getId());
 
         // then / assert
-        assertNotNull(savedUser, "User must not be null");
-        assertTrue(savedUser.getId() > 0, "User id must be greater than 0");
-        assertNotNull(foundUser, "User must be present in the database");
+        assertAll(
+                () -> assertNotNull(savedUser, "User must not be null"),
+                () -> assertTrue(savedUser.getId() > 0, "User id must be greater than 0"),
+                () -> assertNotNull(foundUser, "User must be present in the database"));
     }
 
     @Test
@@ -79,8 +79,10 @@ public class UserRepositoryTest {
         List<User> userList = userRepository.findAll();
 
         // then / assert
-        assertNotNull(userList, "User list must not be null");
-        assertEquals(2, userList.size(), "User list must have 2 users");
+        assertAll(
+                () -> assertNotNull(userList, "User list must not be null"),
+                () -> assertEquals(2, userList.size(), "User list must have 2 users"));
+
     }
 
     @Test
@@ -92,9 +94,11 @@ public class UserRepositoryTest {
         Optional<User> foundUser = userRepository.findById(user.getId());
 
         // then / assert
-        assertNotNull(foundUser, "User must not be null");
-        assertTrue(foundUser.isPresent(), "User must be present in the database");
-        assertEquals(foundUser.get().getId(), user.getId(), "User id must be the same");
+
+        assertAll(
+                () -> assertNotNull(foundUser, "User must not be null"),
+                () -> assertTrue(foundUser.isPresent(), "User must be present in the database"),
+                () -> assertEquals(foundUser.get().getId(), user.getId(), "User id must be the same"));
     }
 
     @Test
@@ -106,8 +110,9 @@ public class UserRepositoryTest {
         User foundUser = userRepository.findByEmail(user.getEmail());
 
         // then / assert
-        assertNotNull(foundUser, "User must not be null");
-        assertEquals(foundUser.getEmail(), user.getEmail(), "User Email must be the same");
+        assertAll(
+                () -> assertNotNull(foundUser, "User must not be null"),
+                () -> assertEquals(foundUser.getEmail(), user.getEmail(), "User Email must be the same"));
     }
 
     @Test
@@ -139,9 +144,10 @@ public class UserRepositoryTest {
         User updatedUser = userRepository.findById(user.getId()).orElseThrow();
 
         // then / assert
-        assertNotNull(updatedUser, "User must not be null");
-        assertEquals("Lucas", updatedUser.getFirstName(), "User first name must be Lucas");
-        assertEquals("Feminino", updatedUser.getGender(), "User gender must be Feminino");
+        assertAll(
+                () -> assertNotNull(updatedUser, "User must not be null"),
+                () -> assertEquals("Lucas", updatedUser.getFirstName(), "User first name must be Lucas"),
+                () -> assertEquals("Feminino", updatedUser.getGender(), "User gender must be Feminino"));
     }
 
     @Test
