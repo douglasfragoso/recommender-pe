@@ -8,12 +8,10 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@AllArgsConstructor
 @NoArgsConstructor
 @Entity(name = "tb_scores")
 public class Score {
@@ -37,5 +35,11 @@ public class Score {
     @ManyToOne(cascade = CascadeType.ALL) 
     @JoinColumn(name = "recommendation_id")
     private Recommendation recommendation;
+
+    public Score(POI poi, int i, Recommendation recommendation) {
+        this.poi = poi;
+        this.score = i;
+        this.recommendation = recommendation;
+    }
 
 }
