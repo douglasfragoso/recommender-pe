@@ -62,45 +62,7 @@ public class PreferencesServiceTest {
         @InjectMocks
         private PreferencesService preferencesService;
 
-        // private PreferencesDTO preferencesDTO;
         private Preferences preferences;
-
-        // @Test
-        // void testGivenValidPreferenceDTO_whenInsert_ThenReturnUserDTO() {
-        // // given / arrange
-        // userRepository.save(user);
-        // ReflectionTestUtils.setField(user, "id", 1L);
-
-        // given(userRepository.findById(1L)).willReturn(Optional.of(user));
-
-        // preferencesDTO = new PreferencesDTO(MOTIVATIONS, HOBBIES, THEMES,
-        // CURRENT_LOCATION);
-
-        // // Mockar autenticação
-        // Authentication auth = mock(Authentication.class);
-        // when(auth.getName()).thenReturn("douglas@example.com");
-        // SecurityContextHolder.getContext().setAuthentication(auth);
-
-        // // Mockar repositório
-        // given(userRepository.findByEmail("douglas@example.com")).willReturn(user);
-
-        // Preferences preferences = new Preferences();
-        // preferences.setUser(userRepository.findById(1L).get());
-        // preferences.setDate(Instant.now());
-        // preferences.addMotivation(motivations);
-        // preferences.addHobbie(hobbies);
-        // preferences.addTheme(themes);
-        // preferences.setCurrentLocation(preferencesDTO.getCurrentLocation());
-
-        // // when / act
-        // PreferencesDTO result = preferencesService.insert(preferencesDTO);
-
-        // // then / assert
-        // assertNotNull(result);
-        // assertEquals(preferencesDTO.getMotivations(), result.getMotivations());
-        // assertEquals(preferencesDTO.getCurrentLocation(),
-        // result.getCurrentLocation());
-        // }
 
         @Test
         void testFindAllPreferences_ShouldReturnPage() {
