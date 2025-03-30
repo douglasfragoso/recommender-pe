@@ -129,20 +129,29 @@ public class EvaluationControllerTest {
 
         @Test
         void testEvaluateGlobalMetrics_ValidRequestShouldReturnMetrics() throws Exception {
-                // Arrange
-                int k = 5;
-                GlobalEvaluationMetricsDTO mockMetrics = new GlobalEvaluationMetricsDTO(0.5, 1);
-
-                given(evaluationService.evaluateGlobalMetrics(k))
-                                .willReturn(mockMetrics);
-
-                // Act & Assert
-                mockMvc.perform(get("/evaluation/global")
-                                .param("k", String.valueOf(k))
-                                .with(user(USER.getEmail()).roles("MASTER")))
-                                .andExpect(status().isOk())
-                                .andExpect(jsonPath("$.hitRateAtK").value(0.5))
-                                .andExpect(jsonPath("$.itemCoverage").value(1));
+            // Arrange
+            int k = 5;
+            GlobalEvaluationMetricsDTO mockMetrics = new GlobalEvaluationMetricsDTO(
+                0.75,  
+                0.65,  
+                0.70,   
+                0.85,   
+                0.90    
+            );
+        
+            given(evaluationService.evaluateGlobalMetrics(k))
+                .willReturn(mockMetrics);
+        
+            // Act & Assert
+            mockMvc.perform(get("/evaluation/global")
+                    .param("k", String.valueOf(k))
+                    .with(user(USER.getEmail()).roles("MASTER")))
+                    .andExpect(status().isOk())
+                    .andExpect(jsonPath("$.averagePrecisionAtK").value(0.7))
+                    .andExpect(jsonPath("$.averageRecallAtK").value(0.85))
+                    .andExpect(jsonPath("$.averageF1ScoreAtK").value(0.90))
+                    .andExpect(jsonPath("$.hitRateAtK").value(0.75))
+                    .andExpect(jsonPath("$.itemCoverage").value(0.65));
         }
 
 }

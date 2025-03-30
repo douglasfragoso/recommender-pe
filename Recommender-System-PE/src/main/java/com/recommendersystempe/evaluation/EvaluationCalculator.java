@@ -1,5 +1,6 @@
 package com.recommendersystempe.evaluation;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -18,14 +19,52 @@ public class EvaluationCalculator {
         return new UserEvaluationMetricsDTO(precisionAtK, recallAtK, f1ScoreAtK);
     }
 
-    // Método para calcular as métricas globais de avaliação - Method to calculate the global evaluation metrics
-    public static GlobalEvaluationMetricsDTO calculateGlobalMetrics(List<List<POI>> allRecommendations, 
-                                                                   List<Set<POI>> allRelevantItems, 
-                                                                   int totalItemsAvailable, 
+    public static GlobalEvaluationMetricsDTO calculateGlobalMetrics(List<List<POI>> allRecommendations,
+                                                                   List<Set<POI>> allRelevantItems,
+                                                                   int totalItemsAvailable,
                                                                    int k) {
+        // Listas para armazenar as métricas de cada usuário - Lists to store the metrics of each user
+        List<Double> precisions = new ArrayList<>();
+        List<Double> recalls = new ArrayList<>();
+        List<Double> f1Scores = new ArrayList<>();
+
+        // Calcula métricas para cada usuário - Calculates metrics for each user
+        for (int i = 0; i < allRecommendations.size(); i++) {
+            UserEvaluationMetricsDTO userMetrics = calculateUserMetrics(
+                allRecommendations.get(i),
+                allRelevantItems.get(i),
+                k
+            );
+            precisions.add(userMetrics.getPrecisionAtK());
+            recalls.add(userMetrics.getRecallAtK());
+            f1Scores.add(userMetrics.getF1ScoreAtK());
+        }
+
+        // Calcula as médias globais - Calculates the global averages
+        double averagePrecision = calculateAverage(precisions);
+        double averageRecall = calculateAverage(recalls);
+        double averageF1Score = calculateAverage(f1Scores);
+
+        // Métricas existentes - Existing metrics
         double hitRateAtK = HitRate.hitRateAtK(allRecommendations, allRelevantItems, k);
         double itemCoverage = ItemCovarage.itemCoverage(allRecommendations, totalItemsAvailable);
 
-        return new GlobalEvaluationMetricsDTO(hitRateAtK, itemCoverage);
+        return new GlobalEvaluationMetricsDTO(
+            averagePrecision,
+            averageRecall,
+            averageF1Score,
+            hitRateAtK,
+            itemCoverage
+        );
     }
+
+        private static double calculateAverage(List<Double> values) {
+            if (values.isEmpty()) return 0.0;
+            
+            double sum = 0.0;
+            for (Double value : values) {
+                sum += value;
+            }
+            return sum / values.size();
+        }
 }

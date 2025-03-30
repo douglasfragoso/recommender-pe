@@ -240,7 +240,10 @@ public class EvaluationServiceTest {
         // then / assert
         assertNotNull(globalMetrics);
         assertEquals(1, globalMetrics.getHitRateAtK());
-        assertEquals(0.5, globalMetrics.getItemCoverage());
+        assertEquals(0.2, globalMetrics.getItemCoverage());
+        assertEquals(0.33333333333333337, globalMetrics.getAveragePrecisionAtK());
+        assertEquals(1, globalMetrics.getAverageRecallAtK());
+        assertEquals(0.5, globalMetrics.getAverageF1ScoreAtK());
     }
 
 }

@@ -19,4 +19,16 @@ public class GlobalEvaluationMetricsDTO {
     @Schema(description = "Item Coverage", example = "0.60")
     @Size(min = 0, max = 1, message = "The field itemCoverage must be between 0 and 1")
     private double itemCoverage;
+
+    @Schema(description = "Average of PrecisionAtK", example = "0.60")
+    @Size(min = 0, max = 1, message = "The field averagePrecisionAtk must be between 0 and 1")
+    private double averagePrecisionAtK;
+
+    @Schema(description = "Average of RecallAtK", example = "0.60")
+    @Size(min = 0, max = 1, message = "The field averageRecallAtK must be between 0 and 1")
+    private double averageRecallAtK;
+
+    @Schema(description = "Average of F1ScoreAtK", example = "0.60")
+    @Size(min = 0, max = 1, message = "The field averageF1ScoreAtK must be between 0 and 1")
+    private double averageF1ScoreAtK;
 }
