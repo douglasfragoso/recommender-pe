@@ -13,7 +13,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.apache.catalina.security.SecurityConfig;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentMatchers;
@@ -32,6 +32,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.recommendersystempe.configs.SecurityConfig;
 import com.recommendersystempe.dtos.POIDTO;
 import com.recommendersystempe.dtos.PreferencesDTO;
 import com.recommendersystempe.dtos.RecommendationDTO;
@@ -175,7 +176,6 @@ public class RecommendationControllerTest {
 
                 // when / act
                 ResultActions response = mockMvc.perform(post("/recommendation")
-                                .with(csrf())
                                 .contentType("application/json")
                                 .with(user(USER.getEmail()).roles("MASTER"))
                                 .content(objectMapper.writeValueAsString(preferencesDTO)));
@@ -211,7 +211,6 @@ public class RecommendationControllerTest {
                 // when / act
                 ResultActions response = mockMvc
                                 .perform(post("/recommendation/{recommendationId}/score", recommendation.getId())
-                                                .with(csrf())
                                                 .contentType("application/json")
                                                 .with(user(USER.getEmail()).roles("MASTER"))
                                                 .content(objectMapper.writeValueAsString(scoreList)));
