@@ -224,7 +224,7 @@ Valença, J. 2022. Passaporte Pernambuco: saiba onde e como conseguir o caderno 
 # UML CLASSES
 
 ## Classes
-![Classes](<UML - Classes.jpeg>)
+![Classes](<UML - Classe.jpeg>)
 
 ## Evaluation Calculator
 ![Evaluation Calculator](<UML - Evaluation Calculator.jpeg>)
