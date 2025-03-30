@@ -84,13 +84,14 @@ public class AuthenticationControllerTest {
 
     @Test
     void testClientLoginSuccess() throws Exception {
+        // given / arrange
         String jsonRequest = createLoginRequest(USER_EMAIL, USER_PASSWORD);
 
         when(authenticationManager.authenticate(any(UsernamePasswordAuthenticationToken.class)))
                 .thenReturn(new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities()));
-
+        //when / act
         when(tokenService.generateToken(any(User.class))).thenReturn("mocked-jwt-token");
-        
+        // then / assert
         mockMvc.perform(post("/auth/v1/login")
                 .contentType("application/json")
                 .content(jsonRequest))
@@ -105,11 +106,11 @@ public class AuthenticationControllerTest {
 
     @Test
     void testClientLoginFailure() throws Exception {
+        // given / arrange
         String jsonRequest = createLoginRequest("wrong@example.com", "WrongPassword");
-
         when(authenticationManager.authenticate(any(UsernamePasswordAuthenticationToken.class)))
             .thenThrow(new BadCredentialsException("Invalid credentials"));
-
+        //then / assert
         mockMvc.perform(post("/auth/v1/login")
                 .contentType("application/json")
                 .content(jsonRequest))

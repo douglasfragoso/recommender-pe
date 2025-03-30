@@ -45,7 +45,7 @@ public class RecommendationController {
     private RecommendationService recommendationService;
 
     @PreAuthorize("hasAnyRole('ADMIN', 'MASTER', 'USER')")
-    @PostMapping()
+    @PostMapping
     @ApiResponses({
             @ApiResponse(responseCode = "201", description = "Successfully created", content = @Content(schema = @Schema(implementation = RecommendationDTO.class))),
             @ApiResponse(responseCode = "400", description = "Invalid request", content = @Content(schema = @Schema(implementation = ValidationError.class))),

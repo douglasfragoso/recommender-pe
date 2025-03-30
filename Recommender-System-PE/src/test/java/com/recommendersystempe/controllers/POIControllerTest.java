@@ -2,7 +2,6 @@ package com.recommendersystempe.controllers;
 
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.BDDMockito.*;
-
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
@@ -116,6 +115,7 @@ public class POIControllerTest {
 
         @Test
         void testGivenPOIDTO_whenSaveReturnPOIDTO() throws JsonProcessingException, Exception {
+                // given / arrange
                 poiAddress = new Address("Rua Exemplo", 100, "Apto 202", "Boa Viagem", "Recife", "PE", "Brasil",
                                 "50000000");
 
@@ -124,12 +124,12 @@ public class POIControllerTest {
 
                 given(poiService.insert(any(POIDTO.class)))
                                 .willAnswer((invocation) -> invocation.getArgument(0));
-
+                //when / act
                 ResultActions response = mockMvc.perform(post("/poi/register")
                                 .contentType("application/json")
                                 .with(user(USER.getEmail()).password(USER.getPassword()).roles("MASTER"))
                                 .content(objectMapper.writeValueAsString(poiDTO)));
-
+                // then / assert
                 response.andDo(print())
                                 .andExpect(status().isCreated())
                                 .andExpect(jsonPath("$.motivations").value(poiDTO.getMotivations().stream()
@@ -143,8 +143,8 @@ public class POIControllerTest {
         }
 
         @Test
-        void testListPOIObject_whenFindAllReturnListPOIDTO()
-                        throws JsonProcessingException, Exception {
+        void testListPOIObject_whenFindAllReturnListPOIDTO() throws JsonProcessingException, Exception {
+                // given / arrange
                 poiAddress = new Address("Rua Exemplo", 100, "Apto 202", "Boa Viagem", "Recife", "PE", "Brasil",
                                 "50000000");
 
@@ -175,13 +175,13 @@ public class POIControllerTest {
                 Page<POIDTO> poiPage = new PageImpl<>(poiDTOList, pageable, 2);
 
                 given(poiService.findAll(any(Pageable.class))).willReturn(poiPage);
-
+                // when / act
                 ResultActions response = mockMvc.perform(get("/poi")
                                 .param("page", "0")
                                 .param("size", "10")
                                 .with(user(USER.getEmail()).password(USER.getPassword()).roles("MASTER"))
                                 .contentType("application/json"));
-
+                // then / assert
                 response.andExpect(status().isOk())
                                 .andDo(print())
                                 .andExpect(jsonPath("$.totalElements").value(poiPage.getTotalElements()));
@@ -189,6 +189,7 @@ public class POIControllerTest {
 
         @Test
         void testGivenPOIId_whenFindbyIdReturnPOIDTO() throws JsonProcessingException, Exception {
+                // given / arrange
                 poiAddress = new Address("Rua Exemplo", 100, "Apto 202", "Boa Viagem", "Recife", "PE", "Brasil",
                                 "50000000");
 
@@ -203,11 +204,11 @@ public class POIControllerTest {
                 Long id = 1L;
                 given(poiService.findById(id)).willReturn(new POIDTO(poi.getId(), poi.getName(), poi.getDescription(),
                                 poi.getMotivations(), poi.getHobbies(), poi.getThemes(), poi.getAddress()));
-
+                // when / act
                 ResultActions response = mockMvc.perform(get("/poi/id/{id}", id)
                                 .with(user(USER.getEmail()).password(USER.getPassword()).roles("MASTER"))
                                 .contentType("application/json"));
-
+                // then / assert
                 response.andDo(print())
                                 .andExpect(status().isOk())
                                 .andExpect(jsonPath("$.motivations").value(poi.getMotivations().stream()
@@ -222,6 +223,7 @@ public class POIControllerTest {
 
         @Test
         void testGivenPOIId_whenDeleteByIdReturnNoContent() throws JsonProcessingException, Exception {
+                // given / arrange
                 poiAddress = new Address("Rua Exemplo", 100, "Apto 202", "Boa Viagem", "Recife", "PE", "Brasil",
                                 "50000000");
 
@@ -232,11 +234,11 @@ public class POIControllerTest {
 
                 Long id = 1L;
                 willDoNothing().given(poiService).deleteById(id);
-
+                // when / act
                 ResultActions response = mockMvc.perform(delete("/poi/id/{id}", id)
                                 .with(user(USER.getEmail()).password(USER.getPassword()).roles("MASTER"))
                                 .contentType("application/json"));
-
+                // then / assert
                 response.andDo(print())
                                 .andExpect(status().isNoContent());
 
@@ -245,6 +247,7 @@ public class POIControllerTest {
 
         @Test
         void testGivenPOIDTO_whenUpdateReturnString() throws JsonProcessingException, Exception {
+                // given / arrange
                 poiAddress = new Address("Rua Exemplo", 100, "Apto 202", "Boa Viagem", "Recife", "PE", "Brasil",
                                 "50000000");
 
@@ -258,12 +261,12 @@ public class POIControllerTest {
                                 MOTIVATIONS, HOBBIES, THEMES, poiAddress);
 
                 willDoNothing().given(poiService).update(any(POIDTO.class));
-
+                // when / act
                 ResultActions response = mockMvc.perform(put("/poi")
                                 .with(user(USER.getEmail()).password(USER.getPassword()).roles("MASTER"))
                                 .contentType("application/json")
                                 .content(objectMapper.writeValueAsString(poiDTO)));
-
+                // then / assert
                 response.andDo(print())
                                 .andExpect(status().isOk())
                                 .andExpect(content().string("POI updated successfully"));

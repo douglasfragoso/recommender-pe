@@ -91,7 +91,7 @@ public class PreferencesControllerTest {
 
     @BeforeEach
     public void setUp() {
-        ReflectionTestUtils.setField(USER, "id", 1L); // Define o ID via reflection
+        ReflectionTestUtils.setField(USER, "id", 1L); 
         UserDetails userDetails = new org.springframework.security.core.userdetails.User(
                 USER.getEmail(),
                 USER.getPassword(),
@@ -109,10 +109,11 @@ public class PreferencesControllerTest {
 
     @Test
     void testListPreferencesObject_whenFindAllReturnListPreferences() throws Exception {
-     
+        // given / arrange
         Preferences preferences = createPreferences(USER, MOTIVATIONS, HOBBIES, THEMES, CURRENT_LOCATION);
         Preferences preferences1 = createPreferences(USER, MOTIVATIONS, HOBBIES, THEMES, CURRENT_LOCATION);
         ReflectionTestUtils.setField(preferences1, "id", 2L);
+
 
         List<PreferencesDTO> preferencesDTOList = List.of(
                 new PreferencesDTO(preferences.getId(), preferences.getUser().getId(), preferences.getDate(),
@@ -126,12 +127,14 @@ public class PreferencesControllerTest {
 
         given(preferencesService.findAll(any(Pageable.class))).willReturn(preferencesPage);
 
+        // when / act
         ResultActions response = mockMvc.perform(get("/preferences")
                 .param("page", "0")
                 .param("size", "10")
                 .with(user(USER.getEmail()).password(USER.getPassword()).roles("MASTER"))
                 .contentType("application/json"));
 
+        // then / assert
         response.andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(jsonPath("$.totalElements").value(preferencesPage.getTotalElements()));
@@ -139,7 +142,7 @@ public class PreferencesControllerTest {
 
     @Test
     void testGivenPreferencesId_whenFindbyIdReturnPreferencesDTO() throws Exception {
-
+        // given / arrange
         Preferences preferences = createPreferences(USER, MOTIVATIONS, HOBBIES, THEMES, CURRENT_LOCATION);
 
         PreferencesDTO preferencesDTO = new PreferencesDTO(
@@ -155,10 +158,12 @@ public class PreferencesControllerTest {
         Long id = 1L;
         given(preferencesService.findById(id)).willReturn(preferencesDTO);
 
+        // when / act
         ResultActions response = mockMvc.perform(get("/preferences/id/{id}", id)
                 .with(user(USER.getEmail()).password(USER.getPassword()).roles("MASTER"))
                 .contentType("application/json"));
 
+        // then / assert
         response.andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.motivations").value(MOTIVATIONS.stream()

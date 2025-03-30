@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.BDDMockito.*;
 
+
 import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
@@ -17,19 +18,25 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.test.util.ReflectionTestUtils;
 
+import com.recommendersystempe.dtos.POIDTO;
 import com.recommendersystempe.dtos.PreferencesDTO;
 import com.recommendersystempe.enums.Hobbies;
 import com.recommendersystempe.enums.Motivations;
 import com.recommendersystempe.enums.Roles;
 import com.recommendersystempe.enums.Themes;
 import com.recommendersystempe.models.Address;
+import com.recommendersystempe.models.POI;
 import com.recommendersystempe.models.Preferences;
 import com.recommendersystempe.models.User;
+import com.recommendersystempe.repositories.POIRepository;
 import com.recommendersystempe.repositories.PreferencesRepository;
 import com.recommendersystempe.repositories.UserRepository;
 import com.recommendersystempe.service.PreferencesService;
+import com.recommendersystempe.service.RecommendationService;
 
 @ExtendWith(MockitoExtension.class)
 public class PreferencesServiceTest {
@@ -59,10 +66,63 @@ public class PreferencesServiceTest {
         @Mock
         private PreferencesRepository preferencesRepository;
 
+        @Mock
+        private POIRepository poiRepository;
+
+        @Mock
+        private RecommendationService recommendationService;
+
         @InjectMocks
         private PreferencesService preferencesService;
 
         private Preferences preferences;
+
+        private void mockAuthenticatedUser(User user) {
+                Authentication auth = mock(Authentication.class);
+                when(auth.getName()).thenReturn(user.getEmail());
+                SecurityContextHolder.getContext().setAuthentication(auth);
+                // Marcar o stub como lenient para evitar UnnecessaryStubbingException
+                lenient().when(userRepository.findByEmail(user.getEmail())).thenReturn(user);
+        }
+
+        private POI createPoi(String nome, String descricao) {
+                POI poi = new POI(nome, descricao, MOTIVATIONS, HOBBIES, THEMES, CURRENT_LOCATION);
+                ReflectionTestUtils.setField(poi, "id", System.nanoTime());
+                return poi;
+        }
+
+        @Test
+        void testInsertPreferences_ShouldReturnPOIDTOList() {
+                // given / arrange
+                ReflectionTestUtils.setField(USER, "id", 1L);
+                mockAuthenticatedUser(USER);
+
+                List<POI> poiList = List.of(
+                                createPoi("Parque da Cidade", "Descrição 1"),
+                                createPoi("Parque da Cidade 2", "Descrição 2"),
+                                createPoi("Parque da Cidade 3", "Descrição 3"),
+                                createPoi("Parque da Cidade 4", "Descrição 4"),
+                                createPoi("Parque da Cidade 5", "Descrição 5"));
+
+                PreferencesDTO dto = new PreferencesDTO(
+                                MOTIVATIONS,
+                                HOBBIES,
+                                THEMES,
+                                CURRENT_LOCATION);
+
+                List<POIDTO> poiDTOList = poiList.stream()
+                                .map(poi -> new POIDTO(poi.getId(), poi.getName(), poi.getDescription()))
+                                .toList();
+                given(recommendationService.recommendation(any(Preferences.class))).willReturn(poiDTOList);
+
+                // when / act
+                List<POIDTO> result = preferencesService.insert(dto);
+
+                // then / assert
+                assertNotNull(result);
+                assertEquals(5, result.size());
+                verify(preferencesRepository, times(2)).save(any(Preferences.class));
+        }
 
         @Test
         void testFindAllPreferences_ShouldReturnPage() {
