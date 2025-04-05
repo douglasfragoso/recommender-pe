@@ -22,7 +22,7 @@ This project is licensed under the [MIT License](https://github.com/douglasfrago
 
 | **Technology**                     | **Function**                                                                 |
 |------------------------------------|-----------------------------------------------------------------------------|
-| Java, Spring Boot, and Maven       | For API development                                                         |
+| Java 21, Spring Boot, and Maven       | For API development                                                         |
 | Spring Security and JSON Web Token | For security implementation                                                 |
 | Spring Web MVC                     | For REST and MVC architecture                                               |
 | Spring Data JPA, H2 Database, MySQL, and MySQL Connector | For data storage and manipulation                              |
