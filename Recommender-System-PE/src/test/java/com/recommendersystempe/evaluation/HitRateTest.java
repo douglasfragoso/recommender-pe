@@ -27,18 +27,18 @@ import com.recommendersystempe.repositories.ScoreRepository;
 import com.recommendersystempe.repositories.UserRepository;
 
 @SpringBootTest
-public class PrecisionTest {
+public class HitRateTest {
 
-    @Autowired 
+    @Autowired
     private ScoreRepository scoreRepository;
 
-    @Autowired 
+    @Autowired
     private POIRepository poiRepository;
 
-    @Autowired 
+    @Autowired
     private UserRepository userRepository;
 
-    @Autowired 
+    @Autowired
     private RecommendationRepository recommendationRepository;
 
     private static final Address ADDRESS = new Address(
@@ -66,39 +66,69 @@ public class PrecisionTest {
 
     @Test
     @Transactional
-    public void testPrecision() {
-        User user = new User(
+    public void testHitRate() {
+        User user = userRepository.save(new User(
                 "Mariana", "Silva", 28, "Feminino", "98765432100",
                 "11-99876-5432", "mariana@example.com", "Segura456*",
-                ADDRESS, Roles.USER);
-        user = userRepository.save(user);
+                ADDRESS, Roles.USER));
 
-        List<POI> poiList = List.of(
+        User user2 = userRepository.save(new User(
+                "Douglas", "Fragoso", 30, "Masculino", "11783576430",
+                "81-98765-4321", "douglas@example.com", "Senha123*",
+                ADDRESS, Roles.USER));
+
+        List<POI> poiList = poiRepository.saveAll(List.of(
                 createPoi("Parque da Cidade", "Descrição 1"),
                 createPoi("Parque da Cidade 2", "Descrição 2"),
                 createPoi("Parque da Cidade 3", "Descrição 3"),
                 createPoi("Parque da Cidade 4", "Descrição 4"),
-                createPoi("Parque da Cidade 5", "Descrição 5"));
-        poiList = poiRepository.saveAll(poiList);
+                createPoi("Parque da Cidade 5", "Descrição 5")));
 
         Recommendation recommendation = new Recommendation();
         recommendation.setUser(user);
         poiList.forEach(recommendation::addPOI);
         recommendation = recommendationRepository.save(recommendation);
 
-        List<Score> scores = new ArrayList<>(List.of(
+        Recommendation recommendation2 = new Recommendation();
+        recommendation2.setUser(user2);
+        poiList.forEach(recommendation2::addPOI);
+        recommendation2 = recommendationRepository.save(recommendation2);
+
+        List<Score> scoresUser1 = List.of(
                 new Score(poiList.get(0), 1, recommendation),
                 new Score(poiList.get(1), 0, recommendation),
                 new Score(poiList.get(2), 0, recommendation),
                 new Score(poiList.get(3), 1, recommendation),
-                new Score(poiList.get(4), 0, recommendation)));
-        scoreRepository.saveAll(scores);
+                new Score(poiList.get(4), 0, recommendation));
 
-        Set<POI> relevantItems = scoreRepository.findByUser(user.getId()).stream()
-                .filter(score -> score.getScore() == 1)
-                .map(Score::getPoi)
-                .collect(Collectors.toSet());
+        List<Score> scoresUser2 = List.of(
+                new Score(poiList.get(0), 1, recommendation2),
+                new Score(poiList.get(1), 0, recommendation2),
+                new Score(poiList.get(2), 0, recommendation2),
+                new Score(poiList.get(3), 1, recommendation2),
+                new Score(poiList.get(4), 0, recommendation2));
 
-        assertEquals(0.4, Precision.precisionAtK(poiList, relevantItems, 5), 0.01);
+        scoreRepository.saveAll(scoresUser1);
+        scoreRepository.saveAll(scoresUser2);
+
+        List<User> users = List.of(user, user2);
+        List<List<POI>> allRecommendations = new ArrayList<>();
+        List<Set<POI>> allRelevantItems = new ArrayList<>();
+
+        for (User currentUser : users) {
+            List<Recommendation> recommendations = recommendationRepository.findByUser(currentUser.getId());
+            List<POI> recommendedPois = recommendations.stream()
+                    .flatMap(r -> r.getPois().stream())
+                    .collect(Collectors.toList());
+            allRecommendations.add(recommendedPois);
+
+            Set<POI> relevantItems = scoreRepository.findByUser(currentUser.getId()).stream()
+                    .map(Score::getPoi)
+                    .collect(Collectors.toSet());
+            allRelevantItems.add(relevantItems);
+        }
+
+        int totalItems = (int) poiRepository.count();
+        assertEquals(1, HitRate.hitRateAtK(allRecommendations, allRelevantItems, totalItems), 0.01);
     }
 }

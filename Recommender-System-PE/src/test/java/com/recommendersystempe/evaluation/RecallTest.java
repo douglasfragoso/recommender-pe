@@ -66,15 +66,14 @@ public class RecallTest {
 
     @Test
     @Transactional
-    public void testPrecision() {
-        // Criar e persistir usuário
+    public void testRecall() {
+
         User user = new User(
                 "Mariana", "Silva", 28, "Feminino", "98765432100",
                 "11-99876-5432", "mariana@example.com", "Segura456*",
                 ADDRESS, Roles.USER);
         user = userRepository.save(user);
 
-        // Criar POIs e persistir
         List<POI> poiList = List.of(
                 createPoi("Parque da Cidade", "Descrição 1"),
                 createPoi("Parque da Cidade 2", "Descrição 2"),
@@ -83,13 +82,11 @@ public class RecallTest {
                 createPoi("Parque da Cidade 5", "Descrição 5"));
         poiList = poiRepository.saveAll(poiList);
 
-        // Criar recomendação e persistir
         Recommendation recommendation = new Recommendation();
         recommendation.setUser(user);
         poiList.forEach(recommendation::addPOI);
         recommendation = recommendationRepository.save(recommendation);
 
-        // Criar e persistir scores
         List<Score> scores = new ArrayList<>(List.of(
                 new Score(poiList.get(0), 1, recommendation),
                 new Score(poiList.get(1), 0, recommendation),
