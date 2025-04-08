@@ -45,7 +45,7 @@ public class POIController {
             @ApiResponse(responseCode = "400", description = "Invalid request", content = @Content(schema = @Schema(implementation = ValidationError.class))),
             @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content(schema = @Schema(implementation = StandardError.class))) })
     @Operation(summary = "Insert POI", description = "Insert a new Point of Interest (POI). Only accessible by ADMIN and MASTER roles.", tags = {
-        "Auth" })
+        "POI" })
     public ResponseEntity<POIDTO> insert(@Valid @RequestBody POIDTO dto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(poiService.insert(dto));
     }
@@ -56,7 +56,7 @@ public class POIController {
             @ApiResponse(responseCode = "200", description = "Successfully find all", content = @Content(schema = @Schema(implementation = POIDTO.class))),
             @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content(schema = @Schema(implementation = StandardError.class))) })
     @Operation(summary = "Find All POI", description = "Retrieve a paginated list of all POI. Only accessible by ADMIN and MASTER roles.", tags = {
-            "GET" })
+            "POI" })
     public ResponseEntity<Page<POIDTO>> findAll(
             @PageableDefault(size = 10, page = 0, sort = { "id" }, direction = Direction.ASC) Pageable peageable) {
         return ResponseEntity.status(HttpStatus.OK).body(poiService.findAll(peageable));
@@ -70,7 +70,7 @@ public class POIController {
             @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content(schema = @Schema(implementation = StandardError.class))),
             @ApiResponse(responseCode = "404", description = "Not found", content = @Content(schema = @Schema(implementation = StandardError.class))) })
     @Operation(summary = "Find by POI id", description = "Find by POI id, only for Admin and Master", tags = {
-        "Auth" })
+        "POI" })
     public ResponseEntity<POIDTO> findById(@Valid @PathVariable("id") Long id) {
         return ResponseEntity.status(HttpStatus.OK).body(poiService.findById(id));
     }
@@ -83,7 +83,7 @@ public class POIController {
             @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content(schema = @Schema(implementation = StandardError.class))),
             @ApiResponse(responseCode = "404", description = "Not found", content = @Content(schema = @Schema(implementation = StandardError.class))) })
     @Operation(summary = "Update POI", description = "Update POI, only for Admin and Master", tags = {
-        "Auth" })
+        "POI" })
     public ResponseEntity<String> update(@Valid @RequestBody POIDTO dto) {
         poiService.update(dto);
         return ResponseEntity.status(HttpStatus.OK).body("POI updated successfully");
@@ -97,7 +97,7 @@ public class POIController {
             @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content(schema = @Schema(implementation = StandardError.class))),
             @ApiResponse(responseCode = "404", description = "Not found", content = @Content(schema = @Schema(implementation = StandardError.class))) })
     @Operation(summary = "Delete POI", description = "Delete a Point of Interest (POI) by its ID. Only accessible by ADMIN and MASTER roles.", tags = {
-        "Auth" })
+        "POI" })
     public ResponseEntity<String> deleteById(@Valid @PathVariable("id") Long id) {
         poiService.deleteById(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body("POI deleted successfully");

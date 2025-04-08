@@ -40,7 +40,7 @@ public class PreferencesController {
             @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content(schema = @Schema(implementation = StandardError.class))),
             @ApiResponse(responseCode = "404", description = "Not found", content = @Content(schema = @Schema(implementation = StandardError.class))) })
     @Operation(summary = "Find All Preferences", description = "Retrieve a paginated list of all user preferences. Only accessible by ADMIN and MASTER roles.", tags = {
-        "Auth" })
+        "Preferences" })
     public ResponseEntity<Page<PreferencesDTO>> findAll(
             @PageableDefault(size = 10, page = 0, sort = { "id" }, direction = Direction.ASC) Pageable peageable) {
         return ResponseEntity.status(HttpStatus.OK).body(preferencesService.findAll(peageable));
@@ -55,7 +55,7 @@ public class PreferencesController {
             @ApiResponse(responseCode = "404", description = "Not found", content = @Content(schema = @Schema(implementation = StandardError.class)))
          })
     @Operation(summary = "Find by Preferences id", description = "Retrieve preferences by their ID. Only accessible by ADMIN and MASTER roles.", tags = {
-        "Auth" })
+        "Preferences" })
     public ResponseEntity<PreferencesDTO> findById(@PathVariable("id") Long id) {
         return ResponseEntity.status(HttpStatus.OK).body(preferencesService.findById(id));
     }

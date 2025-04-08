@@ -27,9 +27,11 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
 @RequestMapping(value = "/user", produces = "application/json")
+@Tag(name = "User", description = "API to management User")
 public class UserController {
 
     @Autowired
@@ -40,7 +42,7 @@ public class UserController {
             @ApiResponse(responseCode = "201", description = "Successfully created", content = @Content(schema = @Schema(implementation = UserDTO.class))),
             @ApiResponse(responseCode = "400", description = "Invalid request", content = @Content(schema = @Schema(implementation = ValidationError.class))) })
     @Operation(summary = "Insert a user", description = "Insert a new User. Accessible to everyone.", tags = {
-            "Auth" })
+            "User" })
     public ResponseEntity<UserDTO> insert(@RequestBody UserDTO dto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(userService.insert(dto));
     }
@@ -52,7 +54,7 @@ public class UserController {
             @ApiResponse(responseCode = "400", description = "Invalid request", content = @Content(schema = @Schema(implementation = ValidationError.class))),
             @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content(schema = @Schema(implementation = StandardError.class))) })
     @Operation(summary = "Find all users", description = "Retrieve a paginated list of all user. Only accessible by ADMIN and MASTER roles.", tags = {
-            "Auth" })
+            "User" })
     public ResponseEntity<Page<UserDTO>> findAll(
             @PageableDefault(size = 10, page = 0, sort = { "id" }, direction = Direction.ASC) Pageable peageable) {
         return ResponseEntity.status(HttpStatus.OK).body(userService.findAll(peageable));
@@ -67,7 +69,7 @@ public class UserController {
             @ApiResponse(responseCode = "404", description = "Not found", content = @Content(schema = @Schema(implementation = StandardError.class)))
     })
     @Operation(summary = "Find by user id", description = "Retrieve user by their ID. Only accessible by ADMIN and MASTER roles.", tags = {
-            "Auth" })
+            "User" })
     public ResponseEntity<UserDTO> findById(@PathVariable("id") Long id) {
         return ResponseEntity.status(HttpStatus.OK).body(userService.findById(id));
     }
@@ -80,7 +82,7 @@ public class UserController {
             @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content(schema = @Schema(implementation = StandardError.class))),
             @ApiResponse(responseCode = "404", description = "Not found", content = @Content(schema = @Schema(implementation = StandardError.class))) })
     @Operation(summary = "Update User", description = "Update User, only for Admin and Master", tags = {
-            "Auth" })
+            "User" })
     public ResponseEntity<String> update(@RequestBody UserDTO dto) {
         userService.update(dto);
         return ResponseEntity.status(HttpStatus.OK).body("Profile updated successfully");
@@ -94,7 +96,7 @@ public class UserController {
         @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content(schema = @Schema(implementation = StandardError.class))),
         @ApiResponse(responseCode = "404", description = "Not found", content = @Content(schema = @Schema(implementation = StandardError.class))) })
 @Operation(summary = "Update Role", description = "Update Role, only for Master", tags = {
-        "Auth" })
+        "User" })
     public ResponseEntity<String> updateRole(@PathVariable("id") Long id) {
         userService.updateRole(id);
         return ResponseEntity.ok("Role updated successfully");
@@ -108,7 +110,7 @@ public class UserController {
             @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content(schema = @Schema(implementation = StandardError.class))),
             @ApiResponse(responseCode = "404", description = "Not found", content = @Content(schema = @Schema(implementation = StandardError.class))) })
     @Operation(summary = "Delete User", description = "Delete a user by its ID. Only accessible by ADMIN and MASTER roles.", tags = {
-        "Auth" })
+        "User" })
     public ResponseEntity<String> deleteById(@PathVariable("id") Long id) {
         userService.deleteById(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body("User deleted successfully");

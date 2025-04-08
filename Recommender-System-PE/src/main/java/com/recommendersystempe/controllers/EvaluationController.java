@@ -38,7 +38,8 @@ public class EvaluationController {
         @ApiResponse(responseCode = "401", description = "Não autorizado", content = @Content(schema = @Schema(implementation = StandardError.class))),
         @ApiResponse(responseCode = "404", description = "Usuário não encontrado", content = @Content(schema = @Schema(implementation = StandardError.class)))
     })
-    @Operation(summary = "Avaliar recomendações de um usuário", description = "Calcula métricas de avaliação para as recomendações de um usuário. Apenas acessível por ADMIN e MASTER.")
+    @Operation(summary = "Avaliar recomendações de um usuário", description = "Calcula métricas de avaliação para as recomendações de um usuário. Apenas acessível por ADMIN e MASTER.", tags = {
+        "Evaluation" })
     public ResponseEntity<UserEvaluationMetricsDTO> evaluateUserRecommendations(
             @PathVariable("userId") Long userId,
             @RequestParam(defaultValue = "5") int k) {
@@ -53,7 +54,8 @@ public class EvaluationController {
         @ApiResponse(responseCode = "400", description = "Requisição inválida", content = @Content(schema = @Schema(implementation = StandardError.class))),
         @ApiResponse(responseCode = "401", description = "Não autorizado", content = @Content(schema = @Schema(implementation = StandardError.class)))
     })
-    @Operation(summary = "Avaliar métricas globais", description = "Calcula métricas globais de avaliação para todas as recomendações. Apenas acessível por ADMIN e MASTER.")
+    @Operation(summary = "Avaliar métricas globais", description = "Calcula métricas globais de avaliação para todas as recomendações. Apenas acessível por ADMIN e MASTER.", tags = {
+        "Evaluation" })
     public ResponseEntity<GlobalEvaluationMetricsDTO> evaluateGlobalMetrics(
             @RequestParam(defaultValue = "5") int k) {
         GlobalEvaluationMetricsDTO dto = evaluationService.evaluateGlobalMetrics(k);

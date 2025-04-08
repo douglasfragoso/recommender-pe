@@ -51,7 +51,7 @@ public class RecommendationController {
             @ApiResponse(responseCode = "400", description = "Invalid request", content = @Content(schema = @Schema(implementation = ValidationError.class))),
             @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content(schema = @Schema(implementation = StandardError.class))) })
     @Operation(summary = "Insert preferences", description = "Insert preferences and get recommendation, only for Admin and Master", tags = {
-            "Auth" })
+            "Recommendation" })
     public ResponseEntity<List<POIDTO>> insert(@RequestBody PreferencesDTO dto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(preferencesService.insert(dto));
     }
@@ -64,7 +64,7 @@ public class RecommendationController {
             @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content(schema = @Schema(implementation = StandardError.class))),
             @ApiResponse(responseCode = "404", description = "Not found", content = @Content(schema = @Schema(implementation = StandardError.class))) })
     @Operation(summary = "Insert score", description = "Insert a new scores to a list of Point of Interest (POI). Only accessible by ADMIN and MASTER roles.", tags = {
-            "Auth" })
+            "Recommendation" })
     public ResponseEntity<String> score(@PathVariable("recommendationId") Long id, @RequestBody List<ScoreDTO> dto) {
         recommendationService.score(id, dto);
         return ResponseEntity.status(HttpStatus.CREATED).body("Scored successfully, thank you!");
@@ -79,7 +79,7 @@ public class RecommendationController {
             @ApiResponse(responseCode = "404", description = "Not found", content = @Content(schema = @Schema(implementation = StandardError.class)))
     })
     @Operation(summary = "Find all recommendation", description = "Retrieve a paginated list of all recommendations. Only accessible by ADMIN and MASTER roles.", tags = {
-            "Auth" })
+            "Recommendation" })
     public ResponseEntity<Page<RecommendationDTO>> findAll(
             @PageableDefault(size = 10, page = 0, sort = { "id" }, direction = Direction.ASC) Pageable peageable) {
         return ResponseEntity.status(HttpStatus.OK).body(recommendationService.findAll(peageable));
@@ -94,7 +94,7 @@ public class RecommendationController {
             @ApiResponse(responseCode = "404", description = "Not found", content = @Content(schema = @Schema(implementation = StandardError.class)))
     })
     @Operation(summary = "Find by recommendation id", description = "Retrieve recommendation by their ID. Only accessible by ADMIN and MASTER roles.", tags = {
-            "Auth" })
+            "Recommendation" })
     public ResponseEntity<RecommendationDTO> findById(@PathVariable("id") Long id) {
         return ResponseEntity.status(HttpStatus.OK).body(recommendationService.findById(id));
     }
@@ -108,7 +108,7 @@ public class RecommendationController {
             @ApiResponse(responseCode = "404", description = "Not found", content = @Content(schema = @Schema(implementation = StandardError.class)))
     })
     @Operation(summary = "Find all recommendation", description = "Retrieve a paginated list of all user recommendation. Only accessible by ADMIN and MASTER roles.", tags = {
-            "Auth" })
+            "Recommendation" })
     public ResponseEntity<Page<RecommendationDTO>> findAllByUser(
             @PageableDefault(size = 10, page = 0, sort = { "id" }, direction = Direction.ASC) Pageable peageable) {
         return ResponseEntity.status(HttpStatus.OK).body(recommendationService.findAllByUserId(peageable));
