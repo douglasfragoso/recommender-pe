@@ -84,7 +84,11 @@ public class RecallTest {
 
         Recommendation recommendation = new Recommendation();
         recommendation.setUser(user);
-        poiList.forEach(recommendation::addPOI);
+        recommendation.addPOI(poiList.get(0)); 
+        recommendation.addPOI(poiList.get(1)); 
+        recommendation.addPOI(poiList.get(2));
+        recommendation.addPOI(poiList.get(3)); 
+        recommendation.addPOI(poiList.get(4)); 
         recommendation = recommendationRepository.save(recommendation);
 
         List<Score> scores = new ArrayList<>(List.of(

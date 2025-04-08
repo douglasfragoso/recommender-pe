@@ -84,14 +84,23 @@ public class ItemCovarageTest {
                                 createPoi("Parque da Cidade 4", "Descrição 4"),
                                 createPoi("Parque da Cidade 5", "Descrição 5")));
 
+                // Recomendações COM ORDEM CONTROLADA
                 Recommendation recommendation = new Recommendation();
                 recommendation.setUser(user);
-                poiList.forEach(recommendation::addPOI);
+                recommendation.addPOI(poiList.get(0)); // POI 0 (relevante)
+                recommendation.addPOI(poiList.get(1)); // POI 1
+                recommendation.addPOI(poiList.get(2)); // POI 2
+                recommendation.addPOI(poiList.get(3)); // POI 3 (relevante)
+                recommendation.addPOI(poiList.get(4)); // POI 4
                 recommendation = recommendationRepository.save(recommendation);
 
                 Recommendation recommendation2 = new Recommendation();
                 recommendation2.setUser(user2);
-                poiList.forEach(recommendation2::addPOI);
+                recommendation2.addPOI(poiList.get(0)); // POI 0 (relevante)
+                recommendation2.addPOI(poiList.get(1)); // POI 1
+                recommendation2.addPOI(poiList.get(2)); // POI 2
+                recommendation2.addPOI(poiList.get(3)); // POI 3 (relevante)
+                recommendation2.addPOI(poiList.get(4)); // POI 4
                 recommendation2 = recommendationRepository.save(recommendation2);
 
                 List<Score> scoresUser1 = List.of(
