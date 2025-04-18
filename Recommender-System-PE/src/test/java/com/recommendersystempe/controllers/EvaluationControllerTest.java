@@ -109,10 +109,7 @@ public class EvaluationControllerTest {
                 Long userId = USER.getId();
                 int k = 5;
 
-                UserEvaluationMetricsDTO mockMetrics = new UserEvaluationMetricsDTO(
-                                0.2,
-                                1.0,
-                                0.33333333333333337);
+                UserEvaluationMetricsDTO mockMetrics = new UserEvaluationMetricsDTO(0.2);
                 // when / act
                 given(evaluationService.evaluateUserRecommendations(userId, k))
                                 .willReturn(mockMetrics);
@@ -122,9 +119,7 @@ public class EvaluationControllerTest {
                                 .param("k", String.valueOf(k)) // Adicionar parâmetro
                                 .with(user(USER.getEmail()).roles("MASTER")))
                                 .andExpect(status().isOk())
-                                .andExpect(jsonPath("$.precisionAtK").value(0.2)) // Nome correto do campo
-                                .andExpect(jsonPath("$.recallAtK").value(1.0))
-                                .andExpect(jsonPath("$.f1ScoreAtK").value(0.33333333333333337));
+                                .andExpect(jsonPath("$.precisionAtK").value(0.2));
         }
 
         @Test
@@ -132,9 +127,7 @@ public class EvaluationControllerTest {
             // Arrange
             int k = 5;
             GlobalEvaluationMetricsDTO mockMetrics = new GlobalEvaluationMetricsDTO(
-                0.75,  
-                0.65,  
-                0.70,   
+                0.75,     
                 0.85,   
                 0.90    
             );
@@ -147,11 +140,9 @@ public class EvaluationControllerTest {
                     .param("k", String.valueOf(k))
                     .with(user(USER.getEmail()).roles("MASTER")))
                     .andExpect(status().isOk())
-                    .andExpect(jsonPath("$.averagePrecisionAtK").value(0.7))
-                    .andExpect(jsonPath("$.averageRecallAtK").value(0.85))
-                    .andExpect(jsonPath("$.averageF1ScoreAtK").value(0.90))
-                    .andExpect(jsonPath("$.hitRateAtK").value(0.75))
-                    .andExpect(jsonPath("$.itemCoverage").value(0.65));
+                    .andExpect(jsonPath("$.averagePrecisionAtK").value(0.75))
+                    .andExpect(jsonPath("$.hitRateAtK").value(0.85))
+                    .andExpect(jsonPath("$.itemCoverage").value(0.9));
         }
 
 }

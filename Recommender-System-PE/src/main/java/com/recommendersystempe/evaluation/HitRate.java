@@ -6,22 +6,37 @@ import java.util.Set;
 import com.recommendersystempe.models.POI;
 
 public class HitRate {
-    
-    // Foco em garantir que cada usuário receba algo relevante no top-k, verificando a proporção dos usuários atendidos - Focus on ensuring that each user receives something relevant in the top-k, checking the proportion of users served
-    // Hit Rate@k = (Usuários com ao menos 1 item relevante no Top-k)/(Total de Usuários) - Hit Rate@k = (Users with at least 1 relevant item in the Top-k) / (Total Users)
-    public static double hitRateAtK(List<List<POI>> allRecommendations, 
-                                   List<Set<POI>> allRelevantItems, 
-                                   int k) {
+
+    // Foco em garantir que cada usuário receba algo relevante no top-k, verificando
+    // a proporção dos usuários atendidos - Focus on ensuring that each user
+    // receives something relevant in the top-k, checking the proportion of users
+    // served
+    // Hit Rate@k = (Usuários com ao menos 1 item relevante no Top-k)/(Total de
+    // Usuários) - Hit Rate@k = (Users with at least 1 relevant item in the Top-k) /
+    // (Total Users)
+    public static double hitRateAtK(List<List<POI>> allRecommendations,
+            List<Set<POI>> allRelevantItems,
+            int k) {
+        if (allRecommendations.isEmpty())
+            return 0.0;
+
         int usersWithHit = 0;
         for (int i = 0; i < allRecommendations.size(); i++) {
             List<POI> recommendations = allRecommendations.get(i);
             Set<POI> relevant = allRelevantItems.get(i);
-            
+
+            // Se não há itens relevantes, considerar como hit?
+            if (relevant.isEmpty()) {
+                usersWithHit++;
+                continue;
+            }
+
             boolean hasHit = recommendations.stream()
                     .limit(k)
                     .anyMatch(relevant::contains);
-            
-            if (hasHit) usersWithHit++;
+
+            if (hasHit)
+                usersWithHit++;
         }
         return (double) usersWithHit / allRecommendations.size();
     }

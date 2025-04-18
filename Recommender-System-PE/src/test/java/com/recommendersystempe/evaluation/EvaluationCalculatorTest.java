@@ -107,10 +107,7 @@ public class EvaluationCalculatorTest {
 
                 UserEvaluationMetricsDTO dto = EvaluationCalculator.calculateUserMetrics(poiList, relevantItems, 5);
 
-                assertAll(
-                                () -> assertEquals(0.4, dto.getPrecisionAtK(), 0.01),
-                                () -> assertEquals(1, dto.getRecallAtK(), 0.01),
-                                () -> assertEquals(0.5714285714285715, dto.getF1ScoreAtK(), 0.01));
+                assertEquals(0.4, dto.getPrecisionAtK(), 0.01);
         }
 
         @Test
@@ -201,8 +198,6 @@ public class EvaluationCalculatorTest {
                 assertAll( 
                         
                                 () -> assertEquals(0.4, dto.getAveragePrecisionAtK(), 0.01),      
-                                () -> assertEquals(1.0, dto.getAverageRecallAtK(), 0.01),          
-                                () -> assertEquals(0.5714285714285715, dto.getAverageF1ScoreAtK(), 0.01), 
                                 () -> assertEquals(1.0, dto.getHitRateAtK(), 0.01),               
                                 () -> assertEquals(1.0, dto.getItemCoverage(), 0.01)               
                         );

@@ -145,12 +145,9 @@ public class EvaluationServiceTest {
         // then / assert
         assertAll(
                 () -> assertNotNull(result),
-                () -> assertNotNull(result.getF1ScoreAtK()),
                 () -> assertNotNull(result.getPrecisionAtK()),
-                () -> assertNotNull(result.getRecallAtK()),
-                () -> assertEquals(0.2, result.getRecallAtK()),
-                () -> assertEquals(1, result.getPrecisionAtK()),
-                () -> assertEquals(0.33333333333333337, result.getF1ScoreAtK()));
+                () -> assertEquals(1, result.getPrecisionAtK()));
+ 
     }
 
     @Test
@@ -239,11 +236,9 @@ public class EvaluationServiceTest {
 
         // then / assert
         assertNotNull(globalMetrics);
-        assertEquals(1, globalMetrics.getHitRateAtK());
-        assertEquals(0.2, globalMetrics.getItemCoverage());
-        assertEquals(0.33333333333333337, globalMetrics.getAveragePrecisionAtK());
-        assertEquals(1, globalMetrics.getAverageRecallAtK());
-        assertEquals(0.5, globalMetrics.getAverageF1ScoreAtK());
+        assertEquals(0.5, globalMetrics.getHitRateAtK());
+        assertEquals(0.5, globalMetrics.getItemCoverage());
+        assertEquals(0.5, globalMetrics.getAveragePrecisionAtK());
     }
 
 }

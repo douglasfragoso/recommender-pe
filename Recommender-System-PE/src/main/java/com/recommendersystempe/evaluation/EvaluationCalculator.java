@@ -15,10 +15,8 @@ public class EvaluationCalculator {
     public static UserEvaluationMetricsDTO calculateUserMetrics(List<POI> recommendedPois, Set<POI> relevantItems,
             int k) {
         double precisionAtK = Precision.precisionAtK(recommendedPois, relevantItems, k);
-        double recallAtK = Recall.recallAtK(recommendedPois, relevantItems, k);
-        double f1ScoreAtK = F1Score.f1ScoreAtK(recommendedPois, relevantItems, k);
 
-        return new UserEvaluationMetricsDTO(precisionAtK, recallAtK, f1ScoreAtK);
+        return new UserEvaluationMetricsDTO(precisionAtK);
     }
 
     public static GlobalEvaluationMetricsDTO calculateGlobalMetrics(List<List<POI>> allRecommendations,
@@ -28,8 +26,6 @@ public class EvaluationCalculator {
         // Listas para armazenar as métricas de cada usuário - Lists to store the
         // metrics of each user
         List<Double> precisions = new ArrayList<>();
-        List<Double> recalls = new ArrayList<>();
-        List<Double> f1Scores = new ArrayList<>();
 
         // Calcula métricas para cada usuário - Calculates metrics for each user
         for (int i = 0; i < allRecommendations.size(); i++) {
@@ -38,14 +34,10 @@ public class EvaluationCalculator {
                     allRelevantItems.get(i),
                     k);
             precisions.add(userMetrics.getPrecisionAtK());
-            recalls.add(userMetrics.getRecallAtK());
-            f1Scores.add(userMetrics.getF1ScoreAtK());
         }
 
         // Calcula as médias globais - Calculates the global averages
         double averagePrecision = calculateAverage(precisions);
-        double averageRecall = calculateAverage(recalls);
-        double averageF1Score = calculateAverage(f1Scores);
 
         // Métricas existentes - Existing metrics
         double hitRateAtK = HitRate.hitRateAtK(allRecommendations, allRelevantItems, k);
@@ -53,8 +45,6 @@ public class EvaluationCalculator {
 
         return new GlobalEvaluationMetricsDTO(
                 averagePrecision,
-                averageRecall,
-                averageF1Score,
                 hitRateAtK,
                 itemCoverage);
     }

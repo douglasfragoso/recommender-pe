@@ -54,6 +54,7 @@ public class EvaluationService {
                 // Busca os POIs relevantes para o usuário (ex.: POIs que o usuário pontuou) -
                 // Find the relevant POIs for the user (e.g.: POIs that the user scored)
                 Set<POI> relevantItems = scoreRepository.findByUser(user.getId()).stream()
+                                .filter(score -> score.getScore() == 1)
                                 .map(Score::getPoi)
                                 .collect(Collectors.toSet());
 
@@ -84,6 +85,7 @@ public class EvaluationService {
 
                         // Obter itens relevantes (com score)
                         Set<POI> relevantItems = scoreRepository.findByUser(userId).stream()
+                                        .filter(score -> score.getScore() == 1)
                                         .map(Score::getPoi)
                                         .collect(Collectors.toSet());
                         allRelevantItems.add(relevantItems);
