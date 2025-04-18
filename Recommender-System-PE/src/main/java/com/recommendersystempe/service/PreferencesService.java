@@ -53,7 +53,7 @@ public class PreferencesService {
 
         // Adicionando os hobbies - Adding hobbies
         List<Hobbies> hobbies = dto.getHobbies();
-        preferences.addHobbie(hobbies);
+        preferences.addHobbies(hobbies);
 
         // Adicionando os temas - Adding themes
         List<Themes> themes = dto.getThemes();

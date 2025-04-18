@@ -62,7 +62,7 @@ public class POI {
     @ElementCollection(targetClass = Hobbies.class, fetch = FetchType.EAGER)
     @Enumerated(EnumType.STRING)
     @CollectionTable(name = "pois_hobbies", joinColumns = @JoinColumn(name = "poi_id"))
-    @Column(name = "hobbie")
+    @Column(name = "hobbies")
     private List<Hobbies> hobbies = new ArrayList<>();
 
     @Getter
@@ -99,7 +99,7 @@ public class POI {
         this.motivations.addAll(motivations);
     }
 
-    public void addHobbie(List<Hobbies> hobbies) {
+    public void addHobbies(List<Hobbies> hobbies) {
         this.hobbies.addAll(hobbies);
     }
 

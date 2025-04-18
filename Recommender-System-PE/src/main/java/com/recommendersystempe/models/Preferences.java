@@ -60,7 +60,7 @@ public class Preferences {
     @ElementCollection(targetClass = Hobbies.class)
     @Enumerated(EnumType.STRING)
     @CollectionTable(name = "preferences_hobbies", joinColumns = @JoinColumn(name = "preference_id"))
-    @Column(name = "hobbie")
+    @Column(name = "hobbies")
     private List<Hobbies> hobbies = new ArrayList<>();
 
     @Getter
@@ -87,7 +87,7 @@ public class Preferences {
         this.motivations.addAll(motivations);
     }
     
-    public void addHobbie(List<Hobbies> hobbies) {
+    public void addHobbies(List<Hobbies> hobbies) {
         this.hobbies.addAll(hobbies);
     }
     

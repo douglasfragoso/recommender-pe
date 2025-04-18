@@ -40,7 +40,7 @@ public class POIService {
 
         // Adicionando os hobbies - Adding hobbies
         List<Hobbies> hobbies = dto.getHobbies();
-        poi.addHobbie(hobbies);
+        poi.addHobbies(hobbies);
 
         // Adicionando os temas - Adding themes
         List<Themes> themes = dto.getThemes();

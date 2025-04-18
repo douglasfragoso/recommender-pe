@@ -1,503 +1,4 @@
--- Usuário 1
-INSERT INTO tb_users (
-    age, house_number, roles, states, zip_code, gender, cpf, phone, complement, country,
-    first_name, last_name, neighborhood, street, user_password, email
-) VALUES (
-    30, 100, 2, 'PE', '50000000', 'Masculino', '12345678900', '81-98765-4321', 'Apto 202', 
-    'Brasil', 'Douglas', 'Fragoso', 'Boa Viagem', 'Rua Exemplo', 
-    '$2a$12$xCCH6JiTOTC0IDjWgBKVQeqS53c/Kw6UuKi69b/iY6lGowC.P0RzW', 'douglas@example.com'
-);
-
--- Usuário 2
-INSERT INTO tb_users (
-    age, house_number, roles, states, zip_code, gender, cpf, phone, complement, country,
-    first_name, last_name, neighborhood, street, user_password, email
-) VALUES (
-    25, 45, 1, 'SP', '01311000', 'Feminino', '11122233344', '11-98765-4321', 'Bloco B', 
-    'Brasil', 'Ana', 'Santos', 'Bela Vista', 'Avenida Paulista', 
-    '$2a$12$xCCH6JiTOTC0IDjWgBKVQeqS53c/Kw6UuKi69b/iY6lGowC.P0RzW', 'ana.santos@example.com'
-);
-
--- Usuário 3
-INSERT INTO tb_users (
-    age, house_number, roles, states, zip_code, gender, cpf, phone, complement, country,
-    first_name, last_name, neighborhood, street, user_password, email
-) VALUES (
-    32, 78, 1, 'RJ', '20040002', 'Masculino', '22233344455', '21-91234-5678', 'Sala 501', 
-    'Brasil', 'Carlos', 'Oliveira', 'Centro', 'Rua Primeiro de Março', 
-    '$2a$12$xCCH6JiTOTC0IDjWgBKVQeqS53c/Kw6UuKi69b/iY6lGowC.P0RzW', 'carlos.oliveira@example.com'
-);
-
--- Usuário 4
-INSERT INTO tb_users (
-    age, house_number, roles, states, zip_code, gender, cpf, phone, complement, country,
-    first_name, last_name, neighborhood, street, user_password, email
-) VALUES (
-    29, 1023, 1, 'MG', '30170010', 'Feminino', '33344455566', '31-99876-5432', 'Andar 7', 
-    'Brasil', 'Fernanda', 'Costa', 'Savassi', 'Rua da Bahia', 
-    '$2a$12$xCCH6JiTOTC0IDjWgBKVQeqS53c/Kw6UuKi69b/iY6lGowC.P0RzW', 'fernanda.costa@example.com'
-);
-
--- Usuário 5
-INSERT INTO tb_users (
-    age, house_number, roles, states, zip_code, gender, cpf, phone, complement, country,
-    first_name, last_name, neighborhood, street, user_password, email
-) VALUES (
-    40, 33, 1, 'BA', '40000000', 'Masculino', '44455566677', '71-91234-1234', 'Fundos', 
-    'Brasil', 'Rafael', 'Almeida', 'Pelourinho', 'Largo do Cruzeiro', 
-    '$2a$12$xCCH6JiTOTC0IDjWgBKVQeqS53c/Kw6UuKi69b/iY6lGowC.P0RzW', 'rafael.almeida@example.com'
-);
-
--- Usuário 6
-INSERT INTO tb_users (
-    age, house_number, roles, states, zip_code, gender, cpf, phone, complement, country,
-    first_name, last_name, neighborhood, street, user_password, email
-) VALUES (
-    27, 567, 1, 'RS', '90000000', 'Outro', '55566677788', '51-94567-8901', 'Galpão 2', 
-    'Brasil', 'Juliana', 'Pereira', 'Moinhos de Vento', 'Avenida Goethe', 
-    '$2a$12$xCCH6JiTOTC0IDjWgBKVQeqS53c/Kw6UuKi69b/iY6lGowC.P0RzW', 'juliana.pereira@example.com'
-);
-
--- Usuário 7
-INSERT INTO tb_users (
-    age, house_number, roles, states, zip_code, gender, cpf, phone, complement, country,
-    first_name, last_name, neighborhood, street, user_password, email
-) VALUES (
-    35, 89, 1, 'PR', '80000000', 'Masculino', '66677788899', '41-95678-2345', 'Cobertura', 
-    'Brasil', 'Lucas', 'Rodrigues', 'Batel', 'Avenida do Batel', 
-    '$2a$12$xCCH6JiTOTC0IDjWgBKVQeqS53c/Kw6UuKi69b/iY6lGowC.P0RzW', 'lucas.rodrigues@example.com'
-);
-
--- Usuário 8
-INSERT INTO tb_users (
-    age, house_number, roles, states, zip_code, gender, cpf, phone, complement, country,
-    first_name, last_name, neighborhood, street, user_password, email
-) VALUES (
-    22, 12, 1, 'CE', '60000000', 'Feminino', '77788899900', '85-97865-4321', 'Casa Azul', 
-    'Brasil', 'Patrícia', 'Nascimento', 'Meireles', 'Rua Maria Tomásia', 
-    '$2a$12$xCCH6JiTOTC0IDjWgBKVQeqS53c/Kw6UuKi69b/iY6lGowC.P0RzW', 'patricia.nascimento@example.com'
-);
-
--- Usuário 9
-INSERT INTO tb_users (
-    age, house_number, roles, states, zip_code, gender, cpf, phone, complement, country,
-    first_name, last_name, neighborhood, street, user_password, email
-) VALUES (
-    31, 150, 1, 'AM', '69000000', 'Masculino', '88899900011', '92-93456-7890', 'Beco 2', 
-    'Brasil', 'Marcos', 'Souza', 'Centro', 'Rua 10 de Julho', 
-    '$2a$12$xCCH6JiTOTC0IDjWgBKVQeqS53c/Kw6UuKi69b/iY6lGowC.P0RzW', 'marcos.souza@example.com'
-);
-
--- Usuário 10
-INSERT INTO tb_users (
-    age, house_number, roles, states, zip_code, gender, cpf, phone, complement, country,
-    first_name, last_name, neighborhood, street, user_password, email
-) VALUES (
-    28, 300, 1, 'ES', '29000000', 'Feminino', '99900011122', '27-91234-5678', 'Loja 5', 
-    'Brasil', 'Isabela', 'Martins', 'Jardim da Penha', 'Avenida Nossa Senhora da Penha', 
-    '$2a$12$xCCH6JiTOTC0IDjWgBKVQeqS53c/Kw6UuKi69b/iY6lGowC.P0RzW', 'isabela.martins@example.com'
-);
-
--- Usuário 11
-INSERT INTO tb_users (
-    age, house_number, roles, states, zip_code, gender, cpf, phone, complement, country,
-    first_name, last_name, neighborhood, street, user_password, email
-) VALUES (
-    45, 1001, 1, 'DF', '70000000', 'Outro', '00011122233', '61-99876-5432', 'Setor Comercial', 
-    'Brasil', 'Ricardo', 'Ferreira', 'Asa Sul', 'Quadra 302', 
-    '$2a$12$xCCH6JiTOTC0IDjWgBKVQeqS53c/Kw6UuKi69b/iY6lGowC.P0RzW', 'ricardo.ferreira@example.com'
-);
-
--- Usuário 12 
-INSERT INTO tb_users (
-    age, house_number, roles, states, zip_code, gender, cpf, phone, complement, country,
-    first_name, last_name, neighborhood, street, user_password, email
-) VALUES (
-    35, 150, 2, 'PE', '50740000', 'Masculino', '11122233399', '81-91234-5678', 'Casa 5', 
-    'Brasil', 'Roberto', 'Silveira', 'Cordeiro', 'Rua do Futuro', 
-    '$2a$12$xCCH6JiTOTC0IDjWgBKVQeqS53c/Kw6UuKi69b/iY6lGowC.P0RzW', 'roberto.silveira@example.com'
-);
-
--- Usuário 13 
-INSERT INTO tb_users (
-    age, house_number, roles, states, zip_code, gender, cpf, phone, complement, country,
-    first_name, last_name, neighborhood, street, user_password, email
-) VALUES (
-    28, 250, 2, 'SP', '01415000', 'Feminino', '22233344488', '11-92345-6789', 'Apto 101', 
-    'Brasil', 'Beatriz', 'Albuquerque', 'Cerqueira César', 'Alameda Santos', 
-    '$2a$12$xCCH6JiTOTC0IDjWgBKVQeqS53c/Kw6UuKi69b/iY6lGowC.P0RzW', 'beatriz.albuquerque@example.com'
-);
-
--- Usuário 14 (Senha: Carioca@2024)
-INSERT INTO tb_users (
-    age, house_number, roles, states, zip_code, gender, cpf, phone, complement, country,
-    first_name, last_name, neighborhood, street, user_password, email
-) VALUES (
-    42, 30, 2, 'RJ', '22070001', 'Masculino', '33344455577', '21-93456-7890', 'Bloco C', 
-    'Brasil', 'Eduardo', 'Pimentel', 'Copacabana', 'Avenida Nossa Senhora de Copacabana', 
-    '$2a$12$xCCH6JiTOTC0IDjWgBKVQeqS53c/Kw6UuKi69b/iY6lGowC.P0RzW', 'eduardo.pimentel@example.com'
-);
-
--- Usuário 15 (Senha: Mineira@123)
-INSERT INTO tb_users (
-    age, house_number, roles, states, zip_code, gender, cpf, phone, complement, country,
-    first_name, last_name, neighborhood, street, user_password, email
-) VALUES (
-    31, 400, 2, 'MG', '30190000', 'Feminino', '44455566666', '31-94567-8901', 'Sala 302', 
-    'Brasil', 'Carolina', 'Andrade', 'Lourdes', 'Rua da Bahia', 
-    '$2a$12$xCCH6JiTOTC0IDjWgBKVQeqS53c/Kw6UuKi69b/iY6lGowC.P0RzW', 'carolina.andrade@example.com'
-);
-
--- Usuário 16 
-INSERT INTO tb_users (
-    age, house_number, roles, states, zip_code, gender, cpf, phone, complement, country,
-    first_name, last_name, neighborhood, street, user_password, email
-) VALUES (
-    29, 22, 2, 'BA', '40110000', 'Outro', '55566677755', '71-95678-9012', 'Fundos', 
-    'Brasil', 'Alex', 'Santana', 'Barra', 'Avenida Oceânica', 
-    '$2a$12$xCCH6JiTOTC0IDjWgBKVQeqS53c/Kw6UuKi69b/iY6lGowC.P0RzW', 'alex.santana@example.com'
-);
-
--- Usuário 17 
-INSERT INTO tb_users (
-    age, house_number, roles, states, zip_code, gender, cpf, phone, complement, country,
-    first_name, last_name, neighborhood, street, user_password, email
-) VALUES (
-    45, 180, 2, 'RS', '90450090', 'Masculino', '66677788844', '51-96789-0123', 'Casa Amarela', 
-    'Brasil', 'Rodrigo', 'Gonçalves', 'Moinhos de Vento', 'Rua Padre Chagas', 
-    '$2a$12$xCCH6JiTOTC0IDjWgBKVQeqS53c/Kw6UuKi69b/iY6lGowC.P0RzW', 'rodrigo.goncalves@example.com'
-);
-
--- Usuário 18 
-INSERT INTO tb_users (
-    age, house_number, roles, states, zip_code, gender, cpf, phone, complement, country,
-    first_name, last_name, neighborhood, street, user_password, email
-) VALUES (
-    26, 90, 2, 'CE', '60160000', 'Feminino', '77788899933', '85-97890-1234', 'Apto 502', 
-    'Brasil', 'Vanessa', 'Castro', 'Aldeota', 'Avenida Dom Luís', 
-    '$2a$12$xCCH6JiTOTC0IDjWgBKVQeqS53c/Kw6UuKi69b/iY6lGowC.P0RzW', 'vanessa.castro@example.com'
-);
-
--- Usuário 19 
-INSERT INTO tb_users (
-    age, house_number, roles, states, zip_code, gender, cpf, phone, complement, country,
-    first_name, last_name, neighborhood, street, user_password, email
-) VALUES (
-    38, 600, 2, 'AM', '69050000', 'Masculino', '88899900022', '92-98901-2345', 'Conjunto 10', 
-    'Brasil', 'Fábio', 'Oliveira', 'Adrianópolis', 'Avenida Joaquim Nabuco', 
-    '$2a$12$xCCH6JiTOTC0IDjWgBKVQeqS53c/Kw6UuKi69b/iY6lGowC.P0RzW', 'fabio.oliveira@example.com'
-);
-
--- Usuário 20 
-INSERT INTO tb_users (
-    age, house_number, roles, states, zip_code, gender, cpf, phone, complement, country,
-    first_name, last_name, neighborhood, street, user_password, email
-) VALUES (
-    33, 45, 2, 'ES', '29055070', 'Feminino', '99900011111', '27-99123-4567', 'Sobrado 3', 
-    'Brasil', 'Daniela', 'Ramos', 'Praia do Canto', 'Rua Professor Fernando Duarte Rabelo', 
-    '$2a$12$xCCH6JiTOTC0IDjWgBKVQeqS53c/Kw6UuKi69b/iY6lGowC.P0RzW', 'daniela.ramos@example.com'
-);
-
--- Usuário 21 
-INSERT INTO tb_users (
-    age, house_number, roles, states, zip_code, gender, cpf, phone, complement, country,
-    first_name, last_name, neighborhood, street, user_password, email
-) VALUES (
-    27, 1200, 2, 'DF', '70297000', 'Outro', '00011122200', '81-99234-5678', 'Quadra 104', 
-    'Brasil', 'Bruno', 'Lima', 'Asa Norte', 'CLN 104 Bloco C', 
-    '$2a$12$xCCH6JiTOTC0IDjWgBKVQeqS53c/Kw6UuKi69b/iY6lGowC.P0RzW', 'bruno.lima@example.com'
-);
-
--- Usuário 22 
-INSERT INTO tb_users (
-    age, house_number, roles, states, zip_code, gender, cpf, phone, complement, country,
-    first_name, last_name, neighborhood, street, user_password, email
-) VALUES (
-    32, 75, 2, 'PB', '58015000', 'Masculino', '12345678911', '83-91234-5678', 'Casa 2', 
-    'Brasil', 'Marcelo', 'Cavalcanti', 'Tambau', 'Avenida Almirante Tamandaré', 
-    '$2a$12$xCCH6JiTOTC0IDjWgBKVQeqS53c/Kw6UuKi69b/iY6lGowC.P0RzW', 'marcelo.cavalcanti@example.com'
-);
-
--- Usuário 23 
-INSERT INTO tb_users (
-    age, house_number, roles, states, zip_code, gender, cpf, phone, complement, country,
-    first_name, last_name, neighborhood, street, user_password, email
-) VALUES (
-    29, 88, 2, 'MA', '65010000', 'Feminino', '23456789122', '98-92345-6789', 'Apto 301', 
-    'Brasil', 'Tatiana', 'Sousa', 'Renascença', 'Rua Grande', 
-    '$2a$12$xCCH6JiTOTC0IDjWgBKVQeqS53c/Kw6UuKi69b/iY6lGowC.P0RzW', 'tatiana.sousa@example.com'
-);
-
--- Usuário 24 
-INSERT INTO tb_users (
-    age, house_number, roles, states, zip_code, gender, cpf, phone, complement, country,
-    first_name, last_name, neighborhood, street, user_password, email
-) VALUES (
-    41, 120, 2, 'MT', '78005000', 'Masculino', '34567891233', '65-93456-7890', 'Quadra 5', 
-    'Brasil', 'Ricardo', 'Nogueira', 'Jardim Cuiabá', 'Rua Galdino Pimentel', 
-    '$2a$12$xCCH6JiTOTC0IDjWgBKVQeqS53c/Kw6UuKi69b/iY6lGowC.P0RzW', 'ricardo.nogueira@example.com'
-);
-
--- Usuário 25 
-INSERT INTO tb_users (
-    age, house_number, roles, states, zip_code, gender, cpf, phone, complement, country,
-    first_name, last_name, neighborhood, street, user_password, email
-) VALUES (
-    26, 340, 2, 'GO', '74030000', 'Feminino', '45678912344', '62-94567-8901', 'Lote 7', 
-    'Brasil', 'Fernanda', 'Lima', 'Setor Marista', 'Avenida 85', 
-    '$2a$12$xCCH6JiTOTC0IDjWgBKVQeqS53c/Kw6UuKi69b/iY6lGowC.P0RzW', 'fernanda.lima@example.com'
-);
-
--- Usuário 26 
-INSERT INTO tb_users (
-    age, house_number, roles, states, zip_code, gender, cpf, phone, complement, country,
-    first_name, last_name, neighborhood, street, user_password, email
-) VALUES (
-    37, 55, 2, 'TO', '77020000', 'Outro', '56789123455', '63-95678-9012', 'Conjunto 3', 
-    'Brasil', 'Patricia', 'Oliveira', 'Plano Diretor Sul', 'Avenida NS-2', 
-    '$2a$12$xCCH6JiTOTC0IDjWgBKVQeqS53c/Kw6UuKi69b/iY6lGowC.P0RzW', 'patricia.oliveira@example.com'
-);
-
--- Usuário 27 
-INSERT INTO tb_users (
-    age, house_number, roles, states, zip_code, gender, cpf, phone, complement, country,
-    first_name, last_name, neighborhood, street, user_password, email
-) VALUES (
-    44, 230, 2, 'RO', '78900000', 'Masculino', '67891234566', '69-96789-0123', 'KM 3', 
-    'Brasil', 'Roberto', 'Santos', 'Nacional', 'Rua Rui Barbosa', 
-    '$2a$12$xCCH6JiTOTC0IDjWgBKVQeqS53c/Kw6UuKi69b/iY6lGowC.P0RzW', 'roberto.santos@example.com'
-);
-
--- Usuário 28 
-INSERT INTO tb_users (
-    age, house_number, roles, states, zip_code, gender, cpf, phone, complement, country,
-    first_name, last_name, neighborhood, street, user_password, email
-) VALUES (
-    31, 18, 2, 'AC', '69900000', 'Feminino', '78912345677', '68-97890-1234', 'Conjunto 8', 
-    'Brasil', 'Juliana', 'Martins', 'Base', 'Rua Benjamin Constant', 
-    '$2a$12$xCCH6JiTOTC0IDjWgBKVQeqS53c/Kw6UuKi69b/iY6lGowC.P0RzW', 'juliana.martins@example.com'
-);
-
--- Usuário 29 
-INSERT INTO tb_users (
-    age, house_number, roles, states, zip_code, gender, cpf, phone, complement, country,
-    first_name, last_name, neighborhood, street, user_password, email
-) VALUES (
-    28, 72, 2, 'RR', '69305000', 'Masculino', '89123456788', '95-98901-2345', 'Apto 102', 
-    'Brasil', 'Carlos', 'Ferreira', 'Centro', 'Avenida Capitão Júlio Bezerra', 
-    '$2a$12$xCCH6JiTOTC0IDjWgBKVQeqS53c/Kw6UuKi69b/iY6lGowC.P0RzW', 'carlos.ferreira@example.com'
-);
-
--- Usuário 30
-INSERT INTO tb_users (
-    age, house_number, roles, states, zip_code, gender, cpf, phone, complement, country,
-    first_name, last_name, neighborhood, street, user_password, email
-) VALUES (
-    35, 95, 2, 'AP', '68900000', 'Feminino', '91234567899', '96-99123-4567', 'Casa Verde', 
-    'Brasil', 'Amanda', 'Rocha', 'Trem', 'Avenida Fab', 
-    '$2a$12$xCCH6JiTOTC0IDjWgBKVQeqS53c/Kw6UuKi69b/iY6lGowC.P0RzW', 'amanda.rocha@example.com'
-);
-
--- Usuário 31 
-INSERT INTO tb_users (
-    age, house_number, roles, states, zip_code, gender, cpf, phone, complement, country,
-    first_name, last_name, neighborhood, street, user_password, email
-) VALUES (
-    40, 110, 2, 'SE', '49010000', 'Outro', '12345678000', '79-99234-5678', 'Bloco D', 
-    'Brasil', 'Alexandre', 'Alves', 'Jardins', 'Avenida Beira Mar', 
-    '$2a$12$xCCH6JiTOTC0IDjWgBKVQeqS53c/Kw6UuKi69b/iY6lGowC.P0RzW', 'alexandre.alves@example.com'
-);
-
--- Usuário 32 
-INSERT INTO tb_users (
-    age, house_number, roles, states, zip_code, gender, cpf, phone, complement, country,
-    first_name, last_name, neighborhood, street, user_password, email
-) VALUES (
-    33, 200, 2, 'PI', '64000000', 'Masculino', '23456789111', '86-91234-5678', 'Quadra 10', 
-    'Brasil', 'Felipe', 'Carvalho', 'Jóquei', 'Avenida Frei Serafim', 
-    '$2a$12$xCCH6JiTOTC0IDjWgBKVQeqS53c/Kw6UuKi69b/iY6lGowC.P0RzW', 'felipe.carvalho@example.com'
-);
-
--- Usuário 33 
-INSERT INTO tb_users (
-    age, house_number, roles, states, zip_code, gender, cpf, phone, complement, country,
-    first_name, last_name, neighborhood, street, user_password, email
-) VALUES (
-    27, 45, 2, 'AL', '57000000', 'Feminino', '34567891222', '82-92345-6789', 'Casa B', 
-    'Brasil', 'Larissa', 'Araújo', 'Jatiúca', 'Rua Desportista Claúdio da Silva', 
-    '$2a$12$xCCH6JiTOTC0IDjWgBKVQeqS53c/Kw6UuKi69b/iY6lGowC.P0RzW', 'larissa.araújo@example.com'
-);
-
--- Usuário 34 
-INSERT INTO tb_users (
-    age, house_number, roles, states, zip_code, gender, cpf, phone, complement, country,
-    first_name, last_name, neighborhood, street, user_password, email
-) VALUES (
-    38, 78, 2, 'RN', '59000000', 'Masculino', '45678912333', '84-93456-7890', 'Apto 201', 
-    'Brasil', 'Rodrigo', 'Barbosa', 'Petrópolis', 'Avenida Campos Sales', 
-    '$2a$12$xCCH6JiTOTC0IDjWgBKVQeqS53c/Kw6UuKi69b/iY6lGowC.P0RzW', 'rodrigo.barbosa@example.com'
-);
-
--- Usuário 35 
-INSERT INTO tb_users (
-    age, house_number, roles, states, zip_code, gender, cpf, phone, complement, country,
-    first_name, last_name, neighborhood, street, user_password, email
-) VALUES (
-    29, 33, 2, 'CE', '60170000', 'Outro', '56789123444', '85-94567-8901', 'Sobrado', 
-    'Brasil', 'Camila', 'Dias', 'Meireles', 'Rua Carlos Vasconcelos', 
-    '$2a$12$xCCH6JiTOTC0IDjWgBKVQeqS53c/Kw6UuKi69b/iY6lGowC.P0RzW', 'camila.dias@example.com'
-);
-
--- Usuário 36
-INSERT INTO tb_users (
-    age, house_number, roles, states, zip_code, gender, cpf, phone, complement, country,
-    first_name, last_name, neighborhood, street, user_password, email
-) VALUES (
-    42, 120, 2, 'PR', '80010000', 'Feminino', '67891234555', '41-95678-9012', 'Casa 2', 
-    'Brasil', 'Gabriela', 'Ribeiro', 'Água Verde', 'Rua Padre Anchieta', 
-    '$2a$12$xCCH6JiTOTC0IDjWgBKVQeqS53c/Kw6UuKi69b/iY6lGowC.P0RzW', 'gabriela.ribeiro@example.com'
-);
-
--- Usuário 37 
-INSERT INTO tb_users (
-    age, house_number, roles, states, zip_code, gender, cpf, phone, complement, country,
-    first_name, last_name, neighborhood, street, user_password, email
-) VALUES (
-    31, 90, 2, 'SC', '88010000', 'Masculino', '78912345666', '48-96789-0123', 'Bloco B', 
-    'Brasil', 'Leonardo', 'Cardoso', 'Centro', 'Rua Felipe Schmidt', 
-    '$2a$12$xCCH6JiTOTC0IDjWgBKVQeqS53c/Kw6UuKi69b/iY6lGowC.P0RzW', 'leonardo.cardoso@example.com'
-);
-
--- Usuário 38 
-INSERT INTO tb_users (
-    age, house_number, roles, states, zip_code, gender, cpf, phone, complement, country,
-    first_name, last_name, neighborhood, street, user_password, email
-) VALUES (
-    36, 150, 2, 'MS', '79000000', 'Feminino', '89123456777', '67-97890-1234', 'Chácara 3', 
-    'Brasil', 'Isabela', 'Cunha', 'Jardim dos Estados', 'Rua da Paz', 
-    '$2a$12$xCCH6JiTOTC0IDjWgBKVQeqS53c/Kw6UuKi69b/iY6lGowC.P0RzW', 'isabela.cunha@example.com'
-);
-
--- Usuário 39 
-INSERT INTO tb_users (
-    age, house_number, roles, states, zip_code, gender, cpf, phone, complement, country,
-    first_name, last_name, neighborhood, street, user_password, email
-) VALUES (
-    25, 60, 2, 'RO', '78950000', 'Masculino', '91234567888', '69-98901-2345', 'KM 8', 
-    'Brasil', 'Vinícius', 'Melo', 'Nova Porto Velho', 'Avenida Governador Jorge Teixeira', 
-    '$2a$12$xCCH6JiTOTC0IDjWgBKVQeqS53c/Kw6UuKi69b/iY6lGowC.P0RzW', 'vinicius.melo@example.com'
-);
-
--- Usuário 40 
-INSERT INTO tb_users (
-    age, house_number, roles, states, zip_code, gender, cpf, phone, complement, country,
-    first_name, last_name, neighborhood, street, user_password, email
-) VALUES (
-    40, 85, 2, 'AC', '69915000', 'Outro', '12345678099', '68-99123-4567', 'Conjunto 4', 
-    'Brasil', 'André', 'Farias', 'Bosque', 'Rua Hugo Carneiro', 
-    '$2a$12$xCCH6JiTOTC0IDjWgBKVQeqS53c/Kw6UuKi69b/iY6lGowC.P0RzW', 'andre.farias@example.com'
-);
-
--- Usuário 41 
-INSERT INTO tb_users (
-    age, house_number, roles, states, zip_code, gender, cpf, phone, complement, country,
-    first_name, last_name, neighborhood, street, user_password, email
-) VALUES (
-    28, 110, 2, 'AP', '68909000', 'Feminino', '23456789100', '96-99234-5678', 'Apto 302', 
-    'Brasil', 'Beatriz', 'Peixoto', 'Central', 'Avenida Ernestino Borges', 
-    '$2a$12$xCCH6JiTOTC0IDjWgBKVQeqS53c/Kw6UuKi69b/iY6lGowC.P0RzW', 'beatriz.peixoto@example.com'
-);
-
--- Usuário 42 
-INSERT INTO tb_users (
-    age, house_number, roles, states, zip_code, gender, cpf, phone, complement, country,
-    first_name, last_name, neighborhood, street, user_password, email
-) VALUES (
-    45, 220, 2, 'TO', '77060000', 'Masculino', '34567891211', '63-99345-6789', 'Quadra 103', 
-    'Brasil', 'Ricardo', 'Santos', 'Plano Diretor Norte', 'Avenida LO-13', 
-    '$2a$12$xCCH6JiTOTC0IDjWgBKVQeqS53c/Kw6UuKi69b/iY6lGowC.P0RzW', 'ricardo.santos@example.com'
-);
-
--- Usuário 43 
-INSERT INTO tb_users (
-    age, house_number, roles, states, zip_code, gender, cpf, phone, complement, country,
-    first_name, last_name, neighborhood, street, user_password, email
-) VALUES (
-    32, 40, 2, 'SE', '49030000', 'Feminino', '45678912322', '79-99456-7890', 'Casa 5', 
-    'Brasil', 'Daniela', 'Lopes', 'Atalaia', 'Avenida Beira Mar', 
-    '$2a$12$xCCH6JiTOTC0IDjWgBKVQeqS53c/Kw6UuKi69b/iY6lGowC.P0RzW', 'daniela.lopes@example.com'
-);
-
--- Usuário 44 
-INSERT INTO tb_users (
-    age, house_number, roles, states, zip_code, gender, cpf, phone, complement, country,
-    first_name, last_name, neighborhood, street, user_password, email
-) VALUES (
-    29, 75, 2, 'AL', '57030000', 'Masculino', '56789123433', '82-99567-8901', 'Bloco C', 
-    'Brasil', 'Eduardo', 'Nunes', 'Ponta Verde', 'Rua Sargento José da Silva', 
-    '$2a$12$xCCH6JiTOTC0IDjWgBKVQeqS53c/Kw6UuKi69b/iY6lGowC.P0RzW', 'eduardo.nunes@example.com'
-);
-
--- Usuário 45 
-INSERT INTO tb_users (
-    age, house_number, roles, states, zip_code, gender, cpf, phone, complement, country,
-    first_name, last_name, neighborhood, street, user_password, email
-) VALUES (
-    37, 95, 2, 'RN', '59020000', 'Outro', '67891234544', '84-99678-9012', 'Apto 401', 
-    'Brasil', 'Fernanda', 'Oliveira', 'Tirol', 'Rua Apodi', 
-    '$2a$12$xCCH6JiTOTC0IDjWgBKVQeqS53c/Kw6UuKi69b/iY6lGowC.P0RzW', 'fernanda.oliveira@example.com'
-);
-
--- Usuário 46 
-INSERT INTO tb_users (
-    age, house_number, roles, states, zip_code, gender, cpf, phone, complement, country,
-    first_name, last_name, neighborhood, street, user_password, email
-) VALUES (
-    26, 130, 2, 'PI', '64030000', 'Feminino', '78912345655', '86-99789-0123', 'Conjunto 6', 
-    'Brasil', 'Gustavo', 'Marques', 'Ilhotas', 'Rua Álvaro Mendes', 
-    '$2a$12$xCCH6JiTOTC0IDjWgBKVQeqS53c/Kw6UuKi69b/iY6lGowC.P0RzW', 'gustavo.marques@example.com'
-);
-
--- Usuário 47 
-INSERT INTO tb_users (
-    age, house_number, roles, states, zip_code, gender, cpf, phone, complement, country,
-    first_name, last_name, neighborhood, street, user_password, email
-) VALUES (
-    43, 65, 2, 'MA', '65030000', 'Masculino', '89123456766', '98-99890-1234', 'Casa 4', 
-    'Brasil', 'Helena', 'Castro', 'Calhau', 'Avenida dos Holandeses', 
-    '$2a$12$xCCH6JiTOTC0IDjWgBKVQeqS53c/Kw6UuKi69b/iY6lGowC.P0RzW', 'helena.castro@example.com'
-);
-
--- Usuário 48 
-INSERT INTO tb_users (
-    age, house_number, roles, states, zip_code, gender, cpf, phone, complement, country,
-    first_name, last_name, neighborhood, street, user_password, email
-) VALUES (
-    30, 180, 2, 'MT', '78030000', 'Feminino', '91234567877', '65-99901-2345', 'Lote 8', 
-    'Brasil', 'Igor', 'Fernandes', 'Jardim Itália', 'Rua General Valle', 
-    '$2a$12$xCCH6JiTOTC0IDjWgBKVQeqS53c/Kw6UuKi69b/iY6lGowC.P0RzW', 'igor.fernandes@example.com'
-);
-
--- Usuário 49 
-INSERT INTO tb_users (
-    age, house_number, roles, states, zip_code, gender, cpf, phone, complement, country,
-    first_name, last_name, neighborhood, street, user_password, email
-) VALUES (
-    34, 25, 2, 'GO', '74060000', 'Masculino', '12345678988', '62-99123-4567', 'Apto 601', 
-    'Brasil', 'Juliana', 'Gomes', 'Setor Oeste', 'Rua 9', 
-    '$2a$12$xCCH6JiTOTC0IDjWgBKVQeqS53c/Kw6UuKi69b/iY6lGowC.P0RzW', 'juliana.gomes@example.com'
-);
-
--- Usuário 50 
-INSERT INTO tb_users (
-    age, house_number, roles, states, zip_code, gender, cpf, phone, complement, country,
-    first_name, last_name, neighborhood, street, user_password, email
-) VALUES (
-    39, 500, 2, 'DF', '70070000', 'Outro', '23456789199', '61-99234-5679', 'Quadra 305', 
-    'Brasil', 'Kaio', 'Henrique', 'Sudoeste', 'CLSW 302 Bloco B', 
-    '$2a$12$xCCH6JiTOTC0IDjWgBKVQeqS53c/Kw6UuKi69b/iY6lGowC.P0RzW', 'kaio.henrique@example.com'
-);
-
+USE db_recommenderpe;
 -- POI ID 1
 INSERT INTO tb_pois (id, poi_name, poi_description, street, house_number, complement, neighborhood, city, states, country, zip_code) 
 VALUES (
@@ -515,7 +16,7 @@ VALUES (
 );
 
 INSERT INTO pois_motivations (poi_id, motivation) VALUES (1, 'HERITAGE'), (1, 'SPIRITUALITY'), (1, 'CULTURE'), (1, 'APPRECIATION'), (1, 'EXPLORATION');
-INSERT INTO pois_hobbies (poi_id, hobbie) VALUES (1, 'ART'), (1, 'PHOTOGRAPHY'), (1, 'LEARNING'), (1, 'TRAVELING'), (1, 'READING');
+INSERT INTO pois_hobbies (poi_id, hobbies) VALUES (1, 'ART'), (1, 'PHOTOGRAPHY'), (1, 'LEARNING'), (1, 'TRAVELING'), (1, 'READING');
 INSERT INTO pois_themes (poi_id, theme) VALUES (1, 'CULTURAL'), (1, 'RELIGIOUS'), (1, 'HISTORY'), (1, 'COLONIAL'), (1, 'LUXURY');
 
 -- POI ID 2
@@ -535,7 +36,7 @@ VALUES (
 );
 
 INSERT INTO pois_motivations (poi_id, motivation) VALUES (2, 'APPRECIATION'), (2, 'MULTISENSORY'), (2, 'SOCIAL'), (2, 'TRADITION'), (2, 'ENTERTAINMENT');
-INSERT INTO pois_hobbies (poi_id, hobbie) VALUES (2, 'GASTRONOMY'), (2, 'SOCIAL'), (2, 'TRAVELING'), (2, 'ART'), (2, 'LEARNING');
+INSERT INTO pois_hobbies (poi_id, hobbies) VALUES (2, 'GASTRONOMY'), (2, 'SOCIAL'), (2, 'TRAVELING'), (2, 'ART'), (2, 'LEARNING');
 INSERT INTO pois_themes (poi_id, theme) VALUES (2, 'GASTRONOMIC'), (2, 'CULTURAL'), (2, 'FAMILY_FRIENDLY'), (2, 'MODERN'), (2, 'NATURE');
 
 -- POI ID 3
@@ -555,7 +56,7 @@ VALUES (
 );
 
 INSERT INTO pois_motivations (poi_id, motivation) VALUES (3, 'HERITAGE'), (3, 'TRADITION'), (3, 'MULTISENSORY'), (3, 'APPRECIATION'), (3, 'EXPLORATION');
-INSERT INTO pois_hobbies (poi_id, hobbie) VALUES (3, 'LEARNING'), (3, 'COLLECTING'), (3, 'TRAVELING'), (3, 'PHOTOGRAPHY'), (3, 'SOCIAL');
+INSERT INTO pois_hobbies (poi_id, hobbies) VALUES (3, 'LEARNING'), (3, 'COLLECTING'), (3, 'TRAVELING'), (3, 'PHOTOGRAPHY'), (3, 'SOCIAL');
 INSERT INTO pois_themes (poi_id, theme) VALUES (3, 'GASTRONOMIC'), (3, 'CULTURAL'), (3, 'HISTORY'), (3, 'NATURE'), (3, 'LUXURY');
 
 -- POI ID 4
@@ -575,7 +76,7 @@ VALUES (
 );
 
 INSERT INTO pois_motivations (poi_id, motivation) VALUES (4, 'CULTURE'), (4, 'EXPLORATION'), (4, 'CREATIVITY'), (4, 'IDENTITY'), (4, 'SOCIAL');
-INSERT INTO pois_hobbies (poi_id, hobbie) VALUES (4, 'LEARNING'), (4, 'ART'), (4, 'TECH'), (4, 'MUSIC'), (4, 'SOCIAL');
+INSERT INTO pois_hobbies (poi_id, hobbies) VALUES (4, 'LEARNING'), (4, 'ART'), (4, 'TECH'), (4, 'MUSIC'), (4, 'SOCIAL');
 INSERT INTO pois_themes (poi_id, theme) VALUES (4, 'CULTURAL'), (4, 'MODERN'), (4, 'HISTORY'), (4, 'FAMILY_FRIENDLY'), (4, 'FOLKLORE');
 
 -- POI ID 5
@@ -595,7 +96,7 @@ VALUES (
 );
 
 INSERT INTO pois_motivations (poi_id, motivation) VALUES (5, 'CULTURE'), (5, 'ENTERTAINMENT'), (5, 'SOCIAL'), (5, 'APPRECIATION'), (5, 'EXPLORATION');
-INSERT INTO pois_hobbies (poi_id, hobbie) VALUES (5, 'ART'), (5, 'THEATER'), (5, 'PHOTOGRAPHY'), (5, 'SOCIAL'), (5, 'LEARNING');
+INSERT INTO pois_hobbies (poi_id, hobbies) VALUES (5, 'ART'), (5, 'THEATER'), (5, 'PHOTOGRAPHY'), (5, 'SOCIAL'), (5, 'LEARNING');
 INSERT INTO pois_themes (poi_id, theme) VALUES (5, 'CULTURAL'), (5, 'HISTORY'), (5, 'MODERN'), (5, 'FAMILY_FRIENDLY'), (5, 'URBAN_ART');
 
 -- POI ID 6
@@ -615,7 +116,7 @@ VALUES (
 );
 
 INSERT INTO pois_motivations (poi_id, motivation) VALUES (6, 'HERITAGE'), (6, 'SPIRITUALITY'), (6, 'APPRECIATION'), (6, 'EXPLORATION'), (6, 'TRADITION');
-INSERT INTO pois_hobbies (poi_id, hobbie) VALUES (6, 'ART'), (6, 'PHOTOGRAPHY'), (6, 'LEARNING'), (6, 'TRAVELING'), (6, 'READING');
+INSERT INTO pois_hobbies (poi_id, hobbies) VALUES (6, 'ART'), (6, 'PHOTOGRAPHY'), (6, 'LEARNING'), (6, 'TRAVELING'), (6, 'READING');
 INSERT INTO pois_themes (poi_id, theme) VALUES (6, 'CULTURAL'), (6, 'RELIGIOUS'), (6, 'HISTORY'), (6, 'LUXURY'), (6, 'COLONIAL');
 
 -- POI ID 7
@@ -635,7 +136,7 @@ VALUES (
 );
 
 INSERT INTO pois_motivations (poi_id, motivation) VALUES (7, 'HERITAGE'), (7, 'STUDY'), (7, 'EXPLORATION'), (7, 'APPRECIATION'), (7, 'CULTURE ');
-INSERT INTO pois_hobbies (poi_id, hobbie) VALUES (7, 'ART'), (7, 'COLLECTING'), (7, 'PHOTOGRAPHY'), (7, 'LEARNING'), (7, 'TRAVELING');
+INSERT INTO pois_hobbies (poi_id, hobbies) VALUES (7, 'ART'), (7, 'COLLECTING'), (7, 'PHOTOGRAPHY'), (7, 'LEARNING'), (7, 'TRAVELING');
 INSERT INTO pois_themes (poi_id, theme) VALUES (7, 'CULTURAL'), (7, 'HISTORY'), (7, 'MODERN'), (7, 'FAMILY_FRIENDLY'), (7, 'URBAN_ART');
 
 -- POI ID 8
@@ -655,7 +156,7 @@ VALUES (
 );
 
 INSERT INTO pois_motivations (poi_id, motivation) VALUES (8, 'ENTERTAINMENT'), (8, 'EXPLORATION'), (8, 'CULTURE'), (8, 'SOCIAL'), (8, 'RELAXATION');
-INSERT INTO pois_hobbies (poi_id, hobbie) VALUES (8, 'ADVENTURE'), (8, 'TRAVELING'), (8, 'PHOTOGRAPHY'), (8, 'SOCIAL'), (8, 'LEARNING');
+INSERT INTO pois_hobbies (poi_id, hobbies) VALUES (8, 'ADVENTURE'), (8, 'TRAVELING'), (8, 'PHOTOGRAPHY'), (8, 'SOCIAL'), (8, 'LEARNING');
 INSERT INTO pois_themes (poi_id, theme) VALUES (8, 'ADVENTURE'), (8, 'CULTURAL'), (8, 'FAMILY_FRIENDLY'), (8, 'NATURE'), (8, 'MODERN');
 
 -- POI ID 9
@@ -675,7 +176,7 @@ VALUES (
 );
 
 INSERT INTO pois_motivations (poi_id, motivation) VALUES (9, 'CULTURE'), (9, 'APPRECIATION'), (9, 'TRADITION'), (9, 'EXPLORATION'), (9, 'SOCIAL');
-INSERT INTO pois_hobbies (poi_id, hobbie) VALUES (9, 'ART'), (9, 'COLLECTING'), (9, 'PHOTOGRAPHY'), (9, 'TRAVELING'), (9, 'LEARNING');
+INSERT INTO pois_hobbies (poi_id, hobbies) VALUES (9, 'ART'), (9, 'COLLECTING'), (9, 'PHOTOGRAPHY'), (9, 'TRAVELING'), (9, 'LEARNING');
 INSERT INTO pois_themes (poi_id, theme) VALUES (9, 'CULTURAL'), (9, 'FAMILY_FRIENDLY'), (9, 'MODERN'), (9, 'NATURE'), (9, 'URBAN_ART');
 
 -- POI ID 10
@@ -695,7 +196,7 @@ VALUES (
 );
 
 INSERT INTO pois_motivations (poi_id, motivation) VALUES (10, 'HERITAGE'), (10, 'SPIRITUALITY'), (10, 'TRADITION'), (10, 'APPRECIATION'), (10, 'EXPLORATION');
-INSERT INTO pois_hobbies (poi_id, hobbie) VALUES (10, 'ART'), (10, 'PHOTOGRAPHY'), (10, 'TRAVELING'), (10, 'LEARNING'), (10, 'SOCIAL');
+INSERT INTO pois_hobbies (poi_id, hobbies) VALUES (10, 'ART'), (10, 'PHOTOGRAPHY'), (10, 'TRAVELING'), (10, 'LEARNING'), (10, 'SOCIAL');
 INSERT INTO pois_themes (poi_id, theme) VALUES (10, 'RELIGIOUS'), (10, 'CULTURAL'), (10, 'HISTORY'), (10, 'LUXURY'), (10, 'COLONIAL');
 
 -- POI ID 11
@@ -715,7 +216,7 @@ VALUES (
 );
 
 INSERT INTO pois_motivations (poi_id, motivation) VALUES (11, 'CULTURE'), (11, 'ENTERTAINMENT'), (11, 'TRADITION'), (11, 'APPRECIATION'), (11, 'IDENTITY ');
-INSERT INTO pois_hobbies (poi_id, hobbie) VALUES (11, 'ART'), (11, 'DANCING'), (11, 'PHOTOGRAPHY'), (11, 'TRAVELING'), (11, 'SOCIAL');
+INSERT INTO pois_hobbies (poi_id, hobbies) VALUES (11, 'ART'), (11, 'DANCING'), (11, 'PHOTOGRAPHY'), (11, 'TRAVELING'), (11, 'SOCIAL');
 INSERT INTO pois_themes (poi_id, theme) VALUES (11, 'CULTURAL'), (11, 'MODERN'), (11, 'FAMILY_FRIENDLY'), (11, 'HISTORY'), (11, 'ADVENTURE');
 
 -- POI ID 12
@@ -735,7 +236,7 @@ VALUES (
 );
 
 INSERT INTO pois_motivations (poi_id, motivation) VALUES (12, 'CULTURE'), (12, 'ENTERTAINMENT'), (12, 'TRADITION'), (12, 'APPRECIATION'), (12, 'SOCIAL');
-INSERT INTO pois_hobbies (poi_id, hobbie) VALUES (12, 'ART'), (12, 'PHOTOGRAPHY'), (12, 'LEARNING'), (12, 'TRAVELING'), (12, 'SOCIAL');
+INSERT INTO pois_hobbies (poi_id, hobbies) VALUES (12, 'ART'), (12, 'PHOTOGRAPHY'), (12, 'LEARNING'), (12, 'TRAVELING'), (12, 'SOCIAL');
 INSERT INTO pois_themes (poi_id, theme) VALUES (12, 'CULTURAL'), (12, 'FAMILY_FRIENDLY'), (12, 'HISTORY'), (12, 'FOLKLORE'), (12, 'ADVENTURE');
 
 -- POI ID 13
@@ -755,7 +256,7 @@ VALUES (
 );
 
 INSERT INTO pois_motivations (poi_id, motivation) VALUES (13, 'HERITAGE'), (13, 'STUDY'), (13, 'APPRECIATION'), (13, 'EXPLORATION'), (13, 'TRADITION');
-INSERT INTO pois_hobbies (poi_id, hobbie) VALUES (13, 'LEARNING'), (13, 'PHOTOGRAPHY'), (13, 'COLLECTING'), (13, 'TRAVELING'), (13, 'READING');
+INSERT INTO pois_hobbies (poi_id, hobbies) VALUES (13, 'LEARNING'), (13, 'PHOTOGRAPHY'), (13, 'COLLECTING'), (13, 'TRAVELING'), (13, 'READING');
 INSERT INTO pois_themes (poi_id, theme) VALUES (13, 'HISTORY'), (13, 'CULTURAL'), (13, 'FAMILY_FRIENDLY'), (13, 'MODERN'), (13, 'COLONIAL ');
 
 -- POI ID 14
@@ -775,7 +276,7 @@ NULL,
 );
 
 INSERT INTO pois_motivations (poi_id, motivation) VALUES (14, 'CULTURE'), (14, 'HERITAGE'), (14, 'SPIRITUALITY'), (14, 'APPRECIATION'), (14, 'EXPLORATION');
-INSERT INTO pois_hobbies (poi_id, hobbie) VALUES (14, 'ADVENTURE'), (14, 'LEARNING'), (14, 'PHOTOGRAPHY'), (14, 'COLLECTING'), (14, 'TRAVELING');
+INSERT INTO pois_hobbies (poi_id, hobbies) VALUES (14, 'ADVENTURE'), (14, 'LEARNING'), (14, 'PHOTOGRAPHY'), (14, 'COLLECTING'), (14, 'TRAVELING');
 INSERT INTO pois_themes (poi_id, theme) VALUES (14, 'HISTORY'), (14, 'CULTURAL'), (14, 'ADVENTURE'), (14, 'RELIGIOUS'), (14, 'COLONIAL ');
 
 -- POI ID 15
@@ -795,7 +296,7 @@ NULL,
 );
 
 INSERT INTO pois_motivations (poi_id, motivation) VALUES (15, 'CULTURE'), (15, 'STUDY'), (15, 'APPRECIATION'), (15, 'EXPLORATION'), (15, 'TRADITION');
-INSERT INTO pois_hobbies (poi_id, hobbie) VALUES (15, 'LEARNING'), (15, 'READING'), (15, 'ART'), (15, 'TRAVELING'), (15, 'PHOTOGRAPHY');
+INSERT INTO pois_hobbies (poi_id, hobbies) VALUES (15, 'LEARNING'), (15, 'READING'), (15, 'ART'), (15, 'TRAVELING'), (15, 'PHOTOGRAPHY');
 INSERT INTO pois_themes (poi_id, theme) VALUES (15, 'CULTURAL'), (15, 'HISTORY'), (15, 'MODERN'), (15, 'FAMILY_FRIENDLY'), (15, 'COLONIAL');
 
 -- POI ID 16
@@ -815,7 +316,7 @@ NULL,
 );
 
 INSERT INTO pois_motivations (poi_id, motivation) VALUES (16, 'HERITAGE'), (16, 'SPIRITUALITY'), (16, 'APPRECIATION'), (16, 'TRADITION'), (16, 'EXPLORATION');
-INSERT INTO pois_hobbies (poi_id, hobbie) VALUES (16, 'ART'), (16, 'PHOTOGRAPHY'), (16, 'LEARNING'), (16, 'TRAVELING'), (16, 'READING');
+INSERT INTO pois_hobbies (poi_id, hobbies) VALUES (16, 'ART'), (16, 'PHOTOGRAPHY'), (16, 'LEARNING'), (16, 'TRAVELING'), (16, 'READING');
 INSERT INTO pois_themes (poi_id, theme) VALUES (16, 'RELIGIOUS'), (16, 'CULTURAL'), (16, 'HISTORY'), (16, 'LUXURY'), (16, 'COLONIAL');
 
 -- POI ID 17
@@ -835,7 +336,7 @@ NULL,
 );
 
 INSERT INTO pois_motivations (poi_id, motivation) VALUES (17, 'HERITAGE'), (17, 'SPIRITUALITY'), (17, 'APPRECIATION'), (17, 'TRADITION'), (17, 'EXPLORATION');
-INSERT INTO pois_hobbies (poi_id, hobbie) VALUES (17, 'ART'), (17, 'PHOTOGRAPHY'), (17, 'LEARNING'), (17, 'TRAVELING'), (17, 'SOCIAL');
+INSERT INTO pois_hobbies (poi_id, hobbies) VALUES (17, 'ART'), (17, 'PHOTOGRAPHY'), (17, 'LEARNING'), (17, 'TRAVELING'), (17, 'SOCIAL');
 INSERT INTO pois_themes (poi_id, theme) VALUES (17, 'RELIGIOUS'), (17, 'CULTURAL'), (17, 'HISTORY'), (17, 'LUXURY'), (17, 'COLONIAL');
 
 -- POI ID 18
@@ -855,7 +356,7 @@ NULL,
 );
 
 INSERT INTO pois_motivations (poi_id, motivation) VALUES (18, 'CULTURE'), (18, 'TRADITION'), (18, 'SPIRITUALITY'), (18, 'APPRECIATION'), (18, 'IDENTITY');
-INSERT INTO pois_hobbies (poi_id, hobbie) VALUES (18, 'ART'), (18, 'DANCING'), (18, 'LEARNING'), (18, 'MUSIC'), (18, 'SOCIAL');
+INSERT INTO pois_hobbies (poi_id, hobbies) VALUES (18, 'ART'), (18, 'DANCING'), (18, 'LEARNING'), (18, 'MUSIC'), (18, 'SOCIAL');
 INSERT INTO pois_themes (poi_id, theme) VALUES (18, 'CULTURAL'), (18, 'RELIGIOUS'), (18, 'HISTORY'), (18, 'FAMILY_FRIENDLY'), (18, 'AFRO_BRAZILIAN');
 
 -- POI ID 19
@@ -875,7 +376,7 @@ NULL,
 );
 
 INSERT INTO pois_motivations (poi_id, motivation) VALUES (19, 'HERITAGE'), (19, 'APPRECIATION'), (19, 'EXPLORATION'), (19, 'STUDY'), (19, 'TRADITION');
-INSERT INTO pois_hobbies (poi_id, hobbie) VALUES (19, 'ART'), (19, 'COLLECTING'), (19, 'PHOTOGRAPHY'), (19, 'LEARNING'), (19, 'TRAVELING');
+INSERT INTO pois_hobbies (poi_id, hobbies) VALUES (19, 'ART'), (19, 'COLLECTING'), (19, 'PHOTOGRAPHY'), (19, 'LEARNING'), (19, 'TRAVELING');
 INSERT INTO pois_themes (poi_id, theme) VALUES (19, 'CULTURAL'), (19, 'HISTORY'), (19, 'LUXURY'), (19, 'COLONIAL'), (19, 'NATURE');
 
 -- POI ID 20
@@ -895,7 +396,7 @@ NULL,
 );
 
 INSERT INTO pois_motivations (poi_id, motivation) VALUES (20, 'EXPLORATION'), (20, 'RELAXATION'), (20, 'FAMILY'), (20, 'APPRECIATION'), (20, 'STUDY');
-INSERT INTO pois_hobbies (poi_id, hobbie) VALUES (20, 'GARDENING'), (20, 'HIKING'), (20, 'PHOTOGRAPHY'), (20, 'BIRD_WATCHING'), (20, 'LEARNING');
+INSERT INTO pois_hobbies (poi_id, hobbies) VALUES (20, 'GARDENING'), (20, 'HIKING'), (20, 'PHOTOGRAPHY'), (20, 'BIRD_WATCHING'), (20, 'LEARNING');
 INSERT INTO pois_themes (poi_id, theme) VALUES (20, 'NATURE'), (20, 'FAMILY_FRIENDLY'), (20, 'CULTURAL'), (20, 'MODERN'), (20, 'ADVENTURE');
 
 -- POI ID 21
@@ -915,7 +416,7 @@ NULL,
 );
 
 INSERT INTO pois_motivations (poi_id, motivation) VALUES (21, 'CULTURE'), (21, 'STUDY'), (21, 'TRADITION'), (21, 'APPRECIATION'), (21, 'IDENTITY');
-INSERT INTO pois_hobbies (poi_id, hobbie) VALUES (21, 'LEARNING'), (21, 'READING'), (21, 'COLLECTING'), (21, 'ART'), (21, 'SOCIAL');
+INSERT INTO pois_hobbies (poi_id, hobbies) VALUES (21, 'LEARNING'), (21, 'READING'), (21, 'COLLECTING'), (21, 'ART'), (21, 'SOCIAL');
 INSERT INTO pois_themes (poi_id, theme) VALUES (21, 'AFRO_BRAZILIAN'), (21, 'COLONIAL'), (21, 'CULTURAL'), (21, 'HISTORY'), (21, 'FAMILY_FRIENDLY');
 
 -- POI ID 22
@@ -935,7 +436,7 @@ NULL,
 );
 
 INSERT INTO pois_motivations (poi_id, motivation) VALUES (22, 'CULTURE'), (22, 'APPRECIATION'), (22, 'STUDY'), (22, 'EXPLORATION'), (22, 'CREATIVITY');
-INSERT INTO pois_hobbies (poi_id, hobbie) VALUES (22, 'ART'), (22, 'PHOTOGRAPHY'), (22, 'LEARNING'), (22, 'SOCIAL'), (22, 'TRAVELING');
+INSERT INTO pois_hobbies (poi_id, hobbies) VALUES (22, 'ART'), (22, 'PHOTOGRAPHY'), (22, 'LEARNING'), (22, 'SOCIAL'), (22, 'TRAVELING');
 INSERT INTO pois_themes (poi_id, theme) VALUES (22, 'CULTURAL'), (22, 'MODERN'), (22, 'HISTORY'), (22, 'URBAN_ART'), (22, 'FAMILY_FRIENDLY');
 
 -- POI ID 23
@@ -955,7 +456,7 @@ NULL,
 );
 
 INSERT INTO pois_motivations (poi_id, motivation) VALUES (23, 'HERITAGE'), (23, 'STUDY'), (23, 'APPRECIATION'), (23, 'EXPLORATION'), (23, 'TRADITION');
-INSERT INTO pois_hobbies (poi_id, hobbie) VALUES (23, 'ART'), (23, 'COLLECTING'), (23, 'LEARNING'), (23, 'READING'), (23, 'TRAVELING');
+INSERT INTO pois_hobbies (poi_id, hobbies) VALUES (23, 'ART'), (23, 'COLLECTING'), (23, 'LEARNING'), (23, 'READING'), (23, 'TRAVELING');
 INSERT INTO pois_themes (poi_id, theme) VALUES (23, 'CULTURAL'), (23, 'HISTORY'), (23, 'FAMILY_FRIENDLY'), (23, 'COLONIAL'), (23, 'NATURE');
 
 -- POI ID 24
@@ -975,7 +476,7 @@ NULL,
 );
 
 INSERT INTO pois_motivations (poi_id, motivation) VALUES (24, 'CULTURE'), (24, 'STUDY'), (24, 'TRADITION'), (24, 'APPRECIATION'), (24, 'IDENTITY');
-INSERT INTO pois_hobbies (poi_id, hobbie) VALUES (24, 'ART'), (24, 'LEARNING'), (24, 'COLLECTING'), (24, 'READING'), (24, 'SOCIAL');
+INSERT INTO pois_hobbies (poi_id, hobbies) VALUES (24, 'ART'), (24, 'LEARNING'), (24, 'COLLECTING'), (24, 'READING'), (24, 'SOCIAL');
 INSERT INTO pois_themes (poi_id, theme) VALUES (24, 'CULTURAL'), (24, 'HISTORY'), (24, 'FAMILY_FRIENDLY'), (24, 'MODERN'), (24, 'NATURE');
 
 -- POI ID 25
@@ -995,7 +496,7 @@ NULL,
 );
 
 INSERT INTO pois_motivations (poi_id, motivation) VALUES (25, 'HERITAGE'), (25, 'EXPLORATION'), (25, 'STUDY'), (25, 'APPRECIATION'), (25, 'TRADITION');
-INSERT INTO pois_hobbies (poi_id, hobbie) VALUES (25, 'COLLECTING'), (25, 'LEARNING'), (25, 'TRAVELING'), (25, 'PHOTOGRAPHY'), (25, 'SOCIAL');
+INSERT INTO pois_hobbies (poi_id, hobbies) VALUES (25, 'COLLECTING'), (25, 'LEARNING'), (25, 'TRAVELING'), (25, 'PHOTOGRAPHY'), (25, 'SOCIAL');
 INSERT INTO pois_themes (poi_id, theme) VALUES (25, 'CULTURAL'), (25, 'HISTORY'), (25, 'MODERN'), (25, 'FAMILY_FRIENDLY'), (25, 'COLONIAL');
 
 -- POI ID 26
@@ -1015,7 +516,7 @@ NULL,
 );
 
 INSERT INTO pois_motivations (poi_id, motivation) VALUES (26, 'CULTURE'), (26, 'APPRECIATION'), (26, 'STUDY'), (26, 'EXPLORATION'), (26, 'CREATIVITY');
-INSERT INTO pois_hobbies (poi_id, hobbie) VALUES (26, 'ART'), (26, 'PHOTOGRAPHY'), (26, 'LEARNING'), (26, 'READING'), (26, 'COLLECTING');
+INSERT INTO pois_hobbies (poi_id, hobbies) VALUES (26, 'ART'), (26, 'PHOTOGRAPHY'), (26, 'LEARNING'), (26, 'READING'), (26, 'COLLECTING');
 INSERT INTO pois_themes (poi_id, theme) VALUES (26, 'CULTURAL'), (26, 'HISTORY'), (26, 'URBAN_ART'), (26, 'FAMILY_FRIENDLY'), (26, 'MODERN');
 
 -- POI ID 27
@@ -1035,7 +536,7 @@ NULL,
 );
 
 INSERT INTO pois_motivations (poi_id, motivation) VALUES (27, 'CULTURE'), (27, 'APPRECIATION'), (27, 'EXPLORATION'), (27, 'MULTISENSORY'), (27, 'CREATIVITY');
-INSERT INTO pois_hobbies (poi_id, hobbie) VALUES (27, 'ART'), (27, 'PHOTOGRAPHY'), (27, 'TRAVELING'), (27, 'LEARNING'), (27, 'SOCIAL');
+INSERT INTO pois_hobbies (poi_id, hobbies) VALUES (27, 'ART'), (27, 'PHOTOGRAPHY'), (27, 'TRAVELING'), (27, 'LEARNING'), (27, 'SOCIAL');
 INSERT INTO pois_themes (poi_id, theme) VALUES (27, 'CULTURAL'), (27, 'MODERN'), (27, 'NATURE'), (27, 'URBAN_ART'), (27, 'ADVENTURE');
 
 -- POI ID 28
@@ -1055,7 +556,7 @@ NULL,
 );
 
 INSERT INTO pois_motivations (poi_id, motivation) VALUES (28, 'CULTURE'), (28, 'ENTERTAINMENT'), (28, 'TRADITION'), (28, 'SOCIAL'), (28, 'IDENTITY');
-INSERT INTO pois_hobbies (poi_id, hobbie) VALUES (28, 'DANCING'), (28, 'MUSIC'), (28, 'SOCIAL'), (28, 'LEARNING'), (28, 'PHOTOGRAPHY');
+INSERT INTO pois_hobbies (poi_id, hobbies) VALUES (28, 'DANCING'), (28, 'MUSIC'), (28, 'SOCIAL'), (28, 'LEARNING'), (28, 'PHOTOGRAPHY');
 INSERT INTO pois_themes (poi_id, theme) VALUES (28, 'CULTURAL'), (28, 'HISTORY'), (28, 'FOLKLORE'), (28, 'FAMILY_FRIENDLY'), (28, 'ADVENTURE');
 
 -- POI ID 29
@@ -1075,7 +576,7 @@ NULL,
 );
 
 INSERT INTO pois_motivations (poi_id, motivation) VALUES (29, 'HERITAGE'), (29, 'APPRECIATION'), (29, 'EXPLORATION'), (29, 'TRADITION'), (29, 'STUDY');
-INSERT INTO pois_hobbies (poi_id, hobbie) VALUES (29, 'ART'), (29, 'PHOTOGRAPHY'), (29, 'LEARNING'), (29, 'TRAVELING'), (29, 'SOCIAL');
+INSERT INTO pois_hobbies (poi_id, hobbies) VALUES (29, 'ART'), (29, 'PHOTOGRAPHY'), (29, 'LEARNING'), (29, 'TRAVELING'), (29, 'SOCIAL');
 INSERT INTO pois_themes (poi_id, theme) VALUES (29, 'CULTURAL'), (29, 'HISTORY'), (29, 'LUXURY'), (29, 'COLONIAL'), (29, 'FAMILY_FRIENDLY');
 
 -- POI ID 30
@@ -1095,7 +596,7 @@ NULL,
 );
 
 INSERT INTO pois_motivations (poi_id, motivation) VALUES (30, 'HERITAGE'), (30, 'APPRECIATION'), (30, 'EXPLORATION'), (30, 'TRADITION'), (30, 'STUDY');
-INSERT INTO pois_hobbies (poi_id, hobbie) VALUES (30, 'ART'), (30, 'PHOTOGRAPHY'), (30, 'LEARNING'), (30, 'TRAVELING'), (30, 'SOCIAL');
+INSERT INTO pois_hobbies (poi_id, hobbies) VALUES (30, 'ART'), (30, 'PHOTOGRAPHY'), (30, 'LEARNING'), (30, 'TRAVELING'), (30, 'SOCIAL');
 INSERT INTO pois_themes (poi_id, theme) VALUES (30, 'CULTURAL'), (30, 'HISTORY'), (30, 'LUXURY'), (30, 'COLONIAL'), (30, 'FAMILY_FRIENDLY');
 
 -- POI ID 31
@@ -1115,7 +616,7 @@ NULL,
 );
 
 INSERT INTO pois_motivations (poi_id, motivation) VALUES (31, 'CULTURE'), (31, 'TRADITION'), (31, 'APPRECIATION'), (31, 'EXPLORATION'), (31, 'SOCIAL');
-INSERT INTO pois_hobbies (poi_id, hobbie) VALUES (31, 'ART'), (31, 'COLLECTING'), (31, 'PHOTOGRAPHY'), (31, 'SOCIAL'), (31, 'TRAVELING');
+INSERT INTO pois_hobbies (poi_id, hobbies) VALUES (31, 'ART'), (31, 'COLLECTING'), (31, 'PHOTOGRAPHY'), (31, 'SOCIAL'), (31, 'TRAVELING');
 INSERT INTO pois_themes (poi_id, theme) VALUES (31, 'CULTURAL'), (31, 'HISTORY'), (31, 'FAMILY_FRIENDLY'), (31, 'RELIGIOUS'), (31, 'NATURE');
 
 -- POI ID 32
@@ -1135,7 +636,7 @@ NULL,
 );
 
 INSERT INTO pois_motivations (poi_id, motivation) VALUES (32, 'CULTURE'), (32, 'TRADITION'), (32, 'ENTERTAINMENT'), (32, 'SOCIAL'), (32, 'IDENTITY');
-INSERT INTO pois_hobbies (poi_id, hobbie) VALUES (32, 'DANCING'), (32, 'MUSIC'), (32, 'SOCIAL'), (32, 'ART'), (32, 'TRAVELING');
+INSERT INTO pois_hobbies (poi_id, hobbies) VALUES (32, 'DANCING'), (32, 'MUSIC'), (32, 'SOCIAL'), (32, 'ART'), (32, 'TRAVELING');
 INSERT INTO pois_themes (poi_id, theme) VALUES (32, 'CULTURAL'), (32, 'FAMILY_FRIENDLY'), (32, 'HISTORY'), (32, 'FOLKLORE'), (32, 'ADVENTURE');
 
 -- POI ID 33
@@ -1155,7 +656,7 @@ NULL,
 );
 
 INSERT INTO pois_motivations (poi_id, motivation) VALUES (33, 'HERITAGE'), (33, 'STUDY'), (33, 'SPIRITUALITY'), (33, 'TRADITION'), (33, 'APPRECIATION');
-INSERT INTO pois_hobbies (poi_id, hobbie) VALUES (33, 'LEARNING'), (33, 'READING'), (33, 'PHOTOGRAPHY'), (33, 'TRAVELING'), (33, 'SOCIAL');
+INSERT INTO pois_hobbies (poi_id, hobbies) VALUES (33, 'LEARNING'), (33, 'READING'), (33, 'PHOTOGRAPHY'), (33, 'TRAVELING'), (33, 'SOCIAL');
 INSERT INTO pois_themes (poi_id, theme) VALUES (33, 'CULTURAL'), (33, 'RELIGIOUS'), (33, 'HISTORY'), (33, 'COLONIAL'), (33, 'FAMILY_FRIENDLY');
 
 -- POI ID 34
@@ -1175,7 +676,7 @@ NULL,
 );
 
 INSERT INTO pois_motivations (poi_id, motivation) VALUES (34, 'CULTURE'), (34, 'ENTERTAINMENT'), (34, 'STUDY'), (34, 'APPRECIATION'), (34, 'HERITAGE');
-INSERT INTO pois_hobbies (poi_id, hobbie) VALUES (34, 'ART'), (34, 'THEATER'), (34, 'PHOTOGRAPHY'), (34, 'LEARNING'), (34, 'SOCIAL');
+INSERT INTO pois_hobbies (poi_id, hobbies) VALUES (34, 'ART'), (34, 'THEATER'), (34, 'PHOTOGRAPHY'), (34, 'LEARNING'), (34, 'SOCIAL');
 INSERT INTO pois_themes (poi_id, theme) VALUES (34, 'CULTURAL'), (34, 'HISTORY'), (34, 'LUXURY'), (34, 'ROMANTIC'), (34, 'COLONIAL');
 
 -- POI ID 35
@@ -1195,7 +696,7 @@ NULL,
 );
 
 INSERT INTO pois_motivations (poi_id, motivation) VALUES (35, 'CULTURE'), (35, 'ENTERTAINMENT'), (35, 'APPRECIATION'), (35, 'EXPLORATION'), (35, 'CREATIVITY');
-INSERT INTO pois_hobbies (poi_id, hobbie) VALUES (35, 'THEATER'), (35, 'ART'), (35, 'PHOTOGRAPHY'), (35, 'GARDENING'), (35, 'SOCIAL');
+INSERT INTO pois_hobbies (poi_id, hobbies) VALUES (35, 'THEATER'), (35, 'ART'), (35, 'PHOTOGRAPHY'), (35, 'GARDENING'), (35, 'SOCIAL');
 INSERT INTO pois_themes (poi_id, theme) VALUES (35, 'CULTURAL'), (35, 'HISTORY'), (35, 'NATURE'), (35, 'URBAN_ART'), (35, 'FAMILY_FRIENDLY');
 
 -- POI ID 36
@@ -1215,5 +716,5 @@ VALUES (
 );
 
 INSERT INTO pois_motivations (poi_id, motivation) VALUES (36, 'CULTURE'), (36, 'EXPLORATION'), (36, 'STUDY'), (36, 'APPRECIATION'), (36, 'HERITAGE');
-INSERT INTO pois_hobbies (poi_id, hobbie) VALUES (36, 'PHOTOGRAPHY'), (36, 'MUSIC'), (36, 'LEARNING'), (36, 'ART'), (36, 'TRAVELING');
+INSERT INTO pois_hobbies (poi_id, hobbies) VALUES (36, 'PHOTOGRAPHY'), (36, 'MUSIC'), (36, 'LEARNING'), (36, 'ART'), (36, 'TRAVELING');
 INSERT INTO pois_themes (poi_id, theme) VALUES (36, 'CULTURAL'), (36, 'HISTORY'), (36, 'MODERN'), (36, 'FAMILY_FRIENDLY'), (36, 'ADVENTURE');

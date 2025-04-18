@@ -10,8 +10,10 @@ import com.recommendersystempe.models.POI;
 
 public class EvaluationCalculator {
 
-    // Método para calcular as métricas de avaliação de um usuário específico - Method to calculate the evaluation metrics of a specific user
-    public static UserEvaluationMetricsDTO calculateUserMetrics(List<POI> recommendedPois, Set<POI> relevantItems, int k) {
+    // Método para calcular as métricas de avaliação de um usuário específico -
+    // Method to calculate the evaluation metrics of a specific user
+    public static UserEvaluationMetricsDTO calculateUserMetrics(List<POI> recommendedPois, Set<POI> relevantItems,
+            int k) {
         double precisionAtK = Precision.precisionAtK(recommendedPois, relevantItems, k);
         double recallAtK = Recall.recallAtK(recommendedPois, relevantItems, k);
         double f1ScoreAtK = F1Score.f1ScoreAtK(recommendedPois, relevantItems, k);
@@ -20,10 +22,11 @@ public class EvaluationCalculator {
     }
 
     public static GlobalEvaluationMetricsDTO calculateGlobalMetrics(List<List<POI>> allRecommendations,
-                                                                   List<Set<POI>> allRelevantItems,
-                                                                   int totalItemsAvailable,
-                                                                   int k) {
-        // Listas para armazenar as métricas de cada usuário - Lists to store the metrics of each user
+            List<Set<POI>> allRelevantItems,
+            int totalItemsAvailable,
+            int k) {
+        // Listas para armazenar as métricas de cada usuário - Lists to store the
+        // metrics of each user
         List<Double> precisions = new ArrayList<>();
         List<Double> recalls = new ArrayList<>();
         List<Double> f1Scores = new ArrayList<>();
@@ -31,10 +34,9 @@ public class EvaluationCalculator {
         // Calcula métricas para cada usuário - Calculates metrics for each user
         for (int i = 0; i < allRecommendations.size(); i++) {
             UserEvaluationMetricsDTO userMetrics = calculateUserMetrics(
-                allRecommendations.get(i),
-                allRelevantItems.get(i),
-                k
-            );
+                    allRecommendations.get(i),
+                    allRelevantItems.get(i),
+                    k);
             precisions.add(userMetrics.getPrecisionAtK());
             recalls.add(userMetrics.getRecallAtK());
             f1Scores.add(userMetrics.getF1ScoreAtK());
@@ -50,21 +52,27 @@ public class EvaluationCalculator {
         double itemCoverage = ItemCovarage.itemCoverage(allRecommendations, totalItemsAvailable);
 
         return new GlobalEvaluationMetricsDTO(
-            averagePrecision,
-            averageRecall,
-            averageF1Score,
-            hitRateAtK,
-            itemCoverage
-        );
+                averagePrecision,
+                averageRecall,
+                averageF1Score,
+                hitRateAtK,
+                itemCoverage);
     }
 
-        private static double calculateAverage(List<Double> values) {
-            if (values.isEmpty()) return 0.0;
-            
-            double sum = 0.0;
-            for (Double value : values) {
+    private static double calculateAverage(List<Double> values) {
+        if (values.isEmpty()) return 0.0;
+    
+        double sum = 0.0;
+        int count = 0;
+    
+        for (Double value : values) {
+            if (!Double.isNaN(value)) {
                 sum += value;
+                count++;
             }
-            return sum / values.size();
         }
+    
+        return (count == 0) ? 0.0 : sum / count;
+    }
+    
 }
