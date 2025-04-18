@@ -109,7 +109,7 @@ public class EvaluationControllerTest {
                 Long userId = USER.getId();
                 int k = 5;
 
-                UserEvaluationMetricsDTO mockMetrics = new UserEvaluationMetricsDTO(0.2);
+                UserEvaluationMetricsDTO mockMetrics = new UserEvaluationMetricsDTO(0.2, 0.3, 0.4);
                 // when / act
                 given(evaluationService.evaluateUserRecommendations(userId, k))
                                 .willReturn(mockMetrics);
@@ -129,7 +129,8 @@ public class EvaluationControllerTest {
             GlobalEvaluationMetricsDTO mockMetrics = new GlobalEvaluationMetricsDTO(
                 0.75,     
                 0.85,   
-                0.90    
+                0.90,
+                0.95 // Adicione o valor esperado para intraListSimilarity aqui    
             );
         
             given(evaluationService.evaluateGlobalMetrics(k))

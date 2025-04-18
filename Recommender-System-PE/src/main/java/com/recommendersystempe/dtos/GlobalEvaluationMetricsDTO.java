@@ -23,4 +23,8 @@ public class GlobalEvaluationMetricsDTO {
     @Schema(description = "Item Coverage", example = "0.60")
     @Size(min = 0, max = 1, message = "The field itemCoverage must be between 0 and 1")
     private double itemCoverage;
+
+    @Schema(description = "Intra List", example = "0.70")
+    @Size(min = 0, max = 1, message = "The field intraList must be between 0 and 1")
+    private double intraListSimilarity;;
 }

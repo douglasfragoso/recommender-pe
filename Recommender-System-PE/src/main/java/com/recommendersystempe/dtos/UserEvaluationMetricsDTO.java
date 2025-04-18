@@ -16,4 +16,11 @@ public class UserEvaluationMetricsDTO {
     @Size(min = 0, max = 1, message = "The field precisionAtK must be between 0 and 1")
     private double precisionAtK;
 
+    @Schema(description = "HitRate@K", example = "0.90")
+    @Size(min = 0, max = 1, message = "The field hitRateAtK must be between 0 and 1")
+    private double hitRateAtK;
+
+    @Schema(description = "Intra List", example = "0.70")
+    @Size(min = 0, max = 1, message = "The field intraList must be between 0 and 1")
+    private double intraListSimilarity;
 }

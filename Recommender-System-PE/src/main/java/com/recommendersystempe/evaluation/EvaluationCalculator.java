@@ -3,66 +3,63 @@ package com.recommendersystempe.evaluation;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-
 import com.recommendersystempe.dtos.GlobalEvaluationMetricsDTO;
 import com.recommendersystempe.dtos.UserEvaluationMetricsDTO;
 import com.recommendersystempe.models.POI;
 
 public class EvaluationCalculator {
 
-    // Método para calcular as métricas de avaliação de um usuário específico -
-    // Method to calculate the evaluation metrics of a specific user
-    public static UserEvaluationMetricsDTO calculateUserMetrics(List<POI> recommendedPois, Set<POI> relevantItems,
-            int k) {
+    public static UserEvaluationMetricsDTO calculateUserMetrics(
+        List<POI> recommendedPois, 
+        Set<POI> relevantItems, 
+        int k
+    ) {
         double precisionAtK = Precision.precisionAtK(recommendedPois, relevantItems, k);
-
-        return new UserEvaluationMetricsDTO(precisionAtK);
+        double hitRateAtK = HitRate.hitRateAtK(List.of(recommendedPois), List.of(relevantItems), k);
+        double intraListSimilarity = IntraListSimilarity.calculate(recommendedPois);
+        
+        return new UserEvaluationMetricsDTO(
+            precisionAtK,
+            hitRateAtK,
+            intraListSimilarity
+        );
     }
 
-    public static GlobalEvaluationMetricsDTO calculateGlobalMetrics(List<List<POI>> allRecommendations,
-            List<Set<POI>> allRelevantItems,
-            int totalItemsAvailable,
-            int k) {
-        // Listas para armazenar as métricas de cada usuário - Lists to store the
-        // metrics of each user
+    public static GlobalEvaluationMetricsDTO calculateGlobalMetrics(
+        List<List<POI>> allRecommendations,
+        List<Set<POI>> allRelevantItems,
+        int totalItemsAvailable,
+        int k
+    ) {
         List<Double> precisions = new ArrayList<>();
+        List<Double> hitRates = new ArrayList<>();
+        List<Double> intraListSimilarities = new ArrayList<>();
 
-        // Calcula métricas para cada usuário - Calculates metrics for each user
         for (int i = 0; i < allRecommendations.size(); i++) {
             UserEvaluationMetricsDTO userMetrics = calculateUserMetrics(
-                    allRecommendations.get(i),
-                    allRelevantItems.get(i),
-                    k);
+                allRecommendations.get(i),
+                allRelevantItems.get(i),
+                k
+            );
             precisions.add(userMetrics.getPrecisionAtK());
+            hitRates.add(userMetrics.getHitRateAtK());
+            intraListSimilarities.add(userMetrics.getIntraListSimilarity());
         }
 
-        // Calcula as médias globais - Calculates the global averages
-        double averagePrecision = calculateAverage(precisions);
-
-        // Métricas existentes - Existing metrics
-        double hitRateAtK = HitRate.hitRateAtK(allRecommendations, allRelevantItems, k);
-        double itemCoverage = ItemCovarage.itemCoverage(allRecommendations, totalItemsAvailable);
-
         return new GlobalEvaluationMetricsDTO(
-                averagePrecision,
-                hitRateAtK,
-                itemCoverage);
+            calculateAverage(precisions),
+            calculateAverage(hitRates),
+            ItemCovarage.itemCoverage(allRecommendations, totalItemsAvailable),
+            calculateAverage(intraListSimilarities)
+        );
     }
 
     private static double calculateAverage(List<Double> values) {
         if (values.isEmpty()) return 0.0;
-    
-        double sum = 0.0;
-        int count = 0;
-    
-        for (Double value : values) {
-            if (!Double.isNaN(value)) {
-                sum += value;
-                count++;
-            }
-        }
-    
-        return (count == 0) ? 0.0 : sum / count;
+        return values.stream()
+            .filter(d -> !Double.isNaN(d))
+            .mapToDouble(Double::doubleValue)
+            .average()
+            .orElse(0.0);
     }
-    
 }

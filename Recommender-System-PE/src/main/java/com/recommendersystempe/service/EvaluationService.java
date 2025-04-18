@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.recommendersystempe.dtos.GlobalEvaluationMetricsDTO;
 import com.recommendersystempe.dtos.UserEvaluationMetricsDTO;
 import com.recommendersystempe.evaluation.EvaluationCalculator;
+import com.recommendersystempe.evaluation.IntraListSimilarity;
 import com.recommendersystempe.models.POI;
 import com.recommendersystempe.models.Recommendation;
 import com.recommendersystempe.models.Score;
@@ -66,7 +67,9 @@ public class EvaluationService {
         @Transactional(readOnly = true)
         public GlobalEvaluationMetricsDTO evaluateGlobalMetrics(int k) {
                 // Buscar todos os usuários
+                List<POI> allPOIs = poiRepository.findAll();
                 List<User> users = userRepository.findAll();
+                IntraListSimilarity.initializeGlobalFeatures(allPOIs);
 
                 // Preparar estruturas para coleta de dados
                 List<List<POI>> allRecommendations = new ArrayList<>();
