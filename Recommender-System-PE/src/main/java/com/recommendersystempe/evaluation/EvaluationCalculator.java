@@ -2,7 +2,9 @@ package com.recommendersystempe.evaluation;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
+
 import com.recommendersystempe.dtos.GlobalEvaluationMetricsDTO;
 import com.recommendersystempe.dtos.UserEvaluationMetricsDTO;
 import com.recommendersystempe.models.POI;
@@ -29,8 +31,8 @@ public class EvaluationCalculator {
         List<List<POI>> allRecommendations,
         List<Set<POI>> allRelevantItems,
         int totalItemsAvailable,
-        int k
-    ) {
+        int k,
+        List<String> allSystemFeatures) {
         List<Double> precisions = new ArrayList<>();
         List<Double> hitRates = new ArrayList<>();
         List<Double> intraListSimilarities = new ArrayList<>();
@@ -46,11 +48,15 @@ public class EvaluationCalculator {
             intraListSimilarities.add(userMetrics.getIntraListSimilarity());
         }
 
+        Map<String, Map<String, Double>> globalFeatureCoverage = 
+        FeatureCoverageCalculator.calculateGlobalFeatureCoverage(allRecommendations, allSystemFeatures);
+
         return new GlobalEvaluationMetricsDTO(
             calculateAverage(precisions),
             calculateAverage(hitRates),
             ItemCovarage.itemCoverage(allRecommendations, totalItemsAvailable),
-            calculateAverage(intraListSimilarities)
+            calculateAverage(intraListSimilarities),
+            globalFeatureCoverage 
         );
     }
 

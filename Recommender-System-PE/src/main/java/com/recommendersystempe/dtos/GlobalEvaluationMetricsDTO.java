@@ -1,5 +1,7 @@
 package com.recommendersystempe.dtos;
 
+import java.util.Map;
+
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -26,5 +28,24 @@ public class GlobalEvaluationMetricsDTO {
 
     @Schema(description = "Intra List", example = "0.70")
     @Size(min = 0, max = 1, message = "The field intraList must be between 0 and 1")
-    private double intraListSimilarity;;
+    private double intraListSimilarity;
+
+    @Schema(description = "Feature Coverage", 
+        example = """
+            {
+                "themes": {
+                    "CULTURAL": 0.57,
+                    "MODERN": 0.55
+                },
+                "hobbies": {
+                    "LEARNING": 0.57,
+                    "PHOTOGRAPHY": 0.45
+                },
+                "motivations": {
+                    "EXPLORATION": 0.50,
+                    "CULTURE": 0.43
+                }
+            }"""
+    )
+    private Map<String, Map<String, Double>> globalFeatureCoverage;
 }

@@ -70,6 +70,7 @@ public class EvaluationService {
                 List<POI> allPOIs = poiRepository.findAll();
                 List<User> users = userRepository.findAll();
                 IntraListSimilarity.initializeGlobalFeatures(allPOIs);
+                List<String> allSystemFeatures = IntraListSimilarity.getAllFeatures();
 
                 // Preparar estruturas para coleta de dados
                 List<List<POI>> allRecommendations = new ArrayList<>();
@@ -100,6 +101,7 @@ public class EvaluationService {
                                 allRecommendations,
                                 allRelevantItems,
                                 totalItems,
-                                k);
+                                k,
+                                allSystemFeatures);
         }
 }
