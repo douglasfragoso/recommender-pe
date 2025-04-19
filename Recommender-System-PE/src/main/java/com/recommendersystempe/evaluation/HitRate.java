@@ -38,6 +38,7 @@ public class HitRate {
             if (hasHit)
                 usersWithHit++;
         }
-        return (double) usersWithHit / allRecommendations.size();
+        double hitRate = (double) usersWithHit / allRecommendations.size();
+        return Math.round(hitRate * 100.0) / 100.0; 
     }
 }

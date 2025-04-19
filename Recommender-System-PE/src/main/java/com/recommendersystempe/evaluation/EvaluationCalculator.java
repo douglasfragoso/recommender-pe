@@ -62,10 +62,12 @@ public class EvaluationCalculator {
 
     private static double calculateAverage(List<Double> values) {
         if (values.isEmpty()) return 0.0;
-        return values.stream()
-            .filter(d -> !Double.isNaN(d))
-            .mapToDouble(Double::doubleValue)
-            .average()
-            .orElse(0.0);
+        double average = values.stream()
+                .filter(d -> !Double.isNaN(d))
+                .mapToDouble(Double::doubleValue)
+                .average()
+                .orElse(0.0);
+        
+        return Math.round(average * 100.0) / 100.0;
     }
 }

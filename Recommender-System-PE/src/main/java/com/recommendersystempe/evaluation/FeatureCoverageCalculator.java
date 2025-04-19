@@ -15,29 +15,34 @@ public class FeatureCoverageCalculator {
         Map<String, Integer> featureCounts = new HashMap<>();
         allSystemFeatures.forEach(feature -> featureCounts.put(feature, 0));
 
-        // Contabiliza ocorrências
+        // Count unique features per user
         for (List<POI> userRecs : allRecommendations) {
+            Map<String, Boolean> userFeatures = new HashMap<>();
+            
             userRecs.forEach(poi -> {
-                poi.getHobbies().forEach(h -> featureCounts.merge("HOBBIE_" + h.name(), 1, Integer::sum));
-                poi.getMotivations().forEach(m -> featureCounts.merge("MOTIVATION_" + m.name(), 1, Integer::sum));
-                poi.getThemes().forEach(t -> featureCounts.merge("THEME_" + t.name(), 1, Integer::sum));
+                poi.getHobbies().forEach(h -> userFeatures.putIfAbsent("HOBBIE_" + h.name(), true));
+                poi.getMotivations().forEach(m -> userFeatures.putIfAbsent("MOTIVATION_" + m.name(), true));
+                poi.getThemes().forEach(t -> userFeatures.putIfAbsent("THEME_" + t.name(), true));
             });
+            
+            // Increment counts for each unique feature this user received
+            userFeatures.keySet().forEach(f -> featureCounts.merge(f, 1, Integer::sum));
         }
 
-        // Organiza em categorias
-        return organizeByCategory(featureCounts, allSystemFeatures.size());
+        // Organize by category - now using user count as denominator
+        return organizeByCategory(featureCounts, allRecommendations.size());
     }
 
     private static Map<String, Map<String, Double>> organizeByCategory(
         Map<String, Integer> featureCounts,
-        int totalFeatures
+        double totalUsers
     ) {
         Map<String, Map<String, Double>> coverage = new HashMap<>();
         coverage.put("themes", new HashMap<>());
         coverage.put("hobbies", new HashMap<>());
         coverage.put("motivations", new HashMap<>());
     
-        featureCounts.forEach((feature, count) -> {
+        featureCounts.forEach((feature, userCount) -> {
             String[] parts = feature.split("_", 2);
             String category = switch (parts[0]) {
                 case "THEME" -> "themes";
@@ -46,15 +51,15 @@ public class FeatureCoverageCalculator {
                 default -> throw new IllegalArgumentException("Categoria desconhecida: " + parts[0]);
             };
             String featureName = formatFeatureName(parts[1]);
-            double value = (double) count / totalFeatures;
+            double coverageValue = Math.round((userCount / totalUsers) * 100.0) / 100.0; 
     
-            coverage.get(category).put(featureName, value);
+            coverage.get(category).put(featureName, coverageValue);
         });
     
         return coverage;
     }
 
     private static String formatFeatureName(String rawName) {
-        return rawName.replace('_', ' '); // Ex: "URBAN_ART" → "URBAN ART"
+        return rawName.replace('_', ' ');
     }
 }
