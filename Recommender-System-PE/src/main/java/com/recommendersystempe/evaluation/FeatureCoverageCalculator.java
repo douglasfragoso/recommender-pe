@@ -1,8 +1,10 @@
 package com.recommendersystempe.evaluation;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 import com.recommendersystempe.models.POI;
 
@@ -37,10 +39,10 @@ public class FeatureCoverageCalculator {
         Map<String, Integer> featureCounts,
         double totalUsers
     ) {
-        Map<String, Map<String, Double>> coverage = new HashMap<>();
-        coverage.put("themes", new HashMap<>());
-        coverage.put("hobbies", new HashMap<>());
-        coverage.put("motivations", new HashMap<>());
+        Map<String, Map<String, Double>> coverage = new LinkedHashMap<>();
+        coverage.put("themes", new TreeMap<>()); 
+        coverage.put("hobbies", new TreeMap<>());
+        coverage.put("motivations", new TreeMap<>());
     
         featureCounts.forEach((feature, userCount) -> {
             String[] parts = feature.split("_", 2);

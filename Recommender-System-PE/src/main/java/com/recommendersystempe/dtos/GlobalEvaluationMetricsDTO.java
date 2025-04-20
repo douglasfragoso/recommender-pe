@@ -30,8 +30,7 @@ public class GlobalEvaluationMetricsDTO {
     @Size(min = 0, max = 1, message = "The field intraList must be between 0 and 1")
     private double intraListSimilarity;
 
-    @Schema(description = "Feature Coverage", 
-        example = """
+    @Schema(description = "Feature Coverage", example = """
             {
                 "themes": {
                     "CULTURAL": 0.57,
@@ -45,7 +44,14 @@ public class GlobalEvaluationMetricsDTO {
                     "EXPLORATION": 0.50,
                     "CULTURE": 0.43
                 }
-            }"""
-    )
+            }""")
     private Map<String, Map<String, Double>> globalFeatureCoverage;
+
+    @Schema(description = "Frequência de Recomendação por POI", example = """
+            {
+                "8": 0.8,
+                "22": 0.6,
+                "27": 0.5
+            }""")
+    private Map<Long, Double> poiFrequency;
 }

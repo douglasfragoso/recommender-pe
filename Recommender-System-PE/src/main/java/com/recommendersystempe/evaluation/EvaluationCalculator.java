@@ -32,7 +32,9 @@ public class EvaluationCalculator {
         List<Set<POI>> allRelevantItems,
         int totalItemsAvailable,
         int k,
-        List<String> allSystemFeatures) {
+        List<String> allSystemFeatures,
+        List<POI> allPois 
+    ) {
         List<Double> precisions = new ArrayList<>();
         List<Double> hitRates = new ArrayList<>();
         List<Double> intraListSimilarities = new ArrayList<>();
@@ -49,14 +51,18 @@ public class EvaluationCalculator {
         }
 
         Map<String, Map<String, Double>> globalFeatureCoverage = 
-        FeatureCoverageCalculator.calculateGlobalFeatureCoverage(allRecommendations, allSystemFeatures);
+            FeatureCoverageCalculator.calculateGlobalFeatureCoverage(allRecommendations, allSystemFeatures);
+        
+        Map<Long, Double> poiFrequency = 
+            POIFrequency.calculatePoiFrequency(allRecommendations, allPois); // <- AJUSTADO AQUI
 
         return new GlobalEvaluationMetricsDTO(
             calculateAverage(precisions),
             calculateAverage(hitRates),
             ItemCovarage.itemCoverage(allRecommendations, totalItemsAvailable),
             calculateAverage(intraListSimilarities),
-            globalFeatureCoverage 
+            globalFeatureCoverage,
+            poiFrequency 
         );
     }
 

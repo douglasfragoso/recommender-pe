@@ -75,6 +75,7 @@ public class EvaluationService {
                 // Preparar estruturas para coleta de dados
                 List<List<POI>> allRecommendations = new ArrayList<>();
                 List<Set<POI>> allRelevantItems = new ArrayList<>();
+                List<POI> allPoiObjects = allPOIs;
 
                 // Coletar dados de cada usuário
                 for (User user : users) {
@@ -102,6 +103,7 @@ public class EvaluationService {
                                 allRelevantItems,
                                 totalItems,
                                 k,
-                                allSystemFeatures);
+                                allSystemFeatures,
+                                allPoiObjects);
         }
 }
