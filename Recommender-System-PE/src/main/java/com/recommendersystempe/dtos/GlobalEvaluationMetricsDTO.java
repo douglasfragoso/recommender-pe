@@ -18,6 +18,14 @@ public class GlobalEvaluationMetricsDTO {
     @Size(min = 0, max = 1, message = "The field averagePrecisionAtk must be between 0 and 1")
     private double averagePrecisionAtK;
 
+    @Schema(description = "Precision Confidence Lower", example = "0.56")
+    @Size(min = 0, max = 1, message = "The field precisionConfidenceLower must be between 0 and 1")
+    private double precisionConfidenceLower;
+
+    @Schema(description = "Precision Confidence Upper", example = "0.064")
+    @Size(min = 0, max = 1, message = "The field precisionConfidenceUpper must be between 0 and 1")
+    private double precisionConfidenceUpper;
+
     @Schema(description = "HitRate@K", example = "0.90")
     @Size(min = 0, max = 1, message = "The field hitRateAtK must be between 0 and 1")
     private double hitRateAtK;

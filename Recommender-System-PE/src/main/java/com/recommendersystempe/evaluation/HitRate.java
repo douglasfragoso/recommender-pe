@@ -25,7 +25,6 @@ public class HitRate {
             List<POI> recommendations = allRecommendations.get(i);
             Set<POI> relevant = allRelevantItems.get(i);
 
-            // Se não há itens relevantes, considerar como hit?
             if (relevant.isEmpty()) {
                 usersWithHit++;
                 continue;

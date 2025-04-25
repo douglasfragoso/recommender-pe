@@ -31,7 +31,7 @@ public class FeatureCoverageCalculator {
             userFeatures.keySet().forEach(f -> featureCounts.merge(f, 1, Integer::sum));
         }
 
-        // Organize by category - now using user count as denominator
+        // Organize by category 
         return organizeByCategory(featureCounts, allRecommendations.size());
     }
 

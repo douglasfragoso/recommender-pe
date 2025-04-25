@@ -138,6 +138,6 @@ public class ItemCovarageTest {
                 }
 
                 int totalItems = (int) poiRepository.count();
-                assertEquals(1, ItemCovarage.itemCoverage(allRecommendations, totalItems), 0.01);
+                assertEquals(1, ItemCoverage.itemCoverage(allRecommendations, totalItems), 0.01);
         }
 }
