@@ -13,9 +13,6 @@ import com.recommendersystempe.models.POI;
 
 public class EvaluationCalculator {
 
-    public double positiveInterval;
-    public double negativeInterval;
-
     public static UserEvaluationMetricsDTO calculateUserMetrics(
         List<POI> recommendedPois, 
         Set<POI> relevantItems, 

@@ -229,15 +229,15 @@ public class EvaluationServiceTest {
                         })
                         .toList());
 
-        given(poiRepository.count()).willReturn(10L);
+        given(poiRepository.count()).willReturn(5L);
 
         // when / act
-        GlobalEvaluationMetricsDTO globalMetrics = evaluationService.evaluateGlobalMetrics(1);
+        GlobalEvaluationMetricsDTO globalMetrics = evaluationService.evaluateGlobalMetrics(5);
 
         // then / assert
         assertNotNull(globalMetrics);
-        assertEquals(0.5, globalMetrics.getHitRateAtK());
-        assertEquals(0.5, globalMetrics.getItemCoverage());
+        assertEquals(1, globalMetrics.getHitRateAtK());
+        assertEquals(1, globalMetrics.getItemCoverage());
         assertEquals(0.5, globalMetrics.getAveragePrecisionAtK());
     }
 

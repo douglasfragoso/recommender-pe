@@ -7,7 +7,7 @@ This project is licensed under the [MIT License](https://github.com/douglasfrago
 
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/douglasfragoso/recommender-pe?tab=License-1-ov-file)
 
-# A Point of Interest Recommendation System in Pernambuco with Java and Spring Boot
+# Vamu!Rec: Boosting Tourism in Recife
 
 **Douglas Inácio Fragoso Ferreira¹\***; **Everton Gomede²**
 
@@ -28,10 +28,11 @@ This project is licensed under the [MIT License](https://github.com/douglasfrago
 | Spring Data JPA, H2 Database, MySQL, and MySQL Connector | For data storage and manipulation                              |
 | Spring Doc and Swagger             | For API documentation                                                       |
 | Java Bean Validation and Lombok    | For code optimization                                                       |
-| Spring Test, JUnit5, Mockito, TestContainers, Rest-Assured, and Docker | For unit and integration testing                               |
+| Spring Test, JUnit5, Mockito | For unit testing                               |
 | JaCoCo, Maven Surefire Plugin, and Maven Surefire Report Plugin | For code coverage and test reporting                             |
 | Postman                            | For manual endpoint testing                                                 |
 | Git and GitHub                     | For code versioning                                                         |
+| Apache Common Math3                | For calculate the metrics of similarity and evaluation
 | Visual Studio Code                 | For code editing                                                            |
 
 ---
@@ -67,7 +68,7 @@ To calculate **COS**, the product of the vectors is obtained, followed by normal
     
     |Q| = √(∑(k=1 to n) (W_qk)^2), |D| = √(∑(k=1 to n) (W_dk)^2) (5)
     
-    similarity(Q, D) = cos(W_qk, W_dk) = (∑(k=1 to n) W_qk * W_dk) / (√(∑(k=1 to n) (W_qk)^2 * √(∑(k=1 to n) (W_dk)^2) (6)
+    similarity(Q, D) = cos(W_qk, W_dk) = (∑(k=1 to n) W_qk * W_dk) / (√(∑(k=1 to n) (W_qk)^2 * √(∑(k=1 to n) (W_dk)^2))) (6)
 
 On the other hand, **ED** calculates the distance between two points through the square root of the sum of the squares of the differences of the vectors \(Q = (q_1, q_2, \dots, q_n)\) and \(D = (d_1, d_2, \dots, d_n)\), which represent the relevance of terms in documents based on TF-IDF (Danielsson, 1980; Sondur and Chigadani, 2016), as shown in equation (7):
 
@@ -87,7 +88,7 @@ Finally, **PCC**, a metric used to measure the strength of the linear relationsh
 
     √(∑(k=1 to n) (q_k - Q_med)^2) * √(∑(k=1 to n) (d_k - D_med)^2) (11)
 
-    Pearson Correlation Coefficient = r(Q, D) = (∑(k=1 to n) (q_k - Q_med)(d_k - D_med)) / (√(∑(k=1 to n) (q_k - Q_med)^2 * √(∑(k=1 to n) (d_k - D_med)^2) (12)
+    Pearson Correlation Coefficient = r(Q, D) = (∑(k=1 to n) (q_k - Q_med)(d_k - D_med)) / (√(∑(k=1 to n) (q_k - Q_med)^2 * √(∑(k=1 to n) (d_k - D_med)^2)) (12)
 
 The result of this calculation ranges from -1 to 1, where -1 indicates a perfect negative linear correlation and 1 indicates a perfect positive linear correlation (Sondur and Chigadani, 2016). Therefore, like ED, the result must be normalized, as seen in equation (13):
 
@@ -103,22 +104,27 @@ The metrics used in this system are Item-Based Indicators in terms of order, aim
 
     Precision@k = (Relevant Items in Top-k) / k (14)
 
-The **Recall@k** metric measures the proportion of relevant items recommended in the top-k relative to the total number of relevant items available (Li et al., 2021), as in equation (15):
+Moreover, to estimate the variability of the mean **Precision@k** metric obtained from the recommendations, a **Confidence Interval (CI)** should be calculated based on the t-Student distribution, as recommended in situations where the population variance is unknown and the sample size is relatively small (n < 100) (Fernandes, 1999). The construction of this interval is based on the T-statistic formula, presented in Eq. (15):
 
-    Recall@k = (Relevant Items Retrieved in Top-k) / (Total Relevant Items) (15)
+    T =  ( ̅x  (Sample mean)  - μ (True population mean)) / ((s (sample standard deviation)  )⁄ √n  (sample size)) (15)
 
-**F1-Score@k** combines Precision@k and Recall@k into a single metric, reflecting the balance between quality and coverage (Li et al., 2021), as in equation (16):
+For a 95% confidence level, the critical value is obtained from the t-Student distribution with n–1 degrees of freedom. The Margin of Error (ME) is then calculated using Eq. (16). Thus, the CI for the mean is defined by Eq. (17).
 
-    F1-Score@k = 2 * (Precision@k * Recall@k) / (Precision@k + Recall@k) (16)
+    ME = t_(σ/2,n-1) (critical value) × (s (sample standard deviation)) / √n (sample size)) (16)
 
-The **Hit Rate@k** metric focuses on ensuring that each user receives something relevant in the top-k, verifying the proportion of users served (Deshpande and Karypis, 2004), as described in equation (17):
+    IC = ̅x ± ME (17)
+ 
 
-    Hit Rate@k = (Users with at least 1 relevant item in Top-k) / (Total Users) (17)
+The **Hit Rate@k** metric focuses on ensuring that each user receives something relevant in the top-k, verifying the proportion of users served (Deshpande and Karypis, 2004), as described in equation (18):
+
+    Hit Rate@k = (Users with at least 1 relevant item in Top-k) / (Total Users) (18)
 
 
-Finally, the **Item Coverage** metric focuses on the diversity of recommendations, measuring the proportion of recommendable items that were effectively recommended to all users (Castells and Jannach, 2023), as in equation (18):
+Finally, the **Item Coverage** metric focuses on the diversity of recommendations, measuring the proportion of recommendable items that were effectively recommended to all users (Castells and Jannach, 2023), as in equation (19):
 
-    Item Coverage = (Number of Unique Recommended Items) / (Total Available Items) (18)
+    Item Coverage = (Number of Unique Recommended Items) / (Total Available Items) (19)
+
+In turn, **Intra-List Similarity** is based on the calculation of the average similarity between item pairs, allowing the evaluation of item diversity in the recommendations (Jesse et al., 2023). To obtain this metric, the system reuses the code used to generate the recommendations. Finally, **Feature Coverage** and **POI Frequency** provide insights into the usage coverage of the features utilized by users and the frequency with which Points of Interest (POIs) appear in the recommendations.
 
 # Passaporte Pernambuco
 
@@ -183,54 +189,18 @@ The POIs (such as museums, churches, and restaurants) are registered with attrib
 
 With the TF-IDF values, it is possible to calculate the **Similarity Metrics**, composed of **COS**, **ED**, and **PCC**, and then obtain the average of the three metrics. The resulting values are used to measure the proximity between the user's profile and the POIs. Subsequently, the most relevant POIs are ranked and returned as a top-k list to the user.
 
-The user evaluates the recommended POIs as **like** or **dislike**. These evaluations are stored in the database and can be analyzed using the metrics **Precision@k**, **Recall@k**, **F1-Score@k**, **Hit Rate@k**, and **Item Coverage**.
-
-## References
-
-Aggarwal, C. C. 2016. *Recommender Systems: The Textbook*. Springer, Switzerland.
-
-Borràs, J.; Moreno, A.; Valls, A. 2014. Intelligent tourism recommender systems: A survey. *Expert Systems with Applications* 41(16): 7370-7389.
-
-Campos, J.; Roldão, I. de; Alves, P.; Dias, M.; Moura, B.; Freire, K.; Santos, N. C. dos; Freitas, P.; Braga, A.; Galvão, B.; Simões, F.; Jarocki, I.; Paulo, J.; Almeida, L.; Marques, P.; Rayane, S.; Xavier, S.; Instituto de Assessoria para o Desenvolvimento Humano (IADH); Rede Nacional de Experiências e Turismo Criativo (RECRIA); Almeida, L. F. de L.; Araújo, A. B. de; Silva, J. P. da; Heraclio, E.; Bekemball, F. 2022. *Plano de Turismo Criativo 2022-2024*. Prefeitura do Recife, Recife, PE. Brasil.
-
-Castells, P.; Jannach, D. 2023. Recommender Systems: A Primer. In Alonso, O. & Baeza-Yates, R. (Eds.). *Advanced Topics for Information Retrieval*. ACM Press.
-
-Costa, I. 2024. Carnaval do Recife movimentou R$2,4 bilhões e recebeu mais de 3,4 milhões de foliões; prefeitura cogita juntar Data Magna aos dias oficiais de folia em 2025. In: *G1*, 2024, Brasil. Disponível em: https://g1.globo.com/pe/pernambuco/carnaval/2024/noticia/2024/02/14/balanco-do-carnaval-do-recife.ghtml. Acesso em: 04 de dezembro de 2024.
-
-Danielsson, P. 1980. Euclidean Distance Mapping. *Computer Graphics and Image Processing* 14: 227-248.
-
-Deshpande, M.; Karypis, G. 2004. Item-based top-N recommendation algorithms. *Transactions on Information Systems* 22(1): 143-177.
-
-Fonseca, D. 2020. Pernambuco lança passaporte para incentivar turismo no estado entre moradores e turistas. In: *G1*, 2020, Brasil. Disponível em: https://g1.globo.com/pe/pernambuco/noticia/2020/12/21/passaporte-pernambuco-busca-incentivar-turismo-no-estado-entre-moradores-e-turistas.ghtml. Acesso em: 28 de setembro de 2024.
-
-Gao, M.; Liu, K.; Wu, Z. 2010. Personalisation in web computing and informatics: The techniques, applications, and future research. *Information Systems Frontiers* 12: 607-629.
-
-Li, Y.; Liu, K.; Wang, S.; Cambria, E. 2021. Recent Developments in Recommender Systems: A Survey. *Journal of Latex Class Files* 14(8).
-
-Morais, I.; Mendonça, E.; Santos, E. 2022. Novas formas de fazer turismo: desde a prática às políticas na construção do Plano de Turismo Criativo do Recife (Pernambuco-Brasil). *Interações* 23(3): 669-684.
-
-Qaiser, S.; Ali, R. 2018. Text Mining: Use of TF-IDF to Examine the Relevance of Words to Documents. *International Journal of Computer Applications* 181(1): 25-29.
-
-Ramos, J. 2003. Using TF-IDF to Determine Word Relevance in Document Queries.
-
-Salton, G.; Buckley, C. 1988. Term-Weighting Approaches in Automatic Text Retrieval. *Information Processing & Management* 24 (5): 513-523.
-
-Secretaria de Turismo e Lazer. 2020. Principais atrativos da cidade já contam com carimbos para o Passaporte Pernambuco. Recife. Disponível em: https://www2.recife.pe.gov.br/noticias/08/12/2020/principais-atrativos-da-cidade-ja-contam-com-carimbos-para-o-passaporte. Acesso em: 04 de dezembro de 2024.
-
-Sondur, S. D.; Chigadani, A. P. 2016. Similarity Measures for Recommender Systems: A Comparative Study. *Journal for Research* 2(3): 76-80.
-
-Valença, J. 2022. Passaporte Pernambuco: saiba onde e como conseguir o caderno turístico. In: *JC*, 2022, Pernambuco. Disponível em: https://jc.ne10.uol.com.br/blogs/turismo-de-valor/2022/02/14952400-passaporte-pernambuco-saiba-onde-e-como-conseguir-o-caderno-turistico.html. Acesso em: 04 de dezembro de 2024.
+The user evaluates the recommended POIs as **like** or **dislike**. These evaluations are stored in the database and can be analyzed using the metrics **Precision@k**, **Hit Rate@k**, **Item Coverage**, **Intra-List Similarity**, **Feature Coverage**, and **POI Frequency**.
 
 # UML CLASSES
 
 ## Classes
-![Classes](<UML - Classes.png>)
+![Classes](<UML - Classes.jpeg>)
 
 ## Evaluation Calculator
-![Evaluation Calculator](<UML -EvaluationCalculator.jpeg>)
+![Evaluation Calculator](<UML - EvaluationCalculator.jpeg>)
 
 ## Similarity Calculator
-![Similarity Calculator](<UML -SimilarityCalculator.jpeg>)
+![Similarity Calculator](<UML - SimilarityCalculator.jpeg>)
 
 # Project Profiles
 
@@ -309,3 +279,39 @@ Surefire Report Path:
 The first time you run mvn site, it may take a while to download the Maven dependencies. 
 
 Made with care by Douglas Fragoso 👊
+
+## References
+
+Aggarwal, C. C. 2016. Recommender Systems: The Textbook. Springer, Cham, ZH, Switzerland.
+
+Borràs, J.; Moreno, A.; Valls, A. 2014. Intelligent tourism recommender systems: a survey. Expert Systems with Applications 41(16): 7370–7389.
+
+Campos, J.; Roldão, I. de; Alves, P.; Dias, M.; Moura, B.; Freire, K.; Santos, N. C. dos; Freitas, P.; Braga, A.; Galvão, B.; Simões, F.; Jarocki, I.; Paulo, J.; Almeida, L.; Marques, P.; Rayane, S.; Xavier, S.; Instituto de Assessoria para o Desenvolvimento Humano [IADH]; Rede Nacional de Experiências e Turismo Criativo [RECRIA]. 2022. Plano de Turismo Criativo 2022-2024. Prefeitura do Recife, Recife, PE, Brasil.
+
+Costa, I. 2024. Carnaval do Recife movimentou R$2,4 bilhões e recebeu mais de 3,4 milhões de foliões; prefeitura cogita juntar Data Magna aos dias oficiais de folia em 2025. In: G1, 2024, Brasil. Disponível em: https://g1.globo.com/pe/pernambuco/carnaval/2024/noticia/2024/02/14/balanco-do-carnaval-do-recife.ghtml. Acesso em: 04 de dezembro de 2024.
+
+Castells, P.; Jannach, D. 2023. Recommender systems: a primer. In: Alonso, O.; Baeza-Yates, R. (Eds.). Advanced Topics for Information Retrieval. ACM Press, New York, NY, USA.
+
+Danielsson, P. 1980. Euclidean distance mapping. Computer Graphics and Image Processing 14: 227–248.
+
+Fernandes, E. M. 1999. Estatística aplicada. Universidade do Minho, Braga, Portugal.
+
+Fonseca, D. 2020. Pernambuco lança passaporte para incentivar turismo no estado entre moradores e turistas. G1, 21 dez. 2020. Disponível em: https://g1.globo.com/pe/pernambuco/noticia/2020/12/21/passaporte-pernambuco-busca-incentivar-turismo-no-estado-entre-moradores-e-turistas.ghtml. Acesso em: 28 set. 2024.
+
+Gao, M.; Liu, K.; Wu, Z. 2010. Personalisation in web computing and informatics: the techniques, applications, and future research. Information Systems Frontiers 12: 607–629.
+
+Li, Y.; Liu, K.; Wang, S.; Cambria, E. 2021. Recent developments in recommender systems: a survey. Journal of LaTeX Class Files 14(8).
+
+Morais, I.; Mendonça, E.; Santos, E. 2022. Novas formas de fazer turismo: desde a prática às políticas na construção do Plano de Turismo Criativo do Recife (Pernambuco-Brasil). Interações 23(3): 669–684.
+
+Qaiser, S.; Ali, R. 2018. Text mining: use of TF-IDF to examine the relevance of words to documents. International Journal of Computer Applications 181(1): 25–29.
+
+Ramos, J. 2003. Using TF-IDF to determine word relevance in document queries. n.d.
+
+Salton, G.; Buckley, C. 1988. Term-weighting approaches in automatic text retrieval. Information Processing & Management 24(5): 513–523.
+
+Secretaria de Turismo e Lazer do Estado de Pernambuco [SETUR-PE]. 2020. Principais atrativos da cidade já contam com carimbos para o Passaporte Pernambuco. Recife, PE. Disponível em: https://www2.recife.pe.gov.br/noticias/08/12/2020/principais-atrativos-da-cidade-ja-contam-com-carimbos-para-o-passaporte. Acesso em: 04 dez. 2024.
+
+Sondur, S. D.; Chigadani, A. P. 2016. Similarity measures for recommender systems: a comparative study. Journal for Research 2(3): 76–80.
+
+Valença, J. 2022. Passaporte Pernambuco: saiba onde e como conseguir o caderno turístico. JC, 02 fev. 2022. Disponível em: https://jc.ne10.uol.com.br/blogs/turismo-de-valor/2022/02/14952400-passaporte-pernambuco-saiba-onde-e-como-conseguir-o-caderno-turistico.html. Acesso em: 04 dez. 2024.
