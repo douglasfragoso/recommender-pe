@@ -6,6 +6,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import java.util.Collections;
+import java.util.Map;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -19,6 +20,7 @@ import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.test.web.servlet.MockMvc;
 
 import com.recommendersystempe.configs.SecurityConfig;
+import com.recommendersystempe.dtos.GlobalEvaluationMetricsDTO;
 import com.recommendersystempe.dtos.UserEvaluationMetricsDTO;
 import com.recommendersystempe.enums.Roles;
 import com.recommendersystempe.models.Address;
@@ -121,29 +123,45 @@ public class EvaluationControllerTest {
                                 .andExpect(jsonPath("$.precisionAtK").value(0.2));
         }
 
-        // @Test
-        // void testEvaluateGlobalMetrics_ValidRequestShouldReturnMetrics() throws Exception {
-        //     // Arrange
-        //     int k = 5;
-        //     GlobalEvaluationMetricsDTO mockMetrics = new GlobalEvaluationMetricsDTO(
-        //         0.75,     
-        //         0.85,   
-        //         0.90,
-        //         0.95,
-        //          // Adicione o valor esperado para intraListSimilarity aqui    
-        //     );
-        
-        //     given(evaluationService.evaluateGlobalMetrics(k))
-        //         .willReturn(mockMetrics);
-        
-        //     // Act & Assert
-        //     mockMvc.perform(get("/evaluation/global")
-        //             .param("k", String.valueOf(k))
-        //             .with(user(USER.getEmail()).roles("MASTER")))
-        //             .andExpect(status().isOk())
-        //             .andExpect(jsonPath("$.averagePrecisionAtK").value(0.75))
-        //             .andExpect(jsonPath("$.hitRateAtK").value(0.85))
-        //             .andExpect(jsonPath("$.itemCoverage").value(0.9));
-        // }
+        @Test
+        void testEvaluateGlobalMetrics_ValidRequestShouldReturnMetrics() throws Exception {
+                // Arrange
+                int k = 5;
+
+                // Mock dos dados necessários
+                Map<String, Map<String, Double>> featureCoverage = Map.of(
+                                "themes", Map.of("ADVENTURE", 0.8),
+                                "hobbies", Map.of("HIKING", 0.7),
+                                "motivations", Map.of("CULTURE", 0.9));
+
+                Map<Long, Double> poiFrequency = Map.of(
+                                1L, 0.75,
+                                2L, 0.65);
+
+                GlobalEvaluationMetricsDTO mockMetrics = new GlobalEvaluationMetricsDTO(
+                                0.75, // averagePrecisionAtK
+                                0.68, // precisionConfidenceLower
+                                0.82, // precisionConfidenceUpper
+                                0.85, // hitRateAtK
+                                0.90, // itemCoverage
+                                0.95, // intraListSimilarity
+                                featureCoverage,
+                                poiFrequency);
+
+                given(evaluationService.evaluateGlobalMetrics(k))
+                                .willReturn(mockMetrics);
+
+                // Act & Assert
+                mockMvc.perform(get("/evaluation/global")
+                                .param("k", String.valueOf(k))
+                                .with(user(USER.getEmail()).roles("MASTER")))
+                                .andExpect(status().isOk())
+                                .andExpect(jsonPath("$.averagePrecisionAtK").value(0.75))
+                                .andExpect(jsonPath("$.hitRateAtK").value(0.85))
+                                .andExpect(jsonPath("$.itemCoverage").value(0.9))
+                                .andExpect(jsonPath("$.intraListSimilarity").value(0.95))
+                                .andExpect(jsonPath("$.globalFeatureCoverage.themes.ADVENTURE").value(0.8))
+                                .andExpect(jsonPath("$.poiFrequency.1").value(0.75));
+        }
 
 }
