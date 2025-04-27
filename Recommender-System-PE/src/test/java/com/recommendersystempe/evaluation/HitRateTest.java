@@ -3,6 +3,7 @@ package com.recommendersystempe.evaluation;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -86,20 +87,20 @@ public class HitRateTest {
 
                 Recommendation recommendation = new Recommendation();
                 recommendation.setUser(user);
-                recommendation.addPOI(poiList.get(0)); 
-                recommendation.addPOI(poiList.get(1)); 
-                recommendation.addPOI(poiList.get(2)); 
-                recommendation.addPOI(poiList.get(3)); 
-                recommendation.addPOI(poiList.get(4)); 
+                recommendation.addPOI(poiList.get(0));
+                recommendation.addPOI(poiList.get(1));
+                recommendation.addPOI(poiList.get(2));
+                recommendation.addPOI(poiList.get(3));
+                recommendation.addPOI(poiList.get(4));
                 recommendation = recommendationRepository.save(recommendation);
 
                 Recommendation recommendation2 = new Recommendation();
                 recommendation2.setUser(user2);
-                recommendation2.addPOI(poiList.get(0)); 
-                recommendation2.addPOI(poiList.get(1)); 
-                recommendation2.addPOI(poiList.get(2)); 
-                recommendation2.addPOI(poiList.get(3)); 
-                recommendation2.addPOI(poiList.get(4)); 
+                recommendation2.addPOI(poiList.get(0));
+                recommendation2.addPOI(poiList.get(1));
+                recommendation2.addPOI(poiList.get(2));
+                recommendation2.addPOI(poiList.get(3));
+                recommendation2.addPOI(poiList.get(4));
                 recommendation2 = recommendationRepository.save(recommendation2);
 
                 List<Score> scoresUser1 = List.of(
@@ -138,5 +139,59 @@ public class HitRateTest {
 
                 int totalItems = (int) poiRepository.count();
                 assertEquals(1, HitRate.hitRateAtK(allRecommendations, allRelevantItems, totalItems), 0.01);
+        }
+
+        @Test
+        public void testConstructor() {
+                new HitRate();
+        }
+
+        @Test
+        public void testHitRateAtKWithEmptyRecommendations() {
+                List<List<POI>> allRecommendations = Collections.emptyList();
+                List<Set<POI>> allRelevantItems = List.of(Set.of(new POI()));
+
+                double result = HitRate.hitRateAtK(allRecommendations, allRelevantItems, 3);
+                assertEquals(0.0, result, 0.001, "Recomendações vazias devem retornar 0");
+        }
+
+        @Test
+        public void testHitRateWhenRelevantItemsAreEmpty() {
+                POI dummyPoi = new POI("Test", "Desc", List.of(), List.of(), List.of(), new Address());
+                List<List<POI>> allRecommendations = List.of(List.of(dummyPoi));
+                List<Set<POI>> allRelevantItems = List.of(Collections.emptySet());
+
+                double result = HitRate.hitRateAtK(allRecommendations, allRelevantItems, 1);
+                assertEquals(1.0, result, 0.001); 
+        }
+
+        @Test
+        public void testHitRateRounding() {
+                POI relevantPoi = new POI("Relevant", "Desc", List.of(), List.of(), List.of(), new Address());
+                POI irrelevantPoi = new POI("Irrelevant", "Desc", List.of(), List.of(), List.of(), new Address());
+
+                List<List<POI>> allRecommendations = List.of(
+                                List.of(relevantPoi), 
+                                List.of(irrelevantPoi), 
+                                List.of(irrelevantPoi) 
+                );
+
+                List<Set<POI>> allRelevantItems = List.of(
+                                Set.of(relevantPoi),
+                                Set.of(relevantPoi),
+                                Set.of(relevantPoi));
+
+                double result = HitRate.hitRateAtK(allRecommendations, allRelevantItems, 1);
+                assertEquals(0.33, result, 0.001, "Arredondamento para duas casas decimais");
+        }
+
+        @Test
+        public void testKGreaterThanRecommendationsSize() {
+                POI relevantPoi = new POI("Relevant", "Desc", List.of(), List.of(), List.of(), new Address());
+                List<List<POI>> allRecommendations = List.of(List.of(relevantPoi));
+                List<Set<POI>> allRelevantItems = List.of(Set.of(relevantPoi));
+
+                double result = HitRate.hitRateAtK(allRecommendations, allRelevantItems, 10);
+                assertEquals(1.0, result, 0.001, "k maior que recomendações deve considerar todos os itens");
         }
 }

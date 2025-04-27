@@ -28,7 +28,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-@EqualsAndHashCode(of = "id")
+@EqualsAndHashCode(of = {"id", "name"})
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor

@@ -53,4 +53,10 @@ public class TFIDFTest {
         );
        
     }
+
+    @Test
+    public void testConstructor() {
+        TFIDF tfidf = new TFIDF();
+        assertNotNull(tfidf);
+    }
 }

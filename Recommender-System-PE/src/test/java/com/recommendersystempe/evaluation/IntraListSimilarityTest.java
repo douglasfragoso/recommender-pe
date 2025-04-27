@@ -1,21 +1,21 @@
 package com.recommendersystempe.evaluation;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import com.recommendersystempe.models.POI;
-import com.recommendersystempe.models.Address;
-import com.recommendersystempe.enums.Hobbies;
-import com.recommendersystempe.enums.Motivations;
-import com.recommendersystempe.enums.Themes;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import com.recommendersystempe.enums.Hobbies;
+import com.recommendersystempe.enums.Motivations;
+import com.recommendersystempe.enums.Themes;
+import com.recommendersystempe.models.Address;
+import com.recommendersystempe.models.POI;
 
 @SpringBootTest
 public class IntraListSimilarityTest {
@@ -26,8 +26,12 @@ public class IntraListSimilarityTest {
 
     @BeforeEach
     public void setUp() {
-        // Reinicializa as features globais antes de cada teste
         IntraListSimilarity.initializeGlobalFeatures(new ArrayList<>());
+    }
+
+    @Test
+    public void testConstructor() {
+        new IntraListSimilarity();
     }
 
     @Test
@@ -107,4 +111,52 @@ public class IntraListSimilarityTest {
         
         assertEquals(0.66, result, 0.01, "Diversidade calculada para três POIs deve ser ~0.66");
     }
+
+    @Test
+    public void testCalculate_AllFeaturesEmptyButRecommendationsNotEmpty() {
+        POI poi = createPOI(
+            List.of(Hobbies.HIKING),
+            List.of(Motivations.CULTURE),
+            List.of(Themes.ADVENTURE)
+        );
+        List<POI> recommendations = List.of(poi);
+        double result = IntraListSimilarity.calculate(recommendations);
+        assertEquals(1.0, result, 0.001, "Deveria retornar 1.0 quando allFeatures está vazio");
+    }
+
+    @Test
+    public void testGetAllFeatures_ReturnsDefensiveCopy() {
+        POI poi = createPOI(List.of(Hobbies.HIKING), List.of(), List.of());
+        IntraListSimilarity.initializeGlobalFeatures(List.of(poi));
+        
+        List<String> features = IntraListSimilarity.getAllFeatures();
+        features.add("INVALID_FEATURE");
+        
+        assertFalse(
+            IntraListSimilarity.getAllFeatures().contains("INVALID_FEATURE"),
+            "A lista retornada deve ser uma cópia defensiva"
+        );
+    }
+
+    @Test
+    public void testInitializeGlobalFeatures_WithMultipleFeatureTypes() {
+        POI poi1 = createPOI(
+            List.of(Hobbies.HIKING, Hobbies.BIRD_WATCHING),
+            List.of(Motivations.CULTURE, Motivations.RELAXATION),
+            List.of(Themes.ADVENTURE)
+        );
+        POI poi2 = createPOI(
+            List.of(Hobbies.PHOTOGRAPHY),
+            List.of(Motivations.STUDY),
+            List.of(Themes.NATURE, Themes.HISTORY)
+        );
+        
+        IntraListSimilarity.initializeGlobalFeatures(List.of(poi1, poi2));
+        List<String> features = IntraListSimilarity.getAllFeatures();
+        
+        assertTrue(features.contains("HOBBIE_HIKING"));
+        assertTrue(features.contains("MOTIVATION_RELAXATION"));
+        assertTrue(features.contains("THEME_HISTORY"));
+    }
+
 }

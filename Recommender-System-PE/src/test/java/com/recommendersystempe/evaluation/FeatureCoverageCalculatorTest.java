@@ -1,7 +1,6 @@
 package com.recommendersystempe.evaluation;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -21,13 +20,12 @@ public class FeatureCoverageCalculatorTest {
 
     private POI createPOI(List<Hobbies> hobbies, List<Motivations> motivations, List<Themes> themes) {
         return new POI(
-            "TestPOI", 
-            "Description", 
-            motivations, 
-            hobbies, 
-            themes, 
-            new Address()
-        );
+                "TestPOI",
+                "Description",
+                motivations,
+                hobbies,
+                themes,
+                new Address());
     }
 
     @Test
@@ -35,14 +33,13 @@ public class FeatureCoverageCalculatorTest {
         // Cenário
         List<List<POI>> allRecommendations = Collections.emptyList();
         List<String> allFeatures = Arrays.asList(
-            "THEME_ADVENTURE", 
-            "HOBBIE_HIKING", 
-            "MOTIVATION_CULTURE"
-        );
+                "THEME_ADVENTURE",
+                "HOBBIE_HIKING",
+                "MOTIVATION_CULTURE");
 
         // Ação
-        Map<String, Map<String, Double>> result = 
-            FeatureCoverageCalculator.calculateGlobalFeatureCoverage(allRecommendations, allFeatures);
+        Map<String, Map<String, Double>> result = FeatureCoverageCalculator
+                .calculateGlobalFeatureCoverage(allRecommendations, allFeatures);
 
         // Verificações
         assertEquals(0.0, result.get("themes").get("ADVENTURE"), "Tema sem uso deve ter cobertura 0");
@@ -54,20 +51,18 @@ public class FeatureCoverageCalculatorTest {
     public void testSingleUserWithFullFeatures() {
         // Cenário
         POI poi = createPOI(
-            Arrays.asList(Hobbies.HIKING),
-            Arrays.asList(Motivations.CULTURE),
-            Arrays.asList(Themes.ADVENTURE)
-        );
+                Arrays.asList(Hobbies.HIKING),
+                Arrays.asList(Motivations.CULTURE),
+                Arrays.asList(Themes.ADVENTURE));
         List<List<POI>> recommendations = Arrays.asList(Arrays.asList(poi));
         List<String> allFeatures = Arrays.asList(
-            "THEME_ADVENTURE", 
-            "HOBBIE_HIKING", 
-            "MOTIVATION_CULTURE"
-        );
+                "THEME_ADVENTURE",
+                "HOBBIE_HIKING",
+                "MOTIVATION_CULTURE");
 
         // Ação
-        Map<String, Map<String, Double>> result = 
-            FeatureCoverageCalculator.calculateGlobalFeatureCoverage(recommendations, allFeatures);
+        Map<String, Map<String, Double>> result = FeatureCoverageCalculator
+                .calculateGlobalFeatureCoverage(recommendations, allFeatures);
 
         // Verificações
         assertEquals(1.0, result.get("themes").get("ADVENTURE"), "Tema presente deve ter cobertura total");
@@ -79,42 +74,38 @@ public class FeatureCoverageCalculatorTest {
     public void testFeatureNameFormatting() {
         // Cenário
         POI poi = createPOI(
-            Arrays.asList(Hobbies.BIRD_WATCHING),
-            Collections.emptyList(),
-            Collections.emptyList()
-        );
+                Arrays.asList(Hobbies.BIRD_WATCHING),
+                Collections.emptyList(),
+                Collections.emptyList());
         List<List<POI>> recommendations = Arrays.asList(Arrays.asList(poi));
         List<String> allFeatures = Arrays.asList("HOBBIE_BIRD_WATCHING");
 
         // Ação
-        Map<String, Map<String, Double>> result = 
-            FeatureCoverageCalculator.calculateGlobalFeatureCoverage(recommendations, allFeatures);
+        Map<String, Map<String, Double>> result = FeatureCoverageCalculator
+                .calculateGlobalFeatureCoverage(recommendations, allFeatures);
 
         // Verificação
         assertTrue(
-            result.get("hobbies").containsKey("BIRD WATCHING"),
-            "Subtraço deve ser substituído por espaço"
-        );
+                result.get("hobbies").containsKey("BIRD WATCHING"),
+                "Subtraço deve ser substituído por espaço");
     }
 
     @Test
     public void testRoundingBehavior() {
         // Cenário
         POI poi = createPOI(
-            Arrays.asList(Hobbies.HIKING),
-            Collections.emptyList(),
-            Collections.emptyList()
-        );
+                Arrays.asList(Hobbies.HIKING),
+                Collections.emptyList(),
+                Collections.emptyList());
         List<List<POI>> recommendations = Arrays.asList(
-            Arrays.asList(poi),
-            Arrays.asList(poi),
-            Collections.emptyList()
-        );
+                Arrays.asList(poi),
+                Arrays.asList(poi),
+                Collections.emptyList());
         List<String> allFeatures = Arrays.asList("HOBBIE_HIKING");
 
         // Ação
-        Map<String, Map<String, Double>> result = 
-            FeatureCoverageCalculator.calculateGlobalFeatureCoverage(recommendations, allFeatures);
+        Map<String, Map<String, Double>> result = FeatureCoverageCalculator
+                .calculateGlobalFeatureCoverage(recommendations, allFeatures);
 
         // Verificação
         assertEquals(0.67, result.get("hobbies").get("HIKING"), 0.01, "Arredondamento para duas casas decimais");
@@ -123,41 +114,59 @@ public class FeatureCoverageCalculatorTest {
     @Test
     public void testCategoryOrdering() {
         // Cenário
-        Map<String, Map<String, Double>> result = 
-            FeatureCoverageCalculator.calculateGlobalFeatureCoverage(Collections.emptyList(), Collections.emptyList());
+        Map<String, Map<String, Double>> result = FeatureCoverageCalculator
+                .calculateGlobalFeatureCoverage(Collections.emptyList(), Collections.emptyList());
 
         // Verificação
         List<String> expectedOrder = Arrays.asList("themes", "hobbies", "motivations");
         assertEquals(
-            expectedOrder,
-            new ArrayList<>(result.keySet()),
-            "Ordem das categorias deve ser mantida"
-        );
+                expectedOrder,
+                new ArrayList<>(result.keySet()),
+                "Ordem das categorias deve ser mantida");
     }
 
     @Test
     public void testDuplicateFeaturesInSameUser() {
         // Cenário
         POI poi1 = createPOI(
-            Arrays.asList(Hobbies.HIKING),
-            Collections.emptyList(),
-            Collections.emptyList()
-        );
+                Arrays.asList(Hobbies.HIKING),
+                Collections.emptyList(),
+                Collections.emptyList());
         POI poi2 = createPOI(
-            Arrays.asList(Hobbies.HIKING),
-            Collections.emptyList(),
-            Collections.emptyList()
-        );
+                Arrays.asList(Hobbies.HIKING),
+                Collections.emptyList(),
+                Collections.emptyList());
         List<List<POI>> recommendations = Arrays.asList(
-            Arrays.asList(poi1, poi2) // Mesmo hobbie em dois POIs
+                Arrays.asList(poi1, poi2) // Mesmo hobbie em dois POIs
         );
         List<String> allFeatures = Arrays.asList("HOBBIE_HIKING");
 
         // Ação
-        Map<String, Map<String, Double>> result = 
-            FeatureCoverageCalculator.calculateGlobalFeatureCoverage(recommendations, allFeatures);
+        Map<String, Map<String, Double>> result = FeatureCoverageCalculator
+                .calculateGlobalFeatureCoverage(recommendations, allFeatures);
 
         // Verificação
         assertEquals(1.0, result.get("hobbies").get("HIKING"), "Deduplicação por usuário");
+    }
+
+    @Test
+    public void testConstructor() {
+        // This test ensures that the constructor can be instantiated (if needed for
+        // coverage)
+        new FeatureCoverageCalculator();
+    }
+
+    @Test
+    public void testUnknownCategoryFeatureThrowsException() {
+        List<String> allFeatures = Arrays.asList("INVALID_CATEGORY_FEATURE");
+        List<List<POI>> recommendations = Collections.emptyList();
+
+        IllegalArgumentException exception = assertThrows(
+                IllegalArgumentException.class,
+                () -> FeatureCoverageCalculator.calculateGlobalFeatureCoverage(recommendations, allFeatures),
+                "Deveria lançar exceção para categoria desconhecida");
+
+        assertTrue(exception.getMessage().contains("Categoria desconhecida: INVALID"),
+                "Mensagem de exceção deve indicar a categoria 'INVALID'");
     }
 }

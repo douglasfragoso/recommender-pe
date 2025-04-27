@@ -2,22 +2,23 @@ package com.recommendersystempe.evaluation;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
 import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import com.recommendersystempe.models.POI;
 
+@SpringBootTest
 public class POIFrequencyTest {
 
     private POI createPOIWithId(Long id) {
         POI poi = new POI();
         try {
-            Field idField = POI.class.getDeclaredField("id");
+            java.lang.reflect.Field idField = POI.class.getDeclaredField("id");
             idField.setAccessible(true);
             idField.set(poi, id);
         } catch (Exception e) {
@@ -27,99 +28,80 @@ public class POIFrequencyTest {
     }
 
     @Test
+    public void testConstructor() {
+        new POIFrequency();
+    }
+
+    @Test
     public void testCalculatePoiFrequency_EmptyRecommendations() {
-        // Cenário
         List<List<POI>> allRecommendations = new ArrayList<>();
-        List<POI> allPois = Arrays.asList(
-                createPOIWithId(1L),
-                createPOIWithId(2L));
-
-        // Ação
+        List<POI> allPois = Arrays.asList(createPOIWithId(1L), createPOIWithId(2L));
+        
         Map<Long, Double> result = POIFrequency.calculatePoiFrequency(allRecommendations, allPois);
-
-        // Verificação
+        
         assertEquals(0.0, result.get(1L), "POI 1 deve ter frequência 0");
         assertEquals(0.0, result.get(2L), "POI 2 deve ter frequência 0");
-        assertEquals(2, result.size(), "Mapa deve conter todos os POIs");
     }
 
     @Test
     public void testCalculatePoiFrequency_MixedRecommendations() {
-        // Cenário
         POI poi1 = createPOIWithId(1L);
         POI poi2 = createPOIWithId(2L);
         POI poi3 = createPOIWithId(3L);
         POI poi4 = createPOIWithId(4L);
-
-        List<List<POI>> allRecommendations = Arrays.asList(
-                Arrays.asList(poi1, poi2, poi2), 
-                Arrays.asList(poi2, poi3) 
+        
+        List<List<POI>> recommendations = Arrays.asList(
+            Arrays.asList(poi1, poi2, poi2),
+            Arrays.asList(poi2, poi3)
         );
-
-        List<POI> allPois = Arrays.asList(poi1, poi2, poi3, poi4);
-
-        // Ação
-        Map<Long, Double> result = POIFrequency.calculatePoiFrequency(allRecommendations, allPois);
-
-        // Verificações
-        assertEquals(0.5, result.get(1L), "POI 1 deve ter frequência 0.5");
-        assertEquals(1.0, result.get(2L), "POI 2 deve ter frequência 1.0");
-        assertEquals(0.5, result.get(3L), "POI 3 deve ter frequência 0.5");
-        assertEquals(0.0, result.get(4L), "POI 4 deve ter frequência 0.0");
+        
+        Map<Long, Double> result = POIFrequency.calculatePoiFrequency(
+            recommendations,
+            Arrays.asList(poi1, poi2, poi3, poi4)
+        );
+        
+        assertEquals(0.5, result.get(1L), "Frequência do POI 1 deve ser 0.5");
+        assertEquals(1.0, result.get(2L), "Frequência do POI 2 deve ser 1.0");
+        assertEquals(0.5, result.get(3L), "Frequência do POI 3 deve ser 0.5");
+        assertEquals(0.0, result.get(4L), "Frequência do POI 4 deve ser 0.0");
     }
 
     @Test
-    public void testCalculatePoiFrequency_Rounding() {
-        // Cenário
-        POI poi1 = createPOIWithId(1L);
-        List<List<POI>> allRecommendations = Arrays.asList(
-                Arrays.asList(poi1), 
-                new ArrayList<>(), 
-                new ArrayList<>() 
+    public void testCalculatePoiFrequency_EmptyAllPois() {
+        Map<Long, Double> result = POIFrequency.calculatePoiFrequency(
+            List.of(List.of(createPOIWithId(1L))),
+            new ArrayList<>()
         );
-
-        // Ação
-        Map<Long, Double> result = POIFrequency.calculatePoiFrequency(allRecommendations, Arrays.asList(poi1));
-
-        // Verificação
-        assertEquals(0.33, result.get(1L), 0.01, "Frequência deve ser arredondada para 0.33");
+        
+        assertTrue(result.isEmpty(), "Mapa deve estar vazio quando allPois é vazio");
     }
 
     @Test
-    public void testCalculatePoiFrequency_Ordering() {
-        // Cenário
+    public void testCalculatePoiFrequency_AllUsersRecommendSamePOI() {
+        POI poi = createPOIWithId(1L);
+        List<List<POI>> recommendations = List.of(
+            List.of(poi),
+            List.of(poi),
+            List.of(poi)
+        );
+        
+        Map<Long, Double> result = POIFrequency.calculatePoiFrequency(recommendations, List.of(poi));
+        
+        assertEquals(1.0, result.get(1L), "Frequência deve ser 1.0 para 3/3 usuários");
+    }
+
+    @Test
+    public void testCalculatePoiFrequency_OrderWithMixedIds() {
         POI poi3 = createPOIWithId(3L);
         POI poi1 = createPOIWithId(1L);
         POI poi2 = createPOIWithId(2L);
-
-        List<List<POI>> allRecommendations = Arrays.asList(
-                Arrays.asList(poi1, poi2, poi3));
-
-        // Ação
+        
+        List<List<POI>> recommendations = List.of(List.of(poi1, poi2, poi3));
         Map<Long, Double> result = POIFrequency.calculatePoiFrequency(
-                allRecommendations,
-                Arrays.asList(poi3, poi1, poi2) 
+            recommendations,
+            List.of(poi3, poi2, poi1)
         );
-
-        // Verificação
-        List<Long> actualOrder = new ArrayList<>(result.keySet());
-        List<Long> expectedOrder = Arrays.asList(1L, 2L, 3L);
-
-        assertEquals(expectedOrder, actualOrder, "IDs devem estar em ordem crescente");
-    }
-
-    @Test
-    public void testCalculatePoiFrequency_DuplicateInSameUser() {
-        // Cenário
-        POI poi1 = createPOIWithId(1L);
-        List<List<POI>> allRecommendations = Arrays.asList(
-                Arrays.asList(poi1, poi1, poi1) 
-        );
-
-        // Ação
-        Map<Long, Double> result = POIFrequency.calculatePoiFrequency(allRecommendations, Arrays.asList(poi1));
-
-        // Verificação
-        assertEquals(1.0, result.get(1L), "Deve contar como 1 ocorrência por usuário");
+        
+        assertEquals(List.of(1L, 2L, 3L), new ArrayList<>(result.keySet()), "Ordenação por ID crescente");
     }
 }

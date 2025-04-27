@@ -2,7 +2,10 @@ package com.recommendersystempe.evaluation;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -211,4 +214,114 @@ public class EvaluationCalculatorTest {
                                                 "Deve haver 5 POIs no mapa de frequência"));
 
         }
+
+        @Test
+        void testCalculateAverageWithEmptyList() throws Exception {
+                Method method = EvaluationCalculator.class.getDeclaredMethod("calculateAverage", List.class);
+                method.setAccessible(true);
+                double result = (double) method.invoke(null, Collections.emptyList());
+                assertEquals(0.0, result, 0.001);
+        }
+
+        @Test
+        void testCalculateAverageWithNaN() throws Exception {
+                Method method = EvaluationCalculator.class.getDeclaredMethod("calculateAverage", List.class);
+                method.setAccessible(true);
+                List<Double> values = Arrays.asList(Double.NaN, 2.0, Double.NaN, 4.0);
+                double result = (double) method.invoke(null, values);
+                assertEquals(3.0, result, 0.01);
+        }
+
+        @Test
+        void testCalculateStandardDeviationWithSizeOne() throws Exception {
+                Method method = EvaluationCalculator.class.getDeclaredMethod("calculateStandardDeviation", List.class,
+                                double.class);
+                method.setAccessible(true);
+                List<Double> values = List.of(2.0);
+                double result = (double) method.invoke(null, values, 2.0);
+                assertEquals(0.0, result, 0.001);
+        }
+
+        @Test
+        void testComputeMarginOfErrorWithSmallSample() throws Exception {
+                Method method = EvaluationCalculator.class.getDeclaredMethod("computeMarginOfError", double.class,
+                                int.class, double.class);
+                method.setAccessible(true);
+                double result = (double) method.invoke(null, 1.0, 1, 0.95);
+                assertEquals(0.0, result, 0.001);
+        }
+
+        @Test
+        void testComputeMarginOfErrorWithInvalidConfidence() throws Exception {
+                Method method = EvaluationCalculator.class.getDeclaredMethod("computeMarginOfError", double.class,
+                                int.class, double.class);
+                method.setAccessible(true);
+                double result = (double) method.invoke(null, 1.0, 10, 1.1);
+                assertEquals(0.0, result, 0.001);
+        }
+
+        @Test
+        @Transactional
+        void testCalculateGlobalMetricsWithEmptyInput() {
+                GlobalEvaluationMetricsDTO dto = EvaluationCalculator.calculateGlobalMetrics(
+                                new ArrayList<>(),
+                                new ArrayList<>(),
+                                0,
+                                5,
+                                new ArrayList<>(),
+                                new ArrayList<>());
+
+                assertAll(
+                                () -> assertEquals(0.0, dto.getAveragePrecisionAtK(), 0.01),
+                                () -> assertEquals(0.0, dto.getPrecisionConfidenceLower(), 0.01),
+                                () -> assertEquals(0.0, dto.getPrecisionConfidenceUpper(), 0.01),
+                                () -> assertEquals(0.0, dto.getHitRateAtK(), 0.01),
+                                () -> assertEquals(0.0, dto.getItemCoverage(), 0.01),
+                                () -> assertEquals(0.0, dto.getIntraListSimilarity(), 0.01)
+                );
+        }
+
+        @Test
+        @Transactional
+        void testCalculateGlobalMetricsWithSingleUser() {
+                User user = userRepository.save(new User(
+                        "Single", "User", 25, "Feminino", "98765432100", // CPF válido
+                        "11-91234-5678", "single@example.com", "Password123*",
+                        ADDRESS, Roles.USER));
+
+                List<POI> poiList = poiRepository.saveAll(List.of(
+                                createPoi("POI 1", "Desc 1"),
+                                createPoi("POI 2", "Desc 2")));
+
+                Recommendation recommendation = new Recommendation();
+                recommendation.setUser(user);
+                recommendation.addPOI(poiList.get(0));
+                recommendation.addPOI(poiList.get(1));
+                recommendation = recommendationRepository.save(recommendation);
+
+                List<Score> scores = List.of(
+                                new Score(poiList.get(0), 1, recommendation),
+                                new Score(poiList.get(1), 0, recommendation));
+                scoreRepository.saveAll(scores);
+
+                Set<POI> relevantItems = scoreRepository.findByUser(user.getId()).stream()
+                                .filter(score -> score.getScore() == 1)
+                                .map(Score::getPoi)
+                                .collect(Collectors.toSet());
+
+                GlobalEvaluationMetricsDTO dto = EvaluationCalculator.calculateGlobalMetrics(
+                                List.of(poiList),
+                                List.of(relevantItems),
+                                poiList.size(),
+                                2,
+                                IntraListSimilarity.getAllFeatures(),
+                                poiList);
+
+                assertAll(
+                                () -> assertEquals(0.5, dto.getAveragePrecisionAtK(), 0.01),
+                                () -> assertEquals(0.5, dto.getPrecisionConfidenceLower(), 0.01),
+                                () -> assertEquals(0.5, dto.getPrecisionConfidenceUpper(), 0.01),
+                                () -> assertEquals(1.0, dto.getItemCoverage(), 0.01));
+        }
+
 }

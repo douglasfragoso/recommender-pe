@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.apache.commons.math3.linear.ArrayRealVector;
 import org.apache.commons.math3.linear.RealVector;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -39,6 +40,37 @@ public class PearsonSimilarityTest {
                 () -> assertEquals(PearsonSimilarity.pearsonSimilarity(userVector, poiVectors.get(1)), 0.09297213632971896),
                 () -> assertEquals(PearsonSimilarity.pearsonSimilarity(userVector, poiVectors.get(2)), 0.44035147702253435)
         );
+    }
+
+     @Test
+    public void testConstructor() {
+        PearsonSimilarity pearsonSimilarity = new PearsonSimilarity();
+        assertNotNull(pearsonSimilarity);
+    }
+
+    @Test
+    public void testPerfectPositiveCorrelation() {
+        RealVector v1 = new ArrayRealVector(new double[]{1.0, 2.0, 3.0});
+        RealVector v2 = new ArrayRealVector(new double[]{1.0, 2.0, 3.0});
+        double similarity = PearsonSimilarity.pearsonSimilarity(v1, v2);
+        assertEquals(1.0, similarity, 1e-9);
+    }
+
+    @Test
+    public void testPerfectNegativeCorrelation() {
+        RealVector v1 = new ArrayRealVector(new double[]{1.0, 2.0, 3.0});
+        RealVector v2 = new ArrayRealVector(new double[]{3.0, 2.0, 1.0});
+        double similarity = PearsonSimilarity.pearsonSimilarity(v1, v2);
+        assertEquals(0.0, similarity, 1e-9);
+    }
+
+    @Test
+    public void testZeroCorrelation() {
+        RealVector v1 = new ArrayRealVector(new double[]{1.0, -1.0, 0.0});
+        RealVector v2 = new ArrayRealVector(new double[]{0.0, 1.0, -1.0});
+        double similarity = PearsonSimilarity.pearsonSimilarity(v1, v2);
+        // Expected Pearson correlation: -0.5, mapped to ( -0.5 + 1 ) / 2 = 0.25
+        assertEquals(0.25, similarity, 1e-9);
     }
 
 }
