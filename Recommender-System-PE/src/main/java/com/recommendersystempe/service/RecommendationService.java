@@ -25,6 +25,7 @@ import com.recommendersystempe.models.POI;
 import com.recommendersystempe.models.Preferences;
 import com.recommendersystempe.models.Recommendation;
 import com.recommendersystempe.models.Score;
+import com.recommendersystempe.models.SimilarityMetric;
 import com.recommendersystempe.models.User;
 import com.recommendersystempe.repositories.POIRepository;
 import com.recommendersystempe.repositories.RecommendationRepository;
@@ -55,66 +56,62 @@ public class RecommendationService {
     public List<POIDTO> recommendation(Preferences userPreferences) {
         User user = searchUser();
 
-        // Coletar todas as características do usuário - Collect all user features
         List<String> userFeatures = getFeaturesFromPreferences(userPreferences);
-
-        // Coletar todos os POIs e suas características - Collect all POIs and their features
         List<POI> allPois = poiRepository.findAll();
         List<List<String>> allPoiFeatures = allPois.stream()
                 .map(this::getFeaturesFromPOI)
                 .collect(Collectors.toList());
 
-        // Coletar todos os termos únicos - Collect all unique terms
         Set<String> allTerms = new HashSet<>(userFeatures);
         allPoiFeatures.forEach(allTerms::addAll);
         List<String> terms = new ArrayList<>(allTerms);
 
-        // Gerar vetor TF-IDF do usuário - Generate user's TF-IDF vector
-        RealVector userVector = TFIDF.toTFIDFVector(
-                userFeatures,
-                allPoiFeatures,
-                terms);
-
-        // Normalizar vetor do usuário - Normalize user's vector
+        RealVector userVector = TFIDF.toTFIDFVector(userFeatures, allPoiFeatures, terms);
         userVector = SimilarityCalculator.normalize(userVector);
 
-        // Calcular similaridade para cada POI - Calculate similarity for each POI
+        // Novo mapa para armazenar todas as métricas detalhadas
+        Map<POI, SimilarityMetric> metricsMap = new HashMap<>();
+
         Map<POI, Double> poiScores = new HashMap<>();
         for (int i = 0; i < allPois.size(); i++) {
             POI poi = allPois.get(i);
-
-            // Gerar vetor TF-IDF do POI - Generate POI's TF-IDF vector
-            RealVector poiVector = TFIDF.toTFIDFVector(
-                    allPoiFeatures.get(i),
-                    allPoiFeatures,
-                    terms);
-
-            // Normalizar vetor do POI - Normalize POI's vector
+            RealVector poiVector = TFIDF.toTFIDFVector(allPoiFeatures.get(i), allPoiFeatures, terms);
             poiVector = SimilarityCalculator.normalize(poiVector);
 
-            // Calcular similaridade combinada - Calculate combined similarity
-            double similarity = SimilarityCalculator.combinedSimilarity(userVector, poiVector);
-            poiScores.put(poi, similarity);
+            // Calcular métricas individuais
+            double cosine = SimilarityCalculator.cosineSimilarity(userVector, poiVector);
+            double euclidean = SimilarityCalculator.euclideanSimilarity(userVector, poiVector);
+            double pearson = SimilarityCalculator.pearsonSimilarity(userVector, poiVector);
+            double jaccard = SimilarityCalculator.jaccardSimilarity(userVector, poiVector);
+            double average = SimilarityCalculator.combinedSimilarity(userVector, poiVector);
+
+            // Armazenar métricas no mapa
+            metricsMap.put(poi, new SimilarityMetric(null, poi, cosine, euclidean, pearson, jaccard));
+            poiScores.put(poi, average);
         }
 
-        // Ordenar POIs pela similaridade - Sort POIs by similarity
         List<POI> sortedPois = poiScores.entrySet().stream()
                 .sorted(Map.Entry.<POI, Double>comparingByValue().reversed())
                 .map(Map.Entry::getKey)
                 .collect(Collectors.toList());
 
-        // Limitar aos 5 primeiros POIs (para salvar e retornar) - Limit to the top 5 POIs (to save and return)
-        List<POI> top5Pois = sortedPois.stream()
-                .limit(5) // ⬅️ Limite aqui
-                .collect(Collectors.toList());
+        List<POI> top5Pois = sortedPois.stream().limit(5).collect(Collectors.toList());
 
-        // Salvar recomendação (apenas os 5 POIs) - Save recommendation (only the top 5 POIs)
         Recommendation recommendation = new Recommendation();
         recommendation.setUser(user);
-        recommendation.getPois().addAll(top5Pois); 
+        recommendation.getPois().addAll(top5Pois);
+
+        // Adicionar as métricas à recomendação
+        top5Pois.forEach(poi -> {
+            SimilarityMetric metric = metricsMap.get(poi);
+            if (metric != null) {
+                metric.setRecommendation(recommendation);
+                recommendation.addSimilarityMetric(metric);
+            }
+        });
+
         recommendationRepository.save(recommendation);
 
-        // Converter para DTO e retornar - Convert to DTO and return
         return top5Pois.stream()
                 .map(this::convertToDTO)
                 .collect(Collectors.toList());
@@ -158,7 +155,7 @@ public class RecommendationService {
             score.setScore(dto.getScoreValue());
             score.setRecommendation(recommendation);
 
-            scoreRepository.save(score); 
+            scoreRepository.save(score);
             recommendation.getScores().add(score);
         });
     }
@@ -206,9 +203,8 @@ public class RecommendationService {
 
         return new RecommendationDTO(
                 recommendation.getId(),
-                recommendation.getUser().getId(), 
-                poiDTOs 
-        );
+                recommendation.getUser().getId(),
+                poiDTOs);
     }
 
     private POIDTO convertToDTO(POI poi) {

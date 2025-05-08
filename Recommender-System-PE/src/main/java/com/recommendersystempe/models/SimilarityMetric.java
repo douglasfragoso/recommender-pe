@@ -8,14 +8,12 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @Table(name = "tb_similarity_metric")
-@AllArgsConstructor
 @NoArgsConstructor
 public class SimilarityMetric {
 
@@ -55,4 +53,15 @@ public class SimilarityMetric {
     @Column(nullable = false)
     private double average;
 
+    public SimilarityMetric(Recommendation recommendation, POI poi, 
+                           double cosine, double euclidean, 
+                           double pearson, double jaccard) {
+        this.recommendation = recommendation;
+        this.poi = poi;
+        this.cosine = cosine;
+        this.euclidean = euclidean;
+        this.pearson = pearson;
+        this.jaccard = jaccard;
+        this.average = (cosine + euclidean + pearson + jaccard) / 4;
+    }
 }
