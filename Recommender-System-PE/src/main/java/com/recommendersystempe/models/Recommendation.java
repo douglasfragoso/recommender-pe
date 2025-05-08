@@ -47,6 +47,15 @@ public class Recommendation {
     @OneToMany(mappedBy = "recommendation", cascade = CascadeType.ALL)
     private List<Score> scores = new ArrayList<>();
 
+    @Getter
+    @OneToMany(mappedBy = "recommendation", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<SimilarityMetric> similarityMetrics = new ArrayList<>();
+
+    public void addSimilarityMetric(SimilarityMetric metric) {
+        this.similarityMetrics.add(metric);
+        metric.setRecommendation(this);
+    }
+
     public void addPOI(POI poi) {
         this.pois.add(poi);
         poi.getRecommendations().add(this); // Sincroniza o lado inverso - Synchronizes the reverse side

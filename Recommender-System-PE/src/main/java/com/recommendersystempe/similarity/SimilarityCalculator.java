@@ -18,4 +18,20 @@ public class SimilarityCalculator {
         
         return (cosine + euclidean + pearson + jaccard) / 4;
     }
+
+    public static double cosineSimilarity(RealVector v1, RealVector v2) {
+        return CosineSimilarity.cosineSimilarity(v1, v2);
+    }
+
+    public static double euclideanSimilarity(RealVector v1, RealVector v2) {
+        return EuclideanSimilarity.euclideanSimilarity(v1, v2);
+    }
+
+    public static double pearsonSimilarity(RealVector v1, RealVector v2) {
+        return PearsonSimilarity.pearsonSimilarity(v1, v2);
+    }
+
+    public static double jaccardSimilarity(RealVector v1, RealVector v2) {
+        return JaccardSimilarity.jaccardSimilarity(v1, v2);
+    }
 }
