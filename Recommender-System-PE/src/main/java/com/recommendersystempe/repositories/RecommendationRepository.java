@@ -27,4 +27,10 @@ public interface RecommendationRepository extends JpaRepository<Recommendation, 
 
     @Query(value = "SELECT * FROM tb_recommendation WHERE user_id = :userId", nativeQuery = true)
     List<Recommendation> findByUser(@Param("userId") Long userId);
+
+    @Query("SELECT DISTINCT r FROM tb_recommendation r " +
+            "LEFT JOIN FETCH r.similarityMetrics sm " +
+            "LEFT JOIN FETCH sm.poi " +
+            "WHERE r.id = :id")
+    Optional<Recommendation> findByIdWithFullMetrics(@Param("id") Long id);
 }

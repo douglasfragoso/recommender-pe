@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Schema(description = "DTO para métricas de avaliação de recomendações de um usuário")
+@Schema(description = "DTO for evaluation metrics of a user's recommendations")
 public class UserEvaluationMetricsDTO {
 
     @Schema(description = "Precision@K", example = "0.85")

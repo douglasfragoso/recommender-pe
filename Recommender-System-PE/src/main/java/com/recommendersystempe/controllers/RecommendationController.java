@@ -23,6 +23,7 @@ import com.recommendersystempe.dtos.POIDTO;
 import com.recommendersystempe.dtos.PreferencesDTO;
 import com.recommendersystempe.dtos.RecommendationDTO;
 import com.recommendersystempe.dtos.ScoreDTO;
+import com.recommendersystempe.dtos.SimilarityMetricDTO;
 import com.recommendersystempe.service.PreferencesService;
 import com.recommendersystempe.service.RecommendationService;
 
@@ -107,11 +108,25 @@ public class RecommendationController {
             @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content(schema = @Schema(implementation = StandardError.class))),
             @ApiResponse(responseCode = "404", description = "Not found", content = @Content(schema = @Schema(implementation = StandardError.class)))
     })
-    @Operation(summary = "Find all recommendation", description = "Retrieve a paginated list of all user recommendation. Only accessible by ADMIN and MASTER roles.", tags = {
+    @Operation(summary = "Find all similarities", description = "Retrieve a paginated list of all recommendation similarities. Only accessible by ADMIN and MASTER roles.", tags = {
             "Recommendation" })
     public ResponseEntity<Page<RecommendationDTO>> findAllByUser(
             @PageableDefault(size = 10, page = 0, sort = { "id" }, direction = Direction.ASC) Pageable peageable) {
         return ResponseEntity.status(HttpStatus.OK).body(recommendationService.findAllByUserId(peageable));
+    }
+
+    @PreAuthorize("hasAnyRole('ADMIN', 'MASTER')")
+    @GetMapping("/id/{id}/similarities")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Successfully find similarities", content = @Content(schema = @Schema(implementation = RecommendationDTO.class))),
+            @ApiResponse(responseCode = "400", description = "Invalid request", content = @Content(schema = @Schema(implementation = StandardError.class))),
+            @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content(schema = @Schema(implementation = StandardError.class))),
+            @ApiResponse(responseCode = "404", description = "Not found", content = @Content(schema = @Schema(implementation = StandardError.class)))
+    })
+    @Operation(summary = "Find similarities by recommendation id", description = "Retrieve similarities by recommendation id. Only accessible by ADMIN and MASTER roles.", tags = {
+            "Recommendation" })
+    public ResponseEntity<List<SimilarityMetricDTO>> findSimilaritiesByRecommendationId(@PathVariable("id") Long id) {
+        return ResponseEntity.status(HttpStatus.OK).body(recommendationService.findSimilarityMetricsByRecommendationId(id));
     }
 
 }

@@ -21,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.recommendersystempe.dtos.POIDTO;
 import com.recommendersystempe.dtos.RecommendationDTO;
 import com.recommendersystempe.dtos.ScoreDTO;
+import com.recommendersystempe.dtos.SimilarityMetricDTO;
 import com.recommendersystempe.models.POI;
 import com.recommendersystempe.models.Preferences;
 import com.recommendersystempe.models.Recommendation;
@@ -178,6 +179,17 @@ public class RecommendationService {
         User user = searchUser();
         Page<Recommendation> recommendations = recommendationRepository.findAllByUserId(user.getId(), pageable);
         return recommendations.map(this::convertToDTO);
+    }
+
+    @Transactional(readOnly = true)
+    public List<SimilarityMetricDTO> findSimilarityMetricsByRecommendationId(Long recommendationId) {
+        Recommendation recommendation = recommendationRepository
+                .findByIdWithFullMetrics(recommendationId)
+                .orElseThrow(() -> new EntityNotFoundException("Recommendation not found"));
+
+        return recommendation.getSimilarityMetrics().stream()
+                .map(SimilarityMetricDTO::new)
+                .collect(Collectors.toList());
     }
 
     private List<String> getFeaturesFromPreferences(Preferences preferences) {
