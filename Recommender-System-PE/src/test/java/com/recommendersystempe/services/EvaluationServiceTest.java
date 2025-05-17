@@ -86,16 +86,16 @@ class EvaluationServiceTest {
 
     @Test
     void testEvaluateUserRecommendations_ShouldReturnUserMetrics() {
-        // Configuração
+        // given / arrange
         given(userRepository.findById(1L)).willReturn(Optional.of(user));
         given(recommendationRepository.findByUser(1L))
             .willReturn(List.of(createRecommendation(user, poiList)));
         given(scoreRepository.findByUser(1L)).willReturn(scoreEntities);
 
-        // Execução
+        // when / act
         UserEvaluationMetricsDTO result = evaluationService.evaluateUserRecommendations(1L, 5);
 
-        // Verificação
+        // then / assert
         assertAll(
             () -> assertNotNull(result, "DTO não deve ser nulo"),
             () -> assertEquals(0.4, result.getPrecisionAtK(), 0.1, "Precisão esperada")
@@ -111,26 +111,23 @@ class EvaluationServiceTest {
 
     @Test
     void testEvaluateGlobalMetrics_ShouldReturnGlobalMetrics() {
-        // Configuração
+        // given / arrange
         int k = 5;
         User user2 = createUser(2L, "another.email@test.com");
         
-        // Mock de dados
         given(poiRepository.findAll()).willReturn(poiList);
         given(poiRepository.count()).willReturn((long) poiList.size());
         given(userRepository.findAll()).willReturn(List.of(user, user2));
-        
-        // Configurar recomendações
+  
         given(recommendationRepository.findByUser(anyLong()))
             .willReturn(List.of(createRecommendation(user, poiList)));
         
-        // Configurar scores
         given(scoreRepository.findByUser(anyLong())).willReturn(scoreEntities);
 
-        // Execução
+        // when / act
         GlobalEvaluationMetricsDTO metrics = evaluationService.evaluateGlobalMetrics(k);
 
-        // Verificações
+        // then / assert
         assertNotNull(metrics, "Métricas não devem ser nulas");
         
         assertAll(
@@ -139,7 +136,6 @@ class EvaluationServiceTest {
             () -> assertTrue(metrics.getIntraListSimilarity() >= 0, "Similaridade inválida")
         );
 
-        // Verificação segura de features
         Map<String, Map<String, Double>> featureCoverage = metrics.getGlobalFeatureCoverage();
         assertAll(
             () -> assertTrue(featureCoverage.containsKey("hobbies")), 

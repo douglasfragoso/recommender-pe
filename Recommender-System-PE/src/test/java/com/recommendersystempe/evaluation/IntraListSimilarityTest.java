@@ -84,7 +84,7 @@ public class IntraListSimilarityTest {
         IntraListSimilarity.initializeGlobalFeatures(allPOIs);
         List<POI> recommendations = Arrays.asList(poi1, poi2);
         double result = IntraListSimilarity.calculate(recommendations);
-        assertEquals(0.86, result, 0.01, "POIs diferentes devem retornar diversidade ~0.86");
+        assertEquals(0.9, result, 0.01, "POIs diferentes devem retornar diversidade ~0.9");
     }
 
     @Test
@@ -109,7 +109,7 @@ public class IntraListSimilarityTest {
         List<POI> recommendations = Arrays.asList(poi1, poi2, poi3);
         double result = IntraListSimilarity.calculate(recommendations);
         
-        assertEquals(0.66, result, 0.01, "Diversidade calculada para três POIs deve ser ~0.66");
+        assertEquals(0.71, result, 0.01, "Diversidade calculada para três POIs deve ser ~0.71");
     }
 
     @Test

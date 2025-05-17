@@ -68,6 +68,7 @@ public class HitRateTest {
         @Test
         @Transactional
         public void testHitRate() {
+                // given / arrange
                 User user = userRepository.save(new User(
                                 "Mariana", "Silva", 28, "Feminino", "98765432100",
                                 "11-99876-5432", "mariana@example.com", "Segura456*",
@@ -124,6 +125,7 @@ public class HitRateTest {
                 List<List<POI>> allRecommendations = new ArrayList<>();
                 List<Set<POI>> allRelevantItems = new ArrayList<>();
 
+                // when / act
                 for (User currentUser : users) {
                         List<Recommendation> recommendations = recommendationRepository.findByUser(currentUser.getId());
                         List<POI> recommendedPois = recommendations.stream()
@@ -138,6 +140,8 @@ public class HitRateTest {
                 }
 
                 int totalItems = (int) poiRepository.count();
+
+                // then / assert
                 assertEquals(1, HitRate.hitRateAtK(allRecommendations, allRelevantItems, totalItems), 0.01);
         }
 
@@ -167,6 +171,7 @@ public class HitRateTest {
 
         @Test
         public void testHitRateRounding() {
+                // given / arrange
                 POI relevantPoi = new POI("Relevant", "Desc", List.of(), List.of(), List.of(), new Address());
                 POI irrelevantPoi = new POI("Irrelevant", "Desc", List.of(), List.of(), List.of(), new Address());
 
@@ -180,18 +185,22 @@ public class HitRateTest {
                                 Set.of(relevantPoi),
                                 Set.of(relevantPoi),
                                 Set.of(relevantPoi));
-
+                // when / act
                 double result = HitRate.hitRateAtK(allRecommendations, allRelevantItems, 1);
+
+                // then / assert
                 assertEquals(0.33, result, 0.001, "Arredondamento para duas casas decimais");
         }
 
         @Test
         public void testKGreaterThanRecommendationsSize() {
+                // given / arrange
                 POI relevantPoi = new POI("Relevant", "Desc", List.of(), List.of(), List.of(), new Address());
                 List<List<POI>> allRecommendations = List.of(List.of(relevantPoi));
                 List<Set<POI>> allRelevantItems = List.of(Set.of(relevantPoi));
-
+                // when / act
                 double result = HitRate.hitRateAtK(allRecommendations, allRelevantItems, 10);
+                // then / assert
                 assertEquals(1.0, result, 0.001, "k maior que recomendações deve considerar todos os itens");
         }
 }

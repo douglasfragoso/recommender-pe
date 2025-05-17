@@ -72,6 +72,7 @@ public class EvaluationCalculatorTest {
         @Test
         @Transactional
         public void testCalculateUserMetrics() {
+                // given / arrange
                 User user = new User(
                                 "Mariana", "Silva", 28, "Feminino", "98765432100",
                                 "11-99876-5432", "mariana@example.com", "Segura456*",
@@ -103,6 +104,7 @@ public class EvaluationCalculatorTest {
                                 new Score(poiList.get(4), 0, recommendation)));
                 scoreRepository.saveAll(scores);
 
+                // when / act
                 Set<POI> relevantItems = scoreRepository.findByUser(user.getId()).stream()
                                 .filter(score -> score.getScore() == 1)
                                 .map(Score::getPoi)
@@ -110,12 +112,14 @@ public class EvaluationCalculatorTest {
 
                 UserEvaluationMetricsDTO dto = EvaluationCalculator.calculateUserMetrics(poiList, relevantItems, 5);
 
+                // then / assert
                 assertEquals(0.4, dto.getPrecisionAtK(), 0.01);
         }
 
         @Test
         @Transactional
         public void testCalculateGlobalMetrics() {
+                // given / arrange
                 User user = userRepository.save(new User(
                                 "Mariana", "Silva", 28, "Feminino", "98765432100",
                                 "11-99876-5432", "mariana@example.com", "Segura456*",
@@ -173,6 +177,7 @@ public class EvaluationCalculatorTest {
                 List<List<POI>> allRecommendations = new ArrayList<>();
                 List<Set<POI>> allRelevantItems = new ArrayList<>();
 
+                // when / act
                 for (User currentUser : users) {
                         List<Recommendation> recommendations = recommendationRepository.findByUser(currentUser.getId());
                         List<POI> recommendedPois = recommendations.stream()
@@ -199,7 +204,7 @@ public class EvaluationCalculatorTest {
                                 allSystemFeatures,
                                 allPois);
 
-                // Asserções
+                // then / assert
                 assertAll(
                                 () -> assertEquals(0.4, dto.getAveragePrecisionAtK(), 0.01),
                                 () -> assertEquals(0.4, dto.getPrecisionConfidenceLower(), 0.01),
@@ -277,17 +282,17 @@ public class EvaluationCalculatorTest {
                                 () -> assertEquals(0.0, dto.getPrecisionConfidenceUpper(), 0.01),
                                 () -> assertEquals(0.0, dto.getHitRateAtK(), 0.01),
                                 () -> assertEquals(0.0, dto.getItemCoverage(), 0.01),
-                                () -> assertEquals(0.0, dto.getIntraListSimilarity(), 0.01)
-                );
+                                () -> assertEquals(0.0, dto.getIntraListSimilarity(), 0.01));
         }
 
         @Test
         @Transactional
         void testCalculateGlobalMetricsWithSingleUser() {
+                // given / arrange
                 User user = userRepository.save(new User(
-                        "Single", "User", 25, "Feminino", "98765432100", // CPF válido
-                        "11-91234-5678", "single@example.com", "Password123*",
-                        ADDRESS, Roles.USER));
+                                "Single", "User", 25, "Feminino", "98765432100", // CPF válido
+                                "11-91234-5678", "single@example.com", "Password123*",
+                                ADDRESS, Roles.USER));
 
                 List<POI> poiList = poiRepository.saveAll(List.of(
                                 createPoi("POI 1", "Desc 1"),
@@ -303,7 +308,7 @@ public class EvaluationCalculatorTest {
                                 new Score(poiList.get(0), 1, recommendation),
                                 new Score(poiList.get(1), 0, recommendation));
                 scoreRepository.saveAll(scores);
-
+                // when / act
                 Set<POI> relevantItems = scoreRepository.findByUser(user.getId()).stream()
                                 .filter(score -> score.getScore() == 1)
                                 .map(Score::getPoi)
@@ -316,7 +321,7 @@ public class EvaluationCalculatorTest {
                                 2,
                                 IntraListSimilarity.getAllFeatures(),
                                 poiList);
-
+                // then / assert
                 assertAll(
                                 () -> assertEquals(0.5, dto.getAveragePrecisionAtK(), 0.01),
                                 () -> assertEquals(0.5, dto.getPrecisionConfidenceLower(), 0.01),

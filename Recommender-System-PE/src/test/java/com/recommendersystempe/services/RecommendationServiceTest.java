@@ -133,6 +133,9 @@ public class RecommendationServiceTest {
                 assertNotNull(result);
                 assertEquals(5, result.size());
                 verify(recommendationRepository, times(1)).save(any(Recommendation.class));
+                verify(recommendationRepository).save(argThat(recommendation -> 
+                    recommendation.getSimilarityMetrics() != null && 
+                    recommendation.getSimilarityMetrics().size() == 5));
         }
 
         @SuppressWarnings("null")
