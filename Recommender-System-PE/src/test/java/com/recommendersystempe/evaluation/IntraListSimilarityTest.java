@@ -90,7 +90,7 @@ public class IntraListSimilarityTest {
     @Test
     public void testCalculate_ThreePOIs_ReturnsCorrectDiversity() {
         POI poi1 = createPOI(
-                Arrays.asList(Hobbies.HIKING, Hobbies.BIRD_WATCHING),
+                Arrays.asList(Hobbies.HIKING, Hobbies.GARDENING),
                 Collections.singletonList(Motivations.CULTURE),
                 Collections.emptyList()
         );
@@ -141,7 +141,7 @@ public class IntraListSimilarityTest {
     @Test
     public void testInitializeGlobalFeatures_WithMultipleFeatureTypes() {
         POI poi1 = createPOI(
-            List.of(Hobbies.HIKING, Hobbies.BIRD_WATCHING),
+            List.of(Hobbies.HIKING, Hobbies.GARDENING),
             List.of(Motivations.CULTURE, Motivations.RELAXATION),
             List.of(Themes.ADVENTURE)
         );

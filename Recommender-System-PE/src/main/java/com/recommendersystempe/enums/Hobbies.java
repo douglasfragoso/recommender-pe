@@ -1,10 +1,9 @@
 package com.recommendersystempe.enums;
 
 public enum Hobbies {
+
     ADVENTURE,
     ART,
-    BIRD_WATCHING,
-    COLLECTING,
     DANCING,
     GASTRONOMY,      
     GARDENING, 
@@ -17,4 +16,5 @@ public enum Hobbies {
     TECH,
     THEATER,
     TRAVELING
+    
 }

@@ -2,15 +2,17 @@ package com.recommendersystempe.enums;
 
 public enum Motivations {
 
-    APPRECIATION,     
+    ARTISTIC_VALUE,     
     CREATIVITY,     
     CULTURE,
     ENTERTAINMENT,
     EXPLORATION,
+    EDUCATION,
     FAMILY,
+    GASTRONOMY,
     HERITAGE,       
     IDENTITY,       
-    MULTISENSORY,   
+    IMMERSIVE_EXPERIENCE,   
     RELAXATION,
     SOCIAL,
     SPIRITUALITY,

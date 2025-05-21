@@ -1,18 +1,21 @@
 package com.recommendersystempe.enums;
 
 public enum Themes {
+
     ADVENTURE,  
-    AFRO_BRAZILIAN,        
+    AFRO_BRAZILIAN,
+    BAROQUE,     
     COLONIAL,        
     CULTURAL,
     FAMILY_FRIENDLY, 
     FOLKLORE,        
     GASTRONOMIC,
     HISTORY,
-    LUXURY,
+    ARCHITETURAL_STYLE,
     MODERN,
     NATURE,
     RELIGIOUS,
     ROMANTIC,
-    URBAN_ART        
+    URBAN_ART    
+
 }

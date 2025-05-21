@@ -74,7 +74,7 @@ public class FeatureCoverageCalculatorTest {
     public void testFeatureNameFormatting() {
         // given / arrange
         POI poi = createPOI(
-                Arrays.asList(Hobbies.BIRD_WATCHING),
+                Arrays.asList(Hobbies.GARDENING),
                 Collections.emptyList(),
                 Collections.emptyList());
         List<List<POI>> recommendations = Arrays.asList(Arrays.asList(poi));

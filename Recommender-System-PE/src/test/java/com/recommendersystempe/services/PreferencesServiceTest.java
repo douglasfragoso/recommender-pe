@@ -4,7 +4,6 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.BDDMockito.*;
 
-
 import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
@@ -42,7 +41,7 @@ import com.recommendersystempe.service.RecommendationService;
 public class PreferencesServiceTest {
 
         private static final List<Motivations> MOTIVATIONS = List.of(
-                        Motivations.CULTURE, Motivations.STUDY, Motivations.APPRECIATION,
+                        Motivations.CULTURE, Motivations.STUDY, Motivations.ARTISTIC_VALUE,
                         Motivations.RELAXATION, Motivations.SOCIAL);
         private static final List<Hobbies> HOBBIES = List.of(
                         Hobbies.PHOTOGRAPHY, Hobbies.MUSIC, Hobbies.ADVENTURE,
