@@ -27,6 +27,7 @@ public class TokenService {
                     .withSubject(user.getEmail())
                     .withExpiresAt(_expirationDate())
                     .withClaim("id", user.getId())
+                    .withClaim("role", user.getRole().toString())
                     .sign(algorithm);
         } catch (JWTCreationException exception) {
             throw new RuntimeException("Erro ao gerar token JWT.", exception);
@@ -44,6 +45,21 @@ public class TokenService {
                     .build()
                     .verify(token)
                     .getSubject();
+        } catch (JWTVerificationException exception) {
+            throw new RuntimeException("Token JWT inválido ou expirado.", exception);
+        }
+    }
+
+    public String getRole(String token) {
+        try {
+            //Algoritmo usado para verificar a assinartura do token - Algorithm used to verify the token signature
+            Algorithm algorithm = Algorithm.HMAC256(SECRET_KEY);
+
+            return JWT.require(algorithm)
+                    .withIssuer(TOKEN_ISSUER)
+                    .build()
+                    .verify(token)
+                    .getClaim("role").asString();
         } catch (JWTVerificationException exception) {
             throw new RuntimeException("Token JWT inválido ou expirado.", exception);
         }

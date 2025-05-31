@@ -49,7 +49,7 @@ public class User implements UserDetails {
     private String lastName;
    
     @Getter @Setter
-    @Column(name = "age")
+    @Column(name = "age") //date
     private Integer age;
 
     @Getter @Setter
