@@ -54,7 +54,7 @@ public class RecommendationService {
     private ScoreRepository scoreRepository;
 
     @Transactional
-    public List<POIDTO> recommendation(Preferences userPreferences) {
+    public RecommendationDTO recommendation(Preferences userPreferences) {
         User user = searchUser();
 
         List<String> userFeatures = getFeaturesFromPreferences(userPreferences);
@@ -113,9 +113,7 @@ public class RecommendationService {
 
         recommendationRepository.save(recommendation);
 
-        return top5Pois.stream()
-                .map(this::convertToDTO)
-                .collect(Collectors.toList());
+         return convertToDTO(recommendation);
     }
 
     @Transactional
@@ -210,16 +208,15 @@ public class RecommendationService {
 
     private RecommendationDTO convertToDTO(Recommendation recommendation) {
         List<POIDTO> poiDTOs = recommendation.getPois().stream()
-                .map(this::convertToDTO)
+                .map(this::convertPOIDTO)
                 .collect(Collectors.toList());
 
         return new RecommendationDTO(
                 recommendation.getId(),
-                recommendation.getUser().getId(),
                 poiDTOs);
     }
 
-    private POIDTO convertToDTO(POI poi) {
+    private POIDTO convertPOIDTO(POI poi) {
         return new POIDTO(
                 poi.getId(),
                 poi.getName(),

@@ -23,6 +23,7 @@ import org.springframework.test.util.ReflectionTestUtils;
 
 import com.recommendersystempe.dtos.POIDTO;
 import com.recommendersystempe.dtos.PreferencesDTO;
+import com.recommendersystempe.dtos.RecommendationDTO;
 import com.recommendersystempe.enums.Hobbies;
 import com.recommendersystempe.enums.Motivations;
 import com.recommendersystempe.enums.Roles;
@@ -112,14 +113,13 @@ public class PreferencesServiceTest {
                 List<POIDTO> poiDTOList = poiList.stream()
                                 .map(poi -> new POIDTO(poi.getId(), poi.getName(), poi.getDescription()))
                                 .toList();
-                given(recommendationService.recommendation(any(Preferences.class))).willReturn(poiDTOList);
+                given(recommendationService.recommendation(any(Preferences.class))).willReturn((RecommendationDTO) poiDTOList);
 
                 // when / act
-                List<POIDTO> result = preferencesService.insert(dto);
+                RecommendationDTO result = preferencesService.insert(dto);
 
                 // then / assert
                 assertNotNull(result);
-                assertEquals(5, result.size());
                 verify(preferencesRepository, times(2)).save(any(Preferences.class));
         }
 

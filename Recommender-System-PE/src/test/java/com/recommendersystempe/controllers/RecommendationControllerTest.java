@@ -173,7 +173,7 @@ public class RecommendationControllerTest {
                                 .collect(Collectors.toList());
 
                 given(preferencesService.insert(ArgumentMatchers.any(PreferencesDTO.class)))
-                                .willReturn(expectedRecommendations);
+                                .willReturn((RecommendationDTO) expectedRecommendations);
 
                 // when / act
                 ResultActions response = mockMvc.perform(post("/recommendation")
@@ -227,7 +227,7 @@ public class RecommendationControllerTest {
         void testFindAllRecommendations_shouldReturnPageOfRecommendation() throws Exception {
                 // given / arrange
                 Page<RecommendationDTO> mockPage = new PageImpl<>(
-                                List.of(new RecommendationDTO(1L, 1L, List.of())),
+                                List.of(new RecommendationDTO(1L, List.of())),
                                 PageRequest.of(0, 10), 1);
 
                 given(recommendationService.findAll(ArgumentMatchers.any(Pageable.class))).willReturn(mockPage);
@@ -248,7 +248,7 @@ public class RecommendationControllerTest {
         void testFindByIdWithValidId_shouldReturnRecommendation() throws Exception {
                 // given / arrange
                 Long id = 1L;
-                RecommendationDTO mockDTO = new RecommendationDTO(id, 1L, List.of());
+                RecommendationDTO mockDTO = new RecommendationDTO(id, List.of());
 
                 given(recommendationService.findById(id)).willReturn(mockDTO);
 
@@ -266,7 +266,7 @@ public class RecommendationControllerTest {
         void testFindAllByUser_shouldReturnUserRecommendations() throws Exception {
                 // Arrange
                 Page<RecommendationDTO> mockPage = new PageImpl<>(List.of(
-                        new RecommendationDTO(1L, USER.getId(), List.of()))
+                        new RecommendationDTO(1L,  List.of()))
                 );
                 
                 given(recommendationService.findAllByUserId(ArgumentMatchers.any(Pageable.class))).willReturn(mockPage);

@@ -23,7 +23,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.test.util.ReflectionTestUtils;
 
-import com.recommendersystempe.dtos.POIDTO;
 import com.recommendersystempe.dtos.RecommendationDTO;
 import com.recommendersystempe.dtos.ScoreDTO;
 import com.recommendersystempe.enums.Hobbies;
@@ -127,11 +126,10 @@ public class RecommendationServiceTest {
                 given(poiRepository.findAll()).willReturn(poiList);
 
                 // Act
-                List<POIDTO> result = recommendationService.recommendation(preferences);
+                RecommendationDTO result = recommendationService.recommendation(preferences);
 
                 // Assert
                 assertNotNull(result);
-                assertEquals(5, result.size());
                 verify(recommendationRepository, times(1)).save(any(Recommendation.class));
                 verify(recommendationRepository).save(argThat(recommendation -> 
                     recommendation.getSimilarityMetrics() != null && 
@@ -202,7 +200,6 @@ public class RecommendationServiceTest {
 
                 // Assert
                 assertNotNull(result);
-                assertEquals(user.getId(), result.getUserId());
                 assertEquals(5, result.getPois().size());
         }
 

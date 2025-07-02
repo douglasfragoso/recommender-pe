@@ -13,10 +13,9 @@ import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Schema(description = "Represents the RecommendationDTO in the system")
 public class RecommendationDTO {
 
@@ -24,13 +23,6 @@ public class RecommendationDTO {
     @Schema(description = "Recommendation Id", example = "1", required = true)
     @Min(value = 1, message = "Recommendation Id must be at least 1")
     private Long id;
-
-    @Getter
-    @Setter
-    @Schema(description = "User Id", example = "1", required = true)
-    @NotNull(message = "The field userId is required")
-    @Min(value = 1, message = "User Id must be at least 1")
-    private Long userId;
 
     @Getter
     @Schema(description = "List of POIs associated with the recommendation", required = true)

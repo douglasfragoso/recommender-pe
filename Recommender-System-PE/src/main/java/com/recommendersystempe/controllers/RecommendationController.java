@@ -53,7 +53,7 @@ public class RecommendationController {
             @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content(schema = @Schema(implementation = StandardError.class))) })
     @Operation(summary = "Insert preferences", description = "Insert preferences and get recommendation, only for Admin and Master", tags = {
             "Recommendation" })
-    public ResponseEntity<List<POIDTO>> insert(@RequestBody PreferencesDTO dto) {
+    public ResponseEntity<RecommendationDTO> insert(@RequestBody PreferencesDTO dto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(preferencesService.insert(dto));
     }
 
