@@ -48,7 +48,7 @@ import com.recommendersystempe.service.UserService;
 @Import(SecurityConfig.class)
 public class PreferencesControllerTest {
 
-    private static final List<Motivations> MOTIVATIONS = List.of(Motivations.CULTURE, Motivations.STUDY);
+    private static final List<Motivations> MOTIVATIONS = List.of(Motivations.CULTURE, Motivations.EDUCATION);
     private static final List<Hobbies> HOBBIES = List.of(Hobbies.PHOTOGRAPHY, Hobbies.MUSIC);
     private static final List<Themes> THEMES = List.of(Themes.HISTORY, Themes.ADVENTURE);
     private static final Address CURRENT_LOCATION = new Address("Rua Exemplo 2", 44, "Apto 22", "Boa Viagem", "Recife", "PE", "Brasil", "5000000");

@@ -65,7 +65,7 @@ public class POIControllerTest {
                         ADDRESS,
                         Roles.MASTER);
         private static final List<Motivations> MOTIVATIONS = List.of(
-                        Motivations.CULTURE, Motivations.STUDY, Motivations.ARTISTIC_VALUE,
+                        Motivations.CULTURE, Motivations.EDUCATION, Motivations.ARTISTIC_VALUE,
                         Motivations.RELAXATION, Motivations.SOCIAL);
         private static final List<Hobbies> HOBBIES = List.of(
                         Hobbies.PHOTOGRAPHY, Hobbies.MUSIC, Hobbies.ADVENTURE,
@@ -153,7 +153,7 @@ public class POIControllerTest {
 
                 ReflectionTestUtils.setField(poi, "id", 1L);
 
-                List<Motivations> motivations1 = List.of(Motivations.CULTURE, Motivations.STUDY);
+                List<Motivations> motivations1 = List.of(Motivations.CULTURE, Motivations.EDUCATION);
                 List<Hobbies> hobbies1 = List.of(Hobbies.PHOTOGRAPHY, Hobbies.MUSIC);
                 List<Themes> themes1 = List.of(Themes.HISTORY, Themes.ADVENTURE);
                 Address poiAddress1 = new Address("Rua Exemplo", 100, "Apto 202", "Boa Viagem", "Recife", "PE",

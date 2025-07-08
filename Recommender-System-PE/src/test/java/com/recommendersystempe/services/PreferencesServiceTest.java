@@ -42,7 +42,7 @@ import com.recommendersystempe.service.RecommendationService;
 public class PreferencesServiceTest {
 
         private static final List<Motivations> MOTIVATIONS = List.of(
-                        Motivations.CULTURE, Motivations.STUDY, Motivations.ARTISTIC_VALUE,
+                        Motivations.CULTURE, Motivations.EDUCATION, Motivations.ARTISTIC_VALUE,
                         Motivations.RELAXATION, Motivations.SOCIAL);
         private static final List<Hobbies> HOBBIES = List.of(
                         Hobbies.PHOTOGRAPHY, Hobbies.MUSIC, Hobbies.ADVENTURE,

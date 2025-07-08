@@ -15,6 +15,7 @@ public enum Hobbies {
     SOCIAL,    
     TECH,
     THEATER,
-    TRAVELING
+    TRAVELING,
+    VOLUNTEERING
     
 }

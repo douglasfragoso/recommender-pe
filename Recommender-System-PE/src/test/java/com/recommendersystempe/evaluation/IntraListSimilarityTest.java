@@ -147,7 +147,7 @@ public class IntraListSimilarityTest {
         );
         POI poi2 = createPOI(
             List.of(Hobbies.PHOTOGRAPHY),
-            List.of(Motivations.STUDY),
+            List.of(Motivations.EDUCATION),
             List.of(Themes.NATURE, Themes.HISTORY)
         );
         

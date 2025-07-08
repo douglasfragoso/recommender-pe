@@ -3,7 +3,6 @@ package com.recommendersystempe.controllers;
 import static org.hamcrest.Matchers.*;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.BDDMockito.*;
-
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
@@ -76,7 +75,7 @@ public class RecommendationControllerTest {
                         ADDRESS,
                         Roles.MASTER);
         private static final List<Motivations> MOTIVATIONS = List.of(
-                        Motivations.CULTURE, Motivations.STUDY, Motivations.ARTISTIC_VALUE,
+                        Motivations.CULTURE, Motivations.EDUCATION, Motivations.ARTISTIC_VALUE,
                         Motivations.RELAXATION, Motivations.SOCIAL);
         private static final List<Hobbies> HOBBIES = List.of(
                         Hobbies.PHOTOGRAPHY, Hobbies.MUSIC, Hobbies.ADVENTURE,

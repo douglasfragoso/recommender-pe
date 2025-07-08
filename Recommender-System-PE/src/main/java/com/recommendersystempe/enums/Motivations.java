@@ -16,7 +16,6 @@ public enum Motivations {
     RELAXATION,
     SOCIAL,
     SPIRITUALITY,
-    STUDY,
     TRADITION
 
 }
