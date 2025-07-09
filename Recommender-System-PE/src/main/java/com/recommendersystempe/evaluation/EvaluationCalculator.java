@@ -18,15 +18,32 @@ public class EvaluationCalculator {
         Set<POI> relevantItems, 
         int k
     ) {
-        double precisionAtK = Precision.precisionAtK(recommendedPois, relevantItems, k);
-        double hitRateAtK = HitRate.hitRateAtK(List.of(recommendedPois), List.of(relevantItems), k);
+        double precisionAtK = calculatePrecisionAtK(recommendedPois, relevantItems, k);
         double intraListSimilarity = IntraListSimilarity.calculate(recommendedPois);
         
         return new UserEvaluationMetricsDTO(
             precisionAtK,
-            hitRateAtK,
+            0, // HitRate será calculado separadamente
             intraListSimilarity
         );
+    }
+
+    private static double calculatePrecisionAtK(List<POI> recommended, Set<POI> relevant, int k) {
+        if (recommended.isEmpty() || k <= 0) {
+            return 0.0;
+        }
+
+        int topK = Math.min(k, recommended.size());
+        int relevantCount = 0;
+
+        for (int i = 0; i < topK; i++) {
+            if (relevant.contains(recommended.get(i))) {
+                relevantCount++;
+            }
+        }
+
+        double precision = (double) relevantCount / topK;
+        return Math.round(precision * 100.0) / 100.0; // Arredonda para 2 casas decimais
     }
 
     public static GlobalEvaluationMetricsDTO calculateGlobalMetrics(
@@ -37,27 +54,38 @@ public class EvaluationCalculator {
         List<String> allSystemFeatures,
         List<POI> allPois 
     ) {
+        // Verificação de consistência dos dados
+        if (allRecommendations.size() != allRelevantItems.size()) {
+            throw new IllegalArgumentException("As listas de recomendações e itens relevantes devem ter o mesmo tamanho");
+        }
+
         List<Double> precisions = new ArrayList<>();
-        List<Double> hitRates = new ArrayList<>();
         List<Double> intraListSimilarities = new ArrayList<>();
 
         for (int i = 0; i < allRecommendations.size(); i++) {
-            UserEvaluationMetricsDTO userMetrics = calculateUserMetrics(
-                allRecommendations.get(i),
-                allRelevantItems.get(i),
-                k
-            );
-            precisions.add(userMetrics.getPrecisionAtK());
-            hitRates.add(userMetrics.getHitRateAtK());
-            intraListSimilarities.add(userMetrics.getIntraListSimilarity());
+            List<POI> recommendations = allRecommendations.get(i);
+            Set<POI> relevantItems = allRelevantItems.get(i);
+            
+            // Verificação adicional para garantir que os POIs relevantes estão corretos
+            if (recommendations == null || relevantItems == null) {
+                continue;
+            }
+
+            double precision = calculatePrecisionAtK(recommendations, relevantItems, k);
+            precisions.add(precision);
+            
+            double ils = IntraListSimilarity.calculate(recommendations);
+            intraListSimilarities.add(ils);
         }
 
+        // Cálculo das demais métricas
+        double hitRateAtK = HitRate.hitRateAtK(allRecommendations, allRelevantItems, k);
         Map<String, Map<String, Double>> globalFeatureCoverage = 
             FeatureCoverageCalculator.calculateGlobalFeatureCoverage(allRecommendations, allSystemFeatures);
-        
         Map<Long, Double> poiFrequency = 
-            POIFrequency.calculatePoiFrequency(allRecommendations, allPois); 
+            POIFrequency.calculatePoiFrequency(allRecommendations, allPois);
 
+        // Cálculo estatístico
         double avgPrecision = calculateAverage(precisions);
         double stdDevPrecision = calculateStandardDeviation(precisions, avgPrecision);
         int sampleSize = precisions.size();
@@ -69,35 +97,45 @@ public class EvaluationCalculator {
         double upperBound = Math.min(1, Math.round((avgPrecision + margin) * 100.0) / 100.0);
 
         return new GlobalEvaluationMetricsDTO(
-            calculateAverage(precisions),
+            avgPrecision,
             lowerBound,
             upperBound,
-            calculateAverage(hitRates),
+            hitRateAtK,
             ItemCoverage.itemCoverage(allRecommendations, totalItemsAvailable),
             calculateAverage(intraListSimilarities),
             globalFeatureCoverage,
-            poiFrequency 
+            poiFrequency
         );
     }
 
     private static double calculateAverage(List<Double> values) {
         if (values.isEmpty()) return 0.0;
-        double average = values.stream()
-                .filter(d -> !Double.isNaN(d))
-                .mapToDouble(Double::doubleValue)
-                .average()
-                .orElse(0.0);
+        double sum = 0.0;
+        int count = 0;
         
-        return Math.round(average * 100.0) / 100.0;
+        for (Double value : values) {
+            if (value != null && !Double.isNaN(value)) {
+                sum += value;
+                count++;
+            }
+        }
+        
+        return count > 0 ? Math.round((sum / count) * 100.0) / 100.0 : 0.0;
     }
 
     private static double calculateStandardDeviation(List<Double> values, double mean) {
         if (values.size() <= 1) return 0.0;
         double sumSquares = 0.0;
+        int count = 0;
+        
         for (Double value : values) {
-            sumSquares += Math.pow(value - mean, 2);
+            if (value != null && !Double.isNaN(value)) {
+                sumSquares += Math.pow(value - mean, 2);
+                count++;
+            }
         }
-        double variance = sumSquares / (values.size() - 1);
+        
+        double variance = sumSquares / (count - 1);
         return Math.sqrt(variance);
     }
 

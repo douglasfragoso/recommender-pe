@@ -11,7 +11,7 @@ public enum Themes {
     FOLKLORE,        
     GASTRONOMIC,
     HISTORY,
-    ARCHITETURAL_STYLE,
+    ARCHITECTURAL_STYLE,
     MODERN,
     NATURE,
     RELIGIOUS,

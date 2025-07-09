@@ -12,4 +12,7 @@ public interface ScoreRepository extends JpaRepository<Score, Long> {
 
     @Query(value = "SELECT s.* FROM tb_scores s JOIN tb_recommendation r ON s.recommendation_id = r.id WHERE r.user_id = :userId", nativeQuery = true)
     List<Score> findByUser(@Param("userId") Long userId);
+
+    List<Score> findByRecommendationId(Long recommendationId);
 }
+

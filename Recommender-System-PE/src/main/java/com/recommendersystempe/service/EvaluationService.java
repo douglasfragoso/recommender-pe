@@ -68,31 +68,26 @@ public class EvaluationService {
         public GlobalEvaluationMetricsDTO evaluateGlobalMetrics(int k) {
                 // Buscar todos os usuários
                 List<POI> allPOIs = poiRepository.findAll();
-                List<User> users = userRepository.findAll();
                 IntraListSimilarity.initializeGlobalFeatures(allPOIs);
                 List<String> allSystemFeatures = IntraListSimilarity.getAllFeatures();
 
-                // Preparar estruturas para coleta de dados
+                // Coletar dados de cada recomendação INDIVIDUALMENTE
+                List<Recommendation> allRecs = recommendationRepository.findAll();
                 List<List<POI>> allRecommendations = new ArrayList<>();
                 List<Set<POI>> allRelevantItems = new ArrayList<>();
-                List<POI> allPoiObjects = allPOIs;
 
-                // Coletar dados de cada usuário
-                for (User user : users) {
-                        Long userId = user.getId();
-
-                        // Obter recomendações do usuário
-                        List<Recommendation> recommendations = recommendationRepository.findByUser(userId);
-                        List<POI> recommendedPois = recommendations.stream()
-                                        .flatMap(r -> r.getPois().stream())
-                                        .collect(Collectors.toList());
+                for (Recommendation rec : allRecs) {
+                        // 1. POIs recomendados nesta recomendação específica
+                        List<POI> recommendedPois = new ArrayList<>(rec.getPois());
                         allRecommendations.add(recommendedPois);
 
-                        // Obter itens relevantes (com score)
-                        Set<POI> relevantItems = scoreRepository.findByUser(userId).stream()
+                        // 2. Itens RELEVANTES nesta recomendação específica (score = 1)
+                        // USANDO O MÉTODO CORRIGIDO:
+                        Set<POI> relevantItems = scoreRepository.findByRecommendationId(rec.getId()).stream()
                                         .filter(score -> score.getScore() == 1)
                                         .map(Score::getPoi)
                                         .collect(Collectors.toSet());
+
                         allRelevantItems.add(relevantItems);
                 }
 
@@ -104,6 +99,6 @@ public class EvaluationService {
                                 totalItems,
                                 k,
                                 allSystemFeatures,
-                                allPoiObjects);
+                                allPOIs);
         }
 }

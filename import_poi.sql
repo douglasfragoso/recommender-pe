@@ -57,7 +57,7 @@ VALUES (
 
 INSERT INTO pois_motivations (poi_id, motivation) VALUES (3, 'GASTRONOMY'), (3, 'TRADITION'), (3, 'IMMERSIVE_EXPERIENCE'), (3, 'ARTISTIC_VALUE'), (3, 'EXPLORATION');
 INSERT INTO pois_hobbies (poi_id, hobbies) VALUES (3, 'LEARNING'), (3, 'ART'), (3, 'TRAVELING'), (3, 'PHOTOGRAPHY'), (3, 'SOCIAL');
-INSERT INTO pois_themes (poi_id, theme) VALUES (3, 'GASTRONOMIC'), (3, 'CULTURAL'), (3, 'HISTORY'), (3, 'NATURE'), (3, 'ARCHITETURAL_STYLE');
+INSERT INTO pois_themes (poi_id, theme) VALUES (3, 'GASTRONOMIC'), (3, 'CULTURAL'), (3, 'HISTORY'), (3, 'NATURE'), (3, 'ARCHITECTURAL_STYLE');
 
 -- POI ID 4
 INSERT INTO tb_pois (id, poi_name, poi_description, street, house_number, complement, neighborhood, city, states, country, zip_code) 
@@ -577,7 +577,7 @@ NULL,
 
 INSERT INTO pois_motivations (poi_id, motivation) VALUES (29, 'HERITAGE'), (29, 'ARTISTIC_VALUE'), (29, 'EXPLORATION'), (29, 'TRADITION'), (29, 'EDUCATION');
 INSERT INTO pois_hobbies (poi_id, hobbies) VALUES (29, 'ART'), (29, 'PHOTOGRAPHY'), (29, 'LEARNING'), (29, 'TRAVELING'), (29, 'SOCIAL');
-INSERT INTO pois_themes (poi_id, theme) VALUES (29, 'CULTURAL'), (29, 'HISTORY'), (29, 'ARCHITETURAL_STYLE'), (29, 'COLONIAL'), (29, 'FAMILY_FRIENDLY');
+INSERT INTO pois_themes (poi_id, theme) VALUES (29, 'CULTURAL'), (29, 'HISTORY'), (29, 'ARCHITECTURAL_STYLE'), (29, 'COLONIAL'), (29, 'FAMILY_FRIENDLY');
 
 -- POI ID 30
 INSERT INTO tb_pois (id, poi_name, poi_description, street, house_number, complement, neighborhood, city, states, country, zip_code)
@@ -597,7 +597,7 @@ NULL,
 
 INSERT INTO pois_motivations (poi_id, motivation) VALUES (30, 'HERITAGE'), (30, 'ARTISTIC_VALUE'), (30, 'EXPLORATION'), (30, 'TRADITION'), (30, 'EDUCATION');
 INSERT INTO pois_hobbies (poi_id, hobbies) VALUES (30, 'ART'), (30, 'PHOTOGRAPHY'), (30, 'LEARNING'), (30, 'TRAVELING'), (30, 'SOCIAL');
-INSERT INTO pois_themes (poi_id, theme) VALUES (30, 'CULTURAL'), (30, 'HISTORY'), (30, 'ARCHITETURAL_STYLE'), (30, 'COLONIAL'), (30, 'FAMILY_FRIENDLY');
+INSERT INTO pois_themes (poi_id, theme) VALUES (30, 'CULTURAL'), (30, 'HISTORY'), (30, 'ARCHITECTURAL_STYLE'), (30, 'COLONIAL'), (30, 'FAMILY_FRIENDLY');
 
 -- POI ID 31
 INSERT INTO tb_pois (id, poi_name, poi_description, street, house_number, complement, neighborhood, city, states, country, zip_code)
@@ -677,7 +677,7 @@ NULL,
 
 INSERT INTO pois_motivations (poi_id, motivation) VALUES (34, 'CULTURE'), (34, 'ENTERTAINMENT'), (34, 'EDUCATION'), (34, 'ARTISTIC_VALUE'), (34, 'HERITAGE');
 INSERT INTO pois_hobbies (poi_id, hobbies) VALUES (34, 'ART'), (34, 'THEATER'), (34, 'PHOTOGRAPHY'), (34, 'LEARNING'), (34, 'SOCIAL');
-INSERT INTO pois_themes (poi_id, theme) VALUES (34, 'CULTURAL'), (34, 'HISTORY'), (34, 'ARCHITETURAL_STYLE'), (34, 'ROMANTIC'), (34, 'COLONIAL');
+INSERT INTO pois_themes (poi_id, theme) VALUES (34, 'CULTURAL'), (34, 'HISTORY'), (34, 'ARCHITECTURAL_STYLE'), (34, 'ROMANTIC'), (34, 'COLONIAL');
 
 -- POI ID 35
 INSERT INTO tb_pois (id, poi_name, poi_description, street, house_number, complement, neighborhood, city, states, country, zip_code)

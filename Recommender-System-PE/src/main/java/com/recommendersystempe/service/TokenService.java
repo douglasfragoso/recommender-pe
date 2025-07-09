@@ -67,7 +67,7 @@ public class TokenService {
 
     private Instant _expirationDate() {
         // O token expira em 10 minutos de acordo com o fuso horário do Brasil - The token expires in 10 minutes according to the Brazil time zone
-        return LocalDateTime.now().plusMinutes(10).toInstant(ZoneOffset.of("-03:00"));
+        return LocalDateTime.now().plusMinutes(60).toInstant(ZoneOffset.of("-03:00"));
     }
 
     // Propriedades definida no application.properties - Properties defined in application.properties
