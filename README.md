@@ -5,11 +5,12 @@ This project is proprietary. The source code is made available exclusively for a
 [![License: Proprietary](https://img.shields.io/badge/license-proprietary-red.svg)](https://github.com/douglasfragoso/recommender-pe?tab=License-1-ov-file)
 
 
-# Vamu!Rec: Boosting Tourism in Recife
+# Points of Interest Recommendation System in Recife with Content-Based Filtering and Pernambuco Passport
 
 ## Project Overview
 
-Vamu!Rec is a RESTful API that recommends personalized tourism routes in Recife, Brazil, based on content-based filtering algorithms. The system matches user preferences with Points of Interest (POIs) using TF-IDF and similarity metrics such as Cosine Similarity (COS), Euclidean Distance (ED), Pearson Correlation Coefficient (PCC), and Jaccard Coefficient (JC). The project is part of a final research work for the Software Engineering MBA at USP/ESALQ.
+Recife has significant tourism potential but requires digital solutions to promote its Points of Interest (POIs). Thus, the implementation of an intelligent system represents an innovation opportunity for the sector. A Content-Based Recommendation System was proposed, which uses similarity metrics to correlate user preferences with POI characteristics. 
+The system achieved 79% precision, 100% minimum hit rate, and 86% coverage, demonstrating strong performance in cold start scenarios despite the overexposure of some POIs. Therefore, the model proved effective in providing personalized recommendations, showing potential to boost local tourism.
 
 ### MVP Goals
 
@@ -17,15 +18,6 @@ Vamu!Rec is a RESTful API that recommends personalized tourism routes in Recife,
 - POI catalog ingestion based on Passaporte Pernambuco
 - Similarity computation and route generation
 - Evaluation using Information Retrieval metrics (Precision@k, Hit Rate@k, Item Coverage, etc.)
-
-## Authors and Affiliations
-
-**Douglas Inácio Fragoso Ferreira¹\***; **Everton Gomede²**
-
-1. University of São Paulo (USP). MBA in Software Engineering, Luiz de Queiroz College of Agriculture (Esalq), Pecege.
-2. School of Electrical and Computer Engineering, State University of Campinas (FEEC/UNICAMP). PhD in Computer Science.
-
-\*Corresponding author: douglas.iff@gmail.com
 
 ## Technologies Used
 
@@ -201,6 +193,18 @@ With the TF-IDF values, it is possible to calculate the **Similarity Metrics** (
 
 The user evaluates the recommended POIs as **like** or **dislike**. These evaluations are stored in the database and can be analyzed using the metrics **Precision@k**, **Hit Rate@k**, **Item Coverage**, **Intra-List Similarity**, **Feature Coverage**, and **POI Frequency**.
 
+In this stage, 36 POIs from the Passaporte Pernambuco in Recife were used. Additionally, 30 fictional users were generated with their preferences and ratings using LLMs. This synthetic data aimed to simulate realistic tourist behaviors and proved suitable for the initial technical validation of the proposed algorithm.
+
+Each user received a personalized list of recommended POIs based on their profile and interactions, recorded in the database through binary like/dislike ratings. These records were used to calculate the evaluation metrics discussed earlier, as illustrated in Figure 3. With the simulated data, basic statistics were extracted, and trends in the algorithm's behavior were identified. The recommender system (RS) achieved an average precision of 79% in the relevance of recommended POIs, with a 95% Confidence Interval (CI) between 73% and 85%. Furthermore, 100% of users received at least one relevant POI.
+
+In terms of item coverage, 86% of the POIs were recommended at least once, and the average intra-list similarity among recommended items was 41%. Although the data used was simulated, the results were considered robust: the RS showed a good balance between engagement and diversity, avoiding excessive redundancy in suggested items while maintaining high recommendation accuracy.
+
+As shown in Figure 4, the system failed to recommend 13.88% of the POIs, with items 13, 15, 23, 24, and 33 appearing 0% of the time in the recommended lists. In contrast, some POIs stood out due to excessive popularity: items 8, 18, 20, 28, 32, and 36 were recommended between 27% and 37% of the time, reaching a popularity of 16.66%.
+
+The overexposure and underutilization of certain POIs may lead to recommendation saturation, harming the personalized experience of tourists as their preferences change. These distortions are possibly linked to uneven category coverage and algorithmic bias stemming from textual similarity.
+
+In summary, the LLM-generated synthetic data allowed us to observe the typical behavior of a content-based RS, highlighting its strengths and limitations: satisfactory performance in cold start scenarios but a tendency to repeat certain items in recommendations. This scenario underscored the need for strategies to expand item coverage and promote greater balance in recommendations.
+
 # UML CLASSES
 
 ## Classes
@@ -288,9 +292,6 @@ Surefire Report Path:
 
 The first time you run mvn site, it may take a while to download the Maven dependencies. 
 
-
-
-Made with care by Douglas Fragoso 👊
 
 ## References
 
