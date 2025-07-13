@@ -5,8 +5,8 @@ INSERT INTO tb_users (
     first_name, last_name, neighborhood, street, user_password, email
 ) VALUES (
     30, 100, 2, 'PE', '50000000', 'Masculino', '12345678900', '81-98765-4321', 'Apto 202', 
-    'Brasil', 'Douglas', 'Fragoso', 'Boa Viagem', 'Rua Exemplo', 
-    '$2a$12$xCCH6JiTOTC0IDjWgBKVQeqS53c/Kw6UuKi69b/iY6lGowC.P0RzW', 'douglas@example.com'
+    'Brasil', 'Richard', 'Fragoso', 'Boa Viagem', 'Rua Exemplo', 
+    '$2a$12$xCCH6JiTOTC0IDjWgBKVQeqS53c/Kw6UuKi69b/iY6lGowC.P0RzW', 'richard@example.com'
 );
 
 -- Usuário 2

@@ -54,7 +54,7 @@ CREATE TABLE `tb_users` (
 
 LOCK TABLES `tb_users` WRITE;
 /*!40000 ALTER TABLE `tb_users` DISABLE KEYS */;
-INSERT INTO `tb_users` VALUES (1,NULL,'Apto 202','Brasil','Boa Viagem',100,'PE','Rua Exemplo','50000000',30,'12345678900','douglas@example.com','Douglas','Masculino','Fragoso','81-98765-4321','MASTER','$2a$12$xCCH6JiTOTC0IDjWgBKVQeqS53c/Kw6UuKi69b/iY6lGowC.P0RzW');
+INSERT INTO `tb_users` VALUES (1,NULL,'Apto 202','Brasil','Boa Viagem',100,'PE','Rua Exemplo','50000000',30,'12345678900','richard@example.com','Richard','Masculino','Fragoso','81-98765-4321','MASTER','$2a$12$xCCH6JiTOTC0IDjWgBKVQeqS53c/Kw6UuKi69b/iY6lGowC.P0RzW');
 /*!40000 ALTER TABLE `tb_users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
