@@ -46,7 +46,7 @@ Typically, ranking in content-based filtering is based on the distance between c
 
 This algorithm helps compare user preferences with the description of Points of Interest (POIs). For example, if a user prefers "beach," TF-IDF will identify POIs where the term is relevant. TF-IDF creates vectors, and the similarity between these vectors is calculated to measure how close they are, ranging from 0 to +1 (0 indicating complete opposition and +1 indicating identical vectors), with **Cosine Similarity (COS)** being the standard method (Gao et al., 2010; Salton & Buckley, 1988).
 
-In this study, to calculate similarity metrics, a combination of TF-IDF, ED, COS, and PCC is used, along with evaluation metrics composed of Precision@k, Hit Rate@k, and Item Coverage. These metrics are described in detail in the subsections below.
+In this study, to calculate similarity metrics, a combination of TF-IDF, COS, ED, JC and PCC is used, along with evaluation metrics composed of Precision@k, Hit Rate@k, and Item Coverage. These metrics are described in detail in the subsections below.
 
 ### Similarity Metrics
 
@@ -193,7 +193,7 @@ With the TF-IDF values, it is possible to calculate the **Similarity Metrics** (
 
 The user evaluates the recommended POIs as **like** or **dislike**. These evaluations are stored in the database and can be analyzed using the metrics **Precision@k**, **Hit Rate@k**, **Item Coverage**, **Intra-List Similarity**, **Feature Coverage**, and **POI Frequency**.
 
-In this stage, 36 POIs from the Passaporte Pernambuco in Recife were used. Additionally, 30 fictional users were generated with their preferences and ratings using LLMs. This synthetic data aimed to simulate realistic tourist behaviors and proved suitable for the initial technical validation of the proposed algorithm.
+In this stage, 36 POIs from the Passaporte Pernambuco in Recife were used. Additionally, 30 fictional users were generated with their preferences and ratings using Large Language Models (LLMs). This synthetic data aimed to simulate realistic tourist behaviors and proved suitable for the initial technical validation of the proposed algorithm.
 
 Each user received a personalized list of recommended POIs based on their profile and interactions, recorded in the database through binary like/dislike ratings. These records were used to calculate the evaluation metrics discussed earlier, as illustrated in Figure 3. With the simulated data, basic statistics were extracted, and trends in the algorithm's behavior were identified. The recommender system (RS) achieved an average precision of 79% in the relevance of recommended POIs, with a 95% Confidence Interval (CI) between 73% and 85%. Furthermore, 100% of users received at least one relevant POI.
 
