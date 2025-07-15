@@ -1,0 +1,1660 @@
+You are helping populate a tourism recommendation system with user data for testing (seed). Your task is to generate a batch of 10 **unique user profiles**, each including:
+
+1. A **realistic and creative person profile**, without repeating names, ages, occupations, or interests. Use Brazilian-style names. The age should range between 18 and 65. And the occupations must be realistics with the region of Brazil and Recife, don't create flashy professions.
+
+2. A JSON object with user preferences based on their profile, using exactly **5 items from each enum category**. Choices must be coherent with the person's interests and job, but overall diverse across the 5 users. Avoid repeating combinations across profiles.
+
+--- ---
+
+- Motivations: ["ARTISTIC_VALUE", "CREATIVITY", "CULTURE", "ENTERTAINMENT", "EXPLORATION", "EDUCATION", "FAMILY", "GASTRONOMY", "HERITAGE", "IDENTITY", "IMMERSIVE_EXPERIENCE", "RELAXATION", "SOCIAL", "SPIRITUALITY",  "TRADITION"]
+
+- Hobbies: ["ADVENTURE", "ART", "DANCING", "GASTRONOMY", "GARDENING", "HIKING", "LEARNING", "MUSIC", "PHOTOGRAPHY", "READING", "SOCIAL", "TECH", "THEATER", "TRAVELING", “VOLUNTEERING”]
+
+- Themes: ["ADVENTURE", "AFRO_BRAZILIAN", "BAROQUE", "COLONIAL", "CULTURAL", "FAMILY_FRIENDLY", "FOLKLORE", "GASTRONOMIC", "HISTORY", "ARCHITETURAL_STYLE", "MODERN", "NATURE", "RELIGIOUS", "ROMANTIC", "URBAN_ART"]
+
+--- Output Format ---
+
+Repeat the following structure 10 times with different data:
+
+Name: <Full Name>  
+Age: <18-65>  
+Gender: <Male|Female>  
+Occupation: <Realistic job>  
+Interests: <2–4 comma-separated interests>  
+
+```json
+{
+  "motivations": [...],
+  "hobbies": [...],
+  "themes": [...]
+}
+-- Important Notes --
+
+Do not repeat any full profile, check before send the output.
+
+Traits must feel coherent and inspired by the context (age, job, interests).
+
+Keep the format clean and parsable (no extra comments or explanations).
+
+Prioritize variety between users and
+Dont be bias by the terms of hobbies, motivation and themes to do the profiles.
+We are generating 10 unique user profiles with Brazilian-style names, ages between 18 and 65, and realistic occupations for the region (Recife, Brazil). 
+ Each profile will have:
+   - Name: Full name (Brazilian, unique)
+   - Age: Between 18 and 65
+   - Gender: Male or Female
+   - Occupation: Realistic job in Recife or Brazil (not flashy)
+   - Interests: 2-4 comma-separated interests (related to the profile)
+ Then, a JSON object with exactly 5 items from each enum (motivations, hobbies, themes) that are coherent with the profile.
+ We must avoid repeating combinations across profiles and ensure diversity.
+ Steps:
+ 1. Create a list of 10 unique profiles. We'll vary age, gender, occupation, and interests.
+ 2. For each profile, assign 5 motivations, 5 hobbies, and 5 themes that make sense for that person.
+ 3. Ensure that the choices are coherent with the person's interests, occupation, and age.
+ Important: Do not repeat the same combination of motivations, hobbies, and themes across users? 
+    Actually, the note says: "Avoid repeating combinations across profiles" for the JSON. But note that the JSON has three separate arrays. 
+    We don't want the exact same set of 5 motivations, 5 hobbies, and 5 themes to appear in two profiles? Or just avoid repeating the same profile?
+    The note says: "overall diverse across the 5 users" (but we are doing 10). And "avoid repeating combinations" meaning the entire set? 
+    Actually, it says: "avoid repeating combinations across profiles" for the JSON. But note that the JSON is per profile and has three keys.
+    Interpretation: We should avoid having two profiles with the exact same list for motivations, or same list for hobbies, or same list for themes? 
+    But that might be too strict. Instead, let's focus on making the entire profile (including the JSON) unique.
+    However, the note says: "Choices must be coherent with the person's interests and job, but overall diverse across the 10 users."
+    So we will try to have diversity in the selections, but it's acceptable if some individual items repeat (because there are only 15 in each enum and we have 10 users with 5 each) but we should avoid identical sets.
+    We'll generate each profile independently and then check for uniqueness of the entire set of data? But the note says "unique user profiles" meaning the profile data (name, age, etc.) and also the JSON should be unique in combination? 
+    Actually, the note: "Do not repeat any full profile" - meaning the entire block (profile data and JSON) should be unique.
+    So we'll generate and then check for uniqueness of the entire structure? But we are generating one by one, so we can avoid repeats by design.
+ 4. We'll use Brazilian names. We can use a mix of common Brazilian first and last names.
+ Let's plan 10 profiles:
+ We'll vary:
+   - Gender: about half male, half female? Let's do 5 male, 5 female.
+   - Age: spread across 18-65.
+   - Occupation: realistic for Recife/Brazil. Examples: teacher, nurse, software developer, shopkeeper, fisherman, tour guide, chef, student, etc.
+   - Interests: 2-4 per profile, which will help determine the JSON.
+ We'll generate the JSON based on the profile. For example, a chef might have GASTRONOMY as an interest and then have motivations and themes around that.
+ But note: the JSON must have exactly 5 from each category.
+ Let's create 10 profiles:
+ Profile 1: 
+   Name: João Silva
+   Age: 28
+   Gender: Male
+   Occupation: Software Developer
+   Interests: Technology, Reading, Traveling
+   Then for JSON:
+     motivations: might include TECH, LEARNING, EXPLORATION, etc. (but note: motivations enum doesn't have TECH. So we have to choose from given motivations: 
+        Motivations: ["ARTISTIC_VALUE", "CREATIVITY", "CULTURE", ...]
+        We can choose: "CREATIVITY", "EXPLORATION", "EDUCATION", "IMMERSIVE_EXPERIENCE", "SOCIAL" ? 
+        But we have to pick 5. And they must be coherent.
+   Alternatively, we can map interests to the enums.
+   We have to be careful: the interests in the profile are free-text (but we can use terms that relate to the enums) but they are not limited to the enums. However, the JSON enums are fixed.
+   How to assign:
+     - motivations: why does the user travel? what drives them? Based on their personality and interests.
+     - hobbies: what activities do they enjoy? (from the hobbies enum)
+     - themes: what kind of attractions or experiences are they drawn to? (from the themes enum)
+   We must pick 5 from each, and they must be coherent.
+   For João Silva (Software Developer, 28, interests: Technology, Reading, Traveling):
+     motivations: EXPLORATION, EDUCATION, CREATIVITY, IMMERSIVE_EXPERIENCE, TECH? -> but TECH is not in motivations. So we have to choose from the list.
+     Let's look: 
+        Motivations: no TECH, but we have LEARNING? No, but we have "EDUCATION". 
+        So: EXPLORATION, EDUCATION, CREATIVITY, IMMERSIVE_EXPERIENCE, and maybe SOCIAL (if he likes meeting people while traveling).
+     Hobbies: from the hobbies enum, we can choose: TECH, READING, TRAVELING, LEARNING, and maybe MUSIC (if we assume he likes music) but we have to be coherent. 
+        Since his interests are Technology, Reading, Traveling -> we can choose: TECH, READING, TRAVELING, and then we need two more. 
+        We can add LEARNING and maybe ADVENTURE (if traveling implies adventure) or SOCIAL? 
+        But note: we have to pick exactly 5. So: ["TECH", "READING", "TRAVELING", "LEARNING", "ADVENTURE"]? 
+     Themes: what themes? He might like MODERN, URBAN_ART, CULTURAL, HISTORY, ADVENTURE? 
+   But we must avoid being too literal. The profile interests are just 2-4, and the JSON has 5 in each. We can add more based on the occupation and age.
+   We'll do this for each.
+ 5. We must also ensure that the same set of 5 motivations doesn't appear in two profiles? Not necessarily, but avoid if possible. Same for hobbies and themes? 
+    The note says: "avoid repeating combinations across profiles" for the JSON. So we should avoid having two profiles with the same 5 motivations, or same 5 hobbies, or same 5 themes? 
+    But it might be challenging because there are only 15 items in each enum and we are picking 5 for 10 profiles -> the number of combinations is C(15,5)=3003, so we can avoid repeats.
+    We'll try to avoid exact duplicates in any of the three arrays across profiles.
+ Implementation:
+    We'll generate one profile at a time and keep track of the sets we've used for motivations, hobbies, and themes to avoid duplicates? 
+    But the note doesn't require that, it just says "avoid repeating combinations" and "overall diverse". 
+    However, to be safe, we'll avoid having the same set of 5 motivations in two different profiles. Same for hobbies and themes.
+    We'll maintain:
+        used_motivations = set()   # but we store tuple(sorted(motivations_list))
+        used_hobbies = set()
+        used_themes = set()
+    And when generating, if we get a duplicate, we regenerate that part? But note: the profile is fixed first, so we must generate a set that fits the profile and is not used.
+    Alternatively, we can design the profiles to be different enough that the sets naturally differ.
+    Given the constraints, I'll design 10 profiles that are very different, so the JSON will naturally be different.
+ 6. We'll create 10 profiles:
+    We'll aim for diversity in occupations and interests.
+    Profile 1: Young male software developer, tech and reading.
+    Profile 2: Middle-aged female teacher, education and culture.
+    Profile 3: Young female student, adventure and social.
+    Profile 4: Male chef, gastronomy and creativity.
+    Profile 5: Female nurse, family and relaxation.
+    Profile 6: Male fisherman, nature and tradition.
+    Profile 7: Female artist, art and creativity.
+    Profile 8: Male tour guide, history and culture.
+    Profile 9: Female shopkeeper, social and family.
+    Profile 10: Retired male, gardening and heritage.
+    But we have to make sure the occupations are realistic for Recife.
+    Let's adjust:
+      Recife is a city in the Northeast of Brazil, with a rich cultural heritage, beaches, and urban life.
+      Occupations: 
+        1. Software Developer (common in urban areas)
+        2. School Teacher
+        3. University Student (maybe studying biology)
+        4. Chef (or cozinheiro)
+        5. Nurse
+        6. Fisherman (pescador) - common in coastal areas
+        7. Artist (pintora, for example)
+        8. Tour Guide (guia turístico)
+        9. Shopkeeper (dona de loja)
+        10. Retired civil servant (aposentado)
+    We'll assign names accordingly.
+ 7. Now, let's generate each one.
+ We'll use:
+   Profile 1:
+        Name: João Silva
+        Age: 28
+        Gender: Male
+        Occupation: Software Developer
+        Interests: Technology, Reading, Traveling
+        motivations: EXPLORATION, EDUCATION, CREATIVITY, IMMERSIVE_EXPERIENCE, TECH? -> wait, TECH is not in motivations. 
+          Instead, we have to choose from the motivations enum. 
+          Possible: EXPLORATION (for traveling), EDUCATION (learning new things), CREATIVITY (for problem solving in tech), IMMERSIVE_EXPERIENCE (for deep dives), and maybe SOCIAL (if he meets people) or CULTURE? 
+          Let's choose: ["EXPLORATION", "EDUCATION", "CREATIVITY", "IMMERSIVE_EXPERIENCE", "CULTURE"]
+        hobbies: from enum: TECH, READING, TRAVELING, LEARNING, and we need one more. Let's say MUSIC (as a common hobby) or ADVENTURE? 
+          But his interests don't mention music. We can stick to: TECH, READING, TRAVELING, LEARNING, and ADVENTURE (if traveling includes adventure). 
+          So: ["TECH", "READING", "TRAVELING", "LEARNING", "ADVENTURE"]
+        themes: He might like modern architecture, cultural sites, history, urban art, and adventure themes.
+          From the themes: MODERN, CULTURAL, HISTORY, URBAN_ART, ADVENTURE
+        But note: we must pick exactly 5. And avoid duplicates in the set with other profiles? We'll check later.
+   Profile 2:
+        Name: Maria Oliveira
+        Age: 42
+        Gender: Female
+        Occupation: School Teacher
+        Interests: Education, Reading, Social
+        motivations: EDUCATION, CULTURE, IDENTITY, HERITAGE, SOCIAL (because she's a teacher and interested in social issues)
+        hobbies: READING, LEARNING, THEATER (as a form of education), VOLUNTEERING, SOCIAL
+        themes: CULTURAL, HISTORY, FAMILY_FRIENDLY (if she deals with children), RELIGIOUS (if she's interested in that), TRADITION
+        But let's adjust: 
+          themes: CULTURAL, HISTORY, FAMILY_FRIENDLY, AFRO_BRAZILIAN (important in Recife), COLONIAL (history)
+   Profile 3:
+        Name: Ana Santos
+        Age: 20
+        Gender: Female
+        Occupation: University Student (Biology)
+        Interests: Adventure, Nature, Photography
+        motivations: EXPLORATION, ADVENTURE, NATURE? -> but motivations don't have NATURE. We have EXPLORATION, ADVENTURE? -> not exactly. 
+          Motivations: EXPLORATION, EDUCATION (as a student), NATURE? -> no, but we have NATURE in themes. 
+          Instead, for motivations: EXPLORATION, EDUCATION, IMMERSIVE_EXPERIENCE, CREATIVITY (for photography), and maybe RELAXATION (to break from studies)
+        Actually, motivations: 
+          EXPLORATION (for adventure), EDUCATION (her field), IMMERSIVE_EXPERIENCE (in nature), CREATIVITY (photography), and RELAXATION.
+        hobbies: ADVENTURE, HIKING, PHOTOGRAPHY, LEARNING, and TRAVELING (to get to nature places)
+        themes: NATURE, ADVENTURE, CULTURAL (if she likes to learn about cultures while traveling), HISTORY (of natural places), and maybe FOLKLORE (if she's interested in local stories)
+   Profile 4:
+        Name: Carlos Mendes
+        Age: 35
+        Gender: Male
+        Occupation: Chef
+        Interests: Gastronomy, Creativity, Traveling
+        motivations: GASTRONOMY, CREATIVITY, EXPLORATION, CULTURE, IMMERSIVE_EXPERIENCE
+        hobbies: GASTRONOMY, TRAVELING, LEARNING (new cuisines), MUSIC (if he enjoys music while cooking), and SOCIAL (if he likes to host)
+        themes: GASTRONOMIC, CULTURAL, HISTORY (of food), AFRO_BRAZILIAN (influence on cuisine), COLONIAL (cuisine)
+   Profile 5:
+        Name: Fernanda Costa
+        Age: 50
+        Gender: Female
+        Occupation: Nurse
+        Interests: Family, Relaxation, Volunteering
+        motivations: FAMILY, RELAXATION, VOLUNTEERING? -> but motivations: FAMILY, RELAXATION, VOLUNTEERING is not in motivations. 
+          Motivations: FAMILY, RELAXATION, SOCIAL (if volunteering is social), SPIRITUALITY (if she finds meaning in helping), and IDENTITY?
+        Actually, motivations: FAMILY, RELAXATION, SOCIAL, SPIRITUALITY, and maybe EDUCATION (if she does health education) or HERITAGE? 
+          Let's choose: FAMILY, RELAXATION, SOCIAL, SPIRITUALITY, VOLUNTEERING? -> wait, VOLUNTEERING is not in motivations. 
+          Looking: VOLUNTEERING is in hobbies. 
+        So motivations: FAMILY, RELAXATION, SOCIAL, SPIRITUALITY, and EDUCATION (if she educates patients).
+        hobbies: VOLUNTEERING, SOCIAL, READING (for relaxation), GARDENING (to relax), and maybe MUSIC.
+        themes: FAMILY_FRIENDLY, RELIGIOUS (if she is spiritual), NATURE (for relaxation), CULTURAL, and ROMANTIC (if she enjoys romantic settings with family)
+   But wait, the hobbies enum has VOLUNTEERING. So we can use that in hobbies.
+   Profile 6:
+        Name: José Pereira
+        Age: 60
+        Gender: Male
+        Occupation: Fisherman
+        Interests: Nature, Tradition, Social
+        motivations: TRADITION, NATURE? -> but motivations don't have NATURE. Instead: TRADITION, HERITAGE, IDENTITY, RELAXATION (by the sea), SOCIAL
+        hobbies: FISHING? -> not in hobbies. But we have ADVENTURE? maybe not. Let's see: 
+          He might enjoy being in nature: GARDENING? HIKING? but he's a fisherman. 
+          We can assign: NATURE? -> not in hobbies. The hobbies are fixed. 
+          Instead: ADVENTURE (if fishing is adventurous), SOCIAL (with other fishermen), MUSIC (traditional songs), DANCING (traditional dances), and VOLUNTEERING (in community)?
+        But we have to choose from the hobbies enum. 
+          How about: ADVENTURE, MUSIC, DANCING, VOLUNTEERING, and SOCIAL.
+        themes: NATURE, TRADITION, FOLKLORE, AFRO_BRAZILIAN (if he is from that heritage), and RELIGIOUS (many fishermen are religious for protection)
+   Profile 7:
+        Name: Beatriz Lima
+        Age: 29
+        Gender: Female
+        Occupation: Artist (painter)
+        Interests: Art, Creativity, Culture
+        motivations: ARTISTIC_VALUE, CREATIVITY, CULTURE, HERITAGE, IDENTITY
+        hobbies: ART, PHOTOGRAPHY (as another art form), THEATER (performing arts), DANCING (if she likes dance), and MUSIC
+        themes: ARTISTIC? -> not in themes. Instead: CULTURAL, BAROQUE (art style), COLONIAL (architecture), URBAN_ART, and AFRO_BRAZILIAN (art)
+   Profile 8:
+        Name: Pedro Alves
+        Age: 40
+        Gender: Male
+        Occupation: Tour Guide
+        Interests: History, Culture, Traveling
+        motivations: CULTURE, HERITAGE, EDUCATION, EXPLORATION, SOCIAL (meeting people)
+        hobbies: TRAVELING, LEARNING, READING (about history), PHOTOGRAPHY (of sites), SOCIAL
+        themes: HISTORY, CULTURAL, COLONIAL, BAROQUE, AFRO_BRAZILIAN (all common in Recife)
+   Profile 9:
+        Name: Mariana Rocha
+        Age: 45
+        Gender: Female
+        Occupation: Shopkeeper (owns a small boutique)
+        Interests: Social, Family, Fashion
+        motivations: SOCIAL, FAMILY, IDENTITY (through fashion), ENTERTAINMENT (if she enjoys social events), and maybe GASTRONOMY (if she meets over meals)
+        hobbies: SOCIAL, DANCING (at social events), READING (about fashion), TRAVELING (to buy goods?), and MUSIC
+        themes: URBAN_ART (if in the city), ROMANTIC, FAMILY_FRIENDLY, MODERN (fashion), and GASTRONOMIC (if she likes food markets)
+   Profile 10:
+        Name: Antonio Barbosa
+        Age: 65
+        Gender: Male
+        Occupation: Retired Civil Servant
+        Interests: Gardening, Heritage, Relaxation
+        motivations: HERITAGE, RELAXATION, SPIRITUALITY, IDENTITY, FAMILY (if he has grandchildren)
+        hobbies: GARDENING, READING, VOLUNTEERING (in community), SOCIAL (with friends), and TRAVELING (if he travels to visit family)
+        themes: NATURE, HERITAGE, RELIGIOUS, COLONIAL (historical), and TRADITION
+ 8. Now, we have 10 profiles. We must assign the JSON for each.
+ 9. We must avoid duplicate sets. We'll check:
+    motivations sets (as sorted tuples) for each profile must be unique.
+    hobbies sets must be unique.
+    themes sets must be unique.
+    We'll list the sets we are going to use and check.
+    Profile 1 motivations: ("CREATIVITY", "CULTURE", "EDUCATION", "EXPLORATION", "IMMERSIVE_EXPERIENCE")
+    Profile 2: ("CULTURE", "EDUCATION", "HERITAGE", "IDENTITY", "SOCIAL")
+    Profile 3: ("CREATIVITY", "EDUCATION", "EXPLORATION", "IMMERSIVE_EXPERIENCE", "RELAXATION")
+    Profile 4: ("CREATIVITY", "CULTURE", "EXPLORATION", "GASTRONOMY", "IMMERSIVE_EXPERIENCE")
+    Profile 5: ("EDUCATION", "FAMILY", "RELAXATION", "SOCIAL", "SPIRITUALITY")
+    Profile 6: ("HERITAGE", "IDENTITY", "RELAXATION", "SOCIAL", "TRADITION")
+    Profile 7: ("ARTISTIC_VALUE", "CREATIVITY", "CULTURE", "HERITAGE", "IDENTITY")
+    Profile 8: ("CULTURE", "EDUCATION", "EXPLORATION", "HERITAGE", "SOCIAL")
+    Profile 9: ("ENTERTAINMENT", "FAMILY", "GASTRONOMY", "IDENTITY", "SOCIAL")
+    Profile 10: ("FAMILY", "HERITAGE", "IDENTITY", "RELAXATION", "SPIRITUALITY")
+    Check for duplicates? We see:
+        Profile 2 and 7 both have "CULTURE", "HERITAGE", "IDENTITY" but not the same set: 
+          Profile2: CULTURE, EDUCATION, HERITAGE, IDENTITY, SOCIAL -> not the same as Profile7: ARTISTIC_VALUE, CREATIVITY, CULTURE, HERITAGE, IDENTITY.
+        All are unique.
+    Hobbies:
+        Profile1: ["ADVENTURE", "LEARNING", "READING", "TECH", "TRAVELING"]
+        Profile2: ["LEARNING", "READING", "SOCIAL", "THEATER", "VOLUNTEERING"]
+        Profile3: ["ADVENTURE", "HIKING", "LEARNING", "PHOTOGRAPHY", "TRAVELING"]
+        Profile4: ["GASTRONOMY", "LEARNING", "MUSIC", "SOCIAL", "TRAVELING"]
+        Profile5: ["GARDENING", "MUSIC", "READING", "SOCIAL", "VOLUNTEERING"]
+        Profile6: ["ADVENTURE", "DANCING", "MUSIC", "SOCIAL", "VOLUNTEERING"]
+        Profile7: ["ART", "DANCING", "MUSIC", "PHOTOGRAPHY", "THEATER"]
+        Profile8: ["LEARNING", "PHOTOGRAPHY", "READING", "SOCIAL", "TRAVELING"] -> note: SOCIAL in enum is "SOCIAL", not "SOCIAL"
+        Profile9: ["DANCING", "MUSIC", "READING", "SOCIAL", "TRAVELING"]
+        Profile10: ["GARDENING", "READING", "SOCIAL", "TRAVELING", "VOLUNTEERING"]
+        Check: 
+          Profile1: sorted: ADVENTURE, LEARNING, READING, TECH, TRAVELING
+          Profile3: ADVENTURE, HIKING, LEARNING, PHOTOGRAPHY, TRAVELING -> different
+          Profile4: GASTRONOMY, LEARNING, MUSIC, SOCIAL, TRAVELING
+          Profile5: GARDENING, MUSIC, READING, SOCIAL, VOLUNTEERING
+          Profile6: ADVENTURE, DANCING, MUSIC, SOCIAL, VOLUNTEERING -> different from others
+          Profile7: ART, DANCING, MUSIC, PHOTOGRAPHY, THEATER
+          Profile8: LEARNING, PHOTOGRAPHY, READING, SOCIAL, TRAVELING
+          Profile9: DANCING, MUSIC, READING, SOCIAL, TRAVELING -> same as Profile8? 
+            Profile8: ['LEARNING', 'PHOTOGRAPHY', 'READING', 'SOCIAL', 'TRAVELING']
+            Profile9: ['DANCING', 'MUSIC', 'READING', 'SOCIAL', 'TRAVELING'] -> different: DANCING vs LEARNING, MUSIC vs PHOTOGRAPHY.
+          But note: Profile8 has LEARNING and PHOTOGRAPHY, Profile9 has DANCING and MUSIC -> different.
+          Profile10: GARDENING, READING, SOCIAL, TRAVELING, VOLUNTEERING -> different.
+        So all unique.
+    Themes:
+        Profile1: ["ADVENTURE", "CULTURAL", "HISTORY", "MODERN", "URBAN_ART"]
+        Profile2: ["AFRO_BRAZILIAN", "COLONIAL", "CULTURAL", "FAMILY_FRIENDLY", "HISTORY"]
+        Profile3: ["ADVENTURE", "CULTURAL", "FOLKLORE", "HISTORY", "NATURE"]
+        Profile4: ["AFRO_BRAZILIAN", "COLONIAL", "CULTURAL", "GASTRONOMIC", "HISTORY"]
+        Profile5: ["CULTURAL", "FAMILY_FRIENDLY", "NATURE", "RELIGIOUS", "ROMANTIC"]
+        Profile6: ["AFRO_BRAZILIAN", "FOLKLORE", "NATURE", "RELIGIOUS", "TRADITION"]
+        Profile7: ["AFRO_BRAZILIAN", "BAROQUE", "COLONIAL", "CULTURAL", "URBAN_ART"]
+        Profile8: ["AFRO_BRAZILIAN", "BAROQUE", "COLONIAL", "CULTURAL", "HISTORY"]
+        Profile9: ["FAMILY_FRIENDLY", "GASTRONOMIC", "MODERN", "ROMANTIC", "URBAN_ART"]
+        Profile10: ["COLONIAL", "HERITAGE", "RELIGIOUS", "TRADITION", "NATURE"] -> wait, themes enum has HERITAGE? No, themes: ["ADVENTURE", ... "HISTORY", ...] 
+          Instead, we have HERITAGE? No, the themes are fixed. We have: "HISTORY", "ARCHITETURAL_STYLE" (note: ARCHITETURAL_STYLE is a theme, but we haven't used it). 
+        Let's adjust Profile10: 
+          He is interested in heritage -> so we can use HISTORY, COLONIAL (as architectural style), RELIGIOUS, TRADITION, and NATURE (if he gardens) or ARCHITETURAL_STYLE? 
+          We can use: COLONIAL (as an architectural style), HISTORY, RELIGIOUS, TRADITION, and ARCHITETURAL_STYLE? 
+          But note: the theme "ARCHITETURAL_STYLE" is a bit broad. Alternatively, we can use BAROQUE? 
+          How about: COLONIAL, HISTORY, RELIGIOUS, TRADITION, and ARCHITETURAL_STYLE (to cover heritage buildings).
+        But we haven't used ARCHITETURAL_STYLE in others? 
+          Profile2: used COLONIAL (which is an architectural style) but we have a separate theme for ARCHITETURAL_STYLE? 
+          The enum has "ARCHITETURAL_STYLE" as a theme. We can use it for Profile10.
+        So Profile10: ["ARCHITETURAL_STYLE", "COLONIAL", "HISTORY", "RELIGIOUS", "TRADITION"]
+        Now check uniqueness:
+          Profile1: ADVENTURE, CULTURAL, HISTORY, MODERN, URBAN_ART
+          Profile2: AFRO_BRAZILIAN, COLONIAL, CULTURAL, FAMILY_FRIENDLY, HISTORY
+          Profile3: ADVENTURE, CULTURAL, FOLKLORE, HISTORY, NATURE
+          Profile4: AFRO_BRAZILIAN, COLONIAL, CULTURAL, GASTRONOMIC, HISTORY
+          Profile5: CULTURAL, FAMILY_FRIENDLY, NATURE, RELIGIOUS, ROMANTIC
+          Profile6: AFRO_BRAZILIAN, FOLKLORE, NATURE, RELIGIOUS, TRADITION
+          Profile7: AFRO_BRAZILIAN, BAROQUE, COLONIAL, CULTURAL, URBAN_ART
+          Profile8: AFRO_BRAZILIAN, BAROQUE, COLONIAL, CULTURAL, HISTORY
+          Profile9: FAMILY_FRIENDLY, GASTRONOMIC, MODERN, ROMANTIC, URBAN_ART
+          Profile10: ARCHITETURAL_STYLE, COLONIAL, HISTORY, RELIGIOUS, TRADITION
+        All are unique.
+ 10. Now, we write the output.
+ Note: The JSON keys are: "motivations", "hobbies", "themes" (all plural, as in the example).
+ Let's code the output exactly as required.
+ Important: The interests in the profile are free-text (2-4 items). We wrote them above, but we'll write them as a comma-separated string.
+ Example for Profile1:
+    Name: João Silva
+    Age: 28
+    Gender: Male
+    Occupation: Software Developer
+    Interests: Technology, Reading, Traveling
+    Then the JSON.
+ But note: the hobbies enum has "TRAVELING" (with one L) and we wrote "TRAVELING" in the JSON, but the enum is ["TRAVELING"] -> so we must use the exact string.
+ We'll write the JSON with the exact enum strings.
+ Let's output.
+Name: João Silva
+Age: 28
+Gender: Male
+Occupation: Software Developer
+Interests: Technology, Reading, Traveling
+
+json
+{
+  "motivations": ["EXPLORATION", "EDUCATION", "CREATIVITY", "IMMERSIVE_EXPERIENCE", "SOCIAL"],
+  "hobbies": ["TECH", "READING", "TRAVELING", "LEARNING", "MUSIC"],
+  "themes": ["MODERN", "URBAN_ART", "CULTURAL", "ADVENTURE", "TECH"]
+}
+Name: Maria Oliveira
+Age: 42
+Gender: Female
+Occupation: School Teacher
+Interests: Education, Literature, Community
+
+json
+{
+  "motivations": ["EDUCATION", "CULTURE", "HERITAGE", "IDENTITY", "SOCIAL"],
+  "hobbies": ["READING", "LEARNING", "VOLUNTEERING", "THEATER", "ART"],
+  "themes": ["HISTORY", "AFRO_BRAZILIAN", "FOLKLORE", "FAMILY_FRIENDLY", "CULTURAL"]
+}
+Name: Carlos Mendes
+Age: 35
+Gender: Male
+Occupation: Chef
+Interests: Gastronomy, Cultural Fusion, Music
+
+json
+{
+  "motivations": ["GASTRONOMY", "CREATIVITY", "CULTURE", "ARTISTIC_VALUE", "TRADITION"],
+  "hobbies": ["GASTRONOMY", "DANCING", "MUSIC", "TRAVELING", "SOCIAL"],
+  "themes": ["GASTRONOMIC", "AFRO_BRAZILIAN", "COLONIAL", "BAROQUE", "URBAN_ART"]
+}
+Name: Ana Santos
+Age: 22
+Gender: Female
+Occupation: Biology Student
+Interests: Nature, Photography, Adventure
+
+json
+{
+  "motivations": ["EXPLORATION", "NATURE", "IMMERSIVE_EXPERIENCE", "EDUCATION", "RELAXATION"],
+  "hobbies": ["HIKING", "PHOTOGRAPHY", "ADVENTURE", "LEARNING", "TRAVELING"],
+  "themes": ["NATURE", "ADVENTURE", "FOLKLORE", "COLONIAL", "HISTORY"]
+}
+Name: Pedro Alves
+Age: 58
+Gender: Male
+Occupation: Fisherman
+Interests: Traditional Music, Sea, Community
+
+json
+{
+  "motivations": ["TRADITION", "HERITAGE", "SPIRITUALITY", "SOCIAL", "RELAXATION"],
+  "hobbies": ["MUSIC", "DANCING", "VOLUNTEERING", "SOCIAL", "ADVENTURE"],
+  "themes": ["TRADITION", "RELIGIOUS", "FOLKLORE", "NATURE", "AFRO_BRAZILIAN"]
+}
+Name: Fernanda Costa
+Age: 38
+Gender: Female
+Occupation: Nurse
+Interests: Family Wellness, Gardening, Spirituality
+
+json
+{
+  "motivations": ["FAMILY", "RELAXATION", "SPIRITUALITY", "HEALTH", "SOCIAL"],
+  "hobbies": ["GARDENING", "READING", "VOLUNTEERING", "MUSIC", "ART"],
+  "themes": ["FAMILY_FRIENDLY", "NATURE", "RELIGIOUS", "ROMANTIC", "BAROQUE"]
+}
+Name: Rafael Souza
+Age: 29
+Gender: Male
+Occupation: Tour Guide
+Interests: Local History, Architecture, Storytelling
+
+json
+{
+  "motivations": ["HERITAGE", "CULTURE", "EDUCATION", "IDENTITY", "EXPLORATION"],
+  "hobbies": ["THEATER", "READING", "PHOTOGRAPHY", "TRAVELING", "LEARNING"],
+  "themes": ["COLONIAL", "ARCHITETURAL_STYLE", "HISTORY", "BAROQUE", "CULTURAL"]
+}
+Name: Juliana Lima
+Age: 45
+Gender: Female
+Occupation: Boutique Owner
+Interests: Fashion, Social Events, Dance
+
+json
+{
+  "motivations": ["SOCIAL", "ENTERTAINMENT", "ARTISTIC_VALUE", "CREATIVITY", "IDENTITY"],
+  "hobbies": ["DANCING", "SOCIAL", "ART", "MUSIC", "TRAVELING"],
+  "themes": ["MODERN", "ROMANTIC", "URBAN_ART", "GASTRONOMIC", "FAMILY_FRIENDLY"]
+}
+Name: Antonio Barbosa
+Age: 65
+Gender: Male
+Occupation: Retired Civil Servant
+Interests: Heritage Sites, Gardening, Reading
+
+json
+{
+  "motivations": ["HERITAGE", "RELAXATION", "TRADITION", "SPIRITUALITY", "FAMILY"],
+  "hobbies": ["GARDENING", "READING", "VOLUNTEERING", "TRAVELING", "LEARNING"],
+  "themes": ["HISTORY", "ARCHITETURAL_STYLE", "RELIGIOUS", "COLONIAL", "BAROQUE"]
+}
+Name: Beatriz Rocha
+Age: 26
+Gender: Female
+Occupation: Graphic Designer
+Interests: Urban Art, Photography, Technology
+
+json
+{
+  "motivations": ["CREATIVITY", "ARTISTIC_VALUE", "IMMERSIVE_EXPERIENCE", "EXPLORATION", "CULTURE"],
+  "hobbies": ["PHOTOGRAPHY", "ART", "TECH", "TRAVELING", "MUSIC"],
+  "themes": ["URBAN_ART", "MODERN", "CULTURAL", "ADVENTURE", "AFRO_BRAZILIAN"]
+}
+No primeiro você coloca tech em temas, e não existe esse termo para themes. Faça uma revisão.
+We are generating 10 unique user profiles with Brazilian-style names, ages between 18 and 65, and realistic occupations in the context of Brazil (especially Recife). Each profile includes 2-4 interests and a JSON object with exactly 5 motivations, 5 hobbies, and 5 themes, chosen from the provided enums. The selections must be coherent with the profile and diverse across users.
+ Important: 
+ - In the first example, the theme "TECH" was used, but it is not in the themes enum. We must use only the provided enums.
+ Let's revise the themes enum: 
+   Themes: ["ADVENTURE", "AFRO_BRAZILIAN", "BAROQUE", "COLONIAL", "CULTURAL", "FAMILY_FRIENDLY", "FOLKLORE", "GASTRONOMIC", "HISTORY", "ARCHITETURAL_STYLE", "MODERN", "NATURE", "RELIGIOUS", "ROMANTIC", "URBAN_ART"]
+ Correction: In the first profile (João Silva), the theme "TECH" is invalid. We must replace it with a valid theme. Given his interests (Technology, Reading, Traveling) and occupation (Software Developer), we can choose themes that might align with modern, urban, or cultural experiences.
+ Let's adjust the first profile:
+ For João Silva (Software Developer, 28, Male, Interests: Technology, Reading, Traveling):
+   motivations: We can keep as they are (EXPLORATION, EDUCATION, CREATIVITY, IMMERSIVE_EXPERIENCE, SOCIAL) - they are valid.
+   hobbies: TECH, READING, TRAVELING, LEARNING, MUSIC - valid.
+   themes: We had ["MODERN", "URBAN_ART", "CULTURAL", "ADVENTURE", "TECH"] -> replace "TECH" with, for example, "MODERN" (but we already have MODERN). Instead, we can choose another theme that might fit: perhaps "ARCHITETURAL_STYLE" (if he appreciates modern architecture) or "CULTURAL" (already present). We have 5 themes and we must have 5 distinct. We can replace "TECH" with "HISTORY" (if he likes to learn about history during travels) or "URBAN_ART" is already there. Alternatively, we can remove the duplicate and choose a different one.
+ Actually, we have 5 themes: 
+   Original: MODERN, URBAN_ART, CULTURAL, ADVENTURE, TECH -> we need to replace TECH.
+ Let's choose: "MODERN" and "URBAN_ART" are already there, and we can add "HISTORY" or "ARCHITETURAL_STYLE". But note, the list must be 5. How about "ARCHITETURAL_STYLE" for modern buildings? 
+ Alternatively, we can change the entire set to avoid duplication and better reflect his interests. Since he likes technology, he might be interested in modern and contemporary themes. We can use: 
+   ["MODERN", "URBAN_ART", "CULTURAL", "ADVENTURE", "ARCHITETURAL_STYLE"]
+ But wait, we already have MODERN, URBAN_ART, CULTURAL, ADVENTURE. So we replace TECH with ARCHITETURAL_STYLE.
+ So corrected themes for João: ["MODERN", "URBAN_ART", "CULTURAL", "ADVENTURE", "ARCHITETURAL_STYLE"]
+ However, note that the original had 5 and we are replacing one. Now we have 5 valid.
+ But let's check: 
+   MODERN, URBAN_ART, CULTURAL, ADVENTURE, ARCHITETURAL_STYLE -> all valid.
+ Alternatively, we could choose "TECH" is not valid, so we must remove it and put a valid one.
+ We'll adjust the first profile accordingly.
+ Also, note that in the output we have 10 profiles, but we must check that no other profile has invalid themes.
+ Let's check the others:
+ Maria Oliveira: themes are ["HISTORY", "AFRO_BRAZILIAN", "FOLKLORE", "FAMILY_FRIENDLY", "CULTURAL"] -> all valid.
+ Carlos Mendes: ["GASTRONOMIC", "AFRO_BRAZILIAN", "COLONIAL", "BAROQUE", "URBAN_ART"] -> valid.
+ Ana Santos: ["NATURE", "ADVENTURE", "FOLKLORE", "COLONIAL", "HISTORY"] -> valid.
+ Pedro Alves: ["TRADITION", "RELIGIOUS", "FOLKLORE", "NATURE", "AFRO_BRAZILIAN"] -> valid? Note: "TRADITION" is not in the themes enum. The themes enum does not have "TRADITION", it has "FOLKLORE", "HERITAGE" is not there either. We must use the provided enums.
+ Correction for Pedro Alves (Fisherman, 58, Male, Interests: Traditional Music, Sea, Community):
+   We had themes: ["TRADITION", "RELIGIOUS", "FOLKLORE", "NATURE", "AFRO_BRAZILIAN"]
+   But "TRADITION" is not in the themes list. We can replace it with something that represents tradition? The closest might be "FOLKLORE" (but already present) or "CULTURAL", or "HERITAGE" is not there. Alternatively, we can use "HISTORY" or "COLONIAL" but that might not fit perfectly.
+ Let's look at the themes: 
+   We have: "FOLKLORE" (which is traditional) and "AFRO_BRAZILIAN" (which also carries tradition). So we can replace "TRADITION" with, say, "CULTURAL" or "HISTORY". Since he is a fisherman and connected to the sea, "NATURE" is already there. How about "COLONIAL"? Not necessarily. Or "BAROQUE"? Not fitting.
+ Alternatively, we can use "RELIGIOUS" (already there) and then replace "TRADITION" with "CULTURAL". So we can have: 
+   ["CULTURAL", "RELIGIOUS", "FOLKLORE", "NATURE", "AFRO_BRAZILIAN"]
+ But note: we have two themes that are about tradition: FOLKLORE and AFRO_BRAZILIAN. So removing "TRADITION" and having "CULTURAL" as an umbrella might work.
+ Alternatively, we can use "HISTORY" to represent the traditional aspects of the fishing community? 
+ Let's change to: ["HISTORY", "RELIGIOUS", "FOLKLORE", "NATURE", "AFRO_BRAZILIAN"]
+ But wait, we already have FOLKLORE and AFRO_BRAZILIAN. So we can replace "TRADITION" with "HISTORY".
+ So corrected for Pedro: ["HISTORY", "RELIGIOUS", "FOLKLORE", "NATURE", "AFRO_BRAZILIAN"]
+ Now, Fernanda Costa: themes are ["FAMILY_FRIENDLY", "NATURE", "RELIGIOUS", "ROMANTIC", "BAROQUE"] -> valid? Note: "RELIGIOUS" is spelled as "RELIGIOUS" in the enum? In the enum it's "RELIGIOUS". Wait, the enum says: "RELIGIOUS" (with one 'I')? Actually, in the provided enum it's: "RELIGIOUS" (correct spelling). But in the output, we have "RELIGIOUS" for Fernanda? Actually, in the output I see "RELIGIOUS" for Fernanda and for Pedro we had "RELIGIOUS" (which is correct as per enum). But in the enum it's spelled "RELIGIOUS". So that's correct.
+ However, in Pedro's corrected version we have "RELIGIOUS" (correct) and we changed the first to "HISTORY".
+ Now, Rafael Souza: ["COLONIAL", "ARCHITETURAL_STYLE", "HISTORY", "BAROQUE", "CULTURAL"] -> valid.
+ Juliana Lima: ["MODERN", "ROMANTIC", "URBAN_ART", "GASTRONOMIC", "FAMILY_FRIENDLY"] -> valid.
+ Antonio Barbosa: ["HISTORY", "ARCHITETURAL_STYLE", "RELIGIOUS", "COLONIAL", "BAROQUE"] -> valid.
+ Beatriz Rocha: ["URBAN_ART", "MODERN", "CULTURAL", "ADVENTURE", "AFRO_BRAZILIAN"] -> valid.
+ So only two profiles had issues: João and Pedro.
+ We will correct:
+ For João Silva: replace the theme "TECH" with "ARCHITETURAL_STYLE", so the themes become:
+   ["MODERN", "URBAN_ART", "CULTURAL", "ADVENTURE", "ARCHITETURAL_STYLE"]
+ For Pedro Alves: replace the theme "TRADITION" with "HISTORY", so the themes become:
+   ["HISTORY", "RELIGIOUS", "FOLKLORE", "NATURE", "AFRO_BRAZILIAN"]
+ Now, let's update the output accordingly.
+ We also note that in the first profile, the themes list had 5 items and we are replacing one, so the count remains.
+ We will now output the corrected 10 profiles.
+Name: João Silva
+Age: 28
+Gender: Male
+Occupation: Software Developer
+Interests: Technology, Reading, Traveling
+
+json
+{
+  "motivations": ["EXPLORATION", "EDUCATION", "CREATIVITY", "IMMERSIVE_EXPERIENCE", "SOCIAL"],
+  "hobbies": ["TECH", "READING", "TRAVELING", "LEARNING", "MUSIC"],
+  "themes": ["MODERN", "URBAN_ART", "CULTURAL", "ADVENTURE", "ARCHITETURAL_STYLE"]
+}
+Name: Maria Oliveira
+Age: 42
+Gender: Female
+Occupation: School Teacher
+Interests: Education, Literature, Community
+
+json
+{
+  "motivations": ["EDUCATION", "CULTURE", "HERITAGE", "IDENTITY", "SOCIAL"],
+  "hobbies": ["READING", "LEARNING", "VOLUNTEERING", "THEATER", "ART"],
+  "themes": ["HISTORY", "AFRO_BRAZILIAN", "FOLKLORE", "FAMILY_FRIENDLY", "CULTURAL"]
+}
+Name: Carlos Mendes
+Age: 35
+Gender: Male
+Occupation: Chef
+Interests: Gastronomy, Cultural Fusion, Music
+
+json
+{
+  "motivations": ["GASTRONOMY", "CREATIVITY", "CULTURE", "ARTISTIC_VALUE", "TRADITION"],
+  "hobbies": ["GASTRONOMY", "DANCING", "MUSIC", "TRAVELING", "SOCIAL"],
+  "themes": ["GASTRONOMIC", "AFRO_BRAZILIAN", "COLONIAL", "BAROQUE", "URBAN_ART"]
+}
+Name: Ana Santos
+Age: 22
+Gender: Female
+Occupation: Biology Student
+Interests: Nature, Photography, Adventure
+
+json
+{
+  "motivations": ["EXPLORATION", "NATURE", "IMMERSIVE_EXPERIENCE", "EDUCATION", "RELAXATION"],
+  "hobbies": ["HIKING", "PHOTOGRAPHY", "ADVENTURE", "LEARNING", "TRAVELING"],
+  "themes": ["NATURE", "ADVENTURE", "FOLKLORE", "COLONIAL", "HISTORY"]
+}
+Name: Pedro Alves
+Age: 58
+Gender: Male
+Occupation: Fisherman
+Interests: Traditional Music, Sea, Community
+
+json
+{
+  "motivations": ["TRADITION", "HERITAGE", "SPIRITUALITY", "SOCIAL", "RELAXATION"],
+  "hobbies": ["MUSIC", "DANCING", "VOLUNTEERING", "SOCIAL", "ADVENTURE"],
+  "themes": ["HISTORY", "RELIGIOUS", "FOLKLORE", "NATURE", "AFRO_BRAZILIAN"]
+}
+Name: Fernanda Costa
+Age: 38
+Gender: Female
+Occupation: Nurse
+Interests: Family Wellness, Gardening, Spirituality
+
+json
+{
+  "motivations": ["FAMILY", "RELAXATION", "SPIRITUALITY", "HEALTH", "SOCIAL"],
+  "hobbies": ["GARDENING", "READING", "VOLUNTEERING", "MUSIC", "ART"],
+  "themes": ["FAMILY_FRIENDLY", "NATURE", "RELIGIOUS", "ROMANTIC", "BAROQUE"]
+}
+Name: Rafael Souza
+Age: 29
+Gender: Male
+Occupation: Tour Guide
+Interests: Local History, Architecture, Storytelling
+
+json
+{
+  "motivations": ["HERITAGE", "CULTURE", "EDUCATION", "IDENTITY", "EXPLORATION"],
+  "hobbies": ["THEATER", "READING", "PHOTOGRAPHY", "TRAVELING", "LEARNING"],
+  "themes": ["COLONIAL", "ARCHITETURAL_STYLE", "HISTORY", "BAROQUE", "CULTURAL"]
+}
+Name: Juliana Lima
+Age: 45
+Gender: Female
+Occupation: Boutique Owner
+Interests: Fashion, Social Events, Dance
+
+json
+{
+  "motivations": ["SOCIAL", "ENTERTAINMENT", "ARTISTIC_VALUE", "CREATIVITY", "IDENTITY"],
+  "hobbies": ["DANCING", "SOCIAL", "ART", "MUSIC", "TRAVELING"],
+  "themes": ["MODERN", "ROMANTIC", "URBAN_ART", "GASTRONOMIC", "FAMILY_FRIENDLY"]
+}
+Name: Antonio Barbosa
+Age: 65
+Gender: Male
+Occupation: Retired Civil Servant
+Interests: Heritage Sites, Gardening, Reading
+
+json
+{
+  "motivations": ["HERITAGE", "RELAXATION", "TRADITION", "SPIRITUALITY", "FAMILY"],
+  "hobbies": ["GARDENING", "READING", "VOLUNTEERING", "TRAVELING", "LEARNING"],
+  "themes": ["HISTORY", "ARCHITETURAL_STYLE", "RELIGIOUS", "COLONIAL", "BAROQUE"]
+}
+Name: Beatriz Rocha
+Age: 26
+Gender: Female
+Occupation: Graphic Designer
+Interests: Urban Art, Photography, Technology
+
+json
+{
+  "motivations": ["CREATIVITY", "ARTISTIC_VALUE", "IMMERSIVE_EXPERIENCE", "EXPLORATION", "CULTURE"],
+  "hobbies": ["PHOTOGRAPHY", "ART", "TECH", "TRAVELING", "MUSIC"],
+  "themes": ["URBAN_ART", "MODERN", "CULTURAL", "ADVENTURE", "AFRO_BRAZILIAN"]
+}
+Mais uma vez, não existe "NATURE", retorne a lista corrigindo os erros e mantendo os demais - Name: Ana Santos
+Age: 22
+Gender: Female
+Occupation: Biology Student
+Interests: Nature, Photography, Adventure
+
+json
+{
+  "motivations": ["EXPLORATION", "NATURE", "IMMERSIVE_EXPERIENCE", "EDUCATION", "RELAXATION"],
+  "hobbies": ["HIKING", "PHOTOGRAPHY", "ADVENTURE", "LEARNING", "TRAVELING"],
+  "themes": ["NATURE", "ADVENTURE", "FOLKLORE", "COLONIAL", "HISTORY"]
+} 
+We are given that "NATURE" is not a valid theme. Looking at the list of valid themes:
+ Themes: ["ADVENTURE", "AFRO_BRAZILIAN", "BAROQUE", "COLONIAL", "CULTURAL", "FAMILY_FRIENDLY", "FOLKLORE", "GASTRONOMIC", "HISTORY", "ARCHITETURAL_STYLE", "MODERN", "NATURE", "RELIGIOUS", "ROMANTIC", "URBAN_ART"]
+Wait, actually "NATURE" is in the list? Let me check the original problem:
+Themes: ["ADVENTURE", "AFRO_BRAZILIAN", "BAROQUE", "COLONIAL", "CULTURAL", "FAMILY_FRIENDLY", "FOLKLORE", "GASTRONOMIC", "HISTORY", "ARCHITETURAL_STYLE", "MODERN", "NATURE", "RELIGIOUS", "ROMANTIC", "URBAN_ART"]
+Yes, "NATURE" is present. But the user said "não existe 'NATURE'". However, in the provided list it is included.
+But wait, the user also said "retorne a lista corrigindo os erros e mantendo os demais". So perhaps they mean that in the output for Ana Santos, the theme "NATURE" is used, but the user thinks it's invalid? But according to the enum, it is valid.
+Alternatively, maybe the user is pointing out that in the motivations, there is "NATURE", but motivations do not have "NATURE". Let's check the motivations enum:
+Motivations: ["ARTISTIC_VALUE", "CREATIVITY", "CULTURE", "ENTERTAINMENT", "EXPLORATION", "EDUCATION", "FAMILY", "GASTRONOMY", "HERITAGE", "IDENTITY", "IMMERSIVE_EXPERIENCE", "RELAXATION", "SOCIAL", "SPIRITUALITY",  "TRADITION"]
+Indeed, "NATURE" is not in the motivations. So in Ana Santos's motivations, we have "NATURE", which is invalid.
+Therefore, we must correct the motivations for Ana Santos. We should replace "NATURE" with a valid motivation.
+Given her profile: Biology Student, interests in Nature, Photography, Adventure.
+We can replace "NATURE" with something related, such as "EXPLORATION" (already present) or perhaps "EDUCATION", but that is also present. We need a new one.
+How about "IMMERSIVE_EXPERIENCE" is already there. We have 5 motivations. We have: 
+Original: ["EXPLORATION", "NATURE", "IMMERSIVE_EXPERIENCE", "EDUCATION", "RELAXATION"]
+We can replace "NATURE" with "CULTURE" or "ARTISTIC_VALUE"? Not really. Or "CREATIVITY"? Not directly.
+Alternatively, since she is a biology student, perhaps "EDUCATION" is already there. Another idea: "RELAXATION" is already there. We can choose "DISCOVERY" but that's not in the list.
+Looking at the list, the closest might be "EXPLORATION" (which is already included) or perhaps "IMMERSIVE_EXPERIENCE" (also included). We need to pick one that is not used and fits.
+Possible motivations that fit: 
+- "EXPLORATION" (already present)
+- "EDUCATION" (already present)
+- "IMMERSIVE_EXPERIENCE" (already present)
+- "RELAXATION" (already present)
+So we have one invalid and four valid. We need to replace "NATURE" with a valid one that is not already in the list and fits.
+Available motivations that could fit: 
+- "CULTURE": if she is interested in nature as part of the culture? Not the best.
+- "HERITAGE": not really.
+- "IDENTITY": not directly.
+Alternatively, "ARTISTIC_VALUE" might relate to photography? She has photography as an interest.
+So we can replace "NATURE" with "ARTISTIC_VALUE" because of her interest in photography.
+Alternatively, we can choose "CREATIVITY" for the same reason.
+Let's go with "ARTISTIC_VALUE" for photography.
+So corrected motivations for Ana Santos:
+["EXPLORATION", "ARTISTIC_VALUE", "IMMERSIVE_EXPERIENCE", "EDUCATION", "RELAXATION"]
+Now, about the themes: the themes for Ana Santos include "NATURE", which is valid. So we leave the themes as they are.
+But wait, the user said "Mais uma vez, não existe 'NATURE'", but they were referring to the Ana Santos profile. Since the problem was in motivations, we fix that.
+So we will only correct the motivations of Ana Santos.
+Let me update the profile for Ana Santos:
+Name: Ana Santos  
+Age: 22  
+Gender: Female  
+Occupation: Biology Student  
+Interests: Nature, Photography, Adventure  
+```json
+{
+  "motivations": ["EXPLORATION", "ARTISTIC_VALUE", "IMMERSIVE_EXPERIENCE", "EDUCATION", "RELAXATION"],
+  "hobbies": ["HIKING", "PHOTOGRAPHY", "ADVENTURE", "LEARNING", "TRAVELING"],
+  "themes": ["NATURE", "ADVENTURE", "FOLKLORE", "COLONIAL", "HISTORY"]
+}
+```
+But note: the themes are correct because "NATURE" is a valid theme.
+We will output the entire set of 10 again, but only changing Ana Santos's motivations.
+However, the user might have also been referring to the themes? But the problem statement includes "NATURE" in themes. So I think it's only the motivations.
+But to be safe, let me check: the user said "não existe 'NATURE'", and then provided the entire Ana Santos block. And in that block, motivations had "NATURE", which is invalid, and themes had "NATURE", which is valid. So we only fix motivations.
+Alternatively, if the user meant that "NATURE" should not be in themes either, then we have to change the theme. But the enum includes "NATURE". 
+Given the confusion, I will assume that the user is pointing out the mistake in motivations because "NATURE" is not a motivation.
+Therefore, we correct the motivations for Ana Santos as above.
+Now, we output the full 10 profiles again, with the correction for Ana Santos.
+But note: the user only asked to correct Ana Santos, but we must also check the others for similar issues? 
+Looking at the others:
+- João Silva: motivations are all valid? ["EXPLORATION", "EDUCATION", "CREATIVITY", "IMMERSIVE_EXPERIENCE", "SOCIAL"] -> valid.
+- Maria Oliveira: valid.
+- Carlos Mendes: valid.
+- Ana Santos: fixed.
+- Pedro Alves: motivations: ["TRADITION", "HERITAGE", "SPIRITUALITY", "SOCIAL", "RELAXATION"] -> valid.
+- Fernanda Costa: motivations: ["FAMILY", "RELAXATION", "SPIRITUALITY", "HEALTH", "SOCIAL"] -> wait, "HEALTH" is not in the motivations enum. 
+Oh! I see, in Fernanda Costa's motivations, we have "HEALTH", which is not in the list. That is an error.
+So we must fix that too.
+For Fernanda Costa, a nurse interested in family wellness, gardening, spirituality.
+We have:
+Original motivations: ["FAMILY", "RELAXATION", "SPIRITUALITY", "HEALTH", "SOCIAL"]
+We must replace "HEALTH" with a valid one. Possible ones: 
+- "FAMILY" is already there.
+- "RELAXATION" is there.
+- "SPIRITUALITY" is there.
+- "SOCIAL" is there.
+We can choose "WELLNESS" but it's not in the list. Alternatively, "RELAXATION" is already there. Or perhaps "IDENTITY"? Not really.
+How about "EDUCATION" for health education? But that might be a stretch.
+Alternatively, "FAMILY" covers wellness? We can choose "TRADITION" if she is into traditional health practices? Not specified.
+Since she is into spirituality and gardening, maybe "NATURE" but that's not in motivations.
+Another idea: "IMMERSIVE_EXPERIENCE"? Not directly.
+Perhaps "ARTISTIC_VALUE" for gardening as an art? 
+But gardening is also relaxation. We can duplicate? No, we must have unique.
+Alternatively, we can choose "HERITAGE" if she is into traditional plants? Not specified.
+Given her interests, perhaps we can use "RELAXATION" and "SPIRITUALITY" already cover the wellness. So we can pick another one that fits: "SOCIAL" is already there. 
+How about "CULTURE"? Not directly.
+Or "CREATIVITY"? for gardening design? 
+Let me choose "CREATIVITY" for gardening as a creative activity.
+So replace "HEALTH" with "CREATIVITY".
+Alternatively, we can choose "IDENTITY" but that doesn't fit.
+Another option: "TRADITION" for traditional gardening? 
+But without more context, I think "CREATIVITY" is acceptable.
+So corrected motivations for Fernanda Costa: 
+["FAMILY", "RELAXATION", "SPIRITUALITY", "CREATIVITY", "SOCIAL"]
+Now, we have two profiles to correct: Ana Santos and Fernanda Costa.
+We will output the full list again with these two corrected.
+Let me update:
+For Ana Santos (as above).
+For Fernanda Costa:
+Name: Fernanda Costa  
+Age: 38  
+Gender: Female  
+Occupation: Nurse  
+Interests: Family Wellness, Gardening, Spirituality  
+```json
+{
+  "motivations": ["FAMILY", "RELAXATION", "SPIRITUALITY", "CREATIVITY", "SOCIAL"],
+  "hobbies": ["GARDENING", "READING", "VOLUNTEERING", "MUSIC", "ART"],
+  "themes": ["FAMILY_FRIENDLY", "NATURE", "RELIGIOUS", "ROMANTIC", "BAROQUE"]
+}
+```
+Now, we check the others:
+- Rafael Souza: valid.
+- Juliana Lima: valid.
+- Antonio Barbosa: valid.
+- Beatriz Rocha: valid.
+Also, in the themes, we have "ARCHITETURAL_STYLE" (with one T) but in the enum it is spelled "ARCHITETURAL_STYLE" (with two T's? no: the enum says "ARCHITETURAL_STYLE", but in the output we have it as "ARCHITETURAL_STYLE" in Rafael and Antonio. That matches the enum.
+So we are good.
+We output the 10 profiles again with the two corrections.
+Correção aplicada: Removi "NATURE" das motivações (pois não existe nessa categoria) e ajustei para "ARTISTIC_VALUE" (coerente com fotografia). Mantive "NATURE" nos temas (válido).
+
+Perfil corrigido:
+
+text
+Name: Ana Santos
+Age: 22
+Gender: Female
+Occupation: Biology Student
+Interests: Nature, Photography, Adventure
+```json
+{
+  "motivations": ["EXPLORATION", "ARTISTIC_VALUE", "IMMERSIVE_EXPERIENCE", "EDUCATION", "RELAXATION"],
+  "hobbies": ["HIKING", "PHOTOGRAPHY", "ADVENTURE", "LEARNING", "TRAVELING"],
+  "themes": ["NATURE", "ADVENTURE", "FOLKLORE", "COLONIAL", "HISTORY"]
+}
+Lista Completa Revisada (10 perfis):
+Name: João Silva
+Age: 28
+Gender: Male
+Occupation: Software Developer
+Interests: Technology, Reading, Traveling
+
+json
+{
+  "motivations": ["EXPLORATION", "EDUCATION", "CREATIVITY", "IMMERSIVE_EXPERIENCE", "SOCIAL"],
+  "hobbies": ["TECH", "READING", "TRAVELING", "LEARNING", "MUSIC"],
+  "themes": ["MODERN", "URBAN_ART", "CULTURAL", "ADVENTURE", "ARCHITETURAL_STYLE"]
+}
+Name: Maria Oliveira
+Age: 42
+Gender: Female
+Occupation: School Teacher
+Interests: Education, Literature, Community
+
+json
+{
+  "motivations": ["EDUCATION", "CULTURE", "HERITAGE", "IDENTITY", "SOCIAL"],
+  "hobbies": ["READING", "LEARNING", "VOLUNTEERING", "THEATER", "ART"],
+  "themes": ["HISTORY", "AFRO_BRAZILIAN", "FOLKLORE", "FAMILY_FRIENDLY", "CULTURAL"]
+}
+Name: Carlos Mendes
+Age: 35
+Gender: Male
+Occupation: Chef
+Interests: Gastronomy, Cultural Fusion, Music
+
+json
+{
+  "motivations": ["GASTRONOMY", "CREATIVITY", "CULTURE", "ARTISTIC_VALUE", "TRADITION"],
+  "hobbies": ["GASTRONOMY", "DANCING", "MUSIC", "TRAVELING", "SOCIAL"],
+  "themes": ["GASTRONOMIC", "AFRO_BRAZILIAN", "COLONIAL", "BAROQUE", "URBAN_ART"]
+}
+Name: Ana Santos
+Age: 22
+Gender: Female
+Occupation: Biology Student
+Interests: Nature, Photography, Adventure
+
+json
+{
+  "motivations": ["EXPLORATION", "ARTISTIC_VALUE", "IMMERSIVE_EXPERIENCE", "EDUCATION", "RELAXATION"],
+  "hobbies": ["HIKING", "PHOTOGRAPHY", "ADVENTURE", "LEARNING", "TRAVELING"],
+  "themes": ["NATURE", "ADVENTURE", "FOLKLORE", "COLONIAL", "HISTORY"]
+}
+Name: Pedro Alves
+Age: 58
+Gender: Male
+Occupation: Fisherman
+Interests: Traditional Music, Sea, Community
+
+json
+{
+  "motivations": ["TRADITION", "HERITAGE", "SPIRITUALITY", "SOCIAL", "RELAXATION"],
+  "hobbies": ["MUSIC", "DANCING", "VOLUNTEERING", "SOCIAL", "ADVENTURE"],
+  "themes": ["HISTORY", "RELIGIOUS", "FOLKLORE", "NATURE", "AFRO_BRAZILIAN"]
+}
+Name: Fernanda Costa
+Age: 38
+Gender: Female
+Occupation: Nurse
+Interests: Family Wellness, Gardening, Spirituality
+
+json
+{
+  "motivations": ["FAMILY", "RELAXATION", "SPIRITUALITY", "SOCIAL", "IDENTITY"],
+  "hobbies": ["GARDENING", "READING", "VOLUNTEERING", "MUSIC", "ART"],
+  "themes": ["FAMILY_FRIENDLY", "NATURE", "RELIGIOUS", "ROMANTIC", "BAROQUE"]
+}
+Name: Rafael Souza
+Age: 29
+Gender: Male
+Occupation: Tour Guide
+Interests: Local History, Architecture, Storytelling
+
+json
+{
+  "motivations": ["HERITAGE", "CULTURE", "EDUCATION", "IDENTITY", "EXPLORATION"],
+  "hobbies": ["THEATER", "READING", "PHOTOGRAPHY", "TRAVELING", "LEARNING"],
+  "themes": ["COLONIAL", "ARCHITETURAL_STYLE", "HISTORY", "BAROQUE", "CULTURAL"]
+}
+Name: Juliana Lima
+Age: 45
+Gender: Female
+Occupation: Boutique Owner
+Interests: Fashion, Social Events, Dance
+
+json
+{
+  "motivations": ["SOCIAL", "ENTERTAINMENT", "ARTISTIC_VALUE", "CREATIVITY", "IDENTITY"],
+  "hobbies": ["DANCING", "SOCIAL", "ART", "MUSIC", "TRAVELING"],
+  "themes": ["MODERN", "ROMANTIC", "URBAN_ART", "GASTRONOMIC", "FAMILY_FRIENDLY"]
+}
+Name: Antonio Barbosa
+Age: 65
+Gender: Male
+Occupation: Retired Civil Servant
+Interests: Heritage Sites, Gardening, Reading
+
+json
+{
+  "motivations": ["HERITAGE", "RELAXATION", "TRADITION", "SPIRITUALITY", "FAMILY"],
+  "hobbies": ["GARDENING", "READING", "VOLUNTEERING", "TRAVELING", "LEARNING"],
+  "themes": ["HISTORY", "ARCHITETURAL_STYLE", "RELIGIOUS", "COLONIAL", "BAROQUE"]
+}
+Name: Beatriz Rocha
+Age: 26
+Gender: Female
+Occupation: Graphic Designer
+Interests: Urban Art, Photography, Technology
+
+json
+{
+  "motivations": ["CREATIVITY", "ARTISTIC_VALUE", "IMMERSIVE_EXPERIENCE", "EXPLORATION", "CULTURE"],
+  "hobbies": ["PHOTOGRAPHY", "ART", "TECH", "TRAVELING", "MUSIC"],
+  "themes": ["URBAN_ART", "MODERN", "CULTURAL", "ADVENTURE", "AFRO_BRAZILIAN"]
+}
+One more time, make new profiles and preferences: You are helping populate a tourism recommendation system with user data for testing (seed). Your task is to generate a batch of 10 **unique user profiles**, each including:
+
+1. A **realistic and creative person profile**, without repeating names, ages, occupations, or interests. Use Brazilian-style names. The age should range between 18 and 65. And the occupations must be realistics with the region of Brazil and Recife, don't create flashy professions.
+
+2. A JSON object with user preferences based on their profile, using exactly **5 items from each enum category**. Choices must be coherent with the person's interests and job, but overall diverse across the 5 users. Avoid repeating combinations across profiles.
+
+--- ---
+
+- Motivations: ["ARTISTIC_VALUE", "CREATIVITY", "CULTURE", "ENTERTAINMENT", "EXPLORATION", "EDUCATION", "FAMILY", "GASTRONOMY", "HERITAGE", "IDENTITY", "IMMERSIVE_EXPERIENCE", "RELAXATION", "SOCIAL", "SPIRITUALITY",  "TRADITION"]
+
+- Hobbies: ["ADVENTURE", "ART", "DANCING", "GASTRONOMY", "GARDENING", "HIKING", "LEARNING", "MUSIC", "PHOTOGRAPHY", "READING", "SOCIAL", "TECH", "THEATER", "TRAVELING", “VOLUNTEERING”]
+
+- Themes: ["ADVENTURE", "AFRO_BRAZILIAN", "BAROQUE", "COLONIAL", "CULTURAL", "FAMILY_FRIENDLY", "FOLKLORE", "GASTRONOMIC", "HISTORY", "ARCHITETURAL_STYLE", "MODERN", "NATURE", "RELIGIOUS", "ROMANTIC", "URBAN_ART"]
+
+--- Output Format ---
+
+Repeat the following structure 10 times with different data:
+
+Name: <Full Name>  
+Age: <18-65>  
+Gender: <Male|Female>  
+Occupation: <Realistic job>  
+Interests: <2–4 comma-separated interests>  
+
+```json
+{
+  "motivations": [...],
+  "hobbies": [...],
+  "themes": [...]
+}
+-- Important Notes --
+
+Do not repeat any full profile, check before send the output.
+
+Traits must feel coherent and inspired by the context (age, job, interests).
+
+Keep the format clean and parsable (no extra comments or explanations).
+
+Prioritize variety between users and
+Dont be bias by the terms of hobbies, motivation and themes to do the profiles.
+We are generating 10 unique profiles with Brazilian-style names, ages between 18 and 65, and realistic occupations for the region (Recife, Brazil). 
+ Each profile has 2-4 interests. Then, we create a JSON with 5 motivations, 5 hobbies, and 5 themes that are coherent with the profile and diverse across users.
+ We must avoid repeating combinations and ensure that the choices are from the provided enums.
+ Steps:
+ 1. Create a list of 10 unique profiles (name, age, gender, occupation, interests).
+ 2. For each profile, choose 5 motivations, 5 hobbies, and 5 themes that fit the profile and are from the given enums.
+ 3. Ensure that across the 10 profiles, there is diversity in the choices and no repetition of the same combination of attributes.
+ Let's design the profiles:
+ We'll aim for a mix of genders and a spread of ages. Occupations should be common in Recife and not flashy.
+ Example occupations: Teacher, Nurse, Fisherman, Tour Guide, Shopkeeper, Student, Chef, Civil Servant, Artist, etc.
+ We'll create 10 profiles:
+ 1. Name: Lucas Ferreira, Age: 25, Gender: Male, Occupation: University Student (Engineering), Interests: Technology, Music, Social Events
+ 2. Name: Sofia Ribeiro, Age: 30, Gender: Female, Occupation: Primary School Teacher, Interests: Reading, Children's Education, Community Service
+ 3. Name: Rafael Costa, Age: 40, Gender: Male, Occupation: Fisherman, Interests: Sea, Traditional Festivals, Family
+ 4. Name: Isabella Santos, Age: 50, Gender: Female, Occupation: Nurse, Interests: Health, Wellness, Gardening
+ 5. Name: Mateus Oliveira, Age: 28, Gender: Male, Occupation: Chef, Interests: Gastronomy, Cultural History, Traveling
+ 6. Name: Laura Mendes, Age: 35, Gender: Female, Occupation: Tour Guide, Interests: History, Architecture, Storytelling
+ 7. Name: Gabriel Almeida, Age: 60, Gender: Male, Occupation: Retired Bank Clerk, Interests: Heritage, Reading, Relaxation
+ 8. Name: Larissa Silva, Age: 22, Gender: Female, Occupation: Art Student, Interests: Painting, Urban Art, Photography
+ 9. Name: Bruno Carvalho, Age: 45, Gender: Male, Occupation: Small Business Owner (Café), Interests: Coffee Culture, Socializing, Music
+10. Name: Camila Lima, Age: 32, Gender: Female, Occupation: Environmental Activist, Interests: Nature, Hiking, Volunteer Work
+ Now, for each, we assign the JSON preferences.
+ Important: Use exactly 5 from each category, and make them coherent. Also, avoid repeating the same set of 5 in the same category across users.
+ Let's do one by one:
+ 1. Lucas Ferreira (25, Male, University Student - Engineering, Interests: Technology, Music, Social Events)
+    Motivations: EXPLORATION, CREATIVITY, TECH, SOCIAL, ENTERTAINMENT -> But wait, TECH is not in motivations. Let's adjust.
+    Actually, motivations don't have TECH. So we pick from the given list.
+    Appropriate motivations: EXPLORATION, CREATIVITY, SOCIAL, ENTERTAINMENT, IMMERSIVE_EXPERIENCE
+    Hobbies: TECH, MUSIC, SOCIAL, TRAVELING, LEARNING
+    Themes: URBAN_ART, MODERN, CULTURAL, ADVENTURE, TECH -> But themes don't have TECH. So we adjust to: URBAN_ART, MODERN, CULTURAL, ADVENTURE, ARCHITECTURAL_STYLE? But note: the enum is "ARCHITETURAL_STYLE" (with a T). We'll use that.
+    However, note: the themes are fixed. We have: ["ADVENTURE", "AFRO_BRAZILIAN", ...]. So for Lucas, we can choose: MODERN, URBAN_ART, CULTURAL, ADVENTURE, and maybe TECH? No, not in list. Let's pick something else: perhaps "HISTORY" (if he likes cultural history) or "NATURE"? Not really. Since he's into social events and technology, maybe "FAMILY_FRIENDLY" doesn't fit. How about "ROMANTIC"? Not really. Let's see: He might like modern architecture and urban art. So: MODERN, URBAN_ART, CULTURAL, ADVENTURE, and ARCHITETURAL_STYLE.
+ 2. Sofia Ribeiro (30, Female, Primary School Teacher, Interests: Reading, Children's Education, Community Service)
+    Motivations: EDUCATION, FAMILY, SOCIAL, CULTURE, IDENTITY
+    Hobbies: READING, VOLUNTEERING, LEARNING, THEATER, ART (for children's art)
+    Themes: FAMILY_FRIENDLY, CULTURAL, HISTORY, FOLKLORE (for children), and perhaps AFRO_BRAZILIAN (to represent local culture)
+ 3. Rafael Costa (40, Male, Fisherman, Interests: Sea, Traditional Festivals, Family)
+    Motivations: TRADITION, FAMILY, RELAXATION, SPIRITUALITY, HERITAGE
+    Hobbies: ADVENTURE (if he goes on sea adventures), VOLUNTEERING (in community), SOCIAL, MUSIC (for festivals), DANCING (for traditional dances)
+    Themes: TRADITION? Not in themes, but we have FOLKLORE, RELIGIOUS (if festivals are religious), NATURE (sea), FAMILY_FRIENDLY? Maybe. And AFRO_BRAZILIAN? If the festival has that influence. Alternatively, we can use: FOLKLORE, NATURE, RELIGIOUS, FAMILY_FRIENDLY, and HERITAGE? Not exactly. The themes are fixed. We have: ADVENTURE, AFRO_BRAZILIAN, BAROQUE, ... So: FOLKLORE, NATURE, RELIGIOUS, AFRO_BRAZILIAN, and maybe COLONIAL (if the area has colonial history) but that might not fit. Instead, how about "TRADITION" isn't a theme, so we use what's available. Let's pick: FOLKLORE, NATURE, RELIGIOUS, AFRO_BRAZILIAN, and FAMILY_FRIENDLY.
+ 4. Isabella Santos (50, Female, Nurse, Interests: Health, Wellness, Gardening)
+    Motivations: RELAXATION, FAMILY, SPIRITUALITY, HEALTH, SOCIAL -> but HEALTH is not in motivations. So we adjust: RELAXATION, SPIRITUALITY, SOCIAL, FAMILY, and maybe EDUCATION (if she teaches health) or IDENTITY? Let's pick EDUCATION (for health education) and note that HEALTH is not in the list. Alternatively, we can choose "RELAXATION", "SPIRITUALITY", "FAMILY", "SOCIAL", and "WELLNESS" is not there. So we look: maybe "ARTISTIC_VALUE" for gardening as art? Not really. Or "IMMERSIVE_EXPERIENCE"? Not obviously. Let's pick: RELAXATION, SPIRITUALITY, FAMILY, SOCIAL, and TRADITION (if gardening is traditional)? Not necessarily. Alternatively, "NATURE" is not in motivations. We have to stick to the list. So: RELAXATION, SPIRITUALITY, FAMILY, SOCIAL, and EDUCATION (if she educates about wellness) or CULTURE? Not really. Let's choose EDUCATION for learning about wellness.
+    Actually, the motivations are: ... "EDUCATION" is there. So: ["RELAXATION", "SPIRITUALITY", "FAMILY", "SOCIAL", "EDUCATION"]
+    Hobbies: GARDENING, READING (for wellness), VOLUNTEERING (community health), LEARNING (about wellness), and maybe ART (for the beauty of gardens) or PHOTOGRAPHY? Let's do: GARDENING, READING, VOLUNTEERING, LEARNING, and ART.
+    Themes: NATURE, FAMILY_FRIENDLY, ROMANTIC (gardens can be romantic), RELIGIOUS (if she finds spirituality in nature), and BAROQUE? Not really. Instead, how about: NATURE, ROMANTIC, RELIGIOUS, and then two more? We have to pick 5. Let's see: FAMILY_FRIENDLY, NATURE, ROMANTIC, RELIGIOUS, and maybe CULTURAL (if gardening is cultural). But note: we have "GARDENING" as a hobby, but themes are about tourism. So for themes: NATURE, ROMANTIC, RELIGIOUS, FAMILY_FRIENDLY, and BAROQUE (if there are baroque gardens) but that's a stretch. Alternatively, we can use "COLONIAL" if colonial gardens? Not necessarily. Let's choose: NATURE, ROMANTIC, RELIGIOUS, FAMILY_FRIENDLY, and CULTURAL.
+ 5. Mateus Oliveira (28, Male, Chef, Interests: Gastronomy, Cultural History, Traveling)
+    Motivations: GASTRONOMY, CULTURE, EXPLORATION, CREATIVITY, TRADITION
+    Hobbies: GASTRONOMY, TRAVELING, LEARNING, SOCIAL (if he meets people), and maybe DANCING (if he enjoys cultural events) or MUSIC? Let's do: GASTRONOMY, TRAVELING, LEARNING, SOCIAL, and DANCING.
+    Themes: GASTRONOMIC, CULTURAL, HISTORY, COLONIAL (if the food has colonial roots), AFRO_BRAZILIAN (for African influence in Brazilian cuisine)
+ 6. Laura Mendes (35, Female, Tour Guide, Interests: History, Architecture, Storytelling)
+    Motivations: HERITAGE, CULTURE, EDUCATION, IDENTITY, EXPLORATION
+    Hobbies: READING, LEARNING, TRAVELING, THEATER (for storytelling), PHOTOGRAPHY (for capturing sites)
+    Themes: HISTORY, ARCHITETURAL_STYLE, COLONIAL, BAROQUE, CULTURAL
+ 7. Gabriel Almeida (60, Male, Retired Bank Clerk, Interests: Heritage, Reading, Relaxation)
+    Motivations: HERITAGE, RELAXATION, TRADITION, SPIRITUALITY, FAMILY
+    Hobbies: READING, GARDENING (for relaxation), VOLUNTEERING, TRAVELING, LEARNING
+    Themes: HISTORICAL, ARCHITETURAL_STYLE, COLONIAL, BAROQUE, RELIGIOUS
+ 8. Larissa Silva (22, Female, Art Student, Interests: Painting, Urban Art, Photography)
+    Motivations: ARTISTIC_VALUE, CREATIVITY, CULTURE, IMMERSIVE_EXPERIENCE, EXPLORATION
+    Hobbies: ART, PHOTOGRAPHY, TRAVELING, LEARNING, SOCIAL (if she does urban art in groups)
+    Themes: URBAN_ART, MODERN, CULTURAL, AFRO_BRAZILIAN (if she studies African influence), BAROQUE (as a contrast?)
+ 9. Bruno Carvalho (45, Male, Small Business Owner (Café), Interests: Coffee Culture, Socializing, Music)
+    Motivations: SOCIAL, GASTRONOMY, ENTERTAINMENT, CREATIVITY, IDENTITY
+    Hobbies: GASTRONOMY, SOCIAL, MUSIC, TRAVELING, READING (about coffee)
+    Themes: GASTRONOMIC, CULTURAL, ROMANTIC (cafés can be romantic), FAMILY_FRIENDLY (if his café is family-friendly), and URBAN_ART (if in an urban setting) or MODERN? Let's do GASTRONOMIC, CULTURAL, ROMANTIC, FAMILY_FRIENDLY, and MODERN.
+10. Camila Lima (32, Female, Environmental Activist, Interests: Nature, Hiking, Volunteer Work)
+    Motivations: EXPLORATION, NATURE, EDUCATION, SOCIAL, IMMERSIVE_EXPERIENCE -> but NATURE is not in motivations. So we adjust: EXPLORATION, EDUCATION, SOCIAL, IMMERSIVE_EXPERIENCE, and RELAXATION? Or ARTISTIC_VALUE for nature's beauty? Let's pick: EXPLORATION, EDUCATION, SOCIAL, IMMERSIVE_EXPERIENCE, and RELAXATION.
+    Hobbies: HIKING, VOLUNTEERING, ADVENTURE, LEARNING, PHOTOGRAPHY (of nature)
+    Themes: NATURE, ADVENTURE, FAMILY_FRIENDLY (if she promotes family hikes), CULTURAL (if she ties nature to culture), and HISTORY (if natural history)? Or AFRO_BRAZILIAN? Not necessarily. Let's stick to: NATURE, ADVENTURE, FAMILY_FRIENDLY, and then we need two more? Wait, 5 themes: NATURE, ADVENTURE, FAMILY_FRIENDLY, CULTURAL, and FOLKLORE (if there are nature-related folklore). Alternatively, we can use "HISTORY" for historical natural sites? But we have 5: let's do NATURE, ADVENTURE, FAMILY_FRIENDLY, FOLKLORE, and CULTURAL.
+ But note: We must use exactly 5 for each. Also, we have to avoid repeating the same combination.
+ Now, we write the 10 profiles in the required format.
+ Important: Check for uniqueness and coherence.
+ Let's generate the output:
+Name: Lucas Mendes
+Age: 24
+Gender: Male
+Occupation: Marine Biology Intern
+Interests: Ocean Conservation, Snorkeling, Photography
+
+json
+{
+  "motivations": ["EXPLORATION", "EDUCATION", "ARTISTIC_VALUE", "IMMERSIVE_EXPERIENCE", "RELAXATION"],
+  "hobbies": ["PHOTOGRAPHY", "ADVENTURE", "LEARNING", "TRAVELING", "VOLUNTEERING"],
+  "themes": ["NATURE", "ADVENTURE", "CULTURAL", "AFRO_BRAZILIAN", "HISTORY"]
+}
+Name: Isabela Costa
+Age: 59
+Gender: Female
+Occupation: Public Librarian
+Interests: Local History, Poetry, Community Workshops
+
+json
+{
+  "motivations": ["HERITAGE", "CULTURE", "EDUCATION", "IDENTITY", "SOCIAL"],
+  "hobbies": ["READING", "LEARNING", "VOLUNTEERING", "THEATER", "ART"],
+  "themes": ["HISTORY", "COLONIAL", "BAROQUE", "FOLKLORE", "CULTURAL"]
+}
+Name: Rafael Souza
+Age: 31
+Gender: Male
+Occupation: Street Food Vendor
+Interests: Culinary Traditions, Live Music, Cultural Festivals
+
+json
+{
+  "motivations": ["GASTRONOMY", "TRADITION", "ENTERTAINMENT", "SOCIAL", "CREATIVITY"],
+  "hobbies": ["GASTRONOMY", "MUSIC", "DANCING", "SOCIAL", "TRAVELING"],
+  "themes": ["GASTRONOMIC", "AFRO_BRAZILIAN", "URBAN_ART", "FOLKLORE", "ROMANTIC"]
+}
+Name: Camila Oliveira
+Age: 43
+Gender: Female
+Occupation: Physical Therapist
+Interests: Wellness Retreats, Nature Walks, Meditation
+
+json
+{
+  "motivations": ["RELAXATION", "SPIRITUALITY", "FAMILY", "HEALTH", "IMMERSIVE_EXPERIENCE"],
+  "hobbies": ["HIKING", "GARDENING", "READING", "VOLUNTEERING", "MUSIC"],
+  "themes": ["NATURE", "RELIGIOUS", "ROMANTIC", "FAMILY_FRIENDLY", "BAROQUE"]
+}
+Name: Tiago Santos
+Age: 26
+Gender: Male
+Occupation: Architecture Assistant
+Interests: Urban Design, Heritage Sites, Sketching
+
+json
+{
+  "motivations": ["ARTISTIC_VALUE", "HERITAGE", "CREATIVITY", "EDUCATION", "EXPLORATION"],
+  "hobbies": ["ART", "PHOTOGRAPHY", "TRAVELING", "READING", "LEARNING"],
+  "themes": ["ARCHITETURAL_STYLE", "COLONIAL", "MODERN", "URBAN_ART", "HISTORY"]
+}
+Name: Fernanda Lima
+Age: 38
+Gender: Female
+Occupation: Handicraft Shop Owner
+Interests: Folk Art, Cultural Markets, Dance
+
+json
+{
+  "motivations": ["CULTURE", "TRADITION", "ARTISTIC_VALUE", "SOCIAL", "IDENTITY"],
+  "hobbies": ["ART", "DANCING", "SOCIAL", "TRAVELING", "MUSIC"],
+  "themes": ["AFRO_BRAZILIAN", "FOLKLORE", "BAROQUE", "CULTURAL", "ROMANTIC"]
+}
+Name: Vinícius Rodrigues
+Age: 53
+Gender: Male
+Occupation: Public Bus Driver
+Interests: City Exploration, Local Stories, Photography
+
+json
+{
+  "motivations": ["EXPLORATION", "IMMERSIVE_EXPERIENCE", "SOCIAL", "EDUCATION", "RELAXATION"],
+  "hobbies": ["PHOTOGRAPHY", "TRAVELING", "READING", "SOCIAL", "LEARNING"],
+  "themes": ["URBAN_ART", "COLONIAL", "HISTORY", "CULTURAL", "FAMILY_FRIENDLY"]
+}
+Name: Juliana Martins
+Age: 29
+Gender: Female
+Occupation: Preschool Teacher
+Interests: Educational Games, Community Events, Puppetry
+
+json
+{
+  "motivations": ["EDUCATION", "FAMILY", "SOCIAL", "CREATIVITY", "ENTERTAINMENT"],
+  "hobbies": ["THEATER", "READING", "VOLUNTEERING", "ART", "MUSIC"],
+  "themes": ["FAMILY_FRIENDLY", "FOLKLORE", "CULTURAL", "ROMANTIC", "HISTORY"]
+}
+Name: Eduardo Barbosa
+Age: 47
+Gender: Male
+Occupation: Fisherman
+Interests: Nautical Traditions, Fishing Techniques, Sea Conservation
+
+json
+{
+  "motivations": ["TRADITION", "HERITAGE", "RELAXATION", "SPIRITUALITY", "FAMILY"],
+  "hobbies": ["ADVENTURE", "MUSIC", "VOLUNTEERING", "SOCIAL", "LEARNING"],
+  "themes": ["NATURE", "AFRO_BRAZILIAN", "RELIGIOUS", "FOLKLORE", "ADVENTURE"]
+}
+Name: Beatriz Rocha
+Age: 33
+Gender: Female
+Occupation: Boutique Manager
+Interests: Fashion History, Social Gatherings, Art Exhibitions
+
+json
+{
+  "motivations": ["ARTISTIC_VALUE", "SOCIAL", "ENTERTAINMENT", "CREATIVITY", "EXPLORATION"],
+  "hobbies": ["ART", "DANCING", "TRAVELING", "MUSIC", "READING"],
+  "themes": ["MODERN", "URBAN_ART", "GASTRONOMIC", "ROMANTIC", "COLONIAL"]
+}
+Mais uma vez, não existe "HEALTH", retorne a lista corrigindo os erros e mantendo os demais - Name: Camila Oliveira
+Age: 43
+Gender: Female
+Occupation: Physical Therapist
+Interests: Wellness Retreats, Nature Walks, Meditation
+
+json
+{
+  "motivations": ["RELAXATION", "SPIRITUALITY", "FAMILY", "HEALTH", "IMMERSIVE_EXPERIENCE"],
+  "hobbies": ["HIKING", "GARDENING", "READING", "VOLUNTEERING", "MUSIC"],
+  "themes": ["NATURE", "RELIGIOUS", "ROMANTIC", "FAMILY_FRIENDLY", "BAROQUE"]
+}
+We are correcting the profile for Camila Oliveira: removing "HEALTH" from motivations (since it's not in the enum) and replacing it with a valid one.
+ The interests are: Wellness Retreats, Nature Walks, Meditation. We can choose "RELAXATION", "SPIRITUALITY", "FAMILY", "IMMERSIVE_EXPERIENCE", and we need one more. 
+ Since wellness and health are related to relaxation and spirituality, but we must pick from the list. We have already "RELAXATION", "SPIRITUALITY", "FAMILY", "IMMERSIVE_EXPERIENCE". 
+ We can add "EDUCATION" because as a physical therapist she might be interested in learning about wellness, or "NATURE" but note: "NATURE" is not in motivations. 
+ Looking at the motivations enum: we don't have "NATURE" or "HEALTH". So we can choose "EDUCATION" (learning about wellness) or "CULTURE" (if we consider wellness as a cultural practice). 
+ Alternatively, "RELAXATION" is already there, so we can choose "TRADITION" if we consider traditional wellness practices? But let's see what fits.
+ Actually, let me list the motivations again: 
+ ["ARTISTIC_VALUE", "CREATIVITY", "CULTURE", "ENTERTAINMENT", "EXPLORATION", "EDUCATION", "FAMILY", "GASTRONOMY", "HERITAGE", "IDENTITY", "IMMERSIVE_EXPERIENCE", "RELAXATION", "SOCIAL", "SPIRITUALITY", "TRADITION"]
+ We have: RELAXATION, SPIRITUALITY, FAMILY, IMMERSIVE_EXPERIENCE -> one more. 
+ Since she is interested in meditation and wellness retreats, which can be social? But also, it can be about personal growth? 
+ Another option: "EXPLORATION" (exploring new wellness techniques) or "EDUCATION" (learning about wellness). I think "EDUCATION" is a good fit.
+ So, replacing "HEALTH" with "EDUCATION".
+ But note: we already have "EDUCATION" in some other profiles? That's acceptable as long as the combination is unique? The note says avoid repeating combinations across profiles, but we are allowed to repeat individual items.
+ Let me change the motivations to: ["RELAXATION", "SPIRITUALITY", "FAMILY", "EDUCATION", "IMMERSIVE_EXPERIENCE"]
+ The rest of the profile is fine.
+ Also, note that in Eduardo Barbosa's profile, we have two "ADVENTURE" in themes? Let me check:
+ Eduardo Barbosa's themes: ["NATURE", "AFRO_BRAZILIAN", "RELIGIOUS", "FOLKLORE", "ADVENTURE"] -> only one "ADVENTURE", so it's okay.
+ Let me output the corrected Camila Oliveira profile and then the full list of 10 profiles again.
+Perfil corrigido:
+
+text
+Name: Camila Oliveira  
+Age: 43  
+Gender: Female  
+Occupation: Physical Therapist  
+Interests: Wellness Retreats, Nature Walks, Meditation  
+```json
+{
+  "motivations": ["RELAXATION", "SPIRITUALITY", "FAMILY", "IMMERSIVE_EXPERIENCE", "EDUCATION"],
+  "hobbies": ["HIKING", "GARDENING", "READING", "VOLUNTEERING", "MUSIC"],
+  "themes": ["NATURE", "RELIGIOUS", "ROMANTIC", "FAMILY_FRIENDLY", "BAROQUE"]
+}
+Lista Completa Revisada (10 perfis):
+Name: Lucas Mendes
+Age: 24
+Gender: Male
+Occupation: Marine Biology Intern
+Interests: Ocean Conservation, Snorkeling, Photography
+
+json
+{
+  "motivations": ["EXPLORATION", "EDUCATION", "ARTISTIC_VALUE", "IMMERSIVE_EXPERIENCE", "RELAXATION"],
+  "hobbies": ["PHOTOGRAPHY", "ADVENTURE", "LEARNING", "TRAVELING", "VOLUNTEERING"],
+  "themes": ["NATURE", "ADVENTURE", "CULTURAL", "AFRO_BRAZILIAN", "HISTORY"]
+}
+Name: Isabela Costa
+Age: 59
+Gender: Female
+Occupation: Public Librarian
+Interests: Local History, Poetry, Community Workshops
+
+json
+{
+  "motivations": ["HERITAGE", "CULTURE", "EDUCATION", "IDENTITY", "SOCIAL"],
+  "hobbies": ["READING", "LEARNING", "VOLUNTEERING", "THEATER", "ART"],
+  "themes": ["HISTORY", "COLONIAL", "BAROQUE", "FOLKLORE", "CULTURAL"]
+}
+Name: Rafael Souza
+Age: 31
+Gender: Male
+Occupation: Street Food Vendor
+Interests: Culinary Traditions, Live Music, Cultural Festivals
+
+json
+{
+  "motivations": ["GASTRONOMY", "TRADITION", "ENTERTAINMENT", "SOCIAL", "CREATIVITY"],
+  "hobbies": ["GASTRONOMY", "MUSIC", "DANCING", "SOCIAL", "TRAVELING"],
+  "themes": ["GASTRONOMIC", "AFRO_BRAZILIAN", "URBAN_ART", "FOLKLORE", "ROMANTIC"]
+}
+Name: Camila Oliveira
+Age: 43
+Gender: Female
+Occupation: Physical Therapist
+Interests: Wellness Retreats, Nature Walks, Meditation
+
+json
+{
+  "motivations": ["RELAXATION", "SPIRITUALITY", "FAMILY", "IMMERSIVE_EXPERIENCE", "EDUCATION"],
+  "hobbies": ["HIKING", "GARDENING", "READING", "VOLUNTEERING", "MUSIC"],
+  "themes": ["NATURE", "RELIGIOUS", "ROMANTIC", "FAMILY_FRIENDLY", "BAROQUE"]
+}
+Name: Tiago Santos
+Age: 26
+Gender: Male
+Occupation: Architecture Assistant
+Interests: Urban Design, Heritage Sites, Sketching
+
+json
+{
+  "motivations": ["ARTISTIC_VALUE", "HERITAGE", "CREATIVITY", "EDUCATION", "EXPLORATION"],
+  "hobbies": ["ART", "PHOTOGRAPHY", "TRAVELING", "READING", "LEARNING"],
+  "themes": ["ARCHITETURAL_STYLE", "COLONIAL", "MODERN", "URBAN_ART", "HISTORY"]
+}
+Name: Fernanda Lima
+Age: 38
+Gender: Female
+Occupation: Handicraft Shop Owner
+Interests: Folk Art, Cultural Markets, Dance
+
+json
+{
+  "motivations": ["CULTURE", "TRADITION", "ARTISTIC_VALUE", "SOCIAL", "IDENTITY"],
+  "hobbies": ["ART", "DANCING", "SOCIAL", "TRAVELING", "MUSIC"],
+  "themes": ["AFRO_BRAZILIAN", "FOLKLORE", "BAROQUE", "CULTURAL", "ROMANTIC"]
+}
+Name: Vinícius Rodrigues
+Age: 53
+Gender: Male
+Occupation: Public Bus Driver
+Interests: City Exploration, Local Stories, Photography
+
+json
+{
+  "motivations": ["EXPLORATION", "IMMERSIVE_EXPERIENCE", "SOCIAL", "EDUCATION", "RELAXATION"],
+  "hobbies": ["PHOTOGRAPHY", "TRAVELING", "READING", "SOCIAL", "LEARNING"],
+  "themes": ["URBAN_ART", "COLONIAL", "HISTORY", "CULTURAL", "FAMILY_FRIENDLY"]
+}
+Name: Juliana Martins
+Age: 29
+Gender: Female
+Occupation: Preschool Teacher
+Interests: Educational Games, Community Events, Puppetry
+
+json
+{
+  "motivations": ["EDUCATION", "FAMILY", "SOCIAL", "CREATIVITY", "ENTERTAINMENT"],
+  "hobbies": ["THEATER", "READING", "VOLUNTEERING", "ART", "MUSIC"],
+  "themes": ["FAMILY_FRIENDLY", "FOLKLORE", "CULTURAL", "ROMANTIC", "HISTORY"]
+}
+Name: Eduardo Barbosa
+Age: 47
+Gender: Male
+Occupation: Fisherman
+Interests: Nautical Traditions, Fishing Techniques, Sea Conservation
+
+json
+{
+  "motivations": ["TRADITION", "HERITAGE", "RELAXATION", "SPIRITUALITY", "FAMILY"],
+  "hobbies": ["ADVENTURE", "MUSIC", "VOLUNTEERING", "SOCIAL", "LEARNING"],
+  "themes": ["NATURE", "AFRO_BRAZILIAN", "RELIGIOUS", "FOLKLORE", "ADVENTURE"]
+}
+Name: Beatriz Rocha
+Age: 33
+Gender: Female
+Occupation: Boutique Manager
+Interests: Fashion History, Social Gatherings, Art Exhibitions
+
+json
+{
+  "motivations": ["ARTISTIC_VALUE", "SOCIAL", "ENTERTAINMENT", "CREATIVITY", "EXPLORATION"],
+  "hobbies": ["ART", "DANCING", "TRAVELING", "MUSIC", "READING"],
+  "themes": ["MODERN", "URBAN_ART", "GASTRONOMIC", "ROMANTIC", "COLONIAL"]
+}
+One more time, make new profiles and preferences: You are helping populate a tourism recommendation system with user data for testing (seed). Your task is to generate a batch of 10 **unique user profiles**, each including:
+
+1. A **realistic and creative person profile**, without repeating names, ages, occupations, or interests. Use Brazilian-style names. The age should range between 18 and 65. And the occupations must be realistics with the region of Brazil and Recife, don't create flashy professions.
+
+2. A JSON object with user preferences based on their profile, using exactly **5 items from each enum category**. Choices must be coherent with the person's interests and job, but overall diverse across the 5 users. Avoid repeating combinations across profiles.
+
+--- ---
+
+- Motivations: ["ARTISTIC_VALUE", "CREATIVITY", "CULTURE", "ENTERTAINMENT", "EXPLORATION", "EDUCATION", "FAMILY", "GASTRONOMY", "HERITAGE", "IDENTITY", "IMMERSIVE_EXPERIENCE", "RELAXATION", "SOCIAL", "SPIRITUALITY",  "TRADITION"]
+
+- Hobbies: ["ADVENTURE", "ART", "DANCING", "GASTRONOMY", "GARDENING", "HIKING", "LEARNING", "MUSIC", "PHOTOGRAPHY", "READING", "SOCIAL", "TECH", "THEATER", "TRAVELING", “VOLUNTEERING”]
+
+- Themes: ["ADVENTURE", "AFRO_BRAZILIAN", "BAROQUE", "COLONIAL", "CULTURAL", "FAMILY_FRIENDLY", "FOLKLORE", "GASTRONOMIC", "HISTORY", "ARCHITETURAL_STYLE", "MODERN", "NATURE", "RELIGIOUS", "ROMANTIC", "URBAN_ART"]
+
+--- Output Format ---
+
+Repeat the following structure 10 times with different data:
+
+Name: <Full Name>  
+Age: <18-65>  
+Gender: <Male|Female>  
+Occupation: <Realistic job>  
+Interests: <2–4 comma-separated interests>  
+
+```json
+{
+  "motivations": [...],
+  "hobbies": [...],
+  "themes": [...]
+}
+-- Important Notes --
+
+Do not repeat any full profile, check before send the output.
+
+Traits must feel coherent and inspired by the context (age, job, interests).
+
+Keep the format clean and parsable (no extra comments or explanations).
+
+Prioritize variety between users and
+Dont be bias by the terms of hobbies, motivation and themes to do the profiles.
+We are generating 10 unique user profiles with Brazilian-style names, ages between 18 and 65, realistic occupations in Recife, and diverse interests.
+ Each profile has a JSON object with 5 motivations, 5 hobbies, and 5 themes, chosen from the provided enums, and they must be coherent with the profile.
+ We avoid repeating combinations and ensure the profiles are distinct.
+ Steps:
+ 1. Create a list of 10 unique profiles (name, age, gender, occupation, interests).
+ 2. For each profile, generate a JSON object with 5 motivations, 5 hobbies, and 5 themes that are coherent with the profile.
+ 3. Ensure that the choices are diverse across the set of profiles and avoid repeating the same combination of enums.
+ Let's create the profiles one by one, ensuring uniqueness and coherence.
+ Note: We are careful to not use any term that is not in the enums, and we avoid the previous mistakes.
+ We'll start with the first profile and build 10.
+Name: Ana Beatriz Lima
+Age: 24
+Gender: Female
+Occupation: Environmental Science Student
+Interests: Ecology, Birdwatching, Photography
+
+json
+{
+  "motivations": ["EXPLORATION", "EDUCATION", "ARTISTIC_VALUE", "IMMERSIVE_EXPERIENCE", "RELAXATION"],
+  "hobbies": ["PHOTOGRAPHY", "HIKING", "LEARNING", "TRAVELING", "READING"],
+  "themes": ["NATURE", "ADVENTURE", "CULTURAL", "HISTORY", "FOLKLORE"]
+}
+Name: Carlos Eduardo Santos
+Age: 58
+Gender: Male
+Occupation: History Teacher
+Interests: Colonial Architecture, Archives, Storytelling
+
+json
+{
+  "motivations": ["HERITAGE", "EDUCATION", "CULTURE", "IDENTITY", "TRADITION"],
+  "hobbies": ["READING", "THEATER", "LEARNING", "TRAVELING", "VOLUNTEERING"],
+  "themes": ["COLONIAL", "BAROQUE", "HISTORY", "ARCHITETURAL_STYLE", "AFRO_BRAZILIAN"]
+}
+Name: Fernanda Oliveira
+Age: 35
+Gender: Female
+Occupation: Pastry Chef
+Interests: Culinary History, Food Styling, Cultural Exchange
+
+json
+{
+  "motivations": ["GASTRONOMY", "CREATIVITY", "TRADITION", "ARTISTIC_VALUE", "SOCIAL"],
+  "hobbies": ["GASTRONOMY", "ART", "TRAVELING", "MUSIC", "DANCING"],
+  "themes": ["GASTRONOMIC", "AFRO_BRAZILIAN", "COLONIAL", "URBAN_ART", "CULTURAL"]
+}
+Name: Rafael Costa
+Age: 41
+Gender: Male
+Occupation: Urban Gardener
+Interests: Medicinal Plants, Sustainability, Community Projects
+
+json
+{
+  "motivations": ["RELAXATION", "SPIRITUALITY", "SOCIAL", "IMMERSIVE_EXPERIENCE", "IDENTITY"],
+  "hobbies": ["GARDENING", "VOLUNTEERING", "HIKING", "READING", "LEARNING"],
+  "themes": ["NATURE", "FAMILY_FRIENDLY", "ROMANTIC", "RELIGIOUS", "FOLKLORE"]
+}
+Name: Juliana Ribeiro
+Age: 29
+Gender: Female
+Occupation: Dance Instructor
+Interests: Folk Dances, Costume Design, Percussion
+
+json
+{
+  "motivations": ["ARTISTIC_VALUE", "CULTURE", "ENTERTAINMENT", "TRADITION", "SOCIAL"],
+  "hobbies": ["DANCING", "MUSIC", "ART", "TRAVELING", "SOCIAL"],
+  "themes": ["AFRO_BRAZILIAN", "FOLKLORE", "CULTURAL", "BAROQUE", "ROMANTIC"]
+}
+Name: Pedro Henrique Almeida
+Age: 47
+Gender: Male
+Occupation: Bus Tour Operator
+Interests: Urban Development, Local Legends, Photography
+
+json
+{
+  "motivations": ["EXPLORATION", "EDUCATION", "IMMERSIVE_EXPERIENCE", "SOCIAL", "HERITAGE"],
+  "hobbies": ["PHOTOGRAPHY", "TRAVELING", "READING", "ADVENTURE", "LEARNING"],
+  "themes": ["URBAN_ART", "HISTORY", "MODERN", "COLONIAL", "ADVENTURE"]
+}
+Name: Mariana Silva
+Age: 52
+Gender: Female
+Occupation: Church Archivist
+Interests: Sacred Art, Genealogy, Restoration
+
+json
+{
+  "motivations": ["HERITAGE", "SPIRITUALITY", "ARTISTIC_VALUE", "EDUCATION", "TRADITION"],
+  "hobbies": ["READING", "VOLUNTEERING", "ART", "LEARNING", "TRAVELING"],
+  "themes": ["RELIGIOUS", "BAROQUE", "HISTORY", "ARCHITETURAL_STYLE", "COLONIAL"]
+}
+Name: Lucas Mendonça
+Age: 31
+Gender: Male
+Occupation: Surf Instructor
+Interests: Oceanography, Beach Cleanups, Capoeira
+
+json
+{
+  "motivations": ["ADVENTURE", "EXPLORATION", "SOCIAL", "RELAXATION", "IDENTITY"],
+  "hobbies": ["ADVENTURE", "MUSIC", "VOLUNTEERING", "DANCING", "TRAVELING"],
+  "themes": ["NATURE", "AFRO_BRAZILIAN", "ADVENTURE", "CULTURAL", "FOLKLORE"]
+}
+Name: Camila Fernandes
+Age: 38
+Gender: Female
+Occupation: Daycare Coordinator
+Interests: Educational Toys, Puppet Theater, Community Festivals
+
+json
+{
+  "motivations": ["FAMILY", "EDUCATION", "SOCIAL", "CREATIVITY", "ENTERTAINMENT"],
+  "hobbies": ["THEATER", "ART", "READING", "VOLUNTEERING", "MUSIC"],
+  "themes": ["FAMILY_FRIENDLY", "FOLKLORE", "ROMANTIC", "CULTURAL", "HISTORY"]
+}
+Name: Gabriel Souza
+Age: 26
+Gender: Male
+Occupation: Street Artist
+Interests: Graffiti History, Social Movements, Digital Art
+
+json
+{
+  "motivations": ["CREATIVITY", "ARTISTIC_VALUE", "CULTURE", "IDENTITY", "SOCIAL"],
+  "hobbies": ["ART", "TECH", "PHOTOGRAPHY", "TRAVELING", "MUSIC"],
+  "themes": ["URBAN_ART", "MODERN", "AFRO_BRAZILIAN", "ADVENTURE", "COLONIAL"]
+}
+Mais uma vez, não existe "ADVENTURE", retorne a lista corrigindo os erros e mantendo os demais - Name: Name: Lucas Mendonça
+Age: 31
+Gender: Male
+Occupation: Surf Instructor
+Interests: Oceanography, Beach Cleanups, Capoeira
+
+json
+{
+  "motivations": ["ADVENTURE", "EXPLORATION", "SOCIAL", "RELAXATION", "IDENTITY"],
+  "hobbies": ["ADVENTURE", "MUSIC", "VOLUNTEERING", "DANCING", "TRAVELING"],
+  "themes": ["NATURE", "AFRO_BRAZILIAN", "ADVENTURE", "CULTURAL", "FOLKLORE"]
+}
+We are given a user profile for Lucas Mendonça and need to correct the JSON by removing "ADVENTURE" from motivations and hobbies (since "ADVENTURE" is not in the motivations enum, but it is in hobbies and themes). However, note that the themes category does include "ADVENTURE", so that one is acceptable.
+For motivations, we must choose from the provided list. Since Lucas is a surf instructor with interests in oceanography, beach cleanups, and capoeira, we can replace "ADVENTURE" with something like "EXPLORATION" (already present) or another suitable term. But note: the motivations list does not have "ADVENTURE". We already have "EXPLORATION", "SOCIAL", "RELAXATION", "IDENTITY". We need to replace "ADVENTURE" in motivations.
+Similarly, in hobbies, "ADVENTURE" is allowed (because it's in the hobbies enum). So we can keep it there.
+But wait, the user's profile for Lucas Mendonça has:
+Motivations: we had ["ADVENTURE", ...] -> we must remove "ADVENTURE" and replace with one from the motivations enum that is not already used and fits.
+Possible replacements: "IMMERSIVE_EXPERIENCE", "CULTURE", etc.
+Let's replace "ADVENTURE" in motivations with "IMMERSIVE_EXPERIENCE" (fitting for someone who wants to experience the ocean and culture deeply) or "CULTURE" (since capoeira is cultural). Alternatively, "SPIRITUALITY" might relate to the ocean and capoeira? But let's choose "CULTURE".
+Alternatively, we can also consider "ARTISTIC_VALUE" for capoeira as an art? But capoeira is more cultural and traditional. So "CULTURE" or "TRADITION". Since capoeira is a traditional Afro-Brazilian art, we can use "CULTURE".
+We'll replace "ADVENTURE" in motivations with "CULTURE".
+So corrected motivations: ["EXPLORATION", "SOCIAL", "RELAXATION", "IDENTITY", "CULTURE"]
+But note: the original had "ADVENTURE" and "EXPLORATION" both? Actually, the original list was: ["ADVENTURE", "EXPLORATION", "SOCIAL", "RELAXATION", "IDENTITY"] -> we are replacing "ADVENTURE" with "CULTURE".
+Now, for hobbies: we have "ADVENTURE" which is allowed. So we keep it.
+Themes: we have two "ADVENTURE"? Actually, the list is: ["NATURE", "AFRO_BRAZILIAN", "ADVENTURE", "CULTURAL", "FOLKLORE"] -> that's five, but note that "ADVENTURE" is only once. The correction note said "Mais uma vez, não existe 'ADVENTURE'" but actually in themes it does exist. The problem was in motivations and hobbies? Wait, the user's message says: "não existe 'ADVENTURE'" but then points to the JSON. Looking at the context, the user is correcting the previous output where "ADVENTURE" was used in motivations? Because in the provided enums, motivations does not have "ADVENTURE", but hobbies and themes do.
+So in Lucas's profile, the error is only in motivations (using "ADVENTURE"). Hobbies and themes are okay.
+Therefore, we only correct the motivations array.
+Revised JSON for Lucas Mendonça:
+```json
+{
+  "motivations": ["CULTURE", "EXPLORATION", "SOCIAL", "RELAXATION", "IDENTITY"],
+  "hobbies": ["ADVENTURE", "MUSIC", "VOLUNTEERING", "DANCING", "TRAVELING"],
+  "themes": ["NATURE", "AFRO_BRAZILIAN", "ADVENTURE", "CULTURAL", "FOLKLORE"]
+}
+```
+But wait, the original motivations had five items. We replaced one. Now we have five again.
+However, note that the original motivations array had five items, and we are replacing the first one ("ADVENTURE") with "CULTURE". The order doesn't matter, but we are keeping the other four.
+Let's output the entire set of 10 profiles with this correction.
+Perfil corrigido:
+
+text
+Name: Lucas Mendonça  
+Age: 31  
+Gender: Male  
+Occupation: Surf Instructor  
+Interests: Oceanography, Beach Cleanups, Capoeira  
+```json
+{
+  "motivations": ["EXPLORATION", "SOCIAL", "RELAXATION", "IDENTITY", "IMMERSIVE_EXPERIENCE"],
+  "hobbies": ["ADVENTURE", "MUSIC", "VOLUNTEERING", "DANCING", "TRAVELING"],
+  "themes": ["NATURE", "AFRO_BRAZILIAN", "ADVENTURE", "CULTURAL", "FOLKLORE"]
+}
+Lista Completa Revisada (10 perfis):
+Name: Ana Beatriz Lima
+Age: 24
+Gender: Female
+Occupation: Environmental Science Student
+Interests: Ecology, Birdwatching, Photography
+
+json
+{
+  "motivations": ["EXPLORATION", "EDUCATION", "ARTISTIC_VALUE", "IMMERSIVE_EXPERIENCE", "RELAXATION"],
+  "hobbies": ["PHOTOGRAPHY", "HIKING", "LEARNING", "TRAVELING", "READING"],
+  "themes": ["NATURE", "ADVENTURE", "CULTURAL", "HISTORY", "FOLKLORE"]
+}
+Name: Carlos Eduardo Santos
+Age: 58
+Gender: Male
+Occupation: History Teacher
+Interests: Colonial Architecture, Archives, Storytelling
+
+json
+{
+  "motivations": ["HERITAGE", "EDUCATION", "CULTURE", "IDENTITY", "TRADITION"],
+  "hobbies": ["READING", "THEATER", "LEARNING", "TRAVELING", "VOLUNTEERING"],
+  "themes": ["COLONIAL", "BAROQUE", "HISTORY", "ARCHITETURAL_STYLE", "AFRO_BRAZILIAN"]
+}
+Name: Fernanda Oliveira
+Age: 35
+Gender: Female
+Occupation: Pastry Chef
+Interests: Culinary History, Food Styling, Cultural Exchange
+
+json
+{
+  "motivations": ["GASTRONOMY", "CREATIVITY", "TRADITION", "ARTISTIC_VALUE", "SOCIAL"],
+  "hobbies": ["GASTRONOMY", "ART", "TRAVELING", "MUSIC", "DANCING"],
+  "themes": ["GASTRONOMIC", "AFRO_BRAZILIAN", "COLONIAL", "URBAN_ART", "CULTURAL"]
+}
+Name: Rafael Costa
+Age: 41
+Gender: Male
+Occupation: Urban Gardener
+Interests: Medicinal Plants, Sustainability, Community Projects
+
+json
+{
+  "motivations": ["RELAXATION", "SPIRITUALITY", "SOCIAL", "IMMERSIVE_EXPERIENCE", "IDENTITY"],
+  "hobbies": ["GARDENING", "VOLUNTEERING", "HIKING", "READING", "LEARNING"],
+  "themes": ["NATURE", "FAMILY_FRIENDLY", "ROMANTIC", "RELIGIOUS", "FOLKLORE"]
+}
+Name: Juliana Ribeiro
+Age: 29
+Gender: Female
+Occupation: Dance Instructor
+Interests: Folk Dances, Costume Design, Percussion
+
+json
+{
+  "motivations": ["ARTISTIC_VALUE", "CULTURE", "ENTERTAINMENT", "TRADITION", "SOCIAL"],
+  "hobbies": ["DANCING", "MUSIC", "ART", "TRAVELING", "SOCIAL"],
+  "themes": ["AFRO_BRAZILIAN", "FOLKLORE", "CULTURAL", "BAROQUE", "ROMANTIC"]
+}
+Name: Pedro Henrique Almeida
+Age: 47
+Gender: Male
+Occupation: Bus Tour Operator
+Interests: Urban Development, Local Legends, Photography
+
+json
+{
+  "motivations": ["EXPLORATION", "EDUCATION", "IMMERSIVE_EXPERIENCE", "SOCIAL", "HERITAGE"],
+  "hobbies": ["PHOTOGRAPHY", "TRAVELING", "READING", "ADVENTURE", "LEARNING"],
+  "themes": ["URBAN_ART", "HISTORY", "MODERN", "COLONIAL", "ADVENTURE"]
+}
+Name: Mariana Silva
+Age: 52
+Gender: Female
+Occupation: Church Archivist
+Interests: Sacred Art, Genealogy, Restoration
+
+json
+{
+  "motivations": ["HERITAGE", "SPIRITUALITY", "ARTISTIC_VALUE", "EDUCATION", "TRADITION"],
+  "hobbies": ["READING", "VOLUNTEERING", "ART", "LEARNING", "TRAVELING"],
+  "themes": ["RELIGIOUS", "BAROQUE", "HISTORY", "ARCHITETURAL_STYLE", "COLONIAL"]
+}
+Name: Lucas Mendonça
+Age: 31
+Gender: Male
+Occupation: Surf Instructor
+Interests: Oceanography, Beach Cleanups, Capoeira
+
+json
+{
+  "motivations": ["EXPLORATION", "SOCIAL", "RELAXATION", "IDENTITY", "IMMERSIVE_EXPERIENCE"],
+  "hobbies": ["ADVENTURE", "MUSIC", "VOLUNTEERING", "DANCING", "TRAVELING"],
+  "themes": ["NATURE", "AFRO_BRAZILIAN", "ADVENTURE", "CULTURAL", "FOLKLORE"]
+}
+Name: Camila Fernandes
+Age: 38
+Gender: Female
+Occupation: Daycare Coordinator
+Interests: Educational Toys, Puppet Theater, Community Festivals
+
+json
+{
+  "motivations": ["FAMILY", "EDUCATION", "SOCIAL", "CREATIVITY", "ENTERTAINMENT"],
+  "hobbies": ["THEATER", "ART", "READING", "VOLUNTEERING", "MUSIC"],
+  "themes": ["FAMILY_FRIENDLY", "FOLKLORE", "ROMANTIC", "CULTURAL", "HISTORY"]
+}
+Name: Gabriel Souza
+Age: 26
+Gender: Male
+Occupation: Street Artist
+Interests: Graffiti History, Social Movements, Digital Art
+
+json
+{
+  "motivations": ["CREATIVITY", "ARTISTIC_VALUE", "CULTURE", "IDENTITY", "SOCIAL"],
+  "hobbies": ["ART", "TECH", "PHOTOGRAPHY", "TRAVELING", "MUSIC"],
+  "themes": ["URBAN_ART", "MODERN", "AFRO_BRAZILIAN", "ADVENTURE", "COLONIAL"]
+}
+New chat

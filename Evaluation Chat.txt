@@ -1,0 +1,3393 @@
+You are assisting a tourism recommendation system to evaluate the relevance of a list of POIs (Points of Interest) for a specific user. Based on the user's profile and preferences, analyze each POI and return a binary score:
+
+1 if the user is likely to like or be interested in the POI;
+
+0 if the user is likely to dislike or not care about the POI.
+
+Base your evaluation on the alignment between:
+
+The description or nature of each POI;
+
+The user's motivations, hobbies, and thematic preferences.
+
+
+Recommendation POIs:
+Baseado em suas preferências, encontramos 5 pontos de interesse. Avalie as recomendações para melhorar futuras sugestões:
+
+#1
+Cais do Sertão
+Um dos mais modernos equipamentos culturais do Brasil, o Cais do Sertão, instalado no antigo Armazém 10 do Porto do Recife, é um local de convivência, diversão e conhecimento, polo gerador de novas ideias e experiências. Abrigando e reverenciando a obra de Luiz Gonzaga, o grande homenageado do espaço, traz para a beira-mar da capital do estado um pouco do solo rico e generoso da cultura popular do sertão. O museu teve como curadora e diretora de criação a socióloga pernambucana Isa Grinspum Ferraz, também autora do Museu da Língua Portuguesa em São Paulo.
+
+Bairro não especificado, Recife
+
+Gostei
+
+Não gostei
+#2
+Torre Malakoff
+Torre Malakoff, localizada no Recife Antigo, na cidade do Recife, foi batizada com o nome de uma das torres da fortaleza de Sebastopol, durante a Guerra da Crimeia. A Torre Malakoff é um importante monumento localizado no Bairro do Recife, área tombada pelo Iphan. Construído no século 19 (com materiais provenientes da demolição do Forte do Bom Jesus) para servir como observatório astronômico e portão monumental do Arsenal da Marinha. O caráter militar da obra está presente em sua fachada e na simetria de sua planta lembrando também mesquitas do Oriente.
+
+Bairro não especificado, Recife
+
+Gostei
+
+Não gostei
+#3
+Casa da Cultura
+A Casa da Cultura é um centro de comercialização de artesanato da cidade do Recife, capital do estado brasileiro de Pernambuco. Funciona no edifício da antiga Casa de Detenção do Recife, que foi a maior cadeia do Brasil no século XIX e a primeira prisão radial pan-ótica da América do Sul. Foi também, durante a Ditadura Civil-militar, um dos antros das torturas e assassinatos, sendo um de seus destaques Amaro Luiz de Carvalho.
+
+São José, Recife
+
+Gostei
+
+Não gostei
+#4
+Palácio da Justiça
+Prédio histórico tombado em estilo neoclássico que abriga o Tribunal de Justiça de Pernambuco. Possui um acervo de arte essencial para visitantes, incluindo obras que remontam ao centenário da Confederação do Equador.
+
+Santo Antônio, Recife
+
+Gostei
+
+Não gostei
+#5
+Palácio do Campo das Princesas
+Sede administrativa do governo de Pernambuco, construída em 1841. Destaque para o baobá secular em frente ao palácio, possivelmente inspiração para "O Pequeno Príncipe". Localiza-se próximo ao Teatro de Santa Isabel.
+
+Santo Antônio, Recife
+Context:
+Name: João Silva
+Age: 28
+Gender: Male
+Occupation: Software Developer
+Interests: Technology, Reading, Traveling
+
+json
+{
+  "motivations": ["EXPLORATION", "EDUCATION", "CREATIVITY", "IMMERSIVE_EXPERIENCE", "SOCIAL"],
+  "hobbies": ["TECH", "READING", "TRAVELING", "LEARNING", "MUSIC"],
+  "themes": ["MODERN", "URBAN_ART", "CULTURAL", "ADVENTURE", "ARCHITETURAL_STYLE"]
+}
+--- Output format (JSON array only) ---
+A list of objects with:
+
+"poiName": <ID of the POI>,
+
+"scoreValue": <0 or 1 based on relevance to the user>
+
+Example:
+
+json
+Copiar
+Editar
+[
+  { "poiId": name1, "scoreValue": 0 },
+  { "poiId": name2, "scoreValue": 0 },
+  { "poiId":name3, "scoreValue": 1 },
+  { "poiId": name4, "scoreValue": 1 },
+  { "poiId": name5, "scoreValue": 1 }
+]
+-- Output rules --
+
+Return only the JSON list.
+
+Do not explain or justify your scores.
+
+Ensure scoring is coherent with user preferences.
+We are given a user profile and preferences for João Silva, a 28-year-old male software developer.
+ His interests: Technology, Reading, Traveling.
+ Motivations: EXPLORATION, EDUCATION, CREATIVITY, IMMERSIVE_EXPERIENCE, SOCIAL.
+ Hobbies: TECH, READING, TRAVELING, LEARNING, MUSIC.
+ Themes: MODERN, URBAN_ART, CULTURAL, ADVENTURE, ARCHITETURAL_STYLE.
+ We have 5 POIs to evaluate:
+ #1: Cais do Sertão
+   - Description: A modern cultural facility, museum honoring Luiz Gonzaga (music) and showcasing the culture of the sertão (Brazilian hinterland). It's a place for conviviality, fun, and knowledge, generating new ideas and experiences.
+   - Alignment:
+     - Themes: CULTURAL (strong), MODERN (it's one of the most modern cultural facilities in Brazil), and possibly CREATIVITY (as it generates new ideas) and MUSIC (Luiz Gonzaga).
+     - Motivations: EDUCATION, IMMERSIVE_EXPERIENCE, EXPLORATION (as a museum), and SOCIAL (conviviality).
+     - Hobbies: MUSIC (Luiz Gonzaga connection) and LEARNING.
+   - Since the user has MUSIC as a hobby and CULTURAL as a theme, and the place is modern and educational, this should be a good fit.
+ #2: Torre Malakoff
+   - Description: A historic tower (19th century) in Recife Antigo, built as an astronomical observatory and monumental gate of the Navy Arsenal. It has military character and architectural style reminiscent of the Orient.
+   - Alignment:
+     - Themes: ARCHITETURAL_STYLE (strong, due to the historic building and its style), CULTURAL (as a monument).
+     - Motivations: EXPLORATION, EDUCATION (learning about history and architecture).
+     - Hobbies: LEARNING (about history and architecture).
+   - The user has ARCHITETURAL_STYLE as a theme and LEARNING as a hobby, so this should be relevant.
+ #3: Casa da Cultura
+   - Description: A center for handicraft sales in a building that was an old prison (19th century) and later a site of torture during the dictatorship. It has a dark history.
+   - Alignment:
+     - Themes: CULTURAL (as it's about artisanal crafts) and possibly URBAN_ART (if we consider the handicrafts as art, but the description emphasizes the building's history as a prison and torture site).
+     - Motivations: EDUCATION (about history) and EXPLORATION, but note the dark history might not align with the positive motivations (like CREATIVITY or SOCIAL) unless the user is specifically interested in historical prisons or human rights issues. However, the user's profile doesn't indicate an interest in dark tourism or history of torture.
+     - Hobbies: The primary activity is shopping for handicrafts, which might not strongly align with the user's hobbies (TECH, READING, TRAVELING, LEARNING, MUSIC). The history aspect might appeal to LEARNING, but the focus is on the prison's dark past, which might not be a positive experience for everyone.
+   - Considering the user's themes and hobbies, this might not be as strong. The user has ADVENTURE, but this doesn't seem adventurous. Also, the themes URBAN_ART and MODERN are not strongly present. The building is historic but the use is now commercial. The dark history might not be appealing without a specific interest.
+ #4: Palácio da Justiça
+   - Description: A historic neoclassical building housing the Court of Justice of Pernambuco, with an art collection including pieces from the centenary of the Confederação do Equador.
+   - Alignment:
+     - Themes: ARCHITETURAL_STYLE (neoclassical) and CULTURAL (art collection).
+     - Motivations: EDUCATION (learning about history and art), EXPLORATION.
+     - Hobbies: LEARNING (about history and art).
+   - The user has ARCHITETURAL_STYLE as a theme and LEARNING as a hobby, so this should be relevant.
+ #5: Palácio do Campo das Princesas
+   - Description: The administrative seat of the government of Pernambuco, built in 1841. It highlights a century-old baobab tree in front, possibly an inspiration for "The Little Prince". Located near the Santa Isabel Theater.
+   - Alignment:
+     - Themes: ARCHITETURAL_STYLE (historic palace) and CULTURAL (as a historic site). The baobab tree and the literary connection (The Little Prince) might appeal to READING (a hobby) and CREATIVITY.
+     - Motivations: EXPLORATION, EDUCATION (about history and literature), and possibly CREATIVITY (literary inspiration).
+     - Hobbies: READING (connection to literature) and LEARNING (history).
+   - This seems to align with multiple aspects: the user's hobby of reading (literary connection) and themes of architectural style.
+ Now, let's map each POI to a score:
+ POI #1: Cais do Sertão
+   - Strong in CULTURAL, MODERN, and MUSIC (hobby) -> score 1.
+ POI #2: Torre Malakoff
+   - Strong in ARCHITETURAL_STYLE and CULTURAL -> score 1.
+ POI #3: Casa da Cultura
+   - The primary focus is on handicrafts (which is cultural) and the history of the prison. However, the dark history (torture) might be a negative for a general tourist without specific interest. The user's hobbies and themes don't strongly align with handicrafts or dark history. Also, note that the user has SOCIAL and CREATIVITY motivations, but this place is a shopping center with a dark past. We might consider that the user has no expressed interest in crafts or dark history. Therefore, it might not be as relevant -> score 0.
+ POI #4: Palácio da Justiça
+   - Strong in ARCHITETURAL_STYLE and CULTURAL (art collection) -> aligns with the user's themes and hobbies -> score 1.
+ POI #5: Palácio do Campo das Princesas
+   - Strong in ARCHITETURAL_STYLE, and the literary connection (The Little Prince) to READING hobby -> score 1.
+ However, note that the user also has the theme ADVENTURE and URBAN_ART, which none of the POIs strongly address (except maybe ADVENTURE is not really covered). But we don't see any POI that is about adventure. The user also has TECH as a hobby, but none of the POIs are tech-related. But we are scoring based on the best alignment we have.
+ Therefore, the scores:
+ #1: 1
+ #2: 1
+ #3: 0
+ #4: 1
+ #5: 1
+ But note: the POIs are identified by the name in the input. In the input, they are numbered as #1, #2, etc. However, in the output, we are to use the POI name? The instruction says: "poiName": <ID of the POI>
+ Looking at the example output: 
+   [ { "poiId": name1, ... } ]
+ In the input, each POI has a title (e.g., "Cais do Sertão"). But note that the example uses "name1", "name2", etc. However, in the actual output, we are expected to use the exact ID? 
+ The problem says: "Return only the JSON list." and the example uses "poiId" with a name that is not the full title. But in the example, it's "name1", "name2", etc. However, in our input, the POIs are numbered #1, #2, #3, #4, #5.
+ We should use the identifier as given in the input? The input uses:
+   #1, #2, #3, #4, #5.
+ But note the example output in the problem uses "poiId": name1, etc. However, the problem does not specify the exact string to use for poiId.
+ Looking at the input, the POI is introduced by a line with the number and the name? Actually, the input for each POI starts with a line that has the number and then the name on the next line? Actually, the format:
+ #1
+ Cais do Sertão
+ So, we can use the name as the poiId? Or the number? The problem says: "poiName": <ID of the POI>
+ But in the example, it uses "poiId", but the output format says:
+   "poiName": <ID of the POI>
+ Actually, the output format example uses:
+   { "poiId": name1, "scoreValue": 0 }
+ But the instruction above the example says:
+   "poiName": <ID of the POI>
+ And then in the example, they use "poiId". This is inconsistent.
+ Let me re-read the output format:
+   A list of objects with:
+     "poiName": <ID of the POI>,
+     "scoreValue": <0 or 1 based on relevance to the user>
+ So the key is "poiName".
+ What should we use as the ID? The problem doesn't specify, but in the input we have:
+   #1: Cais do Sertão
+   #2: Torre Malakoff
+   etc.
+ Since the problem says "poiName", we can use the name of the POI (the title) as the ID? But note that the example output uses "name1", "name2", etc. which are not the actual names.
+ However, the problem says: "Return only the JSON list." and we must use the format.
+ Looking at the example output again:
+   [
+     { "poiId": name1, "scoreValue": 0 },
+     { "poiId": name2, "scoreValue": 0 },
+     { "poiId": name3, "scoreValue": 1 },
+     { "poiId": name4, "scoreValue": 1 },
+     { "poiId": name5, "scoreValue": 1 }
+   ]
+ But wait, the example output uses "poiId", but the instruction says "poiName". This is conflicting.
+ Let me check the problem:
+   Output format (JSON array only) ---
+   A list of objects with:
+   "poiName": <ID of the POI>,
+   "scoreValue": <0 or 1 based on relevance to the user>
+ So the key should be "poiName", but the example uses "poiId". This might be a typo in the problem.
+ Since the problem says "poiName", we will use:
+   "poiName": "Cais do Sertão"
+ But note: the example output uses a placeholder (name1, name2) and the key "poiId". This is confusing.
+ However, the problem states: "Base your evaluation on the alignment between ..." and then lists the POIs by their names. So we should use the actual name.
+ Alternatively, to be safe, we can use the number? But the problem says "ID", and the input has a number (#1, etc.). But the example output uses "name1", which is not the number.
+ Given the ambiguity, I will follow the instruction that says "poiName" and use the actual name of the POI.
+ But note: the problem says "poiName", so we use the name.
+ Alternatively, the problem might have intended to use the identifier #1, #2, etc. as the ID? Because the example output uses "name1", which is similar to the way the input is labeled (#1).
+ However, the problem does not specify. Since the example output uses "name1", "name2", etc., which are derived from the input labels (#1, #2), we can use:
+   poiName: "1", "2", ... OR poiName: "#1", "#2", ...?
+ The example output uses "name1", which is without the '#'.
+ But the input uses "#1". To be consistent with the input labeling, we can use the string of the number without the '#'? 
+ However, the problem says: "poiName": <ID of the POI>
+ And the POI is introduced by "#1", so the ID might be "1".
+ But note the example: they use "name1", which is a string. We don't have to use numbers.
+ Since the problem doesn't specify, and to avoid ambiguity, I will use the number as a string (without the '#') as the ID. So:
+   POI #1 -> poiName: "1"
+   POI #2 -> poiName: "2"
+   ...
+ This matches the example output style (name1, name2) if we think of "1", "2", etc. as the IDs.
+ Alternatively, if we look at the example output:
+   [ { "poiId": name1, ... } ]
+ They are using "name1", which is a variable? Actually, in the example, it's written as:
+   [
+     { "poiId": name1, "scoreValue": 0 },
+     ...
+ So it's not valid JSON because the values are not in quotes. But the problem says "JSON array only". So I think the example is meant to be illustrative and we should use a string.
+ Given the confusion, I will use the string of the number (without the '#') as the ID, because that is the unique identifier provided for each POI in the input.
+ So:
+   POI #1 -> "1"
+   POI #2 -> "2"
+   POI #3 -> "3"
+   POI #4 -> "4"
+   POI #5 -> "5"
+ Therefore, the output:
+ [
+   { "poiName": "1", "scoreValue": 1 },
+   { "poiName": "2", "scoreValue": 1 },
+   { "poiName": "3", "scoreValue": 0 },
+   { "poiName": "4", "scoreValue": 1 },
+   { "poiName": "5", "scoreValue": 1 }
+ ]
+ However, note that the example output in the problem uses the key "poiId", but the problem instruction says "poiName". We will use "poiName" as per the instruction.
+ But wait, the example output in the problem uses "poiId", which contradicts the instruction. This is an error in the problem statement.
+ We must follow the instruction: "A list of objects with: 'poiName': ..."
+ So we use "poiName".
+ Alternatively, if the problem meant to use "poiId", then we should use "poiId". But the instruction explicitly says "poiName".
+ Since the problem says: "Output format (JSON array only) ---" and then lists the keys as "poiName" and "scoreValue", we use:
+   "poiName"
+ Therefore, final output:
+[
+  { "poiName": "1", "scoreValue": 1 },
+  { "poiName": "2", "scoreValue": 1 },
+  { "poiName": "3", "scoreValue": 0 },
+  { "poiName": "4", "scoreValue": 1 },
+  { "poiName": "5", "scoreValue": 1 }
+]
+[
+{ "poiName": "1", "scoreValue": 1 },
+{ "poiName": "2", "scoreValue": 1 },
+{ "poiName": "3", "scoreValue": 0 },
+{ "poiName": "4", "scoreValue": 1 },
+{ "poiName": "5", "scoreValue": 1 }
+]
+
+You are assisting a tourism recommendation system to evaluate the relevance of a list of POIs (Points of Interest) for a specific user. Based on the user's profile and preferences, analyze each POI and return a binary score:
+
+1 if the user is likely to like or be interested in the POI;
+
+0 if the user is likely to dislike or not care about the POI.
+
+Base your evaluation on the alignment between:
+
+The description or nature of each POI;
+
+The user's motivations, hobbies, and thematic preferences.
+
+
+Recommendation POIs:
+#1
+Museu da Abolição
+O Museu da Abolição — Centro de Referência da Cultura Afro-Brasileira é um museu localizado na cidade do Recife, capital de Pernambuco, Brasil. Vinculado ao Instituto Brasileiro de Museus (IBRAM) e ao Ministério da Cultura, é um dos raros museus no país a contemplar esta parte da história, e tem suas ações norteadas pelos princípios da nova museologia e da socio museologia. Atualmente o Museu conta com: 130 peças do acervo museológico; 30 metros lineares de acervo bibliográfico; E 2 metros lineares de acervo hemerográfico.
+
+Madalena, Recife
+
+Gostei
+
+Não gostei
+#2
+Igreja Nossa Senhora do Rosário dos Homens Pretos
+Fundada em 1662, pela Venerável Confraria de Nossa Senhora do Rosário dos Homens Pretos de Santo Antônio, é a segunda igreja fundada por uma irmandade de negros do Brasil. No entorno da igreja surgiu o primeiro folguedo afro-brasileiro: a congada. O culto a Nossa Senhora do Rosário foi introduzido na cultura dos escravos africanos no Brasil pelos jesuítas na catequese.
+
+Santo Antônio, Recife
+
+Gostei
+
+Não gostei
+#3
+Teatro do Parque
+Teatro histórico com inovação arquitetônica: um jardim interno para climatização. Construído em aço e cimento em 1915, com decoração de Henrique Elliot e Mário Nunes. Mantém conexão histórica com o Hotel do Parque para venda de ingressos.
+
+Boa Vista, Recife
+
+Gostei
+
+Não gostei
+#4
+Paço do Frevo
+O Paço do Frevo é um espaço cultural dedicado à difusão, pesquisa e formação nas áreas de dança e música do frevo. Recebeu mais de 120 mil visitantes em seu primeiro ano de funcionamento, sendo um dos locais mais procurados de Pernambuco.
+
+Bairro não especificado, Recife
+
+Gostei
+
+Não gostei
+#5
+Sede do Galo da Madrugada
+Atualmente a sede do Galo da Madrugada tem o programa "Galo - Alegria o Ano Inteiro", que promove festividades de valorização da cultura pernambucana não só no Carnaval, mas durante os doze meses do ano. Um exemplo é a prévia Quinta no Galo, que inicia suas edições no segundo semestre e segue até a véspera do Sábado de Zé Pereira. A festa conta com atrações principais e convidadas, além de grupos multiculturais, como palhaços mascarados do Galo, Maracatu Rural (Baque Solto), Maracatu de Baque Virado, Caboclinhos, grupo de passistas de Frevo, Bloco Lírico e fantasias do Galo da Madrugada.
+
+São José, Recife
+
+Gostei
+
+Não gostei
+Context:
+Name: Maria Oliveira
+Age: 42
+Gender: Female
+Occupation: School Teacher
+Interests: Education, Literature, Community
+
+json
+{
+  "motivations": ["EDUCATION", "CULTURE", "HERITAGE", "IDENTITY", "SOCIAL"],
+  "hobbies": ["READING", "LEARNING", "VOLUNTEERING", "THEATER", "ART"],
+  "themes": ["HISTORY", "AFRO_BRAZILIAN", "FOLKLORE", "FAMILY_FRIENDLY", "CULTURAL"]
+}
+--- Output format (JSON array only) ---
+A list of objects with:
+
+"poiName": <ID of the POI>,
+
+"scoreValue": <0 or 1 based on relevance to the user>
+
+Example:
+
+json
+Copiar
+Editar
+[
+  { "poiId": name1, "scoreValue": 0 },
+  { "poiId": name2, "scoreValue": 0 },
+  { "poiId":name3, "scoreValue": 1 },
+  { "poiId": name4, "scoreValue": 1 },
+  { "poiId": name5, "scoreValue": 1 }
+]
+-- Output rules --
+
+Return only the JSON list.
+
+Do not explain or justify your scores.
+
+Ensure scoring is coherent with user preferences.
+We are given a user profile for Maria Oliveira, a 42-year-old female school teacher with interests in Education, Literature, and Community.
+ Her motivations include: EDUCATION, CULTURE, HERITAGE, IDENTITY, SOCIAL
+ Her hobbies include: READING, LEARNING, VOLUNTEERING, THEATER, ART
+ Her themes include: HISTORY, AFRO_BRAZILIAN, FOLKLORE, FAMILY_FRIENDLY, CULTURAL
+ We have 5 POIs to evaluate:
+ #1: Museu da Abolição
+    - Focuses on Afro-Brazilian culture and history (specifically the abolition of slavery)
+    - Aligns with themes: HISTORY, AFRO_BRAZILIAN, CULTURAL
+    - Motivations: EDUCATION, CULTURE, HERITAGE, IDENTITY
+ #2: Igreja Nossa Senhora do Rosário dos Homens Pretos
+    - A historic church founded by a black brotherhood, significant in Afro-Brazilian history and culture
+    - Themes: HISTORY, AFRO_BRAZILIAN, CULTURAL
+    - Motivations: EDUCATION, CULTURE, HERITAGE, IDENTITY
+ #3: Teatro do Parque
+    - A historic theater with architectural innovation, and it has a connection to the Hotel do Parque for ticket sales.
+    - Themes: HISTORY, CULTURAL (and possibly architectural, but not explicitly in the user's themes)
+    - Motivations: CULTURE, and potentially EDUCATION (if she is interested in the history and architecture) and THEATER (as a hobby)
+    - Hobbies: THEATER and ART are direct matches.
+ #4: Paço do Frevo
+    - A cultural center dedicated to frevo (a dance and music style from Pernambuco, recognized as cultural heritage)
+    - Themes: FOLKLORE (as frevo is part of the local folklore), CULTURAL, and possibly FAMILY_FRIENDLY (though not explicit)
+    - Motivations: CULTURE, EDUCATION (as it involves research and formation), and SOCIAL
+ #5: Sede do Galo da Madrugada
+    - The headquarters of a famous carnival group that promotes Pernambuco culture throughout the year, including various cultural expressions.
+    - Themes: FOLKLORE, CULTURAL, and possibly FAMILY_FRIENDLY (if the events are suitable for families)
+    - Motivations: CULTURE, SOCIAL, IDENTITY (as it values local culture)
+ Now, let's map each POI to the user's profile:
+ #1: Strong alignment with the themes (HISTORY, AFRO_BRAZILIAN, CULTURAL) and motivations (EDUCATION, CULTURE, HERITAGE, IDENTITY). Score 1.
+ #2: Similarly, strong alignment with the same themes and motivations. Score 1.
+ #3: Matches the hobby THEATER and the motivation CULTURE. The theme HISTORY is also present. However, note that the user's themes do not explicitly include architecture, but the theater is a cultural and historical site. Since she has THEATER as a hobby, this is a strong match. Score 1.
+ #4: Frevo is a cultural expression that falls under folklore and cultural themes. The user has FOLKLORE and CULTURAL in her themes. Also, the motivation for CULTURE and EDUCATION (as it is a space for research and learning) is present. Score 1.
+ #5: The Galo da Madrugada promotes cultural events throughout the year, which aligns with the themes FOLKLORE and CULTURAL. The motivation for SOCIAL and CULTURE is also present. However, note that the user's hobbies include THEATER and ART, and this POI involves various cultural groups (like maracatu, frevo, etc.). It also has a social aspect. This seems relevant. Score 1.
+ But wait, let's double-check: All POIs seem to align with at least one of the user's motivations, hobbies, or themes? 
+ However, note the user is a school teacher interested in education, literature, and community. All these POIs have cultural and educational aspects. 
+ But the output rules require a binary score and we must be coherent.
+ After analysis, all 5 POIs are relevant to Maria's profile.
+ However, let's be cautious: 
+ - POI #5: Sede do Galo da Madrugada is about a carnival group and year-round festivities. The user has "FAMILY_FRIENDLY" as a theme. The description does not explicitly say it is family-friendly, but it does mention "festividades de valorização da cultura" and includes groups that might be family-oriented. Given the user's community interest and social motivation, it should be a match.
+ Therefore, we assign 1 to all.
+ But note: The example output in the instructions used "poiId" as the key, but the instruction says: 
+   "poiName": <ID of the POI>
+ The example uses "poiId", but the instruction says "poiName". We'll follow the instruction and use "poiName".
+ However, in the previous example, the output used the numeric ID as a string (e.g., "1", "2", etc.). We'll use the number as a string.
+ So the output will be:
+[
+  { "poiName": "1", "scoreValue": 1 },
+  { "poiName": "2", "scoreValue": 1 },
+  { "poiName": "3", "scoreValue": 1 },
+  { "poiName": "4", "scoreValue": 1 },
+  { "poiName": "5", "scoreValue": 1 }
+]
+ However, let me reconsider: Is there any POI that might not be a good fit?
+ - POI #3: Teatro do Parque. The user has THEATER as a hobby, so it's a direct match. But note: the description does not mention any current plays or educational programs. However, it is a historical theater with architectural innovation. The user's motivations include EDUCATION and CULTURE, and themes include HISTORY and CULTURAL. So it's still a match.
+ - POI #5: The description is about a carnival group. The user doesn't have carnival or music as a hobby? But note her hobbies: VOLUNTEERING, THEATER, ART. And her themes: FOLKLORE, CULTURAL. The Galo da Madrugada is a cultural icon and involves various art forms. Also, the social motivation is present. So it's a match.
+ Therefore, we assign 1 to all.
+ But wait, the previous example had a 0 in some. We are not forced to have 0s. If all are relevant, then all get 1.
+ However, let's look at the user's themes: AFRO_BRAZILIAN is present, and POI #1 and #2 are explicitly Afro-Brazilian. The others are not. But the user also has HISTORY, FOLKLORE, CULTURAL, and FAMILY_FRIENDLY. So the others are covered by these.
+ We are confident that all are 1.
+ Let's output accordingly.
+[
+{ "poiName": "1", "scoreValue": 1 },
+{ "poiName": "2", "scoreValue": 1 },
+{ "poiName": "3", "scoreValue": 1 },
+{ "poiName": "4", "scoreValue": 1 },
+{ "poiName": "5", "scoreValue": 1 }
+]
+
+You are assisting a tourism recommendation system to evaluate the relevance of a list of POIs (Points of Interest) for a specific user. Based on the user's profile and preferences, analyze each POI and return a binary score:
+
+1 if the user is likely to like or be interested in the POI;
+
+0 if the user is likely to dislike or not care about the POI.
+
+Base your evaluation on the alignment between:
+
+The description or nature of each POI;
+
+The user's motivations, hobbies, and thematic preferences.
+
+
+Recommendation POIs:
+Baseado em suas preferências, encontramos 5 pontos de interesse. Avalie as recomendações para melhorar futuras sugestões:
+
+#1
+Bistrô Negra Linda
+Culinária da Ilha de Deus Veja as opções de receitas tradicionais da Chef, confira os pratos típicos da culinária da Ilha de Deus que nós preparamos de maneira única! No cardápio você encontra Mariscadas, Siri no Casco, Pasteis de Sururu, Moqueca da Ilha, Escondidinho de Sururu, Peixes, Escudinho de Camarão e vários pratos diferentes que a Chef cria todos os dias.
+
+Casa Forte, Recife
+
+Gostei
+
+Não gostei
+#2
+Cachaçaria Carvalheira
+Entre mais de 2 mil barris de carvalho e sob o aroma da mais pura cachaça envelhecendo, cordas, gamelas, moendas e alambiques antigos dão a Cachaçaria Carvalheira um clima todo especial, cheio de charme, história e tradição. Aqui, você vai saber como uma das melhores cachaças do Brasil é fabricada e passear entre os bairros onde a mais pura bebida nacional descansa durante anos até estar pronto para ser engarrafado e consumido. Depois da visitação às instalações da fábrica, uma deliciosa degustação vai deixar a Cachaça Carvalheira para sempre nas suas melhores lembranças.
+
+Imbiribeira, Recife
+
+Gostei
+
+Não gostei
+#3
+Igreja Nossa Senhora do Rosário dos Homens Pretos
+Fundada em 1662, pela Venerável Confraria de Nossa Senhora do Rosário dos Homens Pretos de Santo Antônio, é a segunda igreja fundada por uma irmandade de negros do Brasil. No entorno da igreja surgiu o primeiro folguedo afro-brasileiro: a congada. O culto a Nossa Senhora do Rosário foi introduzido na cultura dos escravos africanos no Brasil pelos jesuítas na catequese.
+
+Santo Antônio, Recife
+
+Gostei
+
+Não gostei
+#4
+Museu da Abolição
+O Museu da Abolição — Centro de Referência da Cultura Afro-Brasileira é um museu localizado na cidade do Recife, capital de Pernambuco, Brasil. Vinculado ao Instituto Brasileiro de Museus (IBRAM) e ao Ministério da Cultura, é um dos raros museus no país a contemplar esta parte da história, e tem suas ações norteadas pelos princípios da nova museologia e da socio museologia. Atualmente o Museu conta com: 130 peças do acervo museológico; 30 metros lineares de acervo bibliográfico; E 2 metros lineares de acervo hemerográfico.
+
+Madalena, Recife
+
+Gostei
+
+Não gostei
+#5
+Museu de Arte Moderna Aloísio Magalhães
+O Museu de Arte Moderna Aloisio Magalhães ou MAMAM é um museu localizado na cidade do Recife, capital do estado brasileiro de Pernambuco. É considerado um centro de referência da produção moderna e contemporânea das artes visuais. Através da divulgação, registro e reflexão sobre a arte do presente e suas referências históricas, o MAMAM tem contribuído para a formação cultural do público e para o adensamento do meio institucional e artístico do Recife.
+
+Boa Vista, Recife
+
+Gostei
+
+
+#5
+Palácio do Campo das Princesas
+Sede administrativa do governo de Pernambuco, construída em 1841. Destaque para o baobá secular em frente ao palácio, possivelmente inspiração para "O Pequeno Príncipe". Localiza-se próximo ao Teatro de Santa Isabel.
+
+Santo Antônio, Recife
+Context:
+Name: Carlos Mendes
+Age: 35
+Gender: Male
+Occupation: Chef
+Interests: Gastronomy, Cultural Fusion, Music
+
+json
+{
+  "motivations": ["GASTRONOMY", "CREATIVITY", "CULTURE", "ARTISTIC_VALUE", "TRADITION"],
+  "hobbies": ["GASTRONOMY", "DANCING", "MUSIC", "TRAVELING", "SOCIAL"],
+  "themes": ["GASTRONOMIC", "AFRO_BRAZILIAN", "COLONIAL", "BAROQUE", "URBAN_ART"]
+}
+--- Output format (JSON array only) ---
+A list of objects with:
+
+"poiName": <ID of the POI>,
+
+"scoreValue": <0 or 1 based on relevance to the user>
+
+Example:
+
+json
+Copiar
+Editar
+[
+  { "poiId": name1, "scoreValue": 0 },
+  { "poiId": name2, "scoreValue": 0 },
+  { "poiId":name3, "scoreValue": 1 },
+  { "poiId": name4, "scoreValue": 1 },
+  { "poiId": name5, "scoreValue": 1 }
+]
+-- Output rules --
+
+Return only the JSON list.
+
+Do not explain or justify your scores.
+
+Ensure scoring is coherent with user preferences.
+json
+[
+  { "poiName": "1", "scoreValue": 1 },
+  { "poiName": "2", "scoreValue": 1 },
+  { "poiName": "3", "scoreValue": 1 },
+  { "poiName": "4", "scoreValue": 1 },
+  { "poiName": "5", "scoreValue": 0 }
+]
+You are assisting a tourism recommendation system to evaluate the relevance of a list of POIs (Points of Interest) for a specific user. Based on the user's profile and preferences, analyze each POI and return a binary score:
+
+1 if the user is likely to like or be interested in the POI;
+
+0 if the user is likely to dislike or not care about the POI.
+
+Base your evaluation on the alignment between:
+
+The description or nature of each POI;
+
+The user's motivations, hobbies, and thematic preferences.
+
+
+Recommendation POIs:
+Baseado em suas preferências, encontramos 5 pontos de interesse. Avalie as recomendações para melhorar futuras sugestões:
+
+#1
+Jardim Botânico do Recife
+O Jardim Botânico do Recife desenvolve atividades em educação ambiental, como caminhadas ecológicas, exposição permanente da mata atlântica, exibição de vídeos com temas ambientais e visitas a viveiros de plantas medicinais e florestais. Possui um orquidário e um meliponário de abelhas nativas.
+
+Curado, Recife
+
+Gostei
+
+Não gostei
+#2
+Catamaran Tours
+Pioneira nos segmentos de passeios náuticos em Pernambuco, a Catamaran Tours tem se destacado há 30 anos no cenário turístico local por todos os avanços conquistados, 20 deles em pleno coração da capital pernambucana. Foi uma empresa, comandada pela família Britto, que tornou a navegação de turismo pelos rios que cortam o centro do Recife em um dos programas mais procurados por locais e turistas.
+
+São José, Recife
+
+Gostei
+
+Não gostei
+#3
+Embaixada dos Bonecos Gigantes
+A Embaixada dos Bonecos Gigantes é uma exposição permanente de bonecos gigantes (também conhecidos como "bonecos de Olinda"), alegorias populares do Carnaval de Pernambuco. O local expõe 30 bonecos gigantes, incluindo ícones como Alceu Valença, Michael Jackson e Luiz Inácio Lula da Silva.
+
+Bairro não especificado, Recife
+
+Gostei
+
+Não gostei
+#4
+Torre Malakoff
+Torre Malakoff, localizada no Recife Antigo, na cidade do Recife, foi batizada com o nome de uma das torres da fortaleza de Sebastopol, durante a Guerra da Crimeia. A Torre Malakoff é um importante monumento localizado no Bairro do Recife, área tombada pelo Iphan. Construído no século 19 (com materiais provenientes da demolição do Forte do Bom Jesus) para servir como observatório astronômico e portão monumental do Arsenal da Marinha. O caráter militar da obra está presente em sua fachada e na simetria de sua planta lembrando também mesquitas do Oriente.
+
+Bairro não especificado, Recife
+
+Gostei
+
+Não gostei
+#5
+Forte do Brum
+O Forte de São João Batista do Brum localiza-se no bairro do Recife, na cidade do mesmo nome, no estado de Pernambuco, no Brasil. Administrado pelo Exército brasileiro, encontra-se restaurado e aberto ao público, abrigando, desde 5 de janeiro de 1987, o Museu Militar do Forte do Brum (MMFB), que exibe armamento e peças arqueológicas. No seu interior destaca-se a Capela de São João Batista, em estilo maneirista.
+
+Bairro não especificado, Recife
+
+Gostei
+
+Não gostei
+
+Context:
+Name: Ana Santos
+Age: 22
+Gender: Female
+Occupation: Biology Student
+Interests: Nature, Photography, Adventure
+
+json
+{
+  "motivations": ["EXPLORATION", "ARTISTIC_VALUE", "IMMERSIVE_EXPERIENCE", "EDUCATION", "RELAXATION"],
+  "hobbies": ["HIKING", "PHOTOGRAPHY", "ADVENTURE", "LEARNING", "TRAVELING"],
+  "themes": ["NATURE", "ADVENTURE", "FOLKLORE", "COLONIAL", "HISTORY"]
+}
+--- Output format (JSON array only) ---
+A list of objects with:
+
+"poiName": <ID of the POI>,
+
+"scoreValue": <0 or 1 based on relevance to the user>
+
+Example:
+
+json
+Copiar
+Editar
+[
+  { "poiId": name1, "scoreValue": 0 },
+  { "poiId": name2, "scoreValue": 0 },
+  { "poiId":name3, "scoreValue": 1 },
+  { "poiId": name4, "scoreValue": 1 },
+  { "poiId": name5, "scoreValue": 1 }
+]
+-- Output rules --
+
+Return only the JSON list.
+
+Do not explain or justify your scores.
+
+Ensure scoring is coherent with user preferences.
+json
+[
+  { "poiName": "1", "scoreValue": 1 },
+  { "poiName": "2", "scoreValue": 1 },
+  { "poiName": "3", "scoreValue": 0 },
+  { "poiName": "4", "scoreValue": 1 },
+  { "poiName": "5", "scoreValue": 1 }
+]
+You are assisting a tourism recommendation system to evaluate the relevance of a list of POIs (Points of Interest) for a specific user. Based on the user's profile and preferences, analyze each POI and return a binary score:
+
+1 if the user is likely to like or be interested in the POI;
+
+0 if the user is likely to dislike or not care about the POI.
+
+Base your evaluation on the alignment between:
+
+The description or nature of each POI;
+
+The user's motivations, hobbies, and thematic preferences.
+
+
+Recommendation POIs:
+Baseado em suas preferências, encontramos 5 pontos de interesse. Avalie as recomendações para melhorar futuras sugestões:
+
+#1
+Igreja Nossa Senhora do Rosário dos Homens Pretos
+Fundada em 1662, pela Venerável Confraria de Nossa Senhora do Rosário dos Homens Pretos de Santo Antônio, é a segunda igreja fundada por uma irmandade de negros do Brasil. No entorno da igreja surgiu o primeiro folguedo afro-brasileiro: a congada. O culto a Nossa Senhora do Rosário foi introduzido na cultura dos escravos africanos no Brasil pelos jesuítas na catequese.
+
+Santo Antônio, Recife
+
+Gostei
+
+Não gostei
+#2
+Paço do Frevo
+O Paço do Frevo é um espaço cultural dedicado à difusão, pesquisa e formação nas áreas de dança e música do frevo. Recebeu mais de 120 mil visitantes em seu primeiro ano de funcionamento, sendo um dos locais mais procurados de Pernambuco.
+
+Bairro não especificado, Recife
+
+Gostei
+
+Não gostei
+#3
+Sede do Galo da Madrugada
+Atualmente a sede do Galo da Madrugada tem o programa "Galo - Alegria o Ano Inteiro", que promove festividades de valorização da cultura pernambucana não só no Carnaval, mas durante os doze meses do ano. Um exemplo é a prévia Quinta no Galo, que inicia suas edições no segundo semestre e segue até a véspera do Sábado de Zé Pereira. A festa conta com atrações principais e convidadas, além de grupos multiculturais, como palhaços mascarados do Galo, Maracatu Rural (Baque Solto), Maracatu de Baque Virado, Caboclinhos, grupo de passistas de Frevo, Bloco Lírico e fantasias do Galo da Madrugada.
+
+São José, Recife
+
+Gostei
+
+Não gostei
+#4
+Catamaran Tours
+Pioneira nos segmentos de passeios náuticos em Pernambuco, a Catamaran Tours tem se destacado há 30 anos no cenário turístico local por todos os avanços conquistados, 20 deles em pleno coração da capital pernambucana. Foi uma empresa, comandada pela família Britto, que tornou a navegação de turismo pelos rios que cortam o centro do Recife em um dos programas mais procurados por locais e turistas.
+
+São José, Recife
+
+Gostei
+
+Não gostei
+#5
+Igreja Madre de Deus
+A Igreja Madre de Deus é um templo católico da cidade do Recife, capital do estado brasileiro de Pernambuco. Situa-se ao lado do prédio do antigo Convento dos Padres Oratorianos. O interior da nave é um amplo salão com capelas laterais e um majestoso arco triunfal de diversas cantorias com dois altares no arco cruzeiro. O altar-mor é de talha dourada com nichos sacrários e trono em estilo rococó. A sacristia possui grande arcaz e um lavabo em mármore de Estremoz considerado o mais notável do Brasil.
+
+Bairro não especificado, Recife
+
+Context:
+Name: Pedro Alves
+Age: 58
+Gender: Male
+Occupation: Fisherman
+Interests: Traditional Music, Sea, Community
+
+json
+{
+  "motivations": ["TRADITION", "HERITAGE", "SPIRITUALITY", "SOCIAL", "RELAXATION"],
+  "hobbies": ["MUSIC", "DANCING", "VOLUNTEERING", "SOCIAL", "ADVENTURE"],
+  "themes": ["HISTORY", "RELIGIOUS", "FOLKLORE", "NATURE", "AFRO_BRAZILIAN"]
+}
+--- Output format (JSON array only) ---
+A list of objects with:
+
+"poiName": <ID of the POI>,
+
+"scoreValue": <0 or 1 based on relevance to the user>
+
+Example:
+
+json
+Copiar
+Editar
+[
+  { "poiId": name1, "scoreValue": 0 },
+  { "poiId": name2, "scoreValue": 0 },
+  { "poiId":name3, "scoreValue": 1 },
+  { "poiId": name4, "scoreValue": 1 },
+  { "poiId": name5, "scoreValue": 1 }
+]
+-- Output rules --
+
+Return only the JSON list.
+
+Do not explain or justify your scores.
+
+Ensure scoring is coherent with user preferences.
+json
+[
+  { "poiName": "1", "scoreValue": 1 },
+  { "poiName": "2", "scoreValue": 1 },
+  { "poiName": "3", "scoreValue": 1 },
+  { "poiName": "4", "scoreValue": 0 },
+  { "poiName": "5", "scoreValue": 1 }
+]
+You are assisting a tourism recommendation system to evaluate the relevance of a list of POIs (Points of Interest) for a specific user. Based on the user's profile and preferences, analyze each POI and return a binary score:
+
+1 if the user is likely to like or be interested in the POI;
+
+0 if the user is likely to dislike or not care about the POI.
+
+Base your evaluation on the alignment between:
+
+The description or nature of each POI;
+
+The user's motivations, hobbies, and thematic preferences.
+
+
+Recommendation POIs:
+Baseado em suas preferências, encontramos 5 pontos de interesse. Avalie as recomendações para melhorar futuras sugestões:
+
+#1
+Jardim Botânico do Recife
+O Jardim Botânico do Recife desenvolve atividades em educação ambiental, como caminhadas ecológicas, exposição permanente da mata atlântica, exibição de vídeos com temas ambientais e visitas a viveiros de plantas medicinais e florestais. Possui um orquidário e um meliponário de abelhas nativas.
+
+Curado, Recife
+
+Gostei
+
+Não gostei
+#2
+Capela Dourada
+A Capela dos Noviços da Ordem Terceira de São Francisco de Assis ou Capela Dourada é uma capela da Ordem Franciscana localizada na cidade do Recife, capital do estado brasileiro de Pernambuco. Com construção iniciada em 1696, foi o primeiro templo do Brasil a ser integralmente coberto de decoração barroca. Está situado dentro do complexo de edifícios do Convento e Igreja de Santo Antônio, que inclui a Igreja da Ordem Terceira de São Francisco e o Museu Franciscano de Arte Sacra.
+
+Santo Antônio, Recife
+
+Gostei
+
+Não gostei
+#3
+Igreja Madre de Deus
+A Igreja Madre de Deus é um templo católico da cidade do Recife, capital do estado brasileiro de Pernambuco. Situa-se ao lado do prédio do antigo Convento dos Padres Oratorianos. O interior da nave é um amplo salão com capelas laterais e um majestoso arco triunfal de diversas cantorias com dois altares no arco cruzeiro. O altar-mor é de talha dourada com nichos sacrários e trono em estilo rococó. A sacristia possui grande arcaz e um lavabo em mármore de Estremoz considerado o mais notável do Brasil.
+
+Bairro não especificado, Recife
+
+Gostei
+
+Não gostei
+#4
+Concatedral de São Pedro dos Clérigos
+A Concatedral de São Pedro dos Clérigos, também conhecida simplesmente como Igreja de São Pedro dos Clérigos, é um templo católico situado no município do Recife. A área defronte à Igreja, chamada de Pátio de São Pedro, conserva em seu entorno um belo conjunto de 29 casas baixas coloniais.
+
+São José, Recife
+
+Gostei
+
+Não gostei
+#5
+Basílica Nossa Senhora do Carmo
+A Basílica e Convento de Nossa Senhora do Carmo é um conjunto moderno católico pertencente à Ordem Carmelita, localizada na cidade do Recife, em Pernambuco, Brasil. O imponente frontispício da Basílica do Carmo possui muitas volutas esculpidas em pedra, e a torre, de 50 metros de altura — a mais alta torre barroca do Brasil —, é encimada por um dos mais bulbos feitos do estilo no país. No interior, a decoração em talha dourada e a estatuária são de valor inestimável, destacando-se a capela-mor e seu fabuloso retábulo com imagens de Nossa Senhora do Carmo e dos profetas Elias e Eliseu. No seu pátio, a cabeça do líder quilombola Zumbi dos Palmares ficou exposta até completa conclusão. No convento, encontram-se enterrados os restos mortais de Frei Caneca.
+
+Santo Antônio, Recife
+
+
+
+Context:
+Name: Fernanda Costa
+Age: 38
+Gender: Female
+Occupation: Nurse
+Interests: Family Wellness, Gardening, Spirituality
+
+json
+{
+  "motivations": ["FAMILY", "RELAXATION", "SPIRITUALITY", "SOCIAL", "IDENTITY"],
+  "hobbies": ["GARDENING", "READING", "VOLUNTEERING", "MUSIC", "ART"],
+  "themes": ["FAMILY_FRIENDLY", "NATURE", "RELIGIOUS", "ROMANTIC", "BAROQUE"]
+}
+--- Output format (JSON array only) ---
+A list of objects with:
+
+"poiName": <ID of the POI>,
+
+"scoreValue": <0 or 1 based on relevance to the user>
+
+Example:
+
+json
+Copiar
+Editar
+[
+  { "poiId": name1, "scoreValue": 0 },
+  { "poiId": name2, "scoreValue": 0 },
+  { "poiId":name3, "scoreValue": 1 },
+  { "poiId": name4, "scoreValue": 1 },
+  { "poiId": name5, "scoreValue": 1 }
+]
+-- Output rules --
+
+Return only the JSON list.
+
+Do not explain or justify your scores.
+
+Ensure scoring is coherent with user preferences.
+json
+[
+  { "poiName": "1", "scoreValue": 1 },
+  { "poiName": "2", "scoreValue": 1 },
+  { "poiName": "3", "scoreValue": 1 },
+  { "poiName": "4", "scoreValue": 1 },
+  { "poiName": "5", "scoreValue": 1 }
+]
+You are assisting a tourism recommendation system to evaluate the relevance of a list of POIs (Points of Interest) for a specific user. Based on the user's profile and preferences, analyze each POI and return a binary score:
+
+1 if the user is likely to like or be interested in the POI;
+
+0 if the user is likely to dislike or not care about the POI.
+
+Base your evaluation on the alignment between:
+
+The description or nature of each POI;
+
+The user's motivations, hobbies, and thematic preferences.
+
+
+Recommendation POIs:
+Baseado em suas preferências, encontramos 5 pontos de interesse. Avalie as recomendações para melhorar futuras sugestões:
+
+#1
+Teatro de Santa Isabel
+Teatro histórico em estilo neoclássico, palco de eventos importantes como a campanha abolicionista de Joaquim Nabuco. Primeiro teatro do Brasil construído com mão de obra especializada, projetado pelo engenheiro francês Louis Léger Vauthier. Recebeu visitantes ilustres como Dom Pedro II.
+
+Santo Antônio, Recife
+
+Gostei
+
+Não gostei
+#2
+Palácio da Justiça
+Prédio histórico tombado em estilo neoclássico que abriga o Tribunal de Justiça de Pernambuco. Possui um acervo de arte essencial para visitantes, incluindo obras que remontam ao centenário da Confederação do Equador.
+
+Santo Antônio, Recife
+
+Gostei
+
+Não gostei
+#3
+Palácio do Campo das Princesas
+Sede administrativa do governo de Pernambuco, construída em 1841. Destaque para o baobá secular em frente ao palácio, possivelmente inspiração para "O Pequeno Príncipe". Localiza-se próximo ao Teatro de Santa Isabel.
+
+Santo Antônio, Recife
+
+Gostei
+
+Não gostei
+#4
+Instituto Ricardo Brennand
+O Instituto Ricardo Brennand é uma instituição cultural brasileira sem fins lucrativos localizada na cidade do Recife. Possui a maior coleção mundial do pintor holandês Frans Post e um dos maiores acervos de armas brancas do mundo, com mais de 3 mil peças, incluindo 27 armaduras medievais completas.
+
+Várzea, Recife
+
+Gostei
+
+Não gostei
+#5
+Caixa Cultural
+A Caixa Cultural Recife é um espaço cultural localizado na cidade do Recife, capital do estado de Pernambuco, Brasil. Integra um conjunto de sete centros culturais criados pela Caixa Econômica Federal em capitais brasileiras. A Caixa Cultural Recife foi inaugurada em 2012 no edifício do antigo Bank of London & South America Limited, localizado defronte ao Marco Zero, no Recife Antigo. Conta com dois pavimentos de galerias de arte, teatro com 96 lugares, sala multimídia, duas salas para escritórios de arte-educação e amplo foyer.
+
+Bairro não especificado, Recife
+
+Context:
+Name: Rafael Souza
+Age: 29
+Gender: Male
+Occupation: Tour Guide
+Interests: Local History, Architecture, Storytelling
+
+json
+{
+  "motivations": ["HERITAGE", "CULTURE", "EDUCATION", "IDENTITY", "EXPLORATION"],
+  "hobbies": ["THEATER", "READING", "PHOTOGRAPHY", "TRAVELING", "LEARNING"],
+  "themes": ["COLONIAL", "ARCHITETURAL_STYLE", "HISTORY", "BAROQUE", "CULTURAL"]
+}
+--- Output format (JSON array only) ---
+A list of objects with:
+
+"poiName": <ID of the POI>,
+
+"scoreValue": <0 or 1 based on relevance to the user>
+
+Example:
+
+json
+Copiar
+Editar
+[
+  { "poiId": name1, "scoreValue": 0 },
+  { "poiId": name2, "scoreValue": 0 },
+  { "poiId":name3, "scoreValue": 1 },
+  { "poiId": name4, "scoreValue": 1 },
+  { "poiId": name5, "scoreValue": 1 }
+]
+-- Output rules --
+
+Return only the JSON list.
+
+Do not explain or justify your scores.
+
+Ensure scoring is coherent with user preferences.
+json
+[
+  { "poiName": "1", "scoreValue": 1 },
+  { "poiName": "2", "scoreValue": 1 },
+  { "poiName": "3", "scoreValue": 1 },
+  { "poiName": "4", "scoreValue": 1 },
+  { "poiName": "5", "scoreValue": 0 }
+]
+You are assisting a tourism recommendation system to evaluate the relevance of a list of POIs (Points of Interest) for a specific user. Based on the user's profile and preferences, analyze each POI and return a binary score:
+
+1 if the user is likely to like or be interested in the POI;
+
+0 if the user is likely to dislike or not care about the POI.
+
+Base your evaluation on the alignment between:
+
+The description or nature of each POI;
+
+The user's motivations, hobbies, and thematic preferences.
+
+
+Recommendation POIs:
+Baseado em suas preferências, encontramos 5 pontos de interesse. Avalie as recomendações para melhorar futuras sugestões:
+
+#1
+Sede do Galo da Madrugada
+Atualmente a sede do Galo da Madrugada tem o programa "Galo - Alegria o Ano Inteiro", que promove festividades de valorização da cultura pernambucana não só no Carnaval, mas durante os doze meses do ano. Um exemplo é a prévia Quinta no Galo, que inicia suas edições no segundo semestre e segue até a véspera do Sábado de Zé Pereira. A festa conta com atrações principais e convidadas, além de grupos multiculturais, como palhaços mascarados do Galo, Maracatu Rural (Baque Solto), Maracatu de Baque Virado, Caboclinhos, grupo de passistas de Frevo, Bloco Lírico e fantasias do Galo da Madrugada.
+
+São José, Recife
+
+Gostei
+
+Não gostei
+#2
+Paço do Frevo
+O Paço do Frevo é um espaço cultural dedicado à difusão, pesquisa e formação nas áreas de dança e música do frevo. Recebeu mais de 120 mil visitantes em seu primeiro ano de funcionamento, sendo um dos locais mais procurados de Pernambuco.
+
+Bairro não especificado, Recife
+
+Gostei
+
+Não gostei
+#3
+Embaixada Pernambuco
+Em Junho de 2015 inauguramos um novo museu, a Embaixada de Pernambuco. Localizado na Praça do Arsenal no Bairro do Recife, conta com um acervo em tamanho natural dos principais ícones de Pernambuco, como Lampião e Maria Bonita, além de apresentações ao vivo de Frevo.
+
+Bairro não especificado, Recife
+
+Gostei
+
+Não gostei
+#4
+Museu de Arte Moderna Aloísio Magalhães
+O Museu de Arte Moderna Aloisio Magalhães ou MAMAM é um museu localizado na cidade do Recife, capital do estado brasileiro de Pernambuco. É considerado um centro de referência da produção moderna e contemporânea das artes visuais. Através da divulgação, registro e reflexão sobre a arte do presente e suas referências históricas, o MAMAM tem contribuído para a formação cultural do público e para o adensamento do meio institucional e artístico do Recife.
+
+Boa Vista, Recife
+
+Gostei
+
+Não gostei
+#5
+Igreja Nossa Senhora do Rosário dos Homens Pretos
+Fundada em 1662, pela Venerável Confraria de Nossa Senhora do Rosário dos Homens Pretos de Santo Antônio, é a segunda igreja fundada por uma irmandade de negros do Brasil. No entorno da igreja surgiu o primeiro folguedo afro-brasileiro: a congada. O culto a Nossa Senhora do Rosário foi introduzido na cultura dos escravos africanos no Brasil pelos jesuítas na catequese.
+
+Santo Antônio, Recife
+
+Gostei
+
+Context:
+Name: Juliana Lima
+Age: 45
+Gender: Female
+Occupation: Boutique Owner
+Interests: Fashion, Social Events, Dance
+
+json
+{
+  "motivations": ["SOCIAL", "ENTERTAINMENT", "ARTISTIC_VALUE", "CREATIVITY", "IDENTITY"],
+  "hobbies": ["DANCING", "SOCIAL", "ART", "MUSIC", "TRAVELING"],
+  "themes": ["MODERN", "ROMANTIC", "URBAN_ART", "GASTRONOMIC", "FAMILY_FRIENDLY"]
+}
+--- Output format (JSON array only) ---
+A list of objects with:
+
+"poiName": <ID of the POI>,
+
+"scoreValue": <0 or 1 based on relevance to the user>
+
+Example:
+
+json
+Copiar
+Editar
+[
+  { "poiId": name1, "scoreValue": 0 },
+  { "poiId": name2, "scoreValue": 0 },
+  { "poiId":name3, "scoreValue": 1 },
+  { "poiId": name4, "scoreValue": 1 },
+  { "poiId": name5, "scoreValue": 1 }
+]
+-- Output rules --
+
+Return only the JSON list.
+
+Do not explain or justify your scores.
+
+Ensure scoring is coherent with user preferences.
+json
+[
+  { "poiName": "1", "scoreValue": 1 },
+  { "poiName": "2", "scoreValue": 1 },
+  { "poiName": "3", "scoreValue": 1 },
+  { "poiName": "4", "scoreValue": 0 },
+  { "poiName": "5", "scoreValue": 0 }
+]
+You are assisting a tourism recommendation system to evaluate the relevance of a list of POIs (Points of Interest) for a specific user. Based on the user's profile and preferences, analyze each POI and return a binary score:
+
+1 if the user is likely to like or be interested in the POI;
+
+0 if the user is likely to dislike or not care about the POI.
+
+Base your evaluation on the alignment between:
+
+The description or nature of each POI;
+
+The user's motivations, hobbies, and thematic preferences.
+
+
+Recommendation POIs:
+Baseado em suas preferências, encontramos 5 pontos de interesse. Avalie as recomendações para melhorar futuras sugestões:
+
+#1
+Jardim Botânico do Recife
+O Jardim Botânico do Recife desenvolve atividades em educação ambiental, como caminhadas ecológicas, exposição permanente da mata atlântica, exibição de vídeos com temas ambientais e visitas a viveiros de plantas medicinais e florestais. Possui um orquidário e um meliponário de abelhas nativas.
+
+Curado, Recife
+
+Gostei
+
+Não gostei
+#2
+Capela Dourada
+A Capela dos Noviços da Ordem Terceira de São Francisco de Assis ou Capela Dourada é uma capela da Ordem Franciscana localizada na cidade do Recife, capital do estado brasileiro de Pernambuco. Com construção iniciada em 1696, foi o primeiro templo do Brasil a ser integralmente coberto de decoração barroca. Está situado dentro do complexo de edifícios do Convento e Igreja de Santo Antônio, que inclui a Igreja da Ordem Terceira de São Francisco e o Museu Franciscano de Arte Sacra.
+
+Santo Antônio, Recife
+
+Gostei
+
+Não gostei
+#3
+Igreja de Santa Tereza D Avila
+Construída em 1700 e concluída sem as pinturas e a torre sineira que conhecemos hoje no ano de 1710, possui grande conjunto de pinturas dedicadas à vida de Santa Teresa de Jesus, que cobrem todo o forro e algumas paredes do templo. O autor das imagens foi João de Deus Sepúlveda, também responsável pela obra-prima da pintura barroca pernambucana presente no forro da Concatedral de São Pedro dos Clérigos.
+
+Santo Antônio, Recife
+
+Gostei
+
+Não gostei
+#4
+Igreja Madre de Deus
+A Igreja Madre de Deus é um templo católico da cidade do Recife, capital do estado brasileiro de Pernambuco. Situa-se ao lado do prédio do antigo Convento dos Padres Oratorianos. O interior da nave é um amplo salão com capelas laterais e um majestoso arco triunfal de diversas cantorias com dois altares no arco cruzeiro. O altar-mor é de talha dourada com nichos sacrários e trono em estilo rococó. A sacristia possui grande arcaz e um lavabo em mármore de Estremoz considerado o mais notável do Brasil.
+
+Bairro não especificado, Recife
+
+Gostei
+
+Não gostei
+#5
+Concatedral de São Pedro dos Clérigos
+A Concatedral de São Pedro dos Clérigos, também conhecida simplesmente como Igreja de São Pedro dos Clérigos, é um templo católico situado no município do Recife. A área defronte à Igreja, chamada de Pátio de São Pedro, conserva em seu entorno um belo conjunto de 29 casas baixas coloniais.
+
+São José, Recife
+Context:
+Name: Antonio Barbosa
+Age: 65
+Gender: Male
+Occupation: Retired Civil Servant
+Interests: Heritage Sites, Gardening, Reading
+
+json
+{
+  "motivations": ["HERITAGE", "RELAXATION", "TRADITION", "SPIRITUALITY", "FAMILY"],
+  "hobbies": ["GARDENING", "READING", "VOLUNTEERING", "TRAVELING", "LEARNING"],
+  "themes": ["HISTORY", "ARCHITETURAL_STYLE", "RELIGIOUS", "COLONIAL", "BAROQUE"]
+}
+--- Output format (JSON array only) ---
+A list of objects with:
+
+"poiName": <ID of the POI>,
+
+"scoreValue": <0 or 1 based on relevance to the user>
+
+Example:
+
+json
+Copiar
+Editar
+[
+  { "poiId": name1, "scoreValue": 0 },
+  { "poiId": name2, "scoreValue": 0 },
+  { "poiId":name3, "scoreValue": 1 },
+  { "poiId": name4, "scoreValue": 1 },
+  { "poiId": name5, "scoreValue": 1 }
+]
+-- Output rules --
+
+Return only the JSON list.
+
+Do not explain or justify your scores.
+
+Ensure scoring is coherent with user preferences.
+json
+[
+  { "poiName": "1", "scoreValue": 1 },
+  { "poiName": "2", "scoreValue": 1 },
+  { "poiName": "3", "scoreValue": 1 },
+  { "poiName": "4", "scoreValue": 1 },
+  { "poiName": "5", "scoreValue": 1 }
+]
+You are assisting a tourism recommendation system to evaluate the relevance of a list of POIs (Points of Interest) for a specific user. Based on the user's profile and preferences, analyze each POI and return a binary score:
+
+1 if the user is likely to like or be interested in the POI;
+
+0 if the user is likely to dislike or not care about the POI.
+
+Base your evaluation on the alignment between:
+
+The description or nature of each POI;
+
+The user's motivations, hobbies, and thematic preferences.
+
+
+Recommendation POIs:
+Baseado em suas preferências, encontramos 5 pontos de interesse. Avalie as recomendações para melhorar futuras sugestões:
+
+#1
+Cais do Sertão
+Um dos mais modernos equipamentos culturais do Brasil, o Cais do Sertão, instalado no antigo Armazém 10 do Porto do Recife, é um local de convivência, diversão e conhecimento, polo gerador de novas ideias e experiências. Abrigando e reverenciando a obra de Luiz Gonzaga, o grande homenageado do espaço, traz para a beira-mar da capital do estado um pouco do solo rico e generoso da cultura popular do sertão. O museu teve como curadora e diretora de criação a socióloga pernambucana Isa Grinspum Ferraz, também autora do Museu da Língua Portuguesa em São Paulo.
+
+Bairro não especificado, Recife
+
+Gostei
+
+Não gostei
+#2
+Torre Malakoff
+Torre Malakoff, localizada no Recife Antigo, na cidade do Recife, foi batizada com o nome de uma das torres da fortaleza de Sebastopol, durante a Guerra da Crimeia. A Torre Malakoff é um importante monumento localizado no Bairro do Recife, área tombada pelo Iphan. Construído no século 19 (com materiais provenientes da demolição do Forte do Bom Jesus) para servir como observatório astronômico e portão monumental do Arsenal da Marinha. O caráter militar da obra está presente em sua fachada e na simetria de sua planta lembrando também mesquitas do Oriente.
+
+Bairro não especificado, Recife
+
+Gostei
+
+Não gostei
+#3
+Oficina Francisco Brennand
+A Oficina Cerâmica Francisco Brennand é um museu de arte brasileiro localizado na cidade do Recife, capital de Pernambuco. Trata-se de um complexo monumental com aproximadamente 2 mil obras, entre esculturas, murais e objetos cerâmicos. A principal temática é a origem da vida e a evolução das coisas. Conta com espaços como a Accademia, Anfiteatro, Salão de Esculturas e jardins projetados por Burle Marx.
+
+Várzea, Recife
+
+Gostei
+
+Não gostei
+#4
+Museu de Arte Moderna Aloísio Magalhães
+O Museu de Arte Moderna Aloisio Magalhães ou MAMAM é um museu localizado na cidade do Recife, capital do estado brasileiro de Pernambuco. É considerado um centro de referência da produção moderna e contemporânea das artes visuais. Através da divulgação, registro e reflexão sobre a arte do presente e suas referências históricas, o MAMAM tem contribuído para a formação cultural do público e para o adensamento do meio institucional e artístico do Recife.
+
+Boa Vista, Recife
+
+Gostei
+
+Não gostei
+#5
+Museu Murilo La Greca
+O Museu Murillo La Greca é um museu brasileiro localizado no bairro do Parnamirim, na cidade do Recife, capital de Pernambuco. Inaugurado em 12 de dezembro de 1985, o acervo é composto principalmente por obras de arte produzidas pelo professor e pintor clássico Murillo La Greca, são 1400 desenhos em que La Greca utilizou diversas técnicas, desde o giz de cera ao pastel. Além dos desenhos há também 160 pinturas entre paisagens, retratos e obras impressionistas. O museu conta também com discotecas, livros e móveis, além de algumas cartas trocadas por artistas com nomes como Candido Portinari.
+
+Parnamirim, Recife
+Context:
+Name: Beatriz Rocha
+Age: 26
+Gender: Female
+Occupation: Graphic Designer
+Interests: Urban Art, Photography, Technology
+
+json
+{
+  "motivations": ["CREATIVITY", "ARTISTIC_VALUE", "IMMERSIVE_EXPERIENCE", "EXPLORATION", "CULTURE"],
+  "hobbies": ["PHOTOGRAPHY", "ART", "TECH", "TRAVELING", "MUSIC"],
+  "themes": ["URBAN_ART", "MODERN", "CULTURAL", "ADVENTURE", "AFRO_BRAZILIAN"]
+}
+--- Output format (JSON array only) ---
+A list of objects with:
+
+"poiName": <ID of the POI>,
+
+"scoreValue": <0 or 1 based on relevance to the user>
+
+Example:
+
+json
+Copiar
+Editar
+[
+  { "poiId": name1, "scoreValue": 0 },
+  { "poiId": name2, "scoreValue": 0 },
+  { "poiId":name3, "scoreValue": 1 },
+  { "poiId": name4, "scoreValue": 1 },
+  { "poiId": name5, "scoreValue": 1 }
+]
+-- Output rules --
+
+Return only the JSON list.
+
+Do not explain or justify your scores.
+
+Ensure scoring is coherent with user preferences.
+json
+[
+  { "poiName": "1", "scoreValue": 1 },
+  { "poiName": "2", "scoreValue": 0 },
+  { "poiName": "3", "scoreValue": 1 },
+  { "poiName": "4", "scoreValue": 1 },
+  { "poiName": "5", "scoreValue": 0 }
+]
+You are assisting a tourism recommendation system to evaluate the relevance of a list of POIs (Points of Interest) for a specific user. Based on the user's profile and preferences, analyze each POI and return a binary score:
+
+1 if the user is likely to like or be interested in the POI;
+
+0 if the user is likely to dislike or not care about the POI.
+
+Base your evaluation on the alignment between:
+
+The description or nature of each POI;
+
+The user's motivations, hobbies, and thematic preferences.
+
+
+Recommendation POIs:
+Baseado em suas preferências, encontramos 5 pontos de interesse. Avalie as recomendações para melhorar futuras sugestões:
+
+#1
+Catamaran Tours
+Pioneira nos segmentos de passeios náuticos em Pernambuco, a Catamaran Tours tem se destacado há 30 anos no cenário turístico local por todos os avanços conquistados, 20 deles em pleno coração da capital pernambucana. Foi uma empresa, comandada pela família Britto, que tornou a navegação de turismo pelos rios que cortam o centro do Recife em um dos programas mais procurados por locais e turistas.
+
+São José, Recife
+
+Gostei
+
+Não gostei
+#2
+Jardim Botânico do Recife
+O Jardim Botânico do Recife desenvolve atividades em educação ambiental, como caminhadas ecológicas, exposição permanente da mata atlântica, exibição de vídeos com temas ambientais e visitas a viveiros de plantas medicinais e florestais. Possui um orquidário e um meliponário de abelhas nativas.
+
+Curado, Recife
+
+Gostei
+
+Não gostei
+#3
+Oficina Francisco Brennand
+A Oficina Cerâmica Francisco Brennand é um museu de arte brasileiro localizado na cidade do Recife, capital de Pernambuco. Trata-se de um complexo monumental com aproximadamente 2 mil obras, entre esculturas, murais e objetos cerâmicos. A principal temática é a origem da vida e a evolução das coisas. Conta com espaços como a Accademia, Anfiteatro, Salão de Esculturas e jardins projetados por Burle Marx.
+
+Várzea, Recife
+
+Gostei
+
+Não gostei
+#4
+Museu da Abolição
+O Museu da Abolição — Centro de Referência da Cultura Afro-Brasileira é um museu localizado na cidade do Recife, capital de Pernambuco, Brasil. Vinculado ao Instituto Brasileiro de Museus (IBRAM) e ao Ministério da Cultura, é um dos raros museus no país a contemplar esta parte da história, e tem suas ações norteadas pelos princípios da nova museologia e da socio museologia. Atualmente o Museu conta com: 130 peças do acervo museológico; 30 metros lineares de acervo bibliográfico; E 2 metros lineares de acervo hemerográfico.
+
+Madalena, Recife
+
+Gostei
+
+Não gostei
+#5
+Torre Malakoff
+Torre Malakoff, localizada no Recife Antigo, na cidade do Recife, foi batizada com o nome de uma das torres da fortaleza de Sebastopol, durante a Guerra da Crimeia. A Torre Malakoff é um importante monumento localizado no Bairro do Recife, área tombada pelo Iphan. Construído no século 19 (com materiais provenientes da demolição do Forte do Bom Jesus) para servir como observatório astronômico e portão monumental do Arsenal da Marinha. O caráter militar da obra está presente em sua fachada e na simetria de sua planta lembrando também mesquitas do Oriente.
+
+Bairro não especificado, Recife
+
+
+Context:
+Name: Lucas Mendes
+Age: 24
+Gender: Male
+Occupation: Marine Biology Intern
+Interests: Ocean Conservation, Snorkeling, Photography
+
+json
+{
+  "motivations": ["EXPLORATION", "EDUCATION", "ARTISTIC_VALUE", "IMMERSIVE_EXPERIENCE", "RELAXATION"],
+  "hobbies": ["PHOTOGRAPHY", "ADVENTURE", "LEARNING", "TRAVELING", "VOLUNTEERING"],
+  "themes": ["NATURE", "ADVENTURE", "CULTURAL", "AFRO_BRAZILIAN", "HISTORY"]
+}
+--- Output format (JSON array only) ---
+A list of objects with:
+
+"poiName": <ID of the POI>,
+
+"scoreValue": <0 or 1 based on relevance to the user>
+
+Example:
+
+json
+Copiar
+Editar
+[
+  { "poiId": name1, "scoreValue": 0 },
+  { "poiId": name2, "scoreValue": 0 },
+  { "poiId":name3, "scoreValue": 1 },
+  { "poiId": name4, "scoreValue": 1 },
+  { "poiId": name5, "scoreValue": 1 }
+]
+-- Output rules --
+
+Return only the JSON list.
+
+Do not explain or justify your scores.
+
+Ensure scoring is coherent with user preferences.
+json
+[
+  { "poiName": "1", "scoreValue": 1 },
+  { "poiName": "2", "scoreValue": 1 },
+  { "poiName": "3", "scoreValue": 0 },
+  { "poiName": "4", "scoreValue": 0 },
+  { "poiName": "5", "scoreValue": 0 }
+]
+You are assisting a tourism recommendation system to evaluate the relevance of a list of POIs (Points of Interest) for a specific user. Based on the user's profile and preferences, analyze each POI and return a binary score:
+
+1 if the user is likely to like or be interested in the POI;
+
+0 if the user is likely to dislike or not care about the POI.
+
+Base your evaluation on the alignment between:
+
+The description or nature of each POI;
+
+The user's motivations, hobbies, and thematic preferences.
+
+
+Recommendation POIs:
+Baseado em suas preferências, encontramos 5 pontos de interesse. Avalie as recomendações para melhorar futuras sugestões:
+
+#1
+Capela Dourada
+A Capela dos Noviços da Ordem Terceira de São Francisco de Assis ou Capela Dourada é uma capela da Ordem Franciscana localizada na cidade do Recife, capital do estado brasileiro de Pernambuco. Com construção iniciada em 1696, foi o primeiro templo do Brasil a ser integralmente coberto de decoração barroca. Está situado dentro do complexo de edifícios do Convento e Igreja de Santo Antônio, que inclui a Igreja da Ordem Terceira de São Francisco e o Museu Franciscano de Arte Sacra.
+
+Santo Antônio, Recife
+
+Gostei
+
+Não gostei
+#2
+Basílica Nossa Senhora do Carmo
+A Basílica e Convento de Nossa Senhora do Carmo é um conjunto moderno católico pertencente à Ordem Carmelita, localizada na cidade do Recife, em Pernambuco, Brasil. O imponente frontispício da Basílica do Carmo possui muitas volutas esculpidas em pedra, e a torre, de 50 metros de altura — a mais alta torre barroca do Brasil —, é encimada por um dos mais bulbos feitos do estilo no país. No interior, a decoração em talha dourada e a estatuária são de valor inestimável, destacando-se a capela-mor e seu fabuloso retábulo com imagens de Nossa Senhora do Carmo e dos profetas Elias e Eliseu. No seu pátio, a cabeça do líder quilombola Zumbi dos Palmares ficou exposta até completa conclusão. No convento, encontram-se enterrados os restos mortais de Frei Caneca.
+
+Santo Antônio, Recife
+
+Gostei
+
+Não gostei
+#3
+Instituto Ricardo Brennand
+O Instituto Ricardo Brennand é uma instituição cultural brasileira sem fins lucrativos localizada na cidade do Recife. Possui a maior coleção mundial do pintor holandês Frans Post e um dos maiores acervos de armas brancas do mundo, com mais de 3 mil peças, incluindo 27 armaduras medievais completas.
+
+Várzea, Recife
+
+Gostei
+
+Não gostei
+#4
+Igreja Madre de Deus
+A Igreja Madre de Deus é um templo católico da cidade do Recife, capital do estado brasileiro de Pernambuco. Situa-se ao lado do prédio do antigo Convento dos Padres Oratorianos. O interior da nave é um amplo salão com capelas laterais e um majestoso arco triunfal de diversas cantorias com dois altares no arco cruzeiro. O altar-mor é de talha dourada com nichos sacrários e trono em estilo rococó. A sacristia possui grande arcaz e um lavabo em mármore de Estremoz considerado o mais notável do Brasil.
+
+Bairro não especificado, Recife
+
+Gostei
+
+Não gostei
+#5
+Concatedral de São Pedro dos Clérigos
+A Concatedral de São Pedro dos Clérigos, também conhecida simplesmente como Igreja de São Pedro dos Clérigos, é um templo católico situado no município do Recife. A área defronte à Igreja, chamada de Pátio de São Pedro, conserva em seu entorno um belo conjunto de 29 casas baixas coloniais.
+
+São José, Recife
+
+
+Context:
+Name: Isabela Costa
+Age: 59
+Gender: Female
+Occupation: Public Librarian
+Interests: Local History, Poetry, Community Workshops
+
+json
+{
+  "motivations": ["HERITAGE", "CULTURE", "EDUCATION", "IDENTITY", "SOCIAL"],
+  "hobbies": ["READING", "LEARNING", "VOLUNTEERING", "THEATER", "ART"],
+  "themes": ["HISTORY", "COLONIAL", "BAROQUE", "FOLKLORE", "CULTURAL"]
+}
+--- Output format (JSON array only) ---
+A list of objects with:
+
+"poiName": <ID of the POI>,
+
+"scoreValue": <0 or 1 based on relevance to the user>
+
+Example:
+
+json
+Copiar
+Editar
+[
+  { "poiId": name1, "scoreValue": 0 },
+  { "poiId": name2, "scoreValue": 0 },
+  { "poiId":name3, "scoreValue": 1 },
+  { "poiId": name4, "scoreValue": 1 },
+  { "poiId": name5, "scoreValue": 1 }
+]
+-- Output rules --
+
+Return only the JSON list.
+
+Do not explain or justify your scores.
+
+Ensure scoring is coherent with user preferences.
+json
+[
+  { "poiName": "1", "scoreValue": 1 },
+  { "poiName": "2", "scoreValue": 1 },
+  { "poiName": "3", "scoreValue": 0 },
+  { "poiName": "4", "scoreValue": 1 },
+  { "poiName": "5", "scoreValue": 1 }
+]
+You are assisting a tourism recommendation system to evaluate the relevance of a list of POIs (Points of Interest) for a specific user. Based on the user's profile and preferences, analyze each POI and return a binary score:
+
+1 if the user is likely to like or be interested in the POI;
+
+0 if the user is likely to dislike or not care about the POI.
+
+Base your evaluation on the alignment between:
+
+The description or nature of each POI;
+
+The user's motivations, hobbies, and thematic preferences.
+
+
+Recommendation POIs:
+Baseado em suas preferências, encontramos 5 pontos de interesse. Avalie as recomendações para melhorar futuras sugestões:
+
+#1
+Bistrô Negra Linda
+Culinária da Ilha de Deus Veja as opções de receitas tradicionais da Chef, confira os pratos típicos da culinária da Ilha de Deus que nós preparamos de maneira única! No cardápio você encontra Mariscadas, Siri no Casco, Pasteis de Sururu, Moqueca da Ilha, Escondidinho de Sururu, Peixes, Escudinho de Camarão e vários pratos diferentes que a Chef cria todos os dias.
+
+Casa Forte, Recife
+
+Gostei
+
+Não gostei
+#2
+Cachaçaria Carvalheira
+Entre mais de 2 mil barris de carvalho e sob o aroma da mais pura cachaça envelhecendo, cordas, gamelas, moendas e alambiques antigos dão a Cachaçaria Carvalheira um clima todo especial, cheio de charme, história e tradição. Aqui, você vai saber como uma das melhores cachaças do Brasil é fabricada e passear entre os bairros onde a mais pura bebida nacional descansa durante anos até estar pronto para ser engarrafado e consumido. Depois da visitação às instalações da fábrica, uma deliciosa degustação vai deixar a Cachaça Carvalheira para sempre nas suas melhores lembranças.
+
+Imbiribeira, Recife
+
+Gostei
+
+Não gostei
+#3
+Sede do Galo da Madrugada
+Atualmente a sede do Galo da Madrugada tem o programa "Galo - Alegria o Ano Inteiro", que promove festividades de valorização da cultura pernambucana não só no Carnaval, mas durante os doze meses do ano. Um exemplo é a prévia Quinta no Galo, que inicia suas edições no segundo semestre e segue até a véspera do Sábado de Zé Pereira. A festa conta com atrações principais e convidadas, além de grupos multiculturais, como palhaços mascarados do Galo, Maracatu Rural (Baque Solto), Maracatu de Baque Virado, Caboclinhos, grupo de passistas de Frevo, Bloco Lírico e fantasias do Galo da Madrugada.
+
+São José, Recife
+
+Gostei
+
+Não gostei
+#4
+Paço do Frevo
+O Paço do Frevo é um espaço cultural dedicado à difusão, pesquisa e formação nas áreas de dança e música do frevo. Recebeu mais de 120 mil visitantes em seu primeiro ano de funcionamento, sendo um dos locais mais procurados de Pernambuco.
+
+Bairro não especificado, Recife
+
+Gostei
+
+Não gostei
+#5
+Igreja Nossa Senhora do Rosário dos Homens Pretos
+Fundada em 1662, pela Venerável Confraria de Nossa Senhora do Rosário dos Homens Pretos de Santo Antônio, é a segunda igreja fundada por uma irmandade de negros do Brasil. No entorno da igreja surgiu o primeiro folguedo afro-brasileiro: a congada. O culto a Nossa Senhora do Rosário foi introduzido na cultura dos escravos africanos no Brasil pelos jesuítas na catequese.
+
+Santo Antônio, Recife
+
+
+
+
+Context:
+Name: Rafael Souza
+Age: 31
+Gender: Male
+Occupation: Street Food Vendor
+Interests: Culinary Traditions, Live Music, Cultural Festivals
+
+json
+{
+  "motivations": ["GASTRONOMY", "TRADITION", "ENTERTAINMENT", "SOCIAL", "CREATIVITY"],
+  "hobbies": ["GASTRONOMY", "MUSIC", "DANCING", "SOCIAL", "TRAVELING"],
+  "themes": ["GASTRONOMIC", "AFRO_BRAZILIAN", "URBAN_ART", "FOLKLORE", "ROMANTIC"]
+}
+--- Output format (JSON array only) ---
+A list of objects with:
+
+"poiName": <ID of the POI>,
+
+"scoreValue": <0 or 1 based on relevance to the user>
+
+Example:
+
+json
+Copiar
+Editar
+[
+  { "poiId": name1, "scoreValue": 0 },
+  { "poiId": name2, "scoreValue": 0 },
+  { "poiId":name3, "scoreValue": 1 },
+  { "poiId": name4, "scoreValue": 1 },
+  { "poiId": name5, "scoreValue": 1 }
+]
+-- Output rules --
+
+Return only the JSON list.
+
+Do not explain or justify your scores.
+
+Ensure scoring is coherent with user preferences.
+json
+[
+  { "poiName": "1", "scoreValue": 1 },
+  { "poiName": "2", "scoreValue": 1 },
+  { "poiName": "3", "scoreValue": 1 },
+  { "poiName": "4", "scoreValue": 1 },
+  { "poiName": "5", "scoreValue": 1 }
+]
+You are assisting a tourism recommendation system to evaluate the relevance of a list of POIs (Points of Interest) for a specific user. Based on the user's profile and preferences, analyze each POI and return a binary score:
+
+1 if the user is likely to like or be interested in the POI;
+
+0 if the user is likely to dislike or not care about the POI.
+
+Base your evaluation on the alignment between:
+
+The description or nature of each POI;
+
+The user's motivations, hobbies, and thematic preferences.
+
+
+Recommendation POIs:
+Baseado em suas preferências, encontramos 5 pontos de interesse. Avalie as recomendações para melhorar futuras sugestões:
+
+#1
+Jardim Botânico do Recife
+O Jardim Botânico do Recife desenvolve atividades em educação ambiental, como caminhadas ecológicas, exposição permanente da mata atlântica, exibição de vídeos com temas ambientais e visitas a viveiros de plantas medicinais e florestais. Possui um orquidário e um meliponário de abelhas nativas.
+
+Curado, Recife
+
+Gostei
+
+Não gostei
+#2
+Pracinha de Boa Viagem
+Principal ponto de venda de artesanato local, com cerca de 200 barracas. No centro, destaca-se a Igreja de Nossa Senhora de Boa Viagem (construída em 1707) e um obelisco histórico com marcos da história de Recife.
+
+Boa Viagem, Recife
+
+Gostei
+
+Não gostei
+#3
+Capela Dourada
+A Capela dos Noviços da Ordem Terceira de São Francisco de Assis ou Capela Dourada é uma capela da Ordem Franciscana localizada na cidade do Recife, capital do estado brasileiro de Pernambuco. Com construção iniciada em 1696, foi o primeiro templo do Brasil a ser integralmente coberto de decoração barroca. Está situado dentro do complexo de edifícios do Convento e Igreja de Santo Antônio, que inclui a Igreja da Ordem Terceira de São Francisco e o Museu Franciscano de Arte Sacra.
+
+Santo Antônio, Recife
+
+Gostei
+
+Não gostei
+#4
+Oficina Francisco Brennand
+A Oficina Cerâmica Francisco Brennand é um museu de arte brasileiro localizado na cidade do Recife, capital de Pernambuco. Trata-se de um complexo monumental com aproximadamente 2 mil obras, entre esculturas, murais e objetos cerâmicos. A principal temática é a origem da vida e a evolução das coisas. Conta com espaços como a Accademia, Anfiteatro, Salão de Esculturas e jardins projetados por Burle Marx.
+
+Várzea, Recife
+
+Gostei
+
+Não gostei
+#5
+Igreja Madre de Deus
+A Igreja Madre de Deus é um templo católico da cidade do Recife, capital do estado brasileiro de Pernambuco. Situa-se ao lado do prédio do antigo Convento dos Padres Oratorianos. O interior da nave é um amplo salão com capelas laterais e um majestoso arco triunfal de diversas cantorias com dois altares no arco cruzeiro. O altar-mor é de talha dourada com nichos sacrários e trono em estilo rococó. A sacristia possui grande arcaz e um lavabo em mármore de Estremoz considerado o mais notável do Brasil.
+
+Bairro não especificado, Recife
+
+Context:
+Name: Camila Oliveira
+Age: 43
+Gender: Female
+Occupation: Physical Therapist
+Interests: Wellness Retreats, Nature Walks, Meditation
+
+json
+{
+  "motivations": ["RELAXATION", "SPIRITUALITY", "FAMILY", "IMMERSIVE_EXPERIENCE", "EDUCATION"],
+  "hobbies": ["HIKING", "GARDENING", "READING", "VOLUNTEERING", "MUSIC"],
+  "themes": ["NATURE", "RELIGIOUS", "ROMANTIC", "FAMILY_FRIENDLY", "BAROQUE"]
+}
+--- Output format (JSON array only) ---
+A list of objects with:
+
+"poiName": <ID of the POI>,
+
+"scoreValue": <0 or 1 based on relevance to the user>
+
+Example:
+
+json
+Copiar
+Editar
+[
+  { "poiId": name1, "scoreValue": 0 },
+  { "poiId": name2, "scoreValue": 0 },
+  { "poiId":name3, "scoreValue": 1 },
+  { "poiId": name4, "scoreValue": 1 },
+  { "poiId": name5, "scoreValue": 1 }
+]
+-- Output rules --
+
+Return only the JSON list.
+
+Do not explain or justify your scores.
+
+Ensure scoring is coherent with user preferences.
+json
+[
+  { "poiName": "1", "scoreValue": 1 },
+  { "poiName": "2", "scoreValue": 0 },
+  { "poiName": "3", "scoreValue": 1 },
+  { "poiName": "4", "scoreValue": 0 },
+  { "poiName": "5", "scoreValue": 1 }
+]
+You are assisting a tourism recommendation system to evaluate the relevance of a list of POIs (Points of Interest) for a specific user. Based on the user's profile and preferences, analyze each POI and return a binary score:
+
+1 if the user is likely to like or be interested in the POI;
+
+0 if the user is likely to dislike or not care about the POI.
+
+Base your evaluation on the alignment between:
+
+The description or nature of each POI;
+
+The user's motivations, hobbies, and thematic preferences.
+
+
+Recommendation POIs:
+Baseado em suas preferências, encontramos 5 pontos de interesse. Avalie as recomendações para melhorar futuras sugestões:
+
+#1
+Museu Murilo La Greca
+O Museu Murillo La Greca é um museu brasileiro localizado no bairro do Parnamirim, na cidade do Recife, capital de Pernambuco. Inaugurado em 12 de dezembro de 1985, o acervo é composto principalmente por obras de arte produzidas pelo professor e pintor clássico Murillo La Greca, são 1400 desenhos em que La Greca utilizou diversas técnicas, desde o giz de cera ao pastel. Além dos desenhos há também 160 pinturas entre paisagens, retratos e obras impressionistas. O museu conta também com discotecas, livros e móveis, além de algumas cartas trocadas por artistas com nomes como Candido Portinari.
+
+Parnamirim, Recife
+
+Gostei
+
+Não gostei
+#2
+Museu de Arte Moderna Aloísio Magalhães
+O Museu de Arte Moderna Aloisio Magalhães ou MAMAM é um museu localizado na cidade do Recife, capital do estado brasileiro de Pernambuco. É considerado um centro de referência da produção moderna e contemporânea das artes visuais. Através da divulgação, registro e reflexão sobre a arte do presente e suas referências históricas, o MAMAM tem contribuído para a formação cultural do público e para o adensamento do meio institucional e artístico do Recife.
+
+Boa Vista, Recife
+
+Gostei
+
+Não gostei
+#3
+Palácio da Justiça
+Prédio histórico tombado em estilo neoclássico que abriga o Tribunal de Justiça de Pernambuco. Possui um acervo de arte essencial para visitantes, incluindo obras que remontam ao centenário da Confederação do Equador.
+
+Santo Antônio, Recife
+
+Gostei
+
+Não gostei
+#4
+Palácio do Campo das Princesas
+Sede administrativa do governo de Pernambuco, construída em 1841. Destaque para o baobá secular em frente ao palácio, possivelmente inspiração para "O Pequeno Príncipe". Localiza-se próximo ao Teatro de Santa Isabel.
+
+Santo Antônio, Recife
+
+Gostei
+
+Não gostei
+#5
+Casa da Cultura
+A Casa da Cultura é um centro de comercialização de artesanato da cidade do Recife, capital do estado brasileiro de Pernambuco. Funciona no edifício da antiga Casa de Detenção do Recife, que foi a maior cadeia do Brasil no século XIX e a primeira prisão radial pan-ótica da América do Sul. Foi também, durante a Ditadura Civil-militar, um dos antros das torturas e assassinatos, sendo um de seus destaques Amaro Luiz de Carvalho.
+
+São José, Recife
+
+
+Context:
+Name: Tiago Santos
+Age: 26
+Gender: Male
+Occupation: Architecture Assistant
+Interests: Urban Design, Heritage Sites, Sketching
+
+json
+{
+  "motivations": ["ARTISTIC_VALUE", "HERITAGE", "CREATIVITY", "EDUCATION", "EXPLORATION"],
+  "hobbies": ["ART", "PHOTOGRAPHY", "TRAVELING", "READING", "LEARNING"],
+  "themes": ["ARCHITETURAL_STYLE", "COLONIAL", "MODERN", "URBAN_ART", "HISTORY"]
+}
+--- Output format (JSON array only) ---
+A list of objects with:
+
+"poiName": <ID of the POI>,
+
+"scoreValue": <0 or 1 based on relevance to the user>
+
+Example:
+
+json
+Copiar
+Editar
+[
+  { "poiId": name1, "scoreValue": 0 },
+  { "poiId": name2, "scoreValue": 0 },
+  { "poiId":name3, "scoreValue": 1 },
+  { "poiId": name4, "scoreValue": 1 },
+  { "poiId": name5, "scoreValue": 1 }
+]
+-- Output rules --
+
+Return only the JSON list.
+
+Do not explain or justify your scores.
+
+Ensure scoring is coherent with user preferences.
+json
+[
+  { "poiName": "1", "scoreValue": 0 },
+  { "poiName": "2", "scoreValue": 1 },
+  { "poiName": "3", "scoreValue": 1 },
+  { "poiName": "4", "scoreValue": 1 },
+  { "poiName": "5", "scoreValue": 1 }
+]
+You are assisting a tourism recommendation system to evaluate the relevance of a list of POIs (Points of Interest) for a specific user. Based on the user's profile and preferences, analyze each POI and return a binary score:
+
+1 if the user is likely to like or be interested in the POI;
+
+0 if the user is likely to dislike or not care about the POI.
+
+Base your evaluation on the alignment between:
+
+The description or nature of each POI;
+
+The user's motivations, hobbies, and thematic preferences.
+
+
+Recommendation POIs:
+Baseado em suas preferências, encontramos 5 pontos de interesse. Avalie as recomendações para melhorar futuras sugestões:
+
+#1
+Igreja Nossa Senhora do Rosário dos Homens Pretos
+Fundada em 1662, pela Venerável Confraria de Nossa Senhora do Rosário dos Homens Pretos de Santo Antônio, é a segunda igreja fundada por uma irmandade de negros do Brasil. No entorno da igreja surgiu o primeiro folguedo afro-brasileiro: a congada. O culto a Nossa Senhora do Rosário foi introduzido na cultura dos escravos africanos no Brasil pelos jesuítas na catequese.
+
+Santo Antônio, Recife
+
+Gostei
+
+Não gostei
+#2
+Sede do Galo da Madrugada
+Atualmente a sede do Galo da Madrugada tem o programa "Galo - Alegria o Ano Inteiro", que promove festividades de valorização da cultura pernambucana não só no Carnaval, mas durante os doze meses do ano. Um exemplo é a prévia Quinta no Galo, que inicia suas edições no segundo semestre e segue até a véspera do Sábado de Zé Pereira. A festa conta com atrações principais e convidadas, além de grupos multiculturais, como palhaços mascarados do Galo, Maracatu Rural (Baque Solto), Maracatu de Baque Virado, Caboclinhos, grupo de passistas de Frevo, Bloco Lírico e fantasias do Galo da Madrugada.
+
+São José, Recife
+
+Gostei
+
+Não gostei
+#3
+Paço do Frevo
+O Paço do Frevo é um espaço cultural dedicado à difusão, pesquisa e formação nas áreas de dança e música do frevo. Recebeu mais de 120 mil visitantes em seu primeiro ano de funcionamento, sendo um dos locais mais procurados de Pernambuco.
+
+Bairro não especificado, Recife
+
+Gostei
+
+Não gostei
+#4
+Museu da Abolição
+O Museu da Abolição — Centro de Referência da Cultura Afro-Brasileira é um museu localizado na cidade do Recife, capital de Pernambuco, Brasil. Vinculado ao Instituto Brasileiro de Museus (IBRAM) e ao Ministério da Cultura, é um dos raros museus no país a contemplar esta parte da história, e tem suas ações norteadas pelos princípios da nova museologia e da socio museologia. Atualmente o Museu conta com: 130 peças do acervo museológico; 30 metros lineares de acervo bibliográfico; E 2 metros lineares de acervo hemerográfico.
+
+Madalena, Recife
+
+Gostei
+
+Não gostei
+#5
+Cais do Sertão
+Um dos mais modernos equipamentos culturais do Brasil, o Cais do Sertão, instalado no antigo Armazém 10 do Porto do Recife, é um local de convivência, diversão e conhecimento, polo gerador de novas ideias e experiências. Abrigando e reverenciando a obra de Luiz Gonzaga, o grande homenageado do espaço, traz para a beira-mar da capital do estado um pouco do solo rico e generoso da cultura popular do sertão. O museu teve como curadora e diretora de criação a socióloga pernambucana Isa Grinspum Ferraz, também autora do Museu da Língua Portuguesa em São Paulo.
+
+Bairro não especificado, Recife
+
+
+
+
+Context:
+Name: Fernanda Lima
+Age: 38
+Gender: Female
+Occupation: Handicraft Shop Owner
+Interests: Folk Art, Cultural Markets, Dance
+
+json
+{
+  "motivations": ["CULTURE", "TRADITION", "ARTISTIC_VALUE", "SOCIAL", "IDENTITY"],
+  "hobbies": ["ART", "DANCING", "SOCIAL", "TRAVELING", "MUSIC"],
+  "themes": ["AFRO_BRAZILIAN", "FOLKLORE", "BAROQUE", "CULTURAL", "ROMANTIC"]
+}
+--- Output format (JSON array only) ---
+A list of objects with:
+
+"poiName": <ID of the POI>,
+
+"scoreValue": <0 or 1 based on relevance to the user>
+
+Example:
+
+json
+Copiar
+Editar
+[
+  { "poiId": name1, "scoreValue": 0 },
+  { "poiId": name2, "scoreValue": 0 },
+  { "poiId":name3, "scoreValue": 1 },
+  { "poiId": name4, "scoreValue": 1 },
+  { "poiId": name5, "scoreValue": 1 }
+]
+-- Output rules --
+
+Return only the JSON list.
+
+Do not explain or justify your scores.
+
+Ensure scoring is coherent with user preferences.
+json
+[
+  { "poiName": "1", "scoreValue": 1 },
+  { "poiName": "2", "scoreValue": 1 },
+  { "poiName": "3", "scoreValue": 1 },
+  { "poiName": "4", "scoreValue": 1 },
+  { "poiName": "5", "scoreValue": 1 }
+]
+You are assisting a tourism recommendation system to evaluate the relevance of a list of POIs (Points of Interest) for a specific user. Based on the user's profile and preferences, analyze each POI and return a binary score:
+
+1 if the user is likely to like or be interested in the POI;
+
+0 if the user is likely to dislike or not care about the POI.
+
+Base your evaluation on the alignment between:
+
+The description or nature of each POI;
+
+The user's motivations, hobbies, and thematic preferences.
+
+
+Recommendation POIs:
+Baseado em suas preferências, encontramos 5 pontos de interesse. Avalie as recomendações para melhorar futuras sugestões:
+
+#1
+Catamaran Tours
+Pioneira nos segmentos de passeios náuticos em Pernambuco, a Catamaran Tours tem se destacado há 30 anos no cenário turístico local por todos os avanços conquistados, 20 deles em pleno coração da capital pernambucana. Foi uma empresa, comandada pela família Britto, que tornou a navegação de turismo pelos rios que cortam o centro do Recife em um dos programas mais procurados por locais e turistas.
+
+São José, Recife
+
+Gostei
+
+Não gostei
+#2
+Casa da Cultura
+A Casa da Cultura é um centro de comercialização de artesanato da cidade do Recife, capital do estado brasileiro de Pernambuco. Funciona no edifício da antiga Casa de Detenção do Recife, que foi a maior cadeia do Brasil no século XIX e a primeira prisão radial pan-ótica da América do Sul. Foi também, durante a Ditadura Civil-militar, um dos antros das torturas e assassinatos, sendo um de seus destaques Amaro Luiz de Carvalho.
+
+São José, Recife
+
+Gostei
+
+Não gostei
+#3
+Museu Murilo La Greca
+O Museu Murillo La Greca é um museu brasileiro localizado no bairro do Parnamirim, na cidade do Recife, capital de Pernambuco. Inaugurado em 12 de dezembro de 1985, o acervo é composto principalmente por obras de arte produzidas pelo professor e pintor clássico Murillo La Greca, são 1400 desenhos em que La Greca utilizou diversas técnicas, desde o giz de cera ao pastel. Além dos desenhos há também 160 pinturas entre paisagens, retratos e obras impressionistas. O museu conta também com discotecas, livros e móveis, além de algumas cartas trocadas por artistas com nomes como Candido Portinari.
+
+Parnamirim, Recife
+
+Gostei
+
+Não gostei
+#4
+Centro de Artesanato de Pernambuco
+Localizado em frente ao Marco Zero, no Bairro do Recife, o Centro de Artesanato de Pernambuco é uma iniciativa de economia criativa do Estado. Inaugurado em 2012, reúne mais de 30 mil peças de cerca de 2 mil artesãos de todas as regiões pernambucanas.
+
+Bairro não especificado, Recife
+
+Gostei
+
+Não gostei
+#5
+Torre Malakoff
+Torre Malakoff, localizada no Recife Antigo, na cidade do Recife, foi batizada com o nome de uma das torres da fortaleza de Sebastopol, durante a Guerra da Crimeia. A Torre Malakoff é um importante monumento localizado no Bairro do Recife, área tombada pelo Iphan. Construído no século 19 (com materiais provenientes da demolição do Forte do Bom Jesus) para servir como observatório astronômico e portão monumental do Arsenal da Marinha. O caráter militar da obra está presente em sua fachada e na simetria de sua planta lembrando também mesquitas do Oriente.
+
+Bairro não especificado, Recife
+Context:
+Name: Vinícius Rodrigues
+Age: 53
+Gender: Male
+Occupation: Public Bus Driver
+Interests: City Exploration, Local Stories, Photography
+
+json
+{
+  "motivations": ["EXPLORATION", "IMMERSIVE_EXPERIENCE", "SOCIAL", "EDUCATION", "RELAXATION"],
+  "hobbies": ["PHOTOGRAPHY", "TRAVELING", "READING", "SOCIAL", "LEARNING"],
+  "themes": ["URBAN_ART", "COLONIAL", "HISTORY", "CULTURAL", "FAMILY_FRIENDLY"]
+}
+--- Output format (JSON array only) ---
+A list of objects with:
+
+"poiName": <ID of the POI>,
+
+"scoreValue": <0 or 1 based on relevance to the user>
+
+Example:
+
+json
+Copiar
+Editar
+[
+  { "poiId": name1, "scoreValue": 0 },
+  { "poiId": name2, "scoreValue": 0 },
+  { "poiId":name3, "scoreValue": 1 },
+  { "poiId": name4, "scoreValue": 1 },
+  { "poiId": name5, "scoreValue": 1 }
+]
+-- Output rules --
+
+Return only the JSON list.
+
+Do not explain or justify your scores.
+
+Ensure scoring is coherent with user preferences.
+json
+[
+  { "poiName": "1", "scoreValue": 1 },
+  { "poiName": "2", "scoreValue": 1 },
+  { "poiName": "3", "scoreValue": 0 },
+  { "poiName": "4", "scoreValue": 1 },
+  { "poiName": "5", "scoreValue": 1 }
+]
+You are assisting a tourism recommendation system to evaluate the relevance of a list of POIs (Points of Interest) for a specific user. Based on the user's profile and preferences, analyze each POI and return a binary score:
+
+1 if the user is likely to like or be interested in the POI;
+
+0 if the user is likely to dislike or not care about the POI.
+
+Base your evaluation on the alignment between:
+
+The description or nature of each POI;
+
+The user's motivations, hobbies, and thematic preferences.
+
+
+Recommendation POIs:
+Baseado em suas preferências, encontramos 5 pontos de interesse. Avalie as recomendações para melhorar futuras sugestões:
+
+#1
+Teatro de Santa Isabel
+Teatro histórico em estilo neoclássico, palco de eventos importantes como a campanha abolicionista de Joaquim Nabuco. Primeiro teatro do Brasil construído com mão de obra especializada, projetado pelo engenheiro francês Louis Léger Vauthier. Recebeu visitantes ilustres como Dom Pedro II.
+
+Santo Antônio, Recife
+
+Gostei
+
+Não gostei
+#2
+Teatro do Parque
+Teatro histórico com inovação arquitetônica: um jardim interno para climatização. Construído em aço e cimento em 1915, com decoração de Henrique Elliot e Mário Nunes. Mantém conexão histórica com o Hotel do Parque para venda de ingressos.
+
+Boa Vista, Recife
+
+Gostei
+
+Não gostei
+#3
+Cais do Sertão
+Um dos mais modernos equipamentos culturais do Brasil, o Cais do Sertão, instalado no antigo Armazém 10 do Porto do Recife, é um local de convivência, diversão e conhecimento, polo gerador de novas ideias e experiências. Abrigando e reverenciando a obra de Luiz Gonzaga, o grande homenageado do espaço, traz para a beira-mar da capital do estado um pouco do solo rico e generoso da cultura popular do sertão. O museu teve como curadora e diretora de criação a socióloga pernambucana Isa Grinspum Ferraz, também autora do Museu da Língua Portuguesa em São Paulo.
+
+Bairro não especificado, Recife
+
+Gostei
+
+Não gostei
+#4
+Sede do Galo da Madrugada
+Atualmente a sede do Galo da Madrugada tem o programa "Galo - Alegria o Ano Inteiro", que promove festividades de valorização da cultura pernambucana não só no Carnaval, mas durante os doze meses do ano. Um exemplo é a prévia Quinta no Galo, que inicia suas edições no segundo semestre e segue até a véspera do Sábado de Zé Pereira. A festa conta com atrações principais e convidadas, além de grupos multiculturais, como palhaços mascarados do Galo, Maracatu Rural (Baque Solto), Maracatu de Baque Virado, Caboclinhos, grupo de passistas de Frevo, Bloco Lírico e fantasias do Galo da Madrugada.
+
+São José, Recife
+
+Gostei
+
+Não gostei
+#5
+Paço do Frevo
+O Paço do Frevo é um espaço cultural dedicado à difusão, pesquisa e formação nas áreas de dança e música do frevo. Recebeu mais de 120 mil visitantes em seu primeiro ano de funcionamento, sendo um dos locais mais procurados de Pernambuco.
+
+Bairro não especificado, Recife
+Context:
+Name: Juliana Martins
+Age: 29
+Gender: Female
+Occupation: Preschool Teacher
+Interests: Educational Games, Community Events, Puppetry
+
+json
+{
+  "motivations": ["EDUCATION", "FAMILY", "SOCIAL", "CREATIVITY", "ENTERTAINMENT"],
+  "hobbies": ["THEATER", "READING", "VOLUNTEERING", "ART", "MUSIC"],
+  "themes": ["FAMILY_FRIENDLY", "FOLKLORE", "CULTURAL", "ROMANTIC", "HISTORY"]
+}
+--- Output format (JSON array only) ---
+A list of objects with:
+
+"poiName": <ID of the POI>,
+
+"scoreValue": <0 or 1 based on relevance to the user>
+
+Example:
+
+json
+Copiar
+Editar
+[
+  { "poiId": name1, "scoreValue": 0 },
+  { "poiId": name2, "scoreValue": 0 },
+  { "poiId":name3, "scoreValue": 1 },
+  { "poiId": name4, "scoreValue": 1 },
+  { "poiId": name5, "scoreValue": 1 }
+]
+-- Output rules --
+
+Return only the JSON list.
+
+Do not explain or justify your scores.
+
+Ensure scoring is coherent with user preferences.
+json
+[
+  { "poiName": "1", "scoreValue": 1 },
+  { "poiName": "2", "scoreValue": 1 },
+  { "poiName": "3", "scoreValue": 0 },
+  { "poiName": "4", "scoreValue": 1 },
+  { "poiName": "5", "scoreValue": 1 }
+]
+You are assisting a tourism recommendation system to evaluate the relevance of a list of POIs (Points of Interest) for a specific user. Based on the user's profile and preferences, analyze each POI and return a binary score:
+
+1 if the user is likely to like or be interested in the POI;
+
+0 if the user is likely to dislike or not care about the POI.
+
+Base your evaluation on the alignment between:
+
+The description or nature of each POI;
+
+The user's motivations, hobbies, and thematic preferences.
+
+
+Recommendation POIs:
+Baseado em suas preferências, encontramos 5 pontos de interesse. Avalie as recomendações para melhorar futuras sugestões:
+
+#1
+Jardim Botânico do Recife
+O Jardim Botânico do Recife desenvolve atividades em educação ambiental, como caminhadas ecológicas, exposição permanente da mata atlântica, exibição de vídeos com temas ambientais e visitas a viveiros de plantas medicinais e florestais. Possui um orquidário e um meliponário de abelhas nativas.
+
+Curado, Recife
+
+Gostei
+
+Não gostei
+#2
+Catamaran Tours
+Pioneira nos segmentos de passeios náuticos em Pernambuco, a Catamaran Tours tem se destacado há 30 anos no cenário turístico local por todos os avanços conquistados, 20 deles em pleno coração da capital pernambucana. Foi uma empresa, comandada pela família Britto, que tornou a navegação de turismo pelos rios que cortam o centro do Recife em um dos programas mais procurados por locais e turistas.
+
+São José, Recife
+
+Gostei
+
+Não gostei
+#3
+Igreja Nossa Senhora do Rosário dos Homens Pretos
+Fundada em 1662, pela Venerável Confraria de Nossa Senhora do Rosário dos Homens Pretos de Santo Antônio, é a segunda igreja fundada por uma irmandade de negros do Brasil. No entorno da igreja surgiu o primeiro folguedo afro-brasileiro: a congada. O culto a Nossa Senhora do Rosário foi introduzido na cultura dos escravos africanos no Brasil pelos jesuítas na catequese.
+
+Santo Antônio, Recife
+
+Gostei
+
+Não gostei
+#4
+Forte do Brum
+O Forte de São João Batista do Brum localiza-se no bairro do Recife, na cidade do mesmo nome, no estado de Pernambuco, no Brasil. Administrado pelo Exército brasileiro, encontra-se restaurado e aberto ao público, abrigando, desde 5 de janeiro de 1987, o Museu Militar do Forte do Brum (MMFB), que exibe armamento e peças arqueológicas. No seu interior destaca-se a Capela de São João Batista, em estilo maneirista.
+
+Bairro não especificado, Recife
+
+Gostei
+
+Não gostei
+#5
+Paço do Frevo
+O Paço do Frevo é um espaço cultural dedicado à difusão, pesquisa e formação nas áreas de dança e música do frevo. Recebeu mais de 120 mil visitantes em seu primeiro ano de funcionamento, sendo um dos locais mais procurados de Pernambuco.
+
+Bairro não especificado, Recife
+
+Context:
+Name: Eduardo Barbosa
+Age: 47
+Gender: Male
+Occupation: Fisherman
+Interests: Nautical Traditions, Fishing Techniques, Sea Conservation
+
+json
+{
+  "motivations": ["TRADITION", "HERITAGE", "RELAXATION", "SPIRITUALITY", "FAMILY"],
+  "hobbies": ["ADVENTURE", "MUSIC", "VOLUNTEERING", "SOCIAL", "LEARNING"],
+  "themes": ["NATURE", "AFRO_BRAZILIAN", "RELIGIOUS", "FOLKLORE", "ADVENTURE"]
+}
+--- Output format (JSON array only) ---
+A list of objects with:
+
+"poiName": <ID of the POI>,
+
+"scoreValue": <0 or 1 based on relevance to the user>
+
+Example:
+
+json
+Copiar
+Editar
+[
+  { "poiId": name1, "scoreValue": 0 },
+  { "poiId": name2, "scoreValue": 0 },
+  { "poiId":name3, "scoreValue": 1 },
+  { "poiId": name4, "scoreValue": 1 },
+  { "poiId": name5, "scoreValue": 1 }
+]
+-- Output rules --
+
+Return only the JSON list.
+
+Do not explain or justify your scores.
+
+Ensure scoring is coherent with user preferences.
+json
+[
+  { "poiName": "1", "scoreValue": 0 },
+  { "poiName": "2", "scoreValue": 1 },
+  { "poiName": "3", "scoreValue": 1 },
+  { "poiName": "4", "scoreValue": 0 },
+  { "poiName": "5", "scoreValue": 1 }
+]
+You are assisting a tourism recommendation system to evaluate the relevance of a list of POIs (Points of Interest) for a specific user. Based on the user's profile and preferences, analyze each POI and return a binary score:
+
+1 if the user is likely to like or be interested in the POI;
+
+0 if the user is likely to dislike or not care about the POI.
+
+Base your evaluation on the alignment between:
+
+The description or nature of each POI;
+
+The user's motivations, hobbies, and thematic preferences.
+
+
+Recommendation POIs:
+Baseado em suas preferências, encontramos 5 pontos de interesse. Avalie as recomendações para melhorar futuras sugestões:
+
+#1
+Museu Murilo La Greca
+O Museu Murillo La Greca é um museu brasileiro localizado no bairro do Parnamirim, na cidade do Recife, capital de Pernambuco. Inaugurado em 12 de dezembro de 1985, o acervo é composto principalmente por obras de arte produzidas pelo professor e pintor clássico Murillo La Greca, são 1400 desenhos em que La Greca utilizou diversas técnicas, desde o giz de cera ao pastel. Além dos desenhos há também 160 pinturas entre paisagens, retratos e obras impressionistas. O museu conta também com discotecas, livros e móveis, além de algumas cartas trocadas por artistas com nomes como Candido Portinari.
+
+Parnamirim, Recife
+
+Gostei
+
+Não gostei
+#2
+Museu de Arte Moderna Aloísio Magalhães
+O Museu de Arte Moderna Aloisio Magalhães ou MAMAM é um museu localizado na cidade do Recife, capital do estado brasileiro de Pernambuco. É considerado um centro de referência da produção moderna e contemporânea das artes visuais. Através da divulgação, registro e reflexão sobre a arte do presente e suas referências históricas, o MAMAM tem contribuído para a formação cultural do público e para o adensamento do meio institucional e artístico do Recife.
+
+Boa Vista, Recife
+
+Gostei
+
+Não gostei
+#3
+Teatro de Santa Isabel
+Teatro histórico em estilo neoclássico, palco de eventos importantes como a campanha abolicionista de Joaquim Nabuco. Primeiro teatro do Brasil construído com mão de obra especializada, projetado pelo engenheiro francês Louis Léger Vauthier. Recebeu visitantes ilustres como Dom Pedro II.
+
+Santo Antônio, Recife
+
+Gostei
+
+Não gostei
+#4
+Sede do Galo da Madrugada
+Atualmente a sede do Galo da Madrugada tem o programa "Galo - Alegria o Ano Inteiro", que promove festividades de valorização da cultura pernambucana não só no Carnaval, mas durante os doze meses do ano. Um exemplo é a prévia Quinta no Galo, que inicia suas edições no segundo semestre e segue até a véspera do Sábado de Zé Pereira. A festa conta com atrações principais e convidadas, além de grupos multiculturais, como palhaços mascarados do Galo, Maracatu Rural (Baque Solto), Maracatu de Baque Virado, Caboclinhos, grupo de passistas de Frevo, Bloco Lírico e fantasias do Galo da Madrugada.
+
+São José, Recife
+
+Gostei
+
+Não gostei
+#5
+Paço do Frevo
+O Paço do Frevo é um espaço cultural dedicado à difusão, pesquisa e formação nas áreas de dança e música do frevo. Recebeu mais de 120 mil visitantes em seu primeiro ano de funcionamento, sendo um dos locais mais procurados de Pernambuco.
+
+Bairro não especificado, Recife
+
+
+
+Context:
+Name: Beatriz Rocha
+Age: 33
+Gender: Female
+Occupation: Boutique Manager
+Interests: Fashion History, Social Gatherings, Art Exhibitions
+
+json
+{
+  "motivations": ["ARTISTIC_VALUE", "SOCIAL", "ENTERTAINMENT", "CREATIVITY", "EXPLORATION"],
+  "hobbies": ["ART", "DANCING", "TRAVELING", "MUSIC", "READING"],
+  "themes": ["MODERN", "URBAN_ART", "GASTRONOMIC", "ROMANTIC", "COLONIAL"]
+}
+--- Output format (JSON array only) ---
+A list of objects with:
+
+"poiName": <ID of the POI>,
+
+"scoreValue": <0 or 1 based on relevance to the user>
+
+Example:
+
+json
+Copiar
+Editar
+[
+  { "poiId": name1, "scoreValue": 0 },
+  { "poiId": name2, "scoreValue": 0 },
+  { "poiId":name3, "scoreValue": 1 },
+  { "poiId": name4, "scoreValue": 1 },
+  { "poiId": name5, "scoreValue": 1 }
+]
+-- Output rules --
+
+Return only the JSON list.
+
+Do not explain or justify your scores.
+
+Ensure scoring is coherent with user preferences.
+json
+[
+  { "poiName": "1", "scoreValue": 0 },
+  { "poiName": "2", "scoreValue": 1 },
+  { "poiName": "3", "scoreValue": 1 },
+  { "poiName": "4", "scoreValue": 1 },
+  { "poiName": "5", "scoreValue": 1 }
+]
+You are assisting a tourism recommendation system to evaluate the relevance of a list of POIs (Points of Interest) for a specific user. Based on the user's profile and preferences, analyze each POI and return a binary score:
+
+1 if the user is likely to like or be interested in the POI;
+
+0 if the user is likely to dislike or not care about the POI.
+
+Base your evaluation on the alignment between:
+
+The description or nature of each POI;
+
+The user's motivations, hobbies, and thematic preferences.
+
+
+Recommendation POIs:
+Baseado em suas preferências, encontramos 5 pontos de interesse. Avalie as recomendações para melhorar futuras sugestões:
+
+#1
+Jardim Botânico do Recife
+O Jardim Botânico do Recife desenvolve atividades em educação ambiental, como caminhadas ecológicas, exposição permanente da mata atlântica, exibição de vídeos com temas ambientais e visitas a viveiros de plantas medicinais e florestais. Possui um orquidário e um meliponário de abelhas nativas.
+
+Curado, Recife
+
+Gostei
+
+Não gostei
+#2
+Catamaran Tours
+Pioneira nos segmentos de passeios náuticos em Pernambuco, a Catamaran Tours tem se destacado há 30 anos no cenário turístico local por todos os avanços conquistados, 20 deles em pleno coração da capital pernambucana. Foi uma empresa, comandada pela família Britto, que tornou a navegação de turismo pelos rios que cortam o centro do Recife em um dos programas mais procurados por locais e turistas.
+
+São José, Recife
+
+Gostei
+
+Não gostei
+#3
+Embaixada dos Bonecos Gigantes
+A Embaixada dos Bonecos Gigantes é uma exposição permanente de bonecos gigantes (também conhecidos como "bonecos de Olinda"), alegorias populares do Carnaval de Pernambuco. O local expõe 30 bonecos gigantes, incluindo ícones como Alceu Valença, Michael Jackson e Luiz Inácio Lula da Silva.
+
+Bairro não especificado, Recife
+
+Gostei
+
+Não gostei
+#4
+Torre Malakoff
+Torre Malakoff, localizada no Recife Antigo, na cidade do Recife, foi batizada com o nome de uma das torres da fortaleza de Sebastopol, durante a Guerra da Crimeia. A Torre Malakoff é um importante monumento localizado no Bairro do Recife, área tombada pelo Iphan. Construído no século 19 (com materiais provenientes da demolição do Forte do Bom Jesus) para servir como observatório astronômico e portão monumental do Arsenal da Marinha. O caráter militar da obra está presente em sua fachada e na simetria de sua planta lembrando também mesquitas do Oriente.
+
+Bairro não especificado, Recife
+
+Gostei
+
+Não gostei
+#5
+Pracinha de Boa Viagem
+Principal ponto de venda de artesanato local, com cerca de 200 barracas. No centro, destaca-se a Igreja de Nossa Senhora de Boa Viagem (construída em 1707) e um obelisco histórico com marcos da história de Recife.
+
+Boa Viagem, Recife
+Context:
+Name: Ana Beatriz Lima
+Age: 24
+Gender: Female
+Occupation: Environmental Science Student
+Interests: Ecology, Birdwatching, Photography
+
+json
+{
+  "motivations": ["EXPLORATION", "EDUCATION", "ARTISTIC_VALUE", "IMMERSIVE_EXPERIENCE", "RELAXATION"],
+  "hobbies": ["PHOTOGRAPHY", "HIKING", "LEARNING", "TRAVELING", "READING"],
+  "themes": ["NATURE", "ADVENTURE", "CULTURAL", "HISTORY", "FOLKLORE"]
+}
+--- Output format (JSON array only) ---
+A list of objects with:
+
+"poiName": <ID of the POI>,
+
+"scoreValue": <0 or 1 based on relevance to the user>
+
+Example:
+
+json
+Copiar
+Editar
+[
+  { "poiId": name1, "scoreValue": 0 },
+  { "poiId": name2, "scoreValue": 0 },
+  { "poiId":name3, "scoreValue": 1 },
+  { "poiId": name4, "scoreValue": 1 },
+  { "poiId": name5, "scoreValue": 1 }
+]
+-- Output rules --
+
+Return only the JSON list.
+
+Do not explain or justify your scores.
+
+Ensure scoring is coherent with user preferences.
+json
+[
+  { "poiName": "1", "scoreValue": 1 },
+  { "poiName": "2", "scoreValue": 1 },
+  { "poiName": "3", "scoreValue": 0 },
+  { "poiName": "4", "scoreValue": 0 },
+  { "poiName": "5", "scoreValue": 1 }
+]
+You are assisting a tourism recommendation system to evaluate the relevance of a list of POIs (Points of Interest) for a specific user. Based on the user's profile and preferences, analyze each POI and return a binary score:
+
+1 if the user is likely to like or be interested in the POI;
+
+0 if the user is likely to dislike or not care about the POI.
+
+Base your evaluation on the alignment between:
+
+The description or nature of each POI;
+
+The user's motivations, hobbies, and thematic preferences.
+
+
+Recommendation POIs:
+Baseado em suas preferências, encontramos 5 pontos de interesse. Avalie as recomendações para melhorar futuras sugestões:
+
+#1
+Museu da Abolição
+O Museu da Abolição — Centro de Referência da Cultura Afro-Brasileira é um museu localizado na cidade do Recife, capital de Pernambuco, Brasil. Vinculado ao Instituto Brasileiro de Museus (IBRAM) e ao Ministério da Cultura, é um dos raros museus no país a contemplar esta parte da história, e tem suas ações norteadas pelos princípios da nova museologia e da socio museologia. Atualmente o Museu conta com: 130 peças do acervo museológico; 30 metros lineares de acervo bibliográfico; E 2 metros lineares de acervo hemerográfico.
+
+Madalena, Recife
+
+Gostei
+
+Não gostei
+#2
+Teatro de Santa Isabel
+Teatro histórico em estilo neoclássico, palco de eventos importantes como a campanha abolicionista de Joaquim Nabuco. Primeiro teatro do Brasil construído com mão de obra especializada, projetado pelo engenheiro francês Louis Léger Vauthier. Recebeu visitantes ilustres como Dom Pedro II.
+
+Santo Antônio, Recife
+
+Gostei
+
+Não gostei
+#3
+Palácio da Justiça
+Prédio histórico tombado em estilo neoclássico que abriga o Tribunal de Justiça de Pernambuco. Possui um acervo de arte essencial para visitantes, incluindo obras que remontam ao centenário da Confederação do Equador.
+
+Santo Antônio, Recife
+
+Gostei
+
+Não gostei
+#4
+Palácio do Campo das Princesas
+Sede administrativa do governo de Pernambuco, construída em 1841. Destaque para o baobá secular em frente ao palácio, possivelmente inspiração para "O Pequeno Príncipe". Localiza-se próximo ao Teatro de Santa Isabel.
+
+Santo Antônio, Recife
+
+Gostei
+
+Não gostei
+#5
+Instituto Ricardo Brennand
+O Instituto Ricardo Brennand é uma instituição cultural brasileira sem fins lucrativos localizada na cidade do Recife. Possui a maior coleção mundial do pintor holandês Frans Post e um dos maiores acervos de armas brancas do mundo, com mais de 3 mil peças, incluindo 27 armaduras medievais completas.
+
+Várzea, Recife
+Context:
+Name: Carlos Eduardo Santos
+Age: 58
+Gender: Male
+Occupation: History Teacher
+Interests: Colonial Architecture, Archives, Storytelling
+
+json
+{
+  "motivations": ["HERITAGE", "EDUCATION", "CULTURE", "IDENTITY", "TRADITION"],
+  "hobbies": ["READING", "THEATER", "LEARNING", "TRAVELING", "VOLUNTEERING"],
+  "themes": ["COLONIAL", "BAROQUE", "HISTORY", "ARCHITETURAL_STYLE", "AFRO_BRAZILIAN"]
+}
+--- Output format (JSON array only) ---
+A list of objects with:
+
+"poiName": <ID of the POI>,
+
+"scoreValue": <0 or 1 based on relevance to the user>
+
+Example:
+
+json
+Copiar
+Editar
+[
+  { "poiId": name1, "scoreValue": 0 },
+  { "poiId": name2, "scoreValue": 0 },
+  { "poiId":name3, "scoreValue": 1 },
+  { "poiId": name4, "scoreValue": 1 },
+  { "poiId": name5, "scoreValue": 1 }
+]
+-- Output rules --
+
+Return only the JSON list.
+
+Do not explain or justify your scores.
+
+Ensure scoring is coherent with user preferences.
+json
+[
+  { "poiName": "1", "scoreValue": 1 },
+  { "poiName": "2", "scoreValue": 1 },
+  { "poiName": "3", "scoreValue": 1 },
+  { "poiName": "4", "scoreValue": 1 },
+  { "poiName": "5", "scoreValue": 1 }
+]
+You are assisting a tourism recommendation system to evaluate the relevance of a list of POIs (Points of Interest) for a specific user. Based on the user's profile and preferences, analyze each POI and return a binary score:
+
+1 if the user is likely to like or be interested in the POI;
+
+0 if the user is likely to dislike or not care about the POI.
+
+Base your evaluation on the alignment between:
+
+The description or nature of each POI;
+
+The user's motivations, hobbies, and thematic preferences.
+
+
+Recommendation POIs:
+Baseado em suas preferências, encontramos 5 pontos de interesse. Avalie as recomendações para melhorar futuras sugestões:
+
+#1
+Bistrô Negra Linda
+Culinária da Ilha de Deus Veja as opções de receitas tradicionais da Chef, confira os pratos típicos da culinária da Ilha de Deus que nós preparamos de maneira única! No cardápio você encontra Mariscadas, Siri no Casco, Pasteis de Sururu, Moqueca da Ilha, Escondidinho de Sururu, Peixes, Escudinho de Camarão e vários pratos diferentes que a Chef cria todos os dias.
+
+Casa Forte, Recife
+
+Gostei
+
+Não gostei
+#2
+Cachaçaria Carvalheira
+Entre mais de 2 mil barris de carvalho e sob o aroma da mais pura cachaça envelhecendo, cordas, gamelas, moendas e alambiques antigos dão a Cachaçaria Carvalheira um clima todo especial, cheio de charme, história e tradição. Aqui, você vai saber como uma das melhores cachaças do Brasil é fabricada e passear entre os bairros onde a mais pura bebida nacional descansa durante anos até estar pronto para ser engarrafado e consumido. Depois da visitação às instalações da fábrica, uma deliciosa degustação vai deixar a Cachaça Carvalheira para sempre nas suas melhores lembranças.
+
+Imbiribeira, Recife
+
+Gostei
+
+Não gostei
+#3
+Igreja Nossa Senhora do Rosário dos Homens Pretos
+Fundada em 1662, pela Venerável Confraria de Nossa Senhora do Rosário dos Homens Pretos de Santo Antônio, é a segunda igreja fundada por uma irmandade de negros do Brasil. No entorno da igreja surgiu o primeiro folguedo afro-brasileiro: a congada. O culto a Nossa Senhora do Rosário foi introduzido na cultura dos escravos africanos no Brasil pelos jesuítas na catequese.
+
+Santo Antônio, Recife
+
+Gostei
+
+Não gostei
+#4
+Museu da Abolição
+O Museu da Abolição — Centro de Referência da Cultura Afro-Brasileira é um museu localizado na cidade do Recife, capital de Pernambuco, Brasil. Vinculado ao Instituto Brasileiro de Museus (IBRAM) e ao Ministério da Cultura, é um dos raros museus no país a contemplar esta parte da história, e tem suas ações norteadas pelos princípios da nova museologia e da socio museologia. Atualmente o Museu conta com: 130 peças do acervo museológico; 30 metros lineares de acervo bibliográfico; E 2 metros lineares de acervo hemerográfico.
+
+Madalena, Recife
+
+Gostei
+
+Não gostei
+#5
+Museu de Arte Moderna Aloísio Magalhães
+O Museu de Arte Moderna Aloisio Magalhães ou MAMAM é um museu localizado na cidade do Recife, capital do estado brasileiro de Pernambuco. É considerado um centro de referência da produção moderna e contemporânea das artes visuais. Através da divulgação, registro e reflexão sobre a arte do presente e suas referências históricas, o MAMAM tem contribuído para a formação cultural do público e para o adensamento do meio institucional e artístico do Recife.
+
+Boa Vista, Recife
+Context:
+Name: Fernanda Oliveira
+Age: 35
+Gender: Female
+Occupation: Pastry Chef
+Interests: Culinary History, Food Styling, Cultural Exchange
+
+json
+{
+  "motivations": ["GASTRONOMY", "CREATIVITY", "TRADITION", "ARTISTIC_VALUE", "SOCIAL"],
+  "hobbies": ["GASTRONOMY", "ART", "TRAVELING", "MUSIC", "DANCING"],
+  "themes": ["GASTRONOMIC", "AFRO_BRAZILIAN", "COLONIAL", "URBAN_ART", "CULTURAL"]
+}
+--- Output format (JSON array only) ---
+A list of objects with:
+
+"poiName": <ID of the POI>,
+
+"scoreValue": <0 or 1 based on relevance to the user>
+
+Example:
+
+json
+Copiar
+Editar
+[
+  { "poiId": name1, "scoreValue": 0 },
+  { "poiId": name2, "scoreValue": 0 },
+  { "poiId":name3, "scoreValue": 1 },
+  { "poiId": name4, "scoreValue": 1 },
+  { "poiId": name5, "scoreValue": 1 }
+]
+-- Output rules --
+
+Return only the JSON list.
+
+Do not explain or justify your scores.
+
+Ensure scoring is coherent with user preferences.
+json
+[
+  { "poiName": "1", "scoreValue": 1 },
+  { "poiName": "2", "scoreValue": 1 },
+  { "poiName": "3", "scoreValue": 1 },
+  { "poiName": "4", "scoreValue": 1 },
+  { "poiName": "5", "scoreValue": 0 }
+]
+You are assisting a tourism recommendation system to evaluate the relevance of a list of POIs (Points of Interest) for a specific user. Based on the user's profile and preferences, analyze each POI and return a binary score:
+
+1 if the user is likely to like or be interested in the POI;
+
+0 if the user is likely to dislike or not care about the POI.
+
+Base your evaluation on the alignment between:
+
+The description or nature of each POI;
+
+The user's motivations, hobbies, and thematic preferences.
+
+
+Recommendation POIs:
+Baseado em suas preferências, encontramos 5 pontos de interesse. Avalie as recomendações para melhorar futuras sugestões:
+
+#1
+Jardim Botânico do Recife
+O Jardim Botânico do Recife desenvolve atividades em educação ambiental, como caminhadas ecológicas, exposição permanente da mata atlântica, exibição de vídeos com temas ambientais e visitas a viveiros de plantas medicinais e florestais. Possui um orquidário e um meliponário de abelhas nativas.
+
+Curado, Recife
+
+Gostei
+
+Não gostei
+#2
+Pracinha de Boa Viagem
+Principal ponto de venda de artesanato local, com cerca de 200 barracas. No centro, destaca-se a Igreja de Nossa Senhora de Boa Viagem (construída em 1707) e um obelisco histórico com marcos da história de Recife.
+
+Boa Viagem, Recife
+
+Gostei
+
+Não gostei
+#3
+Oficina Francisco Brennand
+A Oficina Cerâmica Francisco Brennand é um museu de arte brasileiro localizado na cidade do Recife, capital de Pernambuco. Trata-se de um complexo monumental com aproximadamente 2 mil obras, entre esculturas, murais e objetos cerâmicos. A principal temática é a origem da vida e a evolução das coisas. Conta com espaços como a Accademia, Anfiteatro, Salão de Esculturas e jardins projetados por Burle Marx.
+
+Várzea, Recife
+
+Gostei
+
+Não gostei
+#4
+Catamaran Tours
+Pioneira nos segmentos de passeios náuticos em Pernambuco, a Catamaran Tours tem se destacado há 30 anos no cenário turístico local por todos os avanços conquistados, 20 deles em pleno coração da capital pernambucana. Foi uma empresa, comandada pela família Britto, que tornou a navegação de turismo pelos rios que cortam o centro do Recife em um dos programas mais procurados por locais e turistas.
+
+São José, Recife
+
+Gostei
+
+Não gostei
+#5
+Capela Dourada
+A Capela dos Noviços da Ordem Terceira de São Francisco de Assis ou Capela Dourada é uma capela da Ordem Franciscana localizada na cidade do Recife, capital do estado brasileiro de Pernambuco. Com construção iniciada em 1696, foi o primeiro templo do Brasil a ser integralmente coberto de decoração barroca. Está situado dentro do complexo de edifícios do Convento e Igreja de Santo Antônio, que inclui a Igreja da Ordem Terceira de São Francisco e o Museu Franciscano de Arte Sacra.
+
+Santo Antônio, Recife
+
+Context:
+Name: Rafael Costa
+Age: 41
+Gender: Male
+Occupation: Urban Gardener
+Interests: Medicinal Plants, Sustainability, Community Projects
+
+json
+{
+  "motivations": ["RELAXATION", "SPIRITUALITY", "SOCIAL", "IMMERSIVE_EXPERIENCE", "IDENTITY"],
+  "hobbies": ["GARDENING", "VOLUNTEERING", "HIKING", "READING", "LEARNING"],
+  "themes": ["NATURE", "FAMILY_FRIENDLY", "ROMANTIC", "RELIGIOUS", "FOLKLORE"]
+}
+--- Output format (JSON array only) ---
+A list of objects with:
+
+"poiName": <ID of the POI>,
+
+"scoreValue": <0 or 1 based on relevance to the user>
+
+Example:
+
+json
+Copiar
+Editar
+[
+  { "poiId": name1, "scoreValue": 0 },
+  { "poiId": name2, "scoreValue": 0 },
+  { "poiId":name3, "scoreValue": 1 },
+  { "poiId": name4, "scoreValue": 1 },
+  { "poiId": name5, "scoreValue": 1 }
+]
+-- Output rules --
+
+Return only the JSON list.
+
+Do not explain or justify your scores.
+
+Ensure scoring is coherent with user preferences.
+json
+[
+  { "poiName": "1", "scoreValue": 1 },
+  { "poiName": "2", "scoreValue": 0 },
+  { "poiName": "3", "scoreValue": 1 },
+  { "poiName": "4", "scoreValue": 0 },
+  { "poiName": "5", "scoreValue": 1 }
+]
+You are assisting a tourism recommendation system to evaluate the relevance of a list of POIs (Points of Interest) for a specific user. Based on the user's profile and preferences, analyze each POI and return a binary score:
+
+1 if the user is likely to like or be interested in the POI;
+
+0 if the user is likely to dislike or not care about the POI.
+
+Base your evaluation on the alignment between:
+
+The description or nature of each POI;
+
+The user's motivations, hobbies, and thematic preferences.
+
+
+Recommendation POIs:
+Baseado em suas preferências, encontramos 5 pontos de interesse. Avalie as recomendações para melhorar futuras sugestões:
+
+#1
+Sede do Galo da Madrugada
+Atualmente a sede do Galo da Madrugada tem o programa "Galo - Alegria o Ano Inteiro", que promove festividades de valorização da cultura pernambucana não só no Carnaval, mas durante os doze meses do ano. Um exemplo é a prévia Quinta no Galo, que inicia suas edições no segundo semestre e segue até a véspera do Sábado de Zé Pereira. A festa conta com atrações principais e convidadas, além de grupos multiculturais, como palhaços mascarados do Galo, Maracatu Rural (Baque Solto), Maracatu de Baque Virado, Caboclinhos, grupo de passistas de Frevo, Bloco Lírico e fantasias do Galo da Madrugada.
+
+São José, Recife
+
+Gostei
+
+Não gostei
+#2
+Paço do Frevo
+O Paço do Frevo é um espaço cultural dedicado à difusão, pesquisa e formação nas áreas de dança e música do frevo. Recebeu mais de 120 mil visitantes em seu primeiro ano de funcionamento, sendo um dos locais mais procurados de Pernambuco.
+
+Bairro não especificado, Recife
+
+Gostei
+
+Não gostei
+#3
+Igreja Nossa Senhora do Rosário dos Homens Pretos
+Fundada em 1662, pela Venerável Confraria de Nossa Senhora do Rosário dos Homens Pretos de Santo Antônio, é a segunda igreja fundada por uma irmandade de negros do Brasil. No entorno da igreja surgiu o primeiro folguedo afro-brasileiro: a congada. O culto a Nossa Senhora do Rosário foi introduzido na cultura dos escravos africanos no Brasil pelos jesuítas na catequese.
+
+Santo Antônio, Recife
+
+Gostei
+
+Não gostei
+#4
+Embaixada dos Bonecos Gigantes
+A Embaixada dos Bonecos Gigantes é uma exposição permanente de bonecos gigantes (também conhecidos como "bonecos de Olinda"), alegorias populares do Carnaval de Pernambuco. O local expõe 30 bonecos gigantes, incluindo ícones como Alceu Valença, Michael Jackson e Luiz Inácio Lula da Silva.
+
+Bairro não especificado, Recife
+
+Gostei
+
+Não gostei
+#5
+Teatro de Santa Isabel
+Teatro histórico em estilo neoclássico, palco de eventos importantes como a campanha abolicionista de Joaquim Nabuco. Primeiro teatro do Brasil construído com mão de obra especializada, projetado pelo engenheiro francês Louis Léger Vauthier. Recebeu visitantes ilustres como Dom Pedro II.
+
+Santo Antônio, Recife
+Context:
+Name: Juliana Ribeiro
+Age: 29
+Gender: Female
+Occupation: Dance Instructor
+Interests: Folk Dances, Costume Design, Percussion
+
+json
+{
+  "motivations": ["ARTISTIC_VALUE", "CULTURE", "ENTERTAINMENT", "TRADITION", "SOCIAL"],
+  "hobbies": ["DANCING", "MUSIC", "ART", "TRAVELING", "SOCIAL"],
+  "themes": ["AFRO_BRAZILIAN", "FOLKLORE", "CULTURAL", "BAROQUE", "ROMANTIC"]
+}
+--- Output format (JSON array only) ---
+A list of objects with:
+
+"poiName": <ID of the POI>,
+
+"scoreValue": <0 or 1 based on relevance to the user>
+
+Example:
+
+json
+Copiar
+Editar
+[
+  { "poiId": name1, "scoreValue": 0 },
+  { "poiId": name2, "scoreValue": 0 },
+  { "poiId":name3, "scoreValue": 1 },
+  { "poiId": name4, "scoreValue": 1 },
+  { "poiId": name5, "scoreValue": 1 }
+]
+-- Output rules --
+
+Return only the JSON list.
+
+Do not explain or justify your scores.
+
+Ensure scoring is coherent with user preferences.
+json
+[
+  { "poiName": "1", "scoreValue": 1 },
+  { "poiName": "2", "scoreValue": 1 },
+  { "poiName": "3", "scoreValue": 1 },
+  { "poiName": "4", "scoreValue": 1 },
+  { "poiName": "5", "scoreValue": 0 }
+]
+You are assisting a tourism recommendation system to evaluate the relevance of a list of POIs (Points of Interest) for a specific user. Based on the user's profile and preferences, analyze each POI and return a binary score:
+
+1 if the user is likely to like or be interested in the POI;
+
+0 if the user is likely to dislike or not care about the POI.
+
+Base your evaluation on the alignment between:
+
+The description or nature of each POI;
+
+The user's motivations, hobbies, and thematic preferences.
+
+
+Recommendation POIs:
+Baseado em suas preferências, encontramos 5 pontos de interesse. Avalie as recomendações para melhorar futuras sugestões:
+
+#1
+Torre Malakoff
+Torre Malakoff, localizada no Recife Antigo, na cidade do Recife, foi batizada com o nome de uma das torres da fortaleza de Sebastopol, durante a Guerra da Crimeia. A Torre Malakoff é um importante monumento localizado no Bairro do Recife, área tombada pelo Iphan. Construído no século 19 (com materiais provenientes da demolição do Forte do Bom Jesus) para servir como observatório astronômico e portão monumental do Arsenal da Marinha. O caráter militar da obra está presente em sua fachada e na simetria de sua planta lembrando também mesquitas do Oriente.
+
+Bairro não especificado, Recife
+
+Gostei
+
+Não gostei
+#2
+Forte do Brum
+O Forte de São João Batista do Brum localiza-se no bairro do Recife, na cidade do mesmo nome, no estado de Pernambuco, no Brasil. Administrado pelo Exército brasileiro, encontra-se restaurado e aberto ao público, abrigando, desde 5 de janeiro de 1987, o Museu Militar do Forte do Brum (MMFB), que exibe armamento e peças arqueológicas. No seu interior destaca-se a Capela de São João Batista, em estilo maneirista.
+
+Bairro não especificado, Recife
+
+Gostei
+
+Não gostei
+#3
+Casa da Cultura
+A Casa da Cultura é um centro de comercialização de artesanato da cidade do Recife, capital do estado brasileiro de Pernambuco. Funciona no edifício da antiga Casa de Detenção do Recife, que foi a maior cadeia do Brasil no século XIX e a primeira prisão radial pan-ótica da América do Sul. Foi também, durante a Ditadura Civil-militar, um dos antros das torturas e assassinatos, sendo um de seus destaques Amaro Luiz de Carvalho.
+
+São José, Recife
+
+Gostei
+
+Não gostei
+#4
+Oficina Francisco Brennand
+A Oficina Cerâmica Francisco Brennand é um museu de arte brasileiro localizado na cidade do Recife, capital de Pernambuco. Trata-se de um complexo monumental com aproximadamente 2 mil obras, entre esculturas, murais e objetos cerâmicos. A principal temática é a origem da vida e a evolução das coisas. Conta com espaços como a Accademia, Anfiteatro, Salão de Esculturas e jardins projetados por Burle Marx.
+
+Várzea, Recife
+
+Gostei
+
+Não gostei
+#5
+Museu do Trem
+Museu do Trem ou Estação Central Capiba/Museu do Trem é um museu ferroviário da cidade do Recife, capital do estado brasileiro de Pernambuco. É considerado o primeiro do Brasil e o segundo do gênero da América Latina. Foi criado em 1972 na antiga Estação Central, edifício do século XIX posteriormente incorporado ao Metrô do Recife. O museu passou a ter como seu patrono Gilberto Freyre, tendo como orientador o Instituto Joaquim Nabuco de Pesquisas Sociais.
+
+São José, Recife
+
+
+Context:
+Name: Pedro Henrique Almeida
+Age: 47
+Gender: Male
+Occupation: Bus Tour Operator
+Interests: Urban Development, Local Legends, Photography
+
+json
+{
+  "motivations": ["EXPLORATION", "EDUCATION", "IMMERSIVE_EXPERIENCE", "SOCIAL", "HERITAGE"],
+  "hobbies": ["PHOTOGRAPHY", "TRAVELING", "READING", "ADVENTURE", "LEARNING"],
+  "themes": ["URBAN_ART", "HISTORY", "MODERN", "COLONIAL", "ADVENTURE"]
+}
+--- Output format (JSON array only) ---
+A list of objects with:
+
+"poiName": <ID of the POI>,
+
+"scoreValue": <0 or 1 based on relevance to the user>
+
+Example:
+
+json
+Copiar
+Editar
+[
+  { "poiId": name1, "scoreValue": 0 },
+  { "poiId": name2, "scoreValue": 0 },
+  { "poiId":name3, "scoreValue": 1 },
+  { "poiId": name4, "scoreValue": 1 },
+  { "poiId": name5, "scoreValue": 1 }
+]
+-- Output rules --
+
+Return only the JSON list.
+
+Do not explain or justify your scores.
+
+Ensure scoring is coherent with user preferences.
+json
+[
+  { "poiName": "1", "scoreValue": 1 },
+  { "poiName": "2", "scoreValue": 1 },
+  { "poiName": "3", "scoreValue": 1 },
+  { "poiName": "4", "scoreValue": 0 },
+  { "poiName": "5", "scoreValue": 1 }
+]
+You are assisting a tourism recommendation system to evaluate the relevance of a list of POIs (Points of Interest) for a specific user. Based on the user's profile and preferences, analyze each POI and return a binary score:
+
+1 if the user is likely to like or be interested in the POI;
+
+0 if the user is likely to dislike or not care about the POI.
+
+Base your evaluation on the alignment between:
+
+The description or nature of each POI;
+
+The user's motivations, hobbies, and thematic preferences.
+
+
+Recommendation POIs:
+Baseado em suas preferências, encontramos 5 pontos de interesse. Avalie as recomendações para melhorar futuras sugestões:
+
+#1
+Capela Dourada
+A Capela dos Noviços da Ordem Terceira de São Francisco de Assis ou Capela Dourada é uma capela da Ordem Franciscana localizada na cidade do Recife, capital do estado brasileiro de Pernambuco. Com construção iniciada em 1696, foi o primeiro templo do Brasil a ser integralmente coberto de decoração barroca. Está situado dentro do complexo de edifícios do Convento e Igreja de Santo Antônio, que inclui a Igreja da Ordem Terceira de São Francisco e o Museu Franciscano de Arte Sacra.
+
+Santo Antônio, Recife
+
+Gostei
+
+Não gostei
+#2
+Igreja de Santa Tereza D Avila
+Construída em 1700 e concluída sem as pinturas e a torre sineira que conhecemos hoje no ano de 1710, possui grande conjunto de pinturas dedicadas à vida de Santa Teresa de Jesus, que cobrem todo o forro e algumas paredes do templo. O autor das imagens foi João de Deus Sepúlveda, também responsável pela obra-prima da pintura barroca pernambucana presente no forro da Concatedral de São Pedro dos Clérigos.
+
+Santo Antônio, Recife
+
+Gostei
+
+Não gostei
+#3
+Igreja Madre de Deus
+A Igreja Madre de Deus é um templo católico da cidade do Recife, capital do estado brasileiro de Pernambuco. Situa-se ao lado do prédio do antigo Convento dos Padres Oratorianos. O interior da nave é um amplo salão com capelas laterais e um majestoso arco triunfal de diversas cantorias com dois altares no arco cruzeiro. O altar-mor é de talha dourada com nichos sacrários e trono em estilo rococó. A sacristia possui grande arcaz e um lavabo em mármore de Estremoz considerado o mais notável do Brasil.
+
+Bairro não especificado, Recife
+
+Gostei
+
+Não gostei
+#4
+Concatedral de São Pedro dos Clérigos
+A Concatedral de São Pedro dos Clérigos, também conhecida simplesmente como Igreja de São Pedro dos Clérigos, é um templo católico situado no município do Recife. A área defronte à Igreja, chamada de Pátio de São Pedro, conserva em seu entorno um belo conjunto de 29 casas baixas coloniais.
+
+São José, Recife
+
+Gostei
+
+Não gostei
+#5
+Basílica Nossa Senhora do Carmo
+A Basílica e Convento de Nossa Senhora do Carmo é um conjunto moderno católico pertencente à Ordem Carmelita, localizada na cidade do Recife, em Pernambuco, Brasil. O imponente frontispício da Basílica do Carmo possui muitas volutas esculpidas em pedra, e a torre, de 50 metros de altura — a mais alta torre barroca do Brasil —, é encimada por um dos mais bulbos feitos do estilo no país. No interior, a decoração em talha dourada e a estatuária são de valor inestimável, destacando-se a capela-mor e seu fabuloso retábulo com imagens de Nossa Senhora do Carmo e dos profetas Elias e Eliseu. No seu pátio, a cabeça do líder quilombola Zumbi dos Palmares ficou exposta até completa conclusão. No convento, encontram-se enterrados os restos mortais de Frei Caneca.
+
+Santo Antônio, Recife
+
+
+Context:
+Name: Mariana Silva
+Age: 52
+Gender: Female
+Occupation: Church Archivist
+Interests: Sacred Art, Genealogy, Restoration
+
+json
+{
+  "motivations": ["HERITAGE", "SPIRITUALITY", "ARTISTIC_VALUE", "EDUCATION", "TRADITION"],
+  "hobbies": ["READING", "VOLUNTEERING", "ART", "LEARNING", "TRAVELING"],
+  "themes": ["RELIGIOUS", "BAROQUE", "HISTORY", "ARCHITETURAL_STYLE", "COLONIAL"]
+}
+--- Output format (JSON array only) ---
+A list of objects with:
+
+"poiName": <ID of the POI>,
+
+"scoreValue": <0 or 1 based on relevance to the user>
+
+Example:
+
+json
+Copiar
+Editar
+[
+  { "poiId": name1, "scoreValue": 0 },
+  { "poiId": name2, "scoreValue": 0 },
+  { "poiId":name3, "scoreValue": 1 },
+  { "poiId": name4, "scoreValue": 1 },
+  { "poiId": name5, "scoreValue": 1 }
+]
+-- Output rules --
+
+Return only the JSON list.
+
+Do not explain or justify your scores.
+
+Ensure scoring is coherent with user preferences.
+json
+[
+  { "poiName": "1", "scoreValue": 1 },
+  { "poiName": "2", "scoreValue": 1 },
+  { "poiName": "3", "scoreValue": 1 },
+  { "poiName": "4", "scoreValue": 1 },
+  { "poiName": "5", "scoreValue": 1 }
+]
+You are assisting a tourism recommendation system to evaluate the relevance of a list of POIs (Points of Interest) for a specific user. Based on the user's profile and preferences, analyze each POI and return a binary score:
+
+1 if the user is likely to like or be interested in the POI;
+
+0 if the user is likely to dislike or not care about the POI.
+
+Base your evaluation on the alignment between:
+
+The description or nature of each POI;
+
+The user's motivations, hobbies, and thematic preferences.
+
+
+Recommendation POIs:
+Baseado em suas preferências, encontramos 5 pontos de interesse. Avalie as recomendações para melhorar futuras sugestões:
+
+#1
+Sede do Galo da Madrugada
+Atualmente a sede do Galo da Madrugada tem o programa "Galo - Alegria o Ano Inteiro", que promove festividades de valorização da cultura pernambucana não só no Carnaval, mas durante os doze meses do ano. Um exemplo é a prévia Quinta no Galo, que inicia suas edições no segundo semestre e segue até a véspera do Sábado de Zé Pereira. A festa conta com atrações principais e convidadas, além de grupos multiculturais, como palhaços mascarados do Galo, Maracatu Rural (Baque Solto), Maracatu de Baque Virado, Caboclinhos, grupo de passistas de Frevo, Bloco Lírico e fantasias do Galo da Madrugada.
+
+São José, Recife
+
+Gostei
+
+Não gostei
+#2
+Paço do Frevo
+O Paço do Frevo é um espaço cultural dedicado à difusão, pesquisa e formação nas áreas de dança e música do frevo. Recebeu mais de 120 mil visitantes em seu primeiro ano de funcionamento, sendo um dos locais mais procurados de Pernambuco.
+
+Bairro não especificado, Recife
+
+Gostei
+
+Não gostei
+#3
+Igreja Nossa Senhora do Rosário dos Homens Pretos
+Fundada em 1662, pela Venerável Confraria de Nossa Senhora do Rosário dos Homens Pretos de Santo Antônio, é a segunda igreja fundada por uma irmandade de negros do Brasil. No entorno da igreja surgiu o primeiro folguedo afro-brasileiro: a congada. O culto a Nossa Senhora do Rosário foi introduzido na cultura dos escravos africanos no Brasil pelos jesuítas na catequese.
+
+Santo Antônio, Recife
+
+Gostei
+
+Não gostei
+#4
+Catamaran Tours
+Pioneira nos segmentos de passeios náuticos em Pernambuco, a Catamaran Tours tem se destacado há 30 anos no cenário turístico local por todos os avanços conquistados, 20 deles em pleno coração da capital pernambucana. Foi uma empresa, comandada pela família Britto, que tornou a navegação de turismo pelos rios que cortam o centro do Recife em um dos programas mais procurados por locais e turistas.
+
+São José, Recife
+
+Gostei
+
+Não gostei
+#5
+Torre Malakoff
+Torre Malakoff, localizada no Recife Antigo, na cidade do Recife, foi batizada com o nome de uma das torres da fortaleza de Sebastopol, durante a Guerra da Crimeia. A Torre Malakoff é um importante monumento localizado no Bairro do Recife, área tombada pelo Iphan. Construído no século 19 (com materiais provenientes da demolição do Forte do Bom Jesus) para servir como observatório astronômico e portão monumental do Arsenal da Marinha. O caráter militar da obra está presente em sua fachada e na simetria de sua planta lembrando também mesquitas do Oriente.
+
+Bairro não especificado, Recife
+
+Gostei
+
+
+Context:
+Name: Lucas Mendonça  
+Age: 31  
+Gender: Male  
+Occupation: Surf Instructor  
+Interests: Oceanography, Beach Cleanups, Capoeira  
+```json
+{
+  "motivations": ["EXPLORATION", "SOCIAL", "RELAXATION", "IDENTITY", "IMMERSIVE_EXPERIENCE"],
+  "hobbies": ["ADVENTURE", "MUSIC", "VOLUNTEERING", "DANCING", "TRAVELING"],
+  "themes": ["NATURE", "AFRO_BRAZILIAN", "ADVENTURE", "CULTURAL", "FOLKLORE"]
+}
+--- Output format (JSON array only) ---
+A list of objects with:
+
+"poiName": <ID of the POI>,
+
+"scoreValue": <0 or 1 based on relevance to the user>
+
+Example:
+
+json
+Copiar
+Editar
+[
+  { "poiId": name1, "scoreValue": 0 },
+  { "poiId": name2, "scoreValue": 0 },
+  { "poiId":name3, "scoreValue": 1 },
+  { "poiId": name4, "scoreValue": 1 },
+  { "poiId": name5, "scoreValue": 1 }
+]
+-- Output rules --
+
+Return only the JSON list.
+
+Do not explain or justify your scores.
+
+Ensure scoring is coherent with user preferences.
+json
+[
+  { "poiName": "1", "scoreValue": 1 },
+  { "poiName": "2", "scoreValue": 1 },
+  { "poiName": "3", "scoreValue": 1 },
+  { "poiName": "4", "scoreValue": 1 },
+  { "poiName": "5", "scoreValue": 0 }
+]
+You are assisting a tourism recommendation system to evaluate the relevance of a list of POIs (Points of Interest) for a specific user. Based on the user's profile and preferences, analyze each POI and return a binary score:
+
+1 if the user is likely to like or be interested in the POI;
+
+0 if the user is likely to dislike or not care about the POI.
+
+Base your evaluation on the alignment between:
+
+The description or nature of each POI;
+
+The user's motivations, hobbies, and thematic preferences.
+
+
+Recommendation POIs:
+Baseado em suas preferências, encontramos 5 pontos de interesse. Avalie as recomendações para melhorar futuras sugestões:
+
+#1
+Teatro de Santa Isabel
+Teatro histórico em estilo neoclássico, palco de eventos importantes como a campanha abolicionista de Joaquim Nabuco. Primeiro teatro do Brasil construído com mão de obra especializada, projetado pelo engenheiro francês Louis Léger Vauthier. Recebeu visitantes ilustres como Dom Pedro II.
+
+Santo Antônio, Recife
+
+Gostei
+
+Não gostei
+#2
+Teatro do Parque
+Teatro histórico com inovação arquitetônica: um jardim interno para climatização. Construído em aço e cimento em 1915, com decoração de Henrique Elliot e Mário Nunes. Mantém conexão histórica com o Hotel do Parque para venda de ingressos.
+
+Boa Vista, Recife
+
+Gostei
+
+Não gostei
+#3
+Cais do Sertão
+Um dos mais modernos equipamentos culturais do Brasil, o Cais do Sertão, instalado no antigo Armazém 10 do Porto do Recife, é um local de convivência, diversão e conhecimento, polo gerador de novas ideias e experiências. Abrigando e reverenciando a obra de Luiz Gonzaga, o grande homenageado do espaço, traz para a beira-mar da capital do estado um pouco do solo rico e generoso da cultura popular do sertão. O museu teve como curadora e diretora de criação a socióloga pernambucana Isa Grinspum Ferraz, também autora do Museu da Língua Portuguesa em São Paulo.
+
+Bairro não especificado, Recife
+
+Gostei
+
+Não gostei
+#4
+Sede do Galo da Madrugada
+Atualmente a sede do Galo da Madrugada tem o programa "Galo - Alegria o Ano Inteiro", que promove festividades de valorização da cultura pernambucana não só no Carnaval, mas durante os doze meses do ano. Um exemplo é a prévia Quinta no Galo, que inicia suas edições no segundo semestre e segue até a véspera do Sábado de Zé Pereira. A festa conta com atrações principais e convidadas, além de grupos multiculturais, como palhaços mascarados do Galo, Maracatu Rural (Baque Solto), Maracatu de Baque Virado, Caboclinhos, grupo de passistas de Frevo, Bloco Lírico e fantasias do Galo da Madrugada.
+
+São José, Recife
+
+Gostei
+
+Não gostei
+#5
+Paço do Frevo
+O Paço do Frevo é um espaço cultural dedicado à difusão, pesquisa e formação nas áreas de dança e música do frevo. Recebeu mais de 120 mil visitantes em seu primeiro ano de funcionamento, sendo um dos locais mais procurados de Pernambuco.
+
+Bairro não especificado, Recife
+
+
+Context:
+Name: Camila Fernandes
+Age: 38
+Gender: Female
+Occupation: Daycare Coordinator
+Interests: Educational Toys, Puppet Theater, Community Festivals
+
+json
+{
+  "motivations": ["FAMILY", "EDUCATION", "SOCIAL", "CREATIVITY", "ENTERTAINMENT"],
+  "hobbies": ["THEATER", "ART", "READING", "VOLUNTEERING", "MUSIC"],
+  "themes": ["FAMILY_FRIENDLY", "FOLKLORE", "ROMANTIC", "CULTURAL", "HISTORY"]
+}
+--- Output format (JSON array only) ---
+A list of objects with:
+
+"poiName": <ID of the POI>,
+
+"scoreValue": <0 or 1 based on relevance to the user>
+
+Example:
+
+json
+Copiar
+Editar
+[
+  { "poiId": name1, "scoreValue": 0 },
+  { "poiId": name2, "scoreValue": 0 },
+  { "poiId":name3, "scoreValue": 1 },
+  { "poiId": name4, "scoreValue": 1 },
+  { "poiId": name5, "scoreValue": 1 }
+]
+-- Output rules --
+
+Return only the JSON list.
+
+Do not explain or justify your scores.
+
+Ensure scoring is coherent with user preferences.
+json
+[
+  { "poiName": "1", "scoreValue": 0 },
+  { "poiName": "2", "scoreValue": 0 },
+  { "poiName": "3", "scoreValue": 1 },
+  { "poiName": "4", "scoreValue": 1 },
+  { "poiName": "5", "scoreValue": 1 }
+]
+You are assisting a tourism recommendation system to evaluate the relevance of a list of POIs (Points of Interest) for a specific user. Based on the user's profile and preferences, analyze each POI and return a binary score:
+
+1 if the user is likely to like or be interested in the POI;
+
+0 if the user is likely to dislike or not care about the POI.
+
+Base your evaluation on the alignment between:
+
+The description or nature of each POI;
+
+The user's motivations, hobbies, and thematic preferences.
+
+
+Recommendation POIs:
+Baseado em suas preferências, encontramos 5 pontos de interesse. Avalie as recomendações para melhorar futuras sugestões:
+
+#1
+Cais do Sertão
+Um dos mais modernos equipamentos culturais do Brasil, o Cais do Sertão, instalado no antigo Armazém 10 do Porto do Recife, é um local de convivência, diversão e conhecimento, polo gerador de novas ideias e experiências. Abrigando e reverenciando a obra de Luiz Gonzaga, o grande homenageado do espaço, traz para a beira-mar da capital do estado um pouco do solo rico e generoso da cultura popular do sertão. O museu teve como curadora e diretora de criação a socióloga pernambucana Isa Grinspum Ferraz, também autora do Museu da Língua Portuguesa em São Paulo.
+
+Bairro não especificado, Recife
+
+Gostei
+
+Não gostei
+#2
+Museu da Abolição
+O Museu da Abolição — Centro de Referência da Cultura Afro-Brasileira é um museu localizado na cidade do Recife, capital de Pernambuco, Brasil. Vinculado ao Instituto Brasileiro de Museus (IBRAM) e ao Ministério da Cultura, é um dos raros museus no país a contemplar esta parte da história, e tem suas ações norteadas pelos princípios da nova museologia e da socio museologia. Atualmente o Museu conta com: 130 peças do acervo museológico; 30 metros lineares de acervo bibliográfico; E 2 metros lineares de acervo hemerográfico.
+
+Madalena, Recife
+
+Gostei
+
+Não gostei
+#3
+Igreja Nossa Senhora do Rosário dos Homens Pretos
+Fundada em 1662, pela Venerável Confraria de Nossa Senhora do Rosário dos Homens Pretos de Santo Antônio, é a segunda igreja fundada por uma irmandade de negros do Brasil. No entorno da igreja surgiu o primeiro folguedo afro-brasileiro: a congada. O culto a Nossa Senhora do Rosário foi introduzido na cultura dos escravos africanos no Brasil pelos jesuítas na catequese.
+
+Santo Antônio, Recife
+
+Gostei
+
+Não gostei
+#4
+Museu de Arte Moderna Aloísio Magalhães
+O Museu de Arte Moderna Aloisio Magalhães ou MAMAM é um museu localizado na cidade do Recife, capital do estado brasileiro de Pernambuco. É considerado um centro de referência da produção moderna e contemporânea das artes visuais. Através da divulgação, registro e reflexão sobre a arte do presente e suas referências históricas, o MAMAM tem contribuído para a formação cultural do público e para o adensamento do meio institucional e artístico do Recife.
+
+Boa Vista, Recife
+
+Gostei
+
+Não gostei
+#5
+Museu Murilo La Greca
+O Museu Murillo La Greca é um museu brasileiro localizado no bairro do Parnamirim, na cidade do Recife, capital de Pernambuco. Inaugurado em 12 de dezembro de 1985, o acervo é composto principalmente por obras de arte produzidas pelo professor e pintor clássico Murillo La Greca, são 1400 desenhos em que La Greca utilizou diversas técnicas, desde o giz de cera ao pastel. Além dos desenhos há também 160 pinturas entre paisagens, retratos e obras impressionistas. O museu conta também com discotecas, livros e móveis, além de algumas cartas trocadas por artistas com nomes como Candido Portinari.
+
+Parnamirim, Recife
+Context:
+Name: Gabriel Souza
+Age: 26
+Gender: Male
+Occupation: Street Artist
+Interests: Graffiti History, Social Movements, Digital Art
+
+json
+{
+  "motivations": ["CREATIVITY", "ARTISTIC_VALUE", "CULTURE", "IDENTITY", "SOCIAL"],
+  "hobbies": ["ART", "TECH", "PHOTOGRAPHY", "TRAVELING", "MUSIC"],
+  "themes": ["URBAN_ART", "MODERN", "AFRO_BRAZILIAN", "ADVENTURE", "COLONIAL"]
+}
+--- Output format (JSON array only) ---
+A list of objects with:
+
+"poiName": <ID of the POI>,
+
+"scoreValue": <0 or 1 based on relevance to the user>
+
+Example:
+
+json
+Copiar
+Editar
+[
+  { "poiId": name1, "scoreValue": 0 },
+  { "poiId": name2, "scoreValue": 0 },
+  { "poiId":name3, "scoreValue": 1 },
+  { "poiId": name4, "scoreValue": 1 },
+  { "poiId": name5, "scoreValue": 1 }
+]
+-- Output rules --
+
+Return only the JSON list.
+
+Do not explain or justify your scores.
+
+Ensure scoring is coherent with user preferences.
+json
+[
+  { "poiName": "1", "scoreValue": 1 },
+  { "poiName": "2", "scoreValue": 1 },
+  { "poiName": "3", "scoreValue": 1 },
+  { "poiName": "4", "scoreValue": 1 },
+  { "poiName": "5", "scoreValue": 0 }
+]
