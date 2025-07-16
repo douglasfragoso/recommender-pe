@@ -55,7 +55,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"firstName\": \"Douglas\",\r\n    \"lastName\": \"Fragoso\",\r\n    \"age\": 30,\r\n    \"gender\": \"Masculino\",\r\n    \"CPF\": \"12345678900\",\r\n    \"phone\": \"81-98765-4321\",\r\n    \"email\": \"douglas@example.com\",\r\n    \"userPassword\": \"senha123\",\r\n    \"address\": {\r\n        \"street\": \"Rua Exemplo\",\r\n        \"number\": 100,\r\n        \"complement\": \"Apto 202\",\r\n        \"neighborhood\": \"Boa Viagem\",\r\n        \"state\": \"PE\",\r\n        \"country\": \"Brasil\",\r\n        \"zipCode\": \"50000000\"\r\n    }\r\n}",
+					"raw": "{\r\n    \"firstName\": \"Richard\",\r\n    \"lastName\": \"Fragoso\",\r\n    \"age\": 30,\r\n    \"gender\": \"Masculino\",\r\n    \"CPF\": \"12345678900\",\r\n    \"phone\": \"81-98765-4321\",\r\n    \"email\": \"richard@example.com\",\r\n    \"userPassword\": \"senha123\",\r\n    \"address\": {\r\n        \"street\": \"Rua Exemplo\",\r\n        \"number\": 100,\r\n        \"complement\": \"Apto 202\",\r\n        \"neighborhood\": \"Boa Viagem\",\r\n        \"state\": \"PE\",\r\n        \"country\": \"Brasil\",\r\n        \"zipCode\": \"50000000\"\r\n    }\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -93,7 +93,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"firstName\": \"Douglas\",\r\n    \"lastName\": \"Fragoso\",\r\n    \"age\": 30,\r\n    \"gender\": \"Masculino\",\r\n    \"CPF\": \"12345678900\",\r\n    \"phone\": \"81-98765-4321\",\r\n    \"email\": \"douglas@example.com\",\r\n    \"userPassword\": \"senha123\",\r\n    \"address\": {\r\n        \"street\": \"Rua Exemplo\",\r\n        \"number\": 100,\r\n        \"complement\": \"Apto 202\",\r\n        \"neighborhood\": \"Boa Viagem\",\r\n        \"state\": \"PE\",\r\n        \"country\": \"Brasil\",\r\n        \"zipCode\": \"50000000\"\r\n    }\r\n}",
+					"raw": "{\r\n    \"firstName\": \"Richard\",\r\n    \"lastName\": \"Fragoso\",\r\n    \"age\": 30,\r\n    \"gender\": \"Masculino\",\r\n    \"CPF\": \"12345678900\",\r\n    \"phone\": \"81-98765-4321\",\r\n    \"email\": \"richard@example.com\",\r\n    \"userPassword\": \"senha123\",\r\n    \"address\": {\r\n        \"street\": \"Rua Exemplo\",\r\n        \"number\": 100,\r\n        \"complement\": \"Apto 202\",\r\n        \"neighborhood\": \"Boa Viagem\",\r\n        \"state\": \"PE\",\r\n        \"country\": \"Brasil\",\r\n        \"zipCode\": \"50000000\"\r\n    }\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -173,7 +173,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"firstName\": \"Douglas\",\r\n    \"lastName\": \"Fragoso\",\r\n    \"age\": 30,\r\n    \"gender\": \"Masculino\",\r\n    \"CPF\": \"12345678900\",\r\n    \"phone\": \"81-98765-4321\",\r\n    \"email\": \"douglas@example.com\",\r\n    \"userPassword\": \"senha123\",\r\n    \"address\": {\r\n        \"street\": \"Rua Exemplo\",\r\n        \"number\": 100,\r\n        \"complement\": \"Apto 202\",\r\n        \"neighborhood\": \"Boa Viagem\",\r\n        \"state\": \"PE\",\r\n        \"country\": \"Brasil\",\r\n        \"zipCode\": \"50000000\"\r\n    }\r\n}",
+					"raw": "{\r\n    \"firstName\": \"Richard\",\r\n    \"lastName\": \"Fragoso\",\r\n    \"age\": 30,\r\n    \"gender\": \"Masculino\",\r\n    \"CPF\": \"12345678900\",\r\n    \"phone\": \"81-98765-4321\",\r\n    \"email\": \"richard@example.com\",\r\n    \"userPassword\": \"senha123\",\r\n    \"address\": {\r\n        \"street\": \"Rua Exemplo\",\r\n        \"number\": 100,\r\n        \"complement\": \"Apto 202\",\r\n        \"neighborhood\": \"Boa Viagem\",\r\n        \"state\": \"PE\",\r\n        \"country\": \"Brasil\",\r\n        \"zipCode\": \"50000000\"\r\n    }\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -211,7 +211,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"firstName\": \"Douglas\",\r\n    \"lastName\": \"Fragoso\",\r\n    \"age\": 30,\r\n    \"gender\": \"Masculino\",\r\n    \"CPF\": \"12345678900\",\r\n    \"phone\": \"81-98765-4321\",\r\n    \"email\": \"douglas@example.com\",\r\n    \"userPassword\": \"senha123\",\r\n    \"address\": {\r\n        \"street\": \"Rua Exemplo\",\r\n        \"number\": 100,\r\n        \"complement\": \"Apto 202\",\r\n        \"neighborhood\": \"Boa Viagem\",\r\n        \"state\": \"PE\",\r\n        \"country\": \"Brasil\",\r\n        \"zipCode\": \"50000000\"\r\n    }\r\n}",
+					"raw": "{\r\n    \"firstName\": \"Richard\",\r\n    \"lastName\": \"Fragoso\",\r\n    \"age\": 30,\r\n    \"gender\": \"Masculino\",\r\n    \"CPF\": \"12345678900\",\r\n    \"phone\": \"81-98765-4321\",\r\n    \"email\": \"richard@example.com\",\r\n    \"userPassword\": \"senha123\",\r\n    \"address\": {\r\n        \"street\": \"Rua Exemplo\",\r\n        \"number\": 100,\r\n        \"complement\": \"Apto 202\",\r\n        \"neighborhood\": \"Boa Viagem\",\r\n        \"state\": \"PE\",\r\n        \"country\": \"Brasil\",\r\n        \"zipCode\": \"50000000\"\r\n    }\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -254,7 +254,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"firstName\": \"Douglas\",\r\n    \"lastName\": \"Fragoso\",\r\n    \"age\": 30,\r\n    \"gender\": \"Masculino\",\r\n    \"CPF\": \"12345678900\",\r\n    \"phone\": \"81-98765-4321\",\r\n    \"email\": \"douglas@example.com\",\r\n    \"userPassword\": \"senha123\",\r\n    \"address\": {\r\n        \"street\": \"Rua Exemplo\",\r\n        \"number\": 100,\r\n        \"complement\": \"Apto 202\",\r\n        \"neighborhood\": \"Boa Viagem\",\r\n        \"state\": \"PE\",\r\n        \"country\": \"Brasil\",\r\n        \"zipCode\": \"50000000\"\r\n    }\r\n}",
+					"raw": "{\r\n    \"firstName\": \"Richard\",\r\n    \"lastName\": \"Fragoso\",\r\n    \"age\": 30,\r\n    \"gender\": \"Masculino\",\r\n    \"CPF\": \"12345678900\",\r\n    \"phone\": \"81-98765-4321\",\r\n    \"email\": \"richard@example.com\",\r\n    \"userPassword\": \"senha123\",\r\n    \"address\": {\r\n        \"street\": \"Rua Exemplo\",\r\n        \"number\": 100,\r\n        \"complement\": \"Apto 202\",\r\n        \"neighborhood\": \"Boa Viagem\",\r\n        \"state\": \"PE\",\r\n        \"country\": \"Brasil\",\r\n        \"zipCode\": \"50000000\"\r\n    }\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -295,7 +295,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"firstName\": \"Douglas\",\r\n    \"lastName\": \"Fragoso\",\r\n    \"age\": 30,\r\n    \"gender\": \"Masculino\",\r\n    \"CPF\": \"12345678900\",\r\n    \"phone\": \"81-98765-4321\",\r\n    \"email\": \"douglas@example.com\",\r\n    \"userPassword\": \"senha123\",\r\n    \"address\": {\r\n        \"street\": \"Rua Exemplo\",\r\n        \"number\": 100,\r\n        \"complement\": \"Apto 202\",\r\n        \"neighborhood\": \"Boa Viagem\",\r\n        \"state\": \"PE\",\r\n        \"country\": \"Brasil\",\r\n        \"zipCode\": \"50000000\"\r\n    }\r\n}",
+					"raw": "{\r\n    \"firstName\": \"Richard\",\r\n    \"lastName\": \"Fragoso\",\r\n    \"age\": 30,\r\n    \"gender\": \"Masculino\",\r\n    \"CPF\": \"12345678900\",\r\n    \"phone\": \"81-98765-4321\",\r\n    \"email\": \"richard@example.com\",\r\n    \"userPassword\": \"senha123\",\r\n    \"address\": {\r\n        \"street\": \"Rua Exemplo\",\r\n        \"number\": 100,\r\n        \"complement\": \"Apto 202\",\r\n        \"neighborhood\": \"Boa Viagem\",\r\n        \"state\": \"PE\",\r\n        \"country\": \"Brasil\",\r\n        \"zipCode\": \"50000000\"\r\n    }\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -326,7 +326,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzcHJpbmdib290ZXhwZXJ0LXJlc3QtYXBpIiwic3ViIjoiZG91Z2xhc0BleGFtcGxlLmNvbSIsImV4cCI6MTc0MDcwODIwMiwiaWQiOjF9.q58S6-LkFlQEbtZElfcf2mP1muKHJG5p2qx_6xIYGig",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJyZWNvbW1lbmRlcnBlLWFwaSIsInN1YiI6InJpY2FyZG8ubm9ndWVpcmFAZXhhbXBsZS5jb20iLCJleHAiOjE3NDUxMDU4MzgsImlkIjoyNH0.Fv5z6mMqe1nWuZnP1Zyiv7K6pLNfpzeyqTK3ki-fjhc",
 							"type": "string"
 						}
 					]
@@ -335,7 +335,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"motivations\": [\r\n        \"CULTURE\",\r\n        \"RELAXATION\"\r\n    ],\r\n    \"hobbies\": [\r\n        \"TRAVELING\",\r\n        \"READING\",\r\n        \"PHOTOGRAPHY\"\r\n    ],\r\n    \"themes\": [\r\n        \"ADVENTURE\",\r\n        \"NATURE\",\r\n        \"CULTURAL\"\r\n    ],\r\n    \"currentLocation\": {\r\n        \"street\": \"Rua das Flores\",\r\n        \"number\": 123,\r\n        \"complement\": \"Casa 5\",\r\n        \"neighborhood\": \"Centro\",\r\n        \"state\": \"SP\",\r\n        \"country\": \"Brasil\",\r\n        \"zipCode\": \"01000000\"\r\n    }\r\n}",
+					"raw": "{\r\n    \"motivations\": [\"CULTURE\", \"HERITAGE\", \"APPRECIATION\", \"EXPLORATION\", \"CREATIVITY\"],\r\n    \"hobbies\": [\"PHOTOGRAPHY\", \"HIKING\", \"TRAVELING\", \"ART\", \"LEARNING\"],\r\n    \"themes\": [\"HISTORY\", \"CULTURAL\", \"COLONIAL\", \"NATURE\", \"ADVENTURE\"],\r\n    \"currentLocation\": {\r\n        \"street\": \"Rua das Flores\",\r\n        \"number\": 123,\r\n        \"complement\": \"Casa 5\",\r\n        \"neighborhood\": \"Centro\",\r\n        \"state\": \"SP\",\r\n        \"country\": \"Brasil\",\r\n        \"zipCode\": \"01000000\"\r\n    }\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -367,7 +367,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzcHJpbmdib290ZXhwZXJ0LXJlc3QtYXBpIiwic3ViIjoiZG91Z2xhc0BleGFtcGxlLmNvbSIsImV4cCI6MTc0MjE3OTE2MywiaWQiOjF9.aBOw6jNYXGEz8f2P7aAXYwwCUm7kS8n33JwSuui9heE",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJyZWNvbW1lbmRlcnBlLWFwaSIsInN1YiI6ImZlcm5hbmRhLmNvc3RhQGV4YW1wbGUuY29tIiwiZXhwIjoxNzQ0OTQxMDY4LCJpZCI6NH0.b4CqTMSU56bhoLO9li0CEILzvkAQtbGRZQ0cd7eIwxE",
 							"type": "string"
 						}
 					]
@@ -483,6 +483,49 @@
 			"response": []
 		},
 		{
+			"name": "Similarities By Recommendation ID",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzcHJpbmdib290ZXhwZXJ0LXJlc3QtYXBpIiwic3ViIjoiZG91Z2xhc0BleGFtcGxlLmNvbSIsImV4cCI6MTc0MjE3OTE2MywiaWQiOjF9.aBOw6jNYXGEz8f2P7aAXYwwCUm7kS8n33JwSuui9heE",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"motivations\": [\r\n        \"CULTURE\",\r\n        \"RELAXATION\"\r\n    ],\r\n    \"hobbies\": [\r\n        \"TRAVELING\",\r\n        \"READING\",\r\n        \"PHOTOGRAPHY\"\r\n    ],\r\n    \"themes\": [\r\n        \"ADVENTURE\",\r\n        \"NATURE\",\r\n        \"CULTURAL\"\r\n    ],\r\n    \"currentLocation\": {\r\n        \"street\": \"Rua das Flores\",\r\n        \"number\": 123,\r\n        \"complement\": \"Casa 5\",\r\n        \"neighborhood\": \"Centro\",\r\n        \"state\": \"SP\",\r\n        \"country\": \"Brasil\",\r\n        \"zipCode\": \"01000000\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/recommendation/id/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"recommendation",
+						"id",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Score",
 			"request": {
 				"auth": {
@@ -490,7 +533,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzcHJpbmdib290ZXhwZXJ0LXJlc3QtYXBpIiwic3ViIjoiZG91Z2xhc0BleGFtcGxlLmNvbSIsImV4cCI6MTc0MjE3OTM0MSwiaWQiOjF9.-Rm0p1gW5MKnveJu-p2R313FbawcLOSz4lzffQq2fG0",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJyZWNvbW1lbmRlcnBlLWFwaSIsInN1YiI6ImRvdWdsYXNAZXhhbXBsZS5jb20iLCJleHAiOjE3NDUwOTQ4OTUsImlkIjoxfQ.wXxEkm9NmsRQaUIzez-eNs3kUryhb7zIrYOawciLJE8",
 							"type": "string"
 						}
 					]
@@ -499,7 +542,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "[\r\n  {\r\n    \"poiId\": 20,\r\n    \"scoreValue\": 1\r\n  },\r\n  {\r\n    \"poiId\": 8,\r\n    \"scoreValue\": 1\r\n  },\r\n  {\r\n    \"poiId\": 35,\r\n    \"scoreValue\": 0\r\n  },\r\n  {\r\n    \"poiId\": 12,\r\n    \"scoreValue\": 1\r\n  },\r\n  {\r\n    \"poiId\": 23,\r\n    \"scoreValue\": 0\r\n  }\r\n]",
+					"raw": "[\r\n    {\r\n        \"poiId\": 2,\r\n        \"scoreValue\": 1\r\n    },\r\n    {\r\n        \"poiId\": 20,\r\n        \"scoreValue\": 1\r\n    },\r\n    {\r\n        \"poiId\": 8,\r\n        \"scoreValue\": 1\r\n    },\r\n    {\r\n        \"poiId\": 3,\r\n        \"scoreValue\": 1\r\n    },\r\n    {\r\n        \"poiId\": 36,\r\n        \"scoreValue\": 0\r\n    }\r\n]",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -581,7 +624,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"firstName\": \"Douglas\",\r\n    \"lastName\": \"Fragoso\",\r\n    \"age\": 30,\r\n    \"gender\": \"Masculino\",\r\n    \"CPF\": \"12345678900\",\r\n    \"phone\": \"81-98765-4321\",\r\n    \"email\": \"douglas@example.com\",\r\n    \"userPassword\": \"senha123\",\r\n    \"address\": {\r\n        \"street\": \"Rua Exemplo\",\r\n        \"number\": 100,\r\n        \"complement\": \"Apto 202\",\r\n        \"neighborhood\": \"Boa Viagem\",\r\n        \"state\": \"PE\",\r\n        \"country\": \"Brasil\",\r\n        \"zipCode\": \"50000000\"\r\n    }\r\n}",
+					"raw": "{\r\n    \"firstName\": \"Richard\",\r\n    \"lastName\": \"Fragoso\",\r\n    \"age\": 30,\r\n    \"gender\": \"Masculino\",\r\n    \"CPF\": \"12345678900\",\r\n    \"phone\": \"81-98765-4321\",\r\n    \"email\": \"richard@example.com\",\r\n    \"userPassword\": \"senha123\",\r\n    \"address\": {\r\n        \"street\": \"Rua Exemplo\",\r\n        \"number\": 100,\r\n        \"complement\": \"Apto 202\",\r\n        \"neighborhood\": \"Boa Viagem\",\r\n        \"state\": \"PE\",\r\n        \"country\": \"Brasil\",\r\n        \"zipCode\": \"50000000\"\r\n    }\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -624,7 +667,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"firstName\": \"Douglas\",\r\n    \"lastName\": \"Fragoso\",\r\n    \"age\": 30,\r\n    \"gender\": \"Masculino\",\r\n    \"CPF\": \"12345678900\",\r\n    \"phone\": \"81-98765-4321\",\r\n    \"email\": \"douglas@example.com\",\r\n    \"userPassword\": \"senha123\",\r\n    \"address\": {\r\n        \"street\": \"Rua Exemplo\",\r\n        \"number\": 100,\r\n        \"complement\": \"Apto 202\",\r\n        \"neighborhood\": \"Boa Viagem\",\r\n        \"state\": \"PE\",\r\n        \"country\": \"Brasil\",\r\n        \"zipCode\": \"50000000\"\r\n    }\r\n}",
+					"raw": "{\r\n    \"firstName\": \"Richard\",\r\n    \"lastName\": \"Fragoso\",\r\n    \"age\": 30,\r\n    \"gender\": \"Masculino\",\r\n    \"CPF\": \"12345678900\",\r\n    \"phone\": \"81-98765-4321\",\r\n    \"email\": \"richard@example.com\",\r\n    \"userPassword\": \"senha123\",\r\n    \"address\": {\r\n        \"street\": \"Rua Exemplo\",\r\n        \"number\": 100,\r\n        \"complement\": \"Apto 202\",\r\n        \"neighborhood\": \"Boa Viagem\",\r\n        \"state\": \"PE\",\r\n        \"country\": \"Brasil\",\r\n        \"zipCode\": \"50000000\"\r\n    }\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -662,7 +705,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"firstName\": \"Douglas\",\r\n    \"lastName\": \"Fragoso\",\r\n    \"age\": 30,\r\n    \"gender\": \"Masculino\",\r\n    \"CPF\": \"12345678900\",\r\n    \"phone\": \"81-98765-4321\",\r\n    \"email\": \"douglas@example.com\",\r\n    \"userPassword\": \"senha123\",\r\n    \"address\": {\r\n        \"street\": \"Rua Exemplo\",\r\n        \"number\": 100,\r\n        \"complement\": \"Apto 202\",\r\n        \"neighborhood\": \"Boa Viagem\",\r\n        \"state\": \"PE\",\r\n        \"country\": \"Brasil\",\r\n        \"zipCode\": \"50000000\"\r\n    }\r\n}",
+					"raw": "{\r\n    \"firstName\": \"Richard\",\r\n    \"lastName\": \"Fragoso\",\r\n    \"age\": 30,\r\n    \"gender\": \"Masculino\",\r\n    \"CPF\": \"12345678900\",\r\n    \"phone\": \"81-98765-4321\",\r\n    \"email\": \"richard@example.com\",\r\n    \"userPassword\": \"senha123\",\r\n    \"address\": {\r\n        \"street\": \"Rua Exemplo\",\r\n        \"number\": 100,\r\n        \"complement\": \"Apto 202\",\r\n        \"neighborhood\": \"Boa Viagem\",\r\n        \"state\": \"PE\",\r\n        \"country\": \"Brasil\",\r\n        \"zipCode\": \"50000000\"\r\n    }\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -696,7 +739,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzcHJpbmdib290ZXhwZXJ0LXJlc3QtYXBpIiwic3ViIjoiZG91Z2xhc0BleGFtcGxlLmNvbSIsImV4cCI6MTczOTU4NTMyOCwiaWQiOjF9.PL56IBWCTr9cafK2sX1vLZT-4s6faH8wmFEeJrD7G1w",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJyZWNvbW1lbmRlcnBlLWFwaSIsInN1YiI6ImRvdWdsYXNAZXhhbXBsZS5jb20iLCJleHAiOjE3NDQ5ODgyODcsImlkIjoxfQ.d8j4oetWnl8B3GLDpi6Ez5yXtQ_rSNCT820Yq8wWlVk",
 							"type": "string"
 						}
 					]
@@ -739,7 +782,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzcHJpbmdib290ZXhwZXJ0LXJlc3QtYXBpIiwic3ViIjoiZG91Z2xhc0BleGFtcGxlLmNvbSIsImV4cCI6MTc0MjE3OTM0MSwiaWQiOjF9.-Rm0p1gW5MKnveJu-p2R313FbawcLOSz4lzffQq2fG0",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJyZWNvbW1lbmRlcnBlLWFwaSIsInN1YiI6ImRvdWdsYXNAZXhhbXBsZS5jb20iLCJleHAiOjE3NTIwMzUxMDcsImlkIjoxLCJyb2xlIjoiTUFTVEVSIn0.qclUbAT5IzcqaniCCn3sOx6gI7AvI_wMDtlAksi8cTY",
 							"type": "string"
 						}
 					]
@@ -777,7 +820,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"email\": \"douglas@example.com\",\r\n    \"userPassword\": \"Senha123*\"\r\n}",
+					"raw": "{\r\n    \"email\": \"richard@example.com\",\r\n    \"userPassword\": \"Senha123*\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
