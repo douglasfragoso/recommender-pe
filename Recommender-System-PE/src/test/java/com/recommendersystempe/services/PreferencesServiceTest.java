@@ -57,8 +57,8 @@ public class PreferencesServiceTest {
                         "Rua Exemplo", 100, "Apto 202", "Boa Viagem", "Recife",
                         "PE", "Brasil", "50000000");
         private static final User USER = new User(
-                        "Douglas", "Fragoso", 30, "Masculino", "12345678900", "81-98765-4321",
-                        "douglas@example.com", "Senha123*", ADDRESS, Roles.USER);
+                        "Richard", "Fragoso", 30, "Masculino", "12345678900", "81-98765-4321",
+                        "richard@example.com", "Senha123*", ADDRESS, Roles.USER);
 
         @Mock
         private UserRepository userRepository;
@@ -113,13 +113,19 @@ public class PreferencesServiceTest {
                 List<POIDTO> poiDTOList = poiList.stream()
                                 .map(poi -> new POIDTO(poi.getId(), poi.getName(), poi.getDescription()))
                                 .toList();
-                given(recommendationService.recommendation(any(Preferences.class))).willReturn((RecommendationDTO) poiDTOList);
+
+                // Create a proper RecommendationDTO instead of casting
+                RecommendationDTO recommendationDTO = new RecommendationDTO();
+                recommendationDTO.addPOI(poiList);
+
+                given(recommendationService.recommendation(any(Preferences.class))).willReturn(recommendationDTO);
 
                 // when / act
                 RecommendationDTO result = preferencesService.insert(dto);
 
                 // then / assert
                 assertNotNull(result);
+                assertEquals(poiDTOList.size(), result.getPois().size());
                 verify(preferencesRepository, times(2)).save(any(Preferences.class));
         }
 

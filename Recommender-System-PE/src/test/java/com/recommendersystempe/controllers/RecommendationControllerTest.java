@@ -11,8 +11,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
-
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -33,7 +31,6 @@ import org.springframework.test.web.servlet.ResultActions;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.recommendersystempe.configs.SecurityConfig;
-import com.recommendersystempe.dtos.POIDTO;
 import com.recommendersystempe.dtos.PreferencesDTO;
 import com.recommendersystempe.dtos.RecommendationDTO;
 import com.recommendersystempe.dtos.ScoreDTO;
@@ -64,13 +61,13 @@ public class RecommendationControllerTest {
                         "Rua Exemplo", 100, "Apto 202", "Boa Viagem", "Recife",
                         "PE", "Brasil", "50000000");
         private static final User USER = new User(
-                        "Douglas",
+                        "Richard",
                         "Fragoso",
                         30,
                         "Masculino",
                         "12345678909",
                         "81-98765-4321",
-                        "douglas@example.com",
+                        "richard@example.com",
                         "Senha123*",
                         ADDRESS,
                         Roles.MASTER);
@@ -149,16 +146,6 @@ public class RecommendationControllerTest {
                 return poi;
         }
 
-        private POIDTO convertToPOIDTO(POI poi) {
-                return new POIDTO(
-                                poi.getId(),
-                                poi.getName(),
-                                poi.getDescription(),
-                                poi.getMotivations(),
-                                poi.getHobbies(),
-                                poi.getThemes(),
-                                poi.getAddress());
-        }
 
         @Test
         void testGivenValidPreferencesDTO_whenInsertShouldReturnPOIList() throws Exception {
@@ -166,13 +153,11 @@ public class RecommendationControllerTest {
                 PreferencesDTO preferencesDTO = new PreferencesDTO(
                                 MOTIVATIONS, HOBBIES, THEMES, CURRENT_LOCATION);
 
-                List<POIDTO> expectedRecommendations = poiList.stream()
-                                .map(this::convertToPOIDTO)
-                                .limit(5)
-                                .collect(Collectors.toList());
+                RecommendationDTO recommendationDTO = new RecommendationDTO();
+                recommendationDTO.addPOI(poiList);
 
                 given(preferencesService.insert(ArgumentMatchers.any(PreferencesDTO.class)))
-                                .willReturn((RecommendationDTO) expectedRecommendations);
+                                .willReturn(recommendationDTO);
 
                 // when / act
                 ResultActions response = mockMvc.perform(post("/recommendation")
@@ -183,9 +168,9 @@ public class RecommendationControllerTest {
                 // then / assert
                 response.andDo(print())
                                 .andExpect(status().isCreated())
-                                .andExpect(jsonPath("$", hasSize(5)))
-                                .andExpect(jsonPath("$[0].name").value("Parque da Cidade"))
-                                .andExpect(jsonPath("$[4].name").value("Parque da Cidade 5"));
+                                .andExpect(jsonPath("$.pois", hasSize(5))) // Note the change to "$.pois"
+                                .andExpect(jsonPath("$.pois[0].name").value("Parque da Cidade"))
+                                .andExpect(jsonPath("$.pois[4].name").value("Parque da Cidade 5"));
 
                 verify(preferencesService, times(1)).insert(ArgumentMatchers.any());
         }
@@ -265,21 +250,21 @@ public class RecommendationControllerTest {
         void testFindAllByUser_shouldReturnUserRecommendations() throws Exception {
                 // Arrange
                 Page<RecommendationDTO> mockPage = new PageImpl<>(List.of(
-                        new RecommendationDTO(1L,  List.of()))
-                );
-                
+                                new RecommendationDTO(1L, List.of())));
+
                 given(recommendationService.findAllByUserId(ArgumentMatchers.any(Pageable.class))).willReturn(mockPage);
                 given(userRepository.findByEmail(USER.getEmail())).willReturn(USER);
 
                 // Act
                 ResultActions response = mockMvc.perform(get("/recommendation/user")
-                        .param("page", "0")
-                        .param("size", "10")
-                        .with(user(USER.getEmail()).roles("MASTER")));
+                                .param("page", "0")
+                                .param("size", "10")
+                                .with(user(USER.getEmail()).roles("MASTER")));
 
                 // Assert
                 response.andExpect(status().isOk())
-                        .andExpect(jsonPath("$.content[0].userId").value(USER.getId()));
+                                .andExpect(jsonPath("$.content[0].id").value(1L)) 
+                                .andExpect(jsonPath("$.content[0].pois").exists()); 
 
         }
 }

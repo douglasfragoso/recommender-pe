@@ -75,8 +75,8 @@ public class HitRateTest {
                                 ADDRESS, Roles.USER));
 
                 User user2 = userRepository.save(new User(
-                                "Douglas", "Fragoso", 30, "Masculino", "11783576430",
-                                "81-98765-4321", "douglas@example.com", "Senha123*",
+                                "Richard", "Fragoso", 30, "Masculino", "11783576430",
+                                "81-98765-4328", "richard@example.com", "Senha123*",
                                 ADDRESS, Roles.USER));
 
                 List<POI> poiList = poiRepository.saveAll(List.of(

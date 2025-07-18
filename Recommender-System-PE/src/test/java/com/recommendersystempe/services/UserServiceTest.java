@@ -38,12 +38,12 @@ public class UserServiceTest {
             "PE", "Brasil", "01000000");
 
     private static final UserDTO USER_DTO = new UserDTO(
-            "Douglas", "Fragoso", 30, "Masculino", "12345678900", "81-98765-4321",
-            "douglas@example.com", "senha123", ADDRESS);
+            "Richard", "Fragoso", 30, "Masculino", "12345678900", "81-98765-4321",
+            "richard@example.com", "senha123", ADDRESS);
 
     private static final User USER = new User(
-            "Douglas", "Fragoso", 30, "Masculino", "12345678900", "81-98765-4321",
-            "douglas@example.com", "senha123", ADDRESS, Roles.USER);
+            "Richard", "Fragoso", 30, "Masculino", "12345678900", "81-98765-4321",
+            "richard@example.com", "senha123", ADDRESS, Roles.USER);
 
     @Mock
     private UserRepository userRepository;
@@ -149,17 +149,17 @@ public class UserServiceTest {
     @Test
     void testUpdateUser_ShouldUpdateUserDetails() {
         // given / arrange
-        User user = createUser(1L, "Douglas", "Fragoso", 30, "Masculino", "12345678900", "81-98765-4321",
-                "douglas@example.com", "senha123", ADDRESS, Roles.USER);
+        User user = createUser(1L, "Richard", "Fragoso", 30, "Masculino", "12345678900", "81-98765-4321",
+                "richard@example.com", "senha123", ADDRESS, Roles.USER);
 
         Authentication auth = mock(Authentication.class);
-        when(auth.getName()).thenReturn("douglas@example.com");
+        when(auth.getName()).thenReturn("richard@example.com");
         SecurityContextHolder.getContext().setAuthentication(auth);
 
-        given(userRepository.findByEmail("douglas@example.com")).willReturn(user);
+        given(userRepository.findByEmail("richard@example.com")).willReturn(user);
 
         UserDTO userDTO = createUserDTO("John", "Doe", 32, "Feminino", "12345678900", "81-98765-4322",
-                "douglas@example.com", "senha123", ADDRESS);
+                "richard@example.com", "senha123", ADDRESS);
 
         // when / act
         userService.update(userDTO);
@@ -177,8 +177,8 @@ public class UserServiceTest {
     @Test
     void testUpdateUserRole_ShouldUpdateRole() {
         // given / arrange
-        User user = createUser(1L, "Douglas", "Fragoso", 30, "Masculino", "12345678900", "81-98765-4321",
-                "douglas@example.com", "senha123", ADDRESS, Roles.USER);
+        User user = createUser(1L, "Richard", "Fragoso", 30, "Masculino", "12345678900", "81-98765-4321",
+                "richard@example.com", "senha123", ADDRESS, Roles.USER);
 
         given(userRepository.findById(1L)).willReturn(Optional.of(user));
         given(userRepository.saveAndFlush(any(User.class))).willReturn(user);
