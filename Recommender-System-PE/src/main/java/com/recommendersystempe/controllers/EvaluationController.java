@@ -33,13 +33,13 @@ public class EvaluationController {
     @PreAuthorize("hasAnyRole('ADMIN', 'MASTER')")
     @GetMapping("/user/{userId}")
     @ApiResponses({
-        @ApiResponse(responseCode = "200", description = "Métricas de avaliação do usuário recuperadas com sucesso", content = @Content(schema = @Schema(implementation = UserEvaluationMetricsDTO.class))),
-        @ApiResponse(responseCode = "400", description = "Requisição inválida", content = @Content(schema = @Schema(implementation = StandardError.class))),
-        @ApiResponse(responseCode = "401", description = "Não autorizado", content = @Content(schema = @Schema(implementation = StandardError.class))),
-        @ApiResponse(responseCode = "404", description = "Usuário não encontrado", content = @Content(schema = @Schema(implementation = StandardError.class)))
+            @ApiResponse(responseCode = "200", description = "User evaluation metrics retrieved successfully", content = @Content(schema = @Schema(implementation = UserEvaluationMetricsDTO.class))),
+            @ApiResponse(responseCode = "400", description = "Invalid request", content = @Content(schema = @Schema(implementation = StandardError.class))),
+            @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content(schema = @Schema(implementation = StandardError.class))),
+            @ApiResponse(responseCode = "404", description = "User not found", content = @Content(schema = @Schema(implementation = StandardError.class)))
     })
-    @Operation(summary = "Avaliar recomendações de um usuário", description = "Calcula métricas de avaliação para as recomendações de um usuário. Apenas acessível por ADMIN e MASTER.", tags = {
-        "Evaluation" })
+    @Operation(summary = "Evaluate user recommendations", description = "Calculates evaluation metrics for a user's recommendations. Only accessible by ADMIN and MASTER roles.", tags = {
+            "Evaluation" })
     public ResponseEntity<UserEvaluationMetricsDTO> evaluateUserRecommendations(
             @PathVariable("userId") Long userId,
             @RequestParam(defaultValue = "5") int k) {
@@ -50,12 +50,12 @@ public class EvaluationController {
     @PreAuthorize("hasAnyRole('ADMIN', 'MASTER')")
     @GetMapping("/global")
     @ApiResponses({
-        @ApiResponse(responseCode = "200", description = "Métricas globais de avaliação recuperadas com sucesso", content = @Content(schema = @Schema(implementation = GlobalEvaluationMetricsDTO.class))),
-        @ApiResponse(responseCode = "400", description = "Requisição inválida", content = @Content(schema = @Schema(implementation = StandardError.class))),
-        @ApiResponse(responseCode = "401", description = "Não autorizado", content = @Content(schema = @Schema(implementation = StandardError.class)))
+            @ApiResponse(responseCode = "200", description = "Global evaluation metrics retrieved successfully", content = @Content(schema = @Schema(implementation = GlobalEvaluationMetricsDTO.class))),
+            @ApiResponse(responseCode = "400", description = "Invalid request", content = @Content(schema = @Schema(implementation = StandardError.class))),
+            @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content(schema = @Schema(implementation = StandardError.class)))
     })
-    @Operation(summary = "Avaliar métricas globais", description = "Calcula métricas globais de avaliação para todas as recomendações. Apenas acessível por ADMIN e MASTER.", tags = {
-        "Evaluation" })
+    @Operation(summary = "Evaluate global metrics", description = "Calculates global evaluation metrics for all recommendations. Only accessible by ADMIN and MASTER roles.", tags = {
+            "Evaluation" })
     public ResponseEntity<GlobalEvaluationMetricsDTO> evaluateGlobalMetrics(
             @RequestParam(defaultValue = "5") int k) {
         GlobalEvaluationMetricsDTO dto = evaluationService.evaluateGlobalMetrics(k);

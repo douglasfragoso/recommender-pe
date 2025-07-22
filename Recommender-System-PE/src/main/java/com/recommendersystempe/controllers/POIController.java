@@ -75,7 +75,7 @@ public class POIController {
         return ResponseEntity.status(HttpStatus.OK).body(poiService.findById(id));
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN', 'MASTER', 'USER')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'MASTER')")
     @PutMapping
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Successfully update", content = @Content(schema = @Schema(implementation = String.class))),

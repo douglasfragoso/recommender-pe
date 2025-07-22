@@ -51,7 +51,7 @@ public class RecommendationController {
             @ApiResponse(responseCode = "201", description = "Successfully created", content = @Content(schema = @Schema(implementation = RecommendationDTO.class))),
             @ApiResponse(responseCode = "400", description = "Invalid request", content = @Content(schema = @Schema(implementation = ValidationError.class))),
             @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content(schema = @Schema(implementation = StandardError.class))) })
-    @Operation(summary = "Insert preferences", description = "Insert preferences and get recommendation, only for Admin and Master", tags = {
+    @Operation(summary = "Insert preferences", description = "Insert preferences and get recommendation. Accessible to everyone.", tags = {
             "Recommendation" })
     public ResponseEntity<RecommendationDTO> insert(@RequestBody PreferencesDTO dto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(preferencesService.insert(dto));
@@ -64,7 +64,7 @@ public class RecommendationController {
             @ApiResponse(responseCode = "400", description = "Invalid request", content = @Content(schema = @Schema(implementation = ValidationError.class))),
             @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content(schema = @Schema(implementation = StandardError.class))),
             @ApiResponse(responseCode = "404", description = "Not found", content = @Content(schema = @Schema(implementation = StandardError.class))) })
-    @Operation(summary = "Insert score", description = "Insert a new scores to a list of Point of Interest (POI). Only accessible by ADMIN and MASTER roles.", tags = {
+    @Operation(summary = "Insert score", description = "Insert a new scores to a list of Point of Interest (POI). Accessible to everyone.", tags = {
             "Recommendation" })
     public ResponseEntity<String> score(@PathVariable("recommendationId") Long id, @RequestBody List<ScoreDTO> dto) {
         recommendationService.score(id, dto);
