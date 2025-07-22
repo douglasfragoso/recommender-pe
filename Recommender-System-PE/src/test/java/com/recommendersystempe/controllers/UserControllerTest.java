@@ -46,13 +46,13 @@ public class UserControllerTest {
                         "Rua Exemplo", 100, "Apto 202", "Boa Viagem", "Recife",
                         "PE", "Brasil", "50000000");
         private static final User USER = new User(
-                        "Douglas",
+                        "Richard",
                         "Fragoso",
                         30,
                         "Masculino",
                         "12345678909",
                         "81-98765-4321",
-                        "douglas@example.com",
+                        "richard@example.com",
                         "Senha123*",
                         ADDRESS,
                         Roles.MASTER);
@@ -88,8 +88,8 @@ public class UserControllerTest {
         @Test
         void testGivenUserDTO_whenSaveReturnUserDTO() throws JsonProcessingException, Exception {
                 // given / arrange
-                UserDTO userDTO = new UserDTO("Douglas", "Fragoso", 30, "Masculino", "12345678900", "81-98765-4321",
-                                "douglas@example.com", "Senha123*", ADDRESS);
+                UserDTO userDTO = new UserDTO("Richard", "Fragoso", 30, "Masculino", "12345678900", "81-98765-4321",
+                                "richard@example.com", "Senha123*", ADDRESS);
 
                 given(userService.insert(any(UserDTO.class))).willAnswer((invocation) -> invocation.getArgument(0));
 
@@ -117,8 +117,8 @@ public class UserControllerTest {
                 Address address1 = new Address("Rua Exemplo1", 101, "Apto 203", "Boa Viagem", "Recife", "PE", "Brasil",
                                 "50000003");
 
-                UserDTO userDTO1 = new UserDTO("Douglas", "Fragoso", 30, "Masculino", "12345678900", "81-98765-4321",
-                                "douglas@example.com", "Senha123*", ADDRESS);
+                UserDTO userDTO1 = new UserDTO("Richard", "Fragoso", 30, "Masculino", "12345678900", "81-98765-4321",
+                                "richard@example.com", "Senha123*", ADDRESS);
                 UserDTO userDTO2 = new UserDTO("Lucas", "Fragoso", 30, "Masculino", "12345678901", "81-98765-4322",
                                 "lucas@example.com", "Senha123*", address1);
 
@@ -153,8 +153,8 @@ public class UserControllerTest {
         @Test
         void testGivenUserId_whenFindbyIdReturnUser() throws JsonProcessingException, Exception {
                 // given / arrange
-                UserDTO userDTO = new UserDTO("Douglas", "Fragoso", 30, "Masculino", "12345678900", "81-98765-4321",
-                                "douglas@example.com", "Senha123*", ADDRESS);
+                UserDTO userDTO = new UserDTO("Richard", "Fragoso", 30, "Masculino", "12345678900", "81-98765-4321",
+                                "richard@example.com", "Senha123*", ADDRESS);
 
                 Long id = 1L;
                 given(userService.findById(id)).willReturn(userDTO);
@@ -194,7 +194,7 @@ public class UserControllerTest {
         void testGivenUserDTO_whenUpdateReturnString() throws JsonProcessingException, Exception {
                 // given / arrange
                 UserDTO userDTO = new UserDTO("John", "Doe", 32, "Feminino", "12345678900", "81-98765-4322",
-                                "douglas@example.com", "Senha123*", ADDRESS);
+                                "richard@example.com", "Senha123*", ADDRESS);
 
                 willDoNothing().given(userService).update(any(UserDTO.class));
 

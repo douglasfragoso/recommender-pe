@@ -56,13 +56,13 @@ public class PreferencesControllerTest {
             "Rua Exemplo", 100, "Apto 202", "Boa Viagem", "Recife",
             "PE", "Brasil", "50000000");
     private static final User USER = new User(
-            "Douglas",
+            "Richard",
             "Fragoso",
             30,
             "Masculino",
             "12345678909",
             "81-98765-4321",
-            "douglas@example.com",
+            "richard@example.com",
             "Senha123*",
             ADDRESS,
             Roles.MASTER

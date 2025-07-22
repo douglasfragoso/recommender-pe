@@ -28,7 +28,7 @@ import com.recommendersystempe.service.UserService;
 @Import(SecurityConfig.class)
 public class AuthenticationControllerTest {
 
-    private static final String USER_EMAIL = "douglas@example.com";
+    private static final String USER_EMAIL = "richard@example.com";
     private static final String USER_PASSWORD = "Senha123*";
 
     @Autowired
@@ -60,7 +60,7 @@ public class AuthenticationControllerTest {
 
     private User createUser(String email, String password) {
         return new User(
-                "Douglas", 
+                "Richard", 
                 "Fragoso",
                 30, 
                 "Masculino",
@@ -96,7 +96,7 @@ public class AuthenticationControllerTest {
                 .contentType("application/json")
                 .content(jsonRequest))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.firstName").value("Douglas"))
+                .andExpect(jsonPath("$.firstName").value("Richard"))
                 .andExpect(jsonPath("$.lastName").value("Fragoso"))
                 .andExpect(jsonPath("$.token").value("mocked-jwt-token"));
 
