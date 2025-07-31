@@ -53,7 +53,7 @@ public class UserDTO {
     @Setter
     @Schema(description = "Gender of a user", example = "Male", required = true)
     @NotBlank(message = "The field gender is required")
-    @Size(min = 6, max = 9, message = "The field gender must be between 6 and 9 characters")
+    @Size(min = 5, max = 9, message = "The field gender must be between 5 and 9 characters")
     @Pattern(regexp = "^(Masculino|Feminino|Outro)$", message = "Gender must be Male, Female, or Other")
     private String gender;
 
@@ -69,8 +69,7 @@ public class UserDTO {
     @Setter
     @Schema(description = "Phone number of a user", example = "11-98765-4321", required = true)
     @NotBlank(message = "The field phone is required")
-    @Size(min = 12, max = 13, message = "Phone number must be between 12 and 13 characters")
-    @Pattern(regexp = "^(\\d{2})-(\\d{4,5})-(\\d{4})$", message = "Phone number must be in the format XX-XXXXX-XXXX or XX-XXXX-XXXX")
+    @Pattern(regexp = "^\\d{10,11}$", message = "Phone number must be between 10 and 11 characters")
     private String phone;
 
     @Getter
@@ -86,7 +85,7 @@ public class UserDTO {
     @Schema(description = "Password of a user", example = "Password123!", required = true)
     @NotBlank(message = "The field password is required")
     @Size(min = 8, max = 100, message = "Password must be between 8 and 100 characters")
-    @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$",
+    @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*+=])(?=\\S+$).{8,}$",
     message = "Password must contain at least one digit, one lowercase, one uppercase, one special character and no whitespace")
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY) // Atributo não será exibido - Attribute will not be displayed
     private String userPassword;

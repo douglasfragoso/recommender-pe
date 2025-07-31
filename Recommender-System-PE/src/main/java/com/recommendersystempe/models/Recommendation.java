@@ -14,6 +14,9 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -36,11 +39,14 @@ public class Recommendation {
     @Setter
     @ManyToOne
     @JoinColumn(name = "user_id")
+    @Min(value = 1, message = "User must be at least 1")
     private User user;
 
     @Getter
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "recommendation_poi", joinColumns = @JoinColumn(name = "recommendation_id"), inverseJoinColumns = @JoinColumn(name = "poi_id"))
+    @Size(min = 5, max = 5, message = "The field pois must have exactly 5 elements")
+    @NotNull(message = "The field pois is required")
     private List<POI> pois = new ArrayList<>();
 
     @Getter

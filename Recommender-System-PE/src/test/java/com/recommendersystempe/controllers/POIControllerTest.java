@@ -222,30 +222,6 @@ public class POIControllerTest {
         }
 
         @Test
-        void testGivenPOIId_whenDeleteByIdReturnNoContent() throws JsonProcessingException, Exception {
-                // given / arrange
-                poiAddress = new Address("Rua Exemplo", 100, "Apto 202", "Boa Viagem", "Recife", "PE", "Brasil",
-                                "50000000");
-
-                poi = new POI("Parque da Cidade", "Um grande parque urbano com áreas verdes, trilhas e lagos.",
-                                MOTIVATIONS, HOBBIES, THEMES, poiAddress);
-
-                ReflectionTestUtils.setField(poi, "id", 1L);
-
-                Long id = 1L;
-                willDoNothing().given(poiService).deleteById(id);
-                // when / act
-                ResultActions response = mockMvc.perform(delete("/poi/id/{id}", id)
-                                .with(user(USER.getEmail()).password(USER.getPassword()).roles("MASTER"))
-                                .contentType("application/json"));
-                // then / assert
-                response.andDo(print())
-                                .andExpect(status().isNoContent());
-
-                verify(poiService).deleteById(id);
-        }
-
-        @Test
         void testGivenPOIDTO_whenUpdateReturnString() throws JsonProcessingException, Exception {
                 // given / arrange
                 poiAddress = new Address("Rua Exemplo", 100, "Apto 202", "Boa Viagem", "Recife", "PE", "Brasil",
@@ -260,7 +236,7 @@ public class POIControllerTest {
                                 "Um grande parque urbano com áreas verdes, trilhas e lagos.",
                                 MOTIVATIONS, HOBBIES, THEMES, poiAddress);
 
-                willDoNothing().given(poiService).update(any(POIDTO.class));
+                willDoNothing().given(poiService).update(null, any(POIDTO.class));
                 // when / act
                 ResultActions response = mockMvc.perform(put("/poi")
                                 .with(user(USER.getEmail()).password(USER.getPassword()).roles("MASTER"))
@@ -271,6 +247,6 @@ public class POIControllerTest {
                                 .andExpect(status().isOk())
                                 .andExpect(content().string("POI updated successfully"));
                 
-                verify(poiService).update(any(POIDTO.class));
+                verify(poiService).update(null, any(POIDTO.class));
         }
 }

@@ -162,7 +162,7 @@ public class UserServiceTest {
                 "richard@example.com", "senha123", ADDRESS);
 
         // when / act
-        userService.update(userDTO);
+        userService.update(null, userDTO);
 
         // then / assert
         verify(userRepository, times(1)).update(

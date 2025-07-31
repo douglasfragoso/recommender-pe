@@ -28,6 +28,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping(value = "/user", produces = "application/json")
@@ -43,14 +44,14 @@ public class UserController {
             @ApiResponse(responseCode = "400", description = "Invalid request", content = @Content(schema = @Schema(implementation = ValidationError.class))) })
     @Operation(summary = "Insert a user", description = "Insert a new User. Accessible to everyone.", tags = {
             "User" })
-    public ResponseEntity<UserDTO> insert(@RequestBody UserDTO dto) {
+    public ResponseEntity<UserDTO> insert(@Valid @RequestBody UserDTO dto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(userService.insert(dto));
     }
 
     @PreAuthorize("hasAnyRole('ADMIN', 'MASTER')")
     @GetMapping
     @ApiResponses({
-            @ApiResponse(responseCode = "201", description = "Successfully created", content = @Content(schema = @Schema(implementation = UserDTO.class))),
+            @ApiResponse(responseCode = "200", description = "Successfully created", content = @Content(schema = @Schema(implementation = UserDTO.class))),
             @ApiResponse(responseCode = "400", description = "Invalid request", content = @Content(schema = @Schema(implementation = ValidationError.class))),
             @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content(schema = @Schema(implementation = StandardError.class))) })
     @Operation(summary = "Find all users", description = "Retrieve a paginated list of all user. Only accessible by ADMIN and MASTER roles.", tags = {
@@ -75,7 +76,7 @@ public class UserController {
     }
 
     @PreAuthorize("hasAnyRole('ADMIN', 'MASTER', 'USER')")
-    @PutMapping
+    @PutMapping("/id/{id}")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Successfully update", content = @Content(schema = @Schema(implementation = String.class))),
             @ApiResponse(responseCode = "400", description = "Invalid request", content = @Content(schema = @Schema(implementation = ValidationError.class))),
@@ -83,8 +84,8 @@ public class UserController {
             @ApiResponse(responseCode = "404", description = "Not found", content = @Content(schema = @Schema(implementation = StandardError.class))) })
     @Operation(summary = "Update User", description = "Update User, only for Admin and Master", tags = {
             "User" })
-    public ResponseEntity<String> update(@RequestBody UserDTO dto) {
-        userService.update(dto);
+    public ResponseEntity<String> update(@PathVariable("id") Long id, @Valid @RequestBody UserDTO dto) {
+        userService.update(id, dto);
         return ResponseEntity.status(HttpStatus.OK).body("Profile updated successfully");
     }
 
@@ -95,11 +96,11 @@ public class UserController {
         @ApiResponse(responseCode = "400", description = "Invalid request", content = @Content(schema = @Schema(implementation = ValidationError.class))),
         @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content(schema = @Schema(implementation = StandardError.class))),
         @ApiResponse(responseCode = "404", description = "Not found", content = @Content(schema = @Schema(implementation = StandardError.class))) })
-@Operation(summary = "Update Role", description = "Update Role, only for Master", tags = {
+    @Operation(summary = "Update Role", description = "Update Role, only for Master", tags = {
         "User" })
     public ResponseEntity<String> updateRole(@PathVariable("id") Long id) {
         userService.updateRole(id);
-        return ResponseEntity.ok("Role updated successfully");
+        return ResponseEntity.status(HttpStatus.OK).body("Role updated successfully");
     }
 
     @PreAuthorize("hasAnyRole('ADMIN', 'MASTER')")

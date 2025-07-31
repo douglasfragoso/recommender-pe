@@ -196,7 +196,7 @@ public class UserControllerTest {
                 UserDTO userDTO = new UserDTO("John", "Doe", 32, "Feminino", "12345678900", "81-98765-4322",
                                 "richard@example.com", "Senha123*", ADDRESS);
 
-                willDoNothing().given(userService).update(any(UserDTO.class));
+                willDoNothing().given(userService).update(null, any(UserDTO.class));
 
                 // when / act
                 ResultActions response = mockMvc.perform(put("/user")

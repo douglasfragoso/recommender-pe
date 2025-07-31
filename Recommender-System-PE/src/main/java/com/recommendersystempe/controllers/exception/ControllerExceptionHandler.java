@@ -5,7 +5,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +17,7 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 import com.recommendersystempe.service.exception.GeneralException;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.ConstraintViolationException;
 
 @ControllerAdvice
 public class ControllerExceptionHandler {
@@ -38,8 +38,9 @@ public class ControllerExceptionHandler {
             HttpServletRequest request) {
         String error = "Validation Error";
         HttpStatus status = HttpStatus.BAD_REQUEST;
-        List<String> errors = Collections.singletonList(ex.getSQLException().getMessage());
-
+        List<String> errors = ex.getConstraintViolations().stream()
+                .map(violation -> violation.getMessage())
+                .collect(Collectors.toList());
         ValidationError err = new ValidationError(Instant.now(), status.value(), error, errors,
                 request.getRequestURI());
         return ResponseEntity.status(status).body(err);
@@ -48,7 +49,7 @@ public class ControllerExceptionHandler {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ValidationError> MethodArgumentNotValidException(MethodArgumentNotValidException ex,
             HttpServletRequest request) {
-        String error = "Not Found";
+        String error = "Validation Error";
         HttpStatus status = HttpStatus.BAD_REQUEST;
         List<String> errors = ex.getBindingResult().getAllErrors().stream()
                 .map(DefaultMessageSourceResolvable::getDefaultMessage)

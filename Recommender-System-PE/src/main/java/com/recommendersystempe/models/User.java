@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import org.hibernate.validator.constraints.br.CPF;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -58,11 +57,11 @@ public class User implements UserDetails {
 
     @Getter @Setter
     @Column(name = "cpf", length = 11, unique = true, updatable = false)
-    @CPF
+    @JsonFormat(pattern = "^\\d{11}$")
     private String cpf;
 
     @Getter @Setter
-    @JsonFormat(pattern = "^(\\d{2})-(\\d{4,5})-(\\d{4})$")
+    @JsonFormat(pattern = "^\\d{10,11}$")
     @Column(name = "phone", length = 15, unique = true)
     private String phone;
 

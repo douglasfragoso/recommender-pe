@@ -130,7 +130,7 @@ public class POIServiceTest {
         given(poiRepository.findById(1L)).willReturn(Optional.of(poi));
 
         // when / act
-        poiService.update(poiDTO);
+        poiService.update(null, poiDTO);
 
         // then / assert
         verify(poiRepository, times(1)).update(
@@ -140,15 +140,4 @@ public class POIServiceTest {
         );
     }
 
-    @Test
-    void testDeletePOIById_ShouldDeletePOI() {
-        // given / arrange
-        Long poiId = 1L;
-
-        // when / act
-        poiService.deleteById(poiId);
-
-        // then / assert
-        verify(poiRepository, times(1)).deleteById(poiId);
-    }
 }

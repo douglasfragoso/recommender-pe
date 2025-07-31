@@ -33,6 +33,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping(value = "/recommendation", produces = "application/json")
@@ -53,7 +54,7 @@ public class RecommendationController {
             @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content(schema = @Schema(implementation = StandardError.class))) })
     @Operation(summary = "Insert preferences", description = "Insert preferences and get recommendation. Accessible to everyone.", tags = {
             "Recommendation" })
-    public ResponseEntity<RecommendationDTO> insert(@RequestBody PreferencesDTO dto) {
+    public ResponseEntity<RecommendationDTO> insert(@Valid @RequestBody PreferencesDTO dto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(preferencesService.insert(dto));
     }
 
@@ -66,7 +67,7 @@ public class RecommendationController {
             @ApiResponse(responseCode = "404", description = "Not found", content = @Content(schema = @Schema(implementation = StandardError.class))) })
     @Operation(summary = "Insert score", description = "Insert a new scores to a list of Point of Interest (POI). Accessible to everyone.", tags = {
             "Recommendation" })
-    public ResponseEntity<String> score(@PathVariable("recommendationId") Long id, @RequestBody List<ScoreDTO> dto) {
+    public ResponseEntity<String> score(@PathVariable("recommendationId") Long id, @Valid @RequestBody List<ScoreDTO> dto) {
         recommendationService.score(id, dto);
         return ResponseEntity.status(HttpStatus.CREATED).body("Scored successfully, thank you!");
     }

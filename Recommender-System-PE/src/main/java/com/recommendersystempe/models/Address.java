@@ -5,6 +5,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -16,7 +17,6 @@ import lombok.NoArgsConstructor;
 @Embeddable
 @Schema(description = "Represents the Address in the system")
 public class Address {
-    
     
     @Column(name = "street", length = 40)
     @Schema(description = "Street name", example = "Rua Exemplo", required = true)
@@ -62,5 +62,7 @@ public class Address {
     @Schema(description = "Zip code", example = "50000000", required = true)
     @NotBlank(message = "The field zipCode is required")
     @Size(min = 8, max = 8, message = "Zip code must be exactly 8 characters")
+    @Pattern(regexp = "^\\d{8}$", message = "Zip code must be in the format 50000000")
     private String zipCode;
+    
 }

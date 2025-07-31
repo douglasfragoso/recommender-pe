@@ -37,9 +37,13 @@ import com.recommendersystempe.similarity.SimilarityCalculator;
 import com.recommendersystempe.similarity.TFIDF;
 
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.validation.Validator;
 
 @Service
 public class RecommendationService {
+
+    @Autowired
+    private Validator validator;
 
     @Autowired
     private RecommendationRepository recommendationRepository;
@@ -86,8 +90,19 @@ public class RecommendationService {
             double jaccard = SimilarityCalculator.jaccardSimilarity(userVector, poiVector);
             double average = SimilarityCalculator.combinedSimilarity(userVector, poiVector);
 
+            SimilarityMetric metric = new SimilarityMetric(null, poi, cosine, euclidean, pearson, jaccard);
+
+            Set<jakarta.validation.ConstraintViolation<SimilarityMetric>> violations = validator.validate(metric);
+            if (!violations.isEmpty()) {
+                String messages = violations.stream()
+                        .map(v -> v.getPropertyPath() + " " + v.getMessage())
+                        .collect(Collectors.joining(", "));
+                throw new jakarta.validation.ConstraintViolationException(
+                        "Invalid similarity metric: " + messages, violations);
+            }
+
             // Armazenar métricas no mapa
-            metricsMap.put(poi, new SimilarityMetric(null, poi, cosine, euclidean, pearson, jaccard));
+            metricsMap.put(poi, metric);
             poiScores.put(poi, average);
         }
 
@@ -111,9 +126,18 @@ public class RecommendationService {
             }
         });
 
+        Set<jakarta.validation.ConstraintViolation<Recommendation>> recommendationViolations = validator
+                .validate(recommendation);
+        if (!recommendationViolations.isEmpty()) {
+            String messages = recommendationViolations.stream()
+                    .map(v -> v.getPropertyPath() + " " + v.getMessage())
+                    .collect(Collectors.joining(", "));
+            throw new jakarta.validation.ConstraintViolationException(
+                    "Invalid recommendation: " + messages, recommendationViolations);
+        }
         recommendationRepository.save(recommendation);
 
-         return convertToDTO(recommendation);
+        return convertToDTO(recommendation);
     }
 
     @Transactional

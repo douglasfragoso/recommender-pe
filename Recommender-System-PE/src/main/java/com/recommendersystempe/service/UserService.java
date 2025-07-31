@@ -1,5 +1,8 @@
 package com.recommendersystempe.service;
 
+import java.util.Set;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
@@ -16,10 +19,15 @@ import com.recommendersystempe.enums.Roles;
 import com.recommendersystempe.models.Address;
 import com.recommendersystempe.models.User;
 import com.recommendersystempe.repositories.UserRepository;
-import com.recommendersystempe.service.exception.GeneralException;;
+import com.recommendersystempe.service.exception.GeneralException;
+
+import jakarta.validation.Validator;;
 
 @Service
 public class UserService {
+
+    @Autowired
+    private Validator validator;
 
     @Autowired
     private UserRepository userRepository;
@@ -59,6 +67,14 @@ public class UserService {
 
         // Mapeando AddressDTO para Address - Mapping AddressDTO to Address
         Address address = dto.getAddress();
+        Set<jakarta.validation.ConstraintViolation<Address>> violations = validator.validate(address);
+            if (!violations.isEmpty()) {
+                String messages = violations.stream()
+                        .map(v -> v.getPropertyPath() + " " + v.getMessage())
+                        .collect(Collectors.joining(", "));
+                throw new jakarta.validation.ConstraintViolationException(
+                        "Invalid address: " + messages, violations);
+            }
         user.setAddress(address);
 
         // Salvando User - Saving User
@@ -85,7 +101,7 @@ public class UserService {
     }
 
     @Transactional
-    public void update(UserDTO dto) {
+    public void update(Long id,UserDTO dto) {
         User user = searchUser();
         Long idUser = user.getId();
 

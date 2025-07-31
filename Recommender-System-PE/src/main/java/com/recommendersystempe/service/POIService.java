@@ -3,7 +3,6 @@ package com.recommendersystempe.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -69,20 +68,10 @@ public class POIService {
     }
 
     @Transactional
-    public void update(POIDTO dto) {
-        poiRepository.findById(dto.getId())
-                .orElseThrow(() -> new GeneralException("POI not found, id does not exist: " + dto.getId()));
-        poiRepository.update(dto.getId(), dto.getName(), dto.getDescription());
-    }
-
-    @Transactional
-    public void deleteById(Long id) {
-        try {
-            poiRepository.deleteById(id);
-        } catch (DataIntegrityViolationException e) {
-            throw new GeneralException("Cannot delete POI, it has related data");
-        }
-
+    public void update(Long id, POIDTO dto) {
+        poiRepository.findById(id)
+                .orElseThrow(() -> new GeneralException("POI not found, id does not exist: " + id));
+        poiRepository.update(id, dto.getName(), dto.getDescription());
     }
 
 }
