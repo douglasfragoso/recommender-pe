@@ -10,7 +10,6 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.DecimalMax;
 import jakarta.validation.constraints.DecimalMin;
-import jakarta.validation.constraints.Min;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -29,13 +28,11 @@ public class SimilarityMetric {
     @ManyToOne
     @Getter @Setter
     @JoinColumn(name = "recommendation_id", nullable = false)
-    @Min(value = 1, message = "Recommendation Id must be at least 1")
     private Recommendation recommendation;
 
     @ManyToOne
     @Getter @Setter
     @JoinColumn(name = "poi_id", nullable = false)
-    @Min(value = 1, message = "POI Id must be at least 1")
     private POI poi;
 
     @Getter @Setter

@@ -11,7 +11,6 @@ import com.recommendersystempe.enums.Themes;
 import com.recommendersystempe.models.Address;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -28,7 +27,6 @@ public class POIDTO {
 
     @Getter
     @Schema(description = "POI Id", example = "1", required = true)
-    @Min(value = 1, message = "POI Id must be at least 1")
     private Long id;
 
     @Getter
@@ -49,21 +47,21 @@ public class POIDTO {
     @JsonFormat(shape = JsonFormat.Shape.STRING)
     @Schema(description = "List of motivations associated with the preferences", example = "[\"CULTURE\", \"ENTERTAINMENT\"]", required = true)
     @NotNull(message = "The field motivations is required")
-    @Size(min = 5, max = 5, message = "The field motivation must have 1 to 5 elements")
+    @Size(min = 5, max = 5, message = "The field motivation must have exactly 5 elements")
     private List<Motivations> motivations = new ArrayList<>();
 
     @Getter
     @JsonFormat(shape = JsonFormat.Shape.STRING)
     @Schema(description = "List of hobbies associated with the preferences", example = "[\"ADVENTURE\", \"ART\"]", required = true)
     @NotNull(message = "The field hobbies is required")
-    @Size(min = 5, max = 5, message = "The field hobbies must have 1 to 5 elements")
+    @Size(min = 5, max = 5, message = "The field hobbies must have exactly 5 elements")
     private List<Hobbies> hobbies = new ArrayList<>();
 
     @Getter
     @JsonFormat(shape = JsonFormat.Shape.STRING)
     @Schema(description = "List of themes associated with the preferences", example = "[\"ADVENTURE\", \"CULTURAL\"]", required = true)
     @NotNull(message = "The field themes is required")
-    @Size(min = 5, max = 5, message = "The field themes must have 1 to 5 elements")
+    @Size(min = 5, max = 5, message = "The field themes must have exactly 5 elements")
     private List<Themes> themes = new ArrayList<>();
 
     @Getter
