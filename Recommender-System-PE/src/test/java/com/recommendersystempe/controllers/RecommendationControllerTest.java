@@ -146,7 +146,6 @@ public class RecommendationControllerTest {
                 return poi;
         }
 
-
         @Test
         void testGivenValidPreferencesDTO_whenInsertShouldReturnPOIList() throws Exception {
                 // given / arrange
@@ -187,7 +186,7 @@ public class RecommendationControllerTest {
                 int scoreValue = 1;
                 for (POI poi : poiList) {
                         Long poiId = (Long) ReflectionTestUtils.getField(poi, "id");
-                        scoreList.add(new ScoreDTO(poiId, scoreValue));
+                        scoreList.add(new ScoreDTO(recommendation.getId(), poiId, scoreValue));
                         scoreValue = (scoreValue == 1) ? 0 : 1;
                 }
 
@@ -263,8 +262,8 @@ public class RecommendationControllerTest {
 
                 // Assert
                 response.andExpect(status().isOk())
-                                .andExpect(jsonPath("$.content[0].id").value(1L)) 
-                                .andExpect(jsonPath("$.content[0].pois").exists()); 
+                                .andExpect(jsonPath("$.content[0].id").value(1L))
+                                .andExpect(jsonPath("$.content[0].pois").exists());
 
         }
 }

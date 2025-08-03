@@ -135,7 +135,7 @@ public class UserRepositoryTest {
 
         // when / act
 
-        userRepository.update(user.getId(), "Lucas", "Fragoso1", 31, "Feminino", "81-98765-4322");
+        userRepository.update(user.getId(), "Lucas", "Fragoso1", 31, "Feminino", "81-98765-4322", "richard@example.com");
 
         // Clear the persistence context, causing all managed entities to become
         // detached

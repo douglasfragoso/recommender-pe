@@ -3,7 +3,6 @@ package com.recommendersystempe.services;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.BDDMockito.*;
-// import static org.mockito.Mockito.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -23,12 +22,15 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import com.recommendersystempe.dtos.UserDTO;
+import com.recommendersystempe.dtos.UserDTOUpdate;
 import com.recommendersystempe.enums.Roles;
 import com.recommendersystempe.models.Address;
 import com.recommendersystempe.models.User;
 import com.recommendersystempe.repositories.UserRepository;
 import com.recommendersystempe.service.UserService;
 import com.recommendersystempe.service.exception.GeneralException;
+
+import jakarta.validation.Validator;
 
 @ExtendWith(MockitoExtension.class)
 public class UserServiceTest {
@@ -46,6 +48,9 @@ public class UserServiceTest {
             "richard@example.com", "senha123", ADDRESS, Roles.USER);
 
     @Mock
+    private Validator validator;
+
+    @Mock
     private UserRepository userRepository;
 
     @Mock
@@ -54,14 +59,11 @@ public class UserServiceTest {
     @InjectMocks
     private UserService userService;
 
-    private User createUser(Long id, String firstName, String lastName, int age, String gender, String cpf, String phone, String email, String password, Address address, Roles role) {
+    private User createUser(Long id, String firstName, String lastName, int age, String gender, String cpf,
+            String phone, String email, String password, Address address, Roles role) {
         User user = new User(firstName, lastName, age, gender, cpf, phone, email, password, address, role);
         ReflectionTestUtils.setField(user, "id", id);
         return user;
-    }
-
-    private UserDTO createUserDTO(String firstName, String lastName, int age, String gender, String cpf, String phone, String email, String password, Address address) {
-        return new UserDTO(firstName, lastName, age, gender, cpf, phone, email, password, address);
     }
 
     @Test
@@ -81,8 +83,7 @@ public class UserServiceTest {
         assertAll(
                 () -> assertNotNull(result, "UserDTO must not be null"),
                 () -> assertEquals(USER_DTO.getFirstName(), result.getFirstName(), "First name must be the same"),
-                () -> assertEquals(USER_DTO.getEmail(), result.getEmail(), "Email must be the same")
-        );
+                () -> assertEquals(USER_DTO.getEmail(), result.getEmail(), "Email must be the same"));
     }
 
     @Test
@@ -126,8 +127,7 @@ public class UserServiceTest {
         // then / assert
         assertAll(
                 () -> assertNotNull(result, "UserPage must not be null"),
-                () -> assertEquals(1, result.getTotalElements(), "UserPage must have 1 element")
-        );
+                () -> assertEquals(1, result.getTotalElements(), "UserPage must have 1 element"));
     }
 
     @Test
@@ -142,8 +142,7 @@ public class UserServiceTest {
         assertAll(
                 () -> assertNotNull(result, "UserDTO must not be null"),
                 () -> assertEquals(USER.getFirstName(), result.getFirstName(), "First name must be the same"),
-                () -> assertEquals(USER.getEmail(), result.getEmail(), "Email must be the same")
-        );
+                () -> assertEquals(USER.getEmail(), result.getEmail(), "Email must be the same"));
     }
 
     @Test
@@ -158,8 +157,8 @@ public class UserServiceTest {
 
         given(userRepository.findByEmail("richard@example.com")).willReturn(user);
 
-        UserDTO userDTO = createUserDTO("John", "Doe", 32, "Feminino", "12345678900", "81-98765-4322",
-                "richard@example.com", "senha123", ADDRESS);
+        UserDTOUpdate userDTO = new UserDTOUpdate(1L, "John", "Doe", 32, "Feminino", "12345678900", "81-98765-4322",
+                "richard@example.com");
 
         // when / act
         userService.update(null, userDTO);
@@ -171,7 +170,8 @@ public class UserServiceTest {
                 "Doe",
                 32,
                 "Feminino",
-                "81-98765-4322");
+                "81-98765-4322",
+                "richard@example.com");
     }
 
     @Test
@@ -189,8 +189,7 @@ public class UserServiceTest {
         // then / assert
         assertAll(
                 () -> assertEquals(Roles.ADMIN, user.getRole(), "Role must be ADMIN"),
-                () -> verify(userRepository, times(1)).saveAndFlush(user)
-        );
+                () -> verify(userRepository, times(1)).saveAndFlush(user));
     }
 
     @Test

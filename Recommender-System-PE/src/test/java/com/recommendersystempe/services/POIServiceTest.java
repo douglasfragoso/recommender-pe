@@ -130,7 +130,8 @@ public class POIServiceTest {
         given(poiRepository.findById(1L)).willReturn(Optional.of(poi));
 
         // when / act
-        poiService.update(null, poiDTO);
+       poiService.update(1L, poiDTO);
+
 
         // then / assert
         verify(poiRepository, times(1)).update(

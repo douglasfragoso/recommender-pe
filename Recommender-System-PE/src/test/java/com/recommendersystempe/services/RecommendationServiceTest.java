@@ -42,6 +42,8 @@ import com.recommendersystempe.repositories.UserRepository;
 import com.recommendersystempe.service.RecommendationService;
 import com.recommendersystempe.service.exception.GeneralException;
 
+import jakarta.validation.Validator;
+
 @ExtendWith(MockitoExtension.class)
 public class RecommendationServiceTest {
 
@@ -72,6 +74,9 @@ public class RecommendationServiceTest {
 
         @Mock
         private ScoreRepository scoreRepository;
+
+        @Mock
+        private Validator validator;
 
         @InjectMocks
         private RecommendationService recommendationService;
@@ -121,25 +126,25 @@ public class RecommendationServiceTest {
 
         @Test
         void testRecommendation_ShouldReturnTop5Pois() {
-                // Arrange
+                // given / arrange 
                 mockAuthenticatedUser(user);
                 given(poiRepository.findAll()).willReturn(poiList);
 
-                // Act
+                // when / act
                 RecommendationDTO result = recommendationService.recommendation(preferences);
 
-                // Assert
+                // then / assert
                 assertNotNull(result);
                 verify(recommendationRepository, times(1)).save(any(Recommendation.class));
-                verify(recommendationRepository).save(argThat(recommendation -> 
-                    recommendation.getSimilarityMetrics() != null && 
-                    recommendation.getSimilarityMetrics().size() == 5));
+                verify(recommendationRepository)
+                                .save(argThat(recommendation -> recommendation.getSimilarityMetrics() != null &&
+                                                recommendation.getSimilarityMetrics().size() == 5));
         }
 
         @SuppressWarnings("null")
         @Test
         void testScore_ShouldSaveScores() {
-                // Arrange
+                // given / arrange
                 mockAuthenticatedUser(user);
                 for (POI poi : poiList) {
                         Long poiId = (Long) ReflectionTestUtils.getField(poi, "id");
@@ -160,17 +165,17 @@ public class RecommendationServiceTest {
                         scoreValue = (scoreValue == 1) ? 0 : 1;
                 }
 
-                // Act
+                // when / act
                 recommendationService.score(1L, scoreList);
 
-                // Assert
+                // then / assert
                 verify(scoreRepository, times(5)).save(any(Score.class));
                 assertEquals(5, recommendation.getScores().size());
         }
 
         @Test
         void testFindAll_ShouldReturnPageOfRecommendations() {
-                // Arrange
+                // given / arrange
                 Pageable pageable = PageRequest.of(0, 10);
                 Recommendation recommendation = new Recommendation();
                 recommendation.setUser(user);
@@ -178,34 +183,34 @@ public class RecommendationServiceTest {
 
                 given(recommendationRepository.findAll(pageable)).willReturn(recommendationPage);
 
-                // Act
+                // when / act
                 Page<RecommendationDTO> result = recommendationService.findAll(pageable);
 
-                // Assert
+                // then / assert
                 assertNotNull(result);
                 assertEquals(1, result.getTotalElements());
         }
 
         @Test
         void testFindById_ShouldReturnRecommendationDTO() {
-                // Arrange
+                // given / arrange
                 Recommendation recommendation = new Recommendation();
                 recommendation.setUser(user);
                 poiList.forEach(recommendation::addPOI);
 
                 given(recommendationRepository.findById(anyLong())).willReturn(Optional.of(recommendation));
 
-                // Act
+                // when / act
                 RecommendationDTO result = recommendationService.findById(1L);
 
-                // Assert
+                // then / assert
                 assertNotNull(result);
                 assertEquals(5, result.getPois().size());
         }
 
         @Test
         void testFindAllByUserId_ShouldReturnPageOfRecommendations() {
-                // Arrange
+                // given / arrange
                 mockAuthenticatedUser(user);
                 Pageable pageable = PageRequest.of(0, 10);
                 Recommendation recommendation = new Recommendation();
@@ -215,31 +220,31 @@ public class RecommendationServiceTest {
                 given(recommendationRepository.findAllByUserId(eq(user.getId()), eq(pageable)))
                                 .willReturn(recommendationPage);
 
-                // Act
+                // when / act
                 Page<RecommendationDTO> result = recommendationService.findAllByUserId(pageable);
 
-                // Assert
+                // then / assert
                 assertNotNull(result);
                 assertEquals(1, result.getTotalElements());
         }
 
         @Test
         void testFindById_WhenRecommendationNotFound_ShouldThrowException() {
-                // Arrange
+                // given / arrange
                 given(recommendationRepository.findById(anyLong())).willReturn(Optional.empty());
 
-                // Act & Assert
+                // when / act / then / assert
                 assertThrows(GeneralException.class, () -> recommendationService.findById(1L));
         }
 
         @Test
         void testScore_WhenUserNotAuthenticated_ShouldThrowException() {
-                // Arrange: Limpa o contexto de segurança para simular ausência de autenticação
+                // given / arrange
                 SecurityContextHolder.clearContext();
 
                 given(recommendationRepository.findById(anyLong())).willReturn(Optional.of(new Recommendation()));
 
-                // Act & Assert
+                // when / act / then / assert
                 assertThrows(NullPointerException.class,
                                 () -> recommendationService.score(1L, List.of(new ScoreDTO(1L, 1))));
         }

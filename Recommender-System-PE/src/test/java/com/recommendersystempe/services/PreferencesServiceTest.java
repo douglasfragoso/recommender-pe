@@ -114,7 +114,6 @@ public class PreferencesServiceTest {
                                 .map(poi -> new POIDTO(poi.getId(), poi.getName(), poi.getDescription()))
                                 .toList();
 
-                // Create a proper RecommendationDTO instead of casting
                 RecommendationDTO recommendationDTO = new RecommendationDTO();
                 recommendationDTO.addPOI(poiList);
 

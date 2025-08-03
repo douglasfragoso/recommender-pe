@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.recommendersystempe.dtos.UserDTO;
+import com.recommendersystempe.dtos.UserDTOUpdate;
 import com.recommendersystempe.enums.Roles;
 import com.recommendersystempe.models.Address;
 import com.recommendersystempe.models.User;
@@ -101,12 +102,12 @@ public class UserService {
     }
 
     @Transactional
-    public void update(Long id,UserDTO dto) {
+    public void update(Long id, UserDTOUpdate dto) {
         User user = searchUser();
         Long idUser = user.getId();
 
         userRepository.update(idUser, dto.getFirstName(), dto.getLastName(), dto.getAge(), dto.getGender(),
-                dto.getPhone());
+                dto.getPhone(), user.getEmail());
     }
 
     @Transactional

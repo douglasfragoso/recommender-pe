@@ -105,13 +105,11 @@ public class POIControllerTest {
         @BeforeEach
         public void setUp() {
                 UserDetails userDetails = new org.springframework.security.core.userdetails.User(
-                        USER.getEmail(),
-                        USER.getPassword(),
-                        Collections.singletonList(new SimpleGrantedAuthority("ROLE_MASTER"))
-                    );
-                    given(authenticationService.loadUserByUsername(USER.getEmail())).willReturn(userDetails);
+                                USER.getEmail(),
+                                USER.getPassword(),
+                                Collections.singletonList(new SimpleGrantedAuthority("ROLE_MASTER")));
+                given(authenticationService.loadUserByUsername(USER.getEmail())).willReturn(userDetails);
         }
-
 
         @Test
         void testGivenPOIDTO_whenSaveReturnPOIDTO() throws JsonProcessingException, Exception {
@@ -124,7 +122,7 @@ public class POIControllerTest {
 
                 given(poiService.insert(any(POIDTO.class)))
                                 .willAnswer((invocation) -> invocation.getArgument(0));
-                //when / act
+                // when / act
                 ResultActions response = mockMvc.perform(post("/poi/register")
                                 .contentType("application/json")
                                 .with(user(USER.getEmail()).password(USER.getPassword()).roles("MASTER"))
@@ -217,7 +215,7 @@ public class POIControllerTest {
                                                 .map(Enum::name).collect(Collectors.toList())))
                                 .andExpect(jsonPath("$.themes").value(poi.getThemes().stream()
                                                 .map(Enum::name).collect(Collectors.toList())));
-                
+
                 verify(poiService).findById(id);
         }
 
@@ -230,23 +228,28 @@ public class POIControllerTest {
                 poi = new POI("Parque da Cidade", "Um grande parque urbano com áreas verdes, trilhas e lagos.",
                                 MOTIVATIONS, HOBBIES, THEMES, poiAddress);
 
-                ReflectionTestUtils.setField(poi, "id", 1L);
+                Long poiId = 1L;
+                ReflectionTestUtils.setField(poi, "id", poiId);
 
-                POIDTO poiDTO = new POIDTO(1L, "Parque da Cidade2",
+                POIDTO poiDTO = new POIDTO(poiId, "Parque da Cidade2",
                                 "Um grande parque urbano com áreas verdes, trilhas e lagos.",
                                 MOTIVATIONS, HOBBIES, THEMES, poiAddress);
 
-                willDoNothing().given(poiService).update(null, any(POIDTO.class));
+                // Corrigido: usar matchers para todos os argumentos
+                willDoNothing().given(poiService).update(eq(poiId), any(POIDTO.class));
+
                 // when / act
-                ResultActions response = mockMvc.perform(put("/poi")
+                ResultActions response = mockMvc.perform(put("/poi/id/{id}", poiId) // Corrigido: incluir ID no path
                                 .with(user(USER.getEmail()).password(USER.getPassword()).roles("MASTER"))
                                 .contentType("application/json")
                                 .content(objectMapper.writeValueAsString(poiDTO)));
+
                 // then / assert
                 response.andDo(print())
                                 .andExpect(status().isOk())
                                 .andExpect(content().string("POI updated successfully"));
-                
-                verify(poiService).update(null, any(POIDTO.class));
+
+                // Corrigido: usar matchers consistentes na verificação
+                verify(poiService).update(eq(poiId), any(POIDTO.class));
         }
 }

@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.recommendersystempe.controllers.exception.StandardError;
 import com.recommendersystempe.controllers.exception.ValidationError;
 import com.recommendersystempe.dtos.UserDTO;
+import com.recommendersystempe.dtos.UserDTOUpdate;
 import com.recommendersystempe.service.UserService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -84,7 +85,7 @@ public class UserController {
             @ApiResponse(responseCode = "404", description = "Not found", content = @Content(schema = @Schema(implementation = StandardError.class))) })
     @Operation(summary = "Update User", description = "Update User, only for Admin and Master", tags = {
             "User" })
-    public ResponseEntity<String> update(@PathVariable("id") Long id, @Valid @RequestBody UserDTO dto) {
+    public ResponseEntity<String> update(@PathVariable("id") Long id, @Valid @RequestBody UserDTOUpdate dto) {
         userService.update(id, dto);
         return ResponseEntity.status(HttpStatus.OK).body("Profile updated successfully");
     }

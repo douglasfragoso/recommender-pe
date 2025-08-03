@@ -2,10 +2,6 @@ package com.recommendersystempe.dtos;
 
 import org.hibernate.validator.constraints.br.CPF;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.recommendersystempe.enums.Roles;
-import com.recommendersystempe.models.Address;
-
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Max;
@@ -14,13 +10,15 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @NoArgsConstructor
+@AllArgsConstructor
 @Schema(description = "Represents the UserDTO in the system")
-public class UserDTO {
+public class UserDTOUpdate {
 
     @Getter
     @Schema(description = "User Id", example = "1", required = true)
@@ -78,52 +76,5 @@ public class UserDTO {
     @Size(max = 50, message = "The field email must be up to 50 characters")
     @Email(message = "Email should be valid")
     private String email;
-
-    @Getter
-    @Setter
-    @Schema(description = "Password of a user", example = "Password123!", required = true)
-    @NotBlank(message = "The field password is required")
-    @Size(min = 8, max = 100, message = "Password must be between 8 and 100 characters")
-    @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*+=])(?=\\S+$).{8,}$",
-    message = "Password must contain at least one digit, one lowercase, one uppercase, one special character and no whitespace")
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY) 
-    private String userPassword;
-
-    @Getter
-    @Setter
-    @Schema(description = "Address of a user", required = true)
-    @NotNull(message = "The field address is required")
-    private Address address;
-
-    @Setter
-    @Getter
-    private Roles role;
-
-    public UserDTO(String firstName, String lastName, Integer age, String gender, String cpf, String phone,
-            String email, String userPassword, Address address) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.age = age;
-        this.gender = gender;
-        this.cpf = cpf;
-        this.phone = phone;
-        this.email = email;
-        this.userPassword = userPassword;
-        this.address = address;
-    }
-
-    public UserDTO(Long id, String firstName, String lastName, Integer age, String gender, String cpf, String phone,
-            String email, Address address, Roles role) {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.age = age;
-        this.gender = gender;
-        this.cpf = cpf;
-        this.phone = phone;
-        this.email = email;
-        this.address = address;
-        this.role = role;
-    }
 
 }

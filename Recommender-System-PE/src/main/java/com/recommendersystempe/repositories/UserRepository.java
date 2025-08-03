@@ -20,12 +20,14 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     @Transactional
     @Modifying(clearAutomatically = true) // Limpa o cache do EntityManager - Clears the EntityManager cache
-    @Query(value = "UPDATE tb_users SET first_name = :firstName, last_name = :lastName, age = :age, gender = :gender, phone = :phone WHERE id = :id", nativeQuery = true)
+    @Query(value = "UPDATE tb_users SET first_name = :firstName, last_name = :lastName, age = :age, gender = :gender, phone = :phone, email = :email WHERE id = :id", nativeQuery = true)
     void update(
             @Param("id") Long id,
             @Param("firstName") String firstName,
             @Param("lastName") String lastName,
             @Param("age") Integer age,
             @Param("gender") String gender,
-            @Param("phone") String phone);
+            @Param("phone") String phone,
+            @Param("email") String email
+            );
 }
