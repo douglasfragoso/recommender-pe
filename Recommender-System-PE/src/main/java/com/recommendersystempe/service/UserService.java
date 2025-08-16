@@ -193,6 +193,9 @@ public class UserService {
         if (dto.getRole() != null) {
             user.setRole(dto.getRole());
         }
+        if (dto.getStatus() != null) {
+            user.setStatus(dto.getStatus());
+        }
 
         userRepository.save(user);
     }

@@ -7,6 +7,7 @@ import org.hibernate.validator.constraints.br.CPF;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.recommendersystempe.enums.Roles;
+import com.recommendersystempe.enums.Status;
 import com.recommendersystempe.models.Address;
 
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -103,6 +104,10 @@ public class UserDTO {
     @Getter
     @Schema(description = "Role of a user", required = false)
     private Roles role;
+
+    @Getter @Setter
+    @Schema(description = "Status of a user", required = true)
+    private Status status;
 
     public UserDTO(String firstName, String lastName, LocalDate birthDate, String gender, String cpf, String phone,
             String email, String userPassword, Address address) {

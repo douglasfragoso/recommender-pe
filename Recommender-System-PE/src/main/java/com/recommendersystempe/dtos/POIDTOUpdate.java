@@ -6,6 +6,7 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.recommendersystempe.enums.Hobbies;
 import com.recommendersystempe.enums.Motivations;
+import com.recommendersystempe.enums.Status;
 import com.recommendersystempe.enums.Themes;
 import com.recommendersystempe.models.Address;
 
@@ -61,5 +62,9 @@ public class POIDTOUpdate {
     @Schema(description = "Address of a POI", required = true)
     @Valid
     private Address address;
+
+    @Getter @Setter
+    @Schema(description = "Status of a POI", required = true)
+    private Status status;
 
 }

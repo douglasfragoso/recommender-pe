@@ -52,14 +52,14 @@ public class POIService {
         poiRepository.save(poi);
 
         return new POIDTO(poi.getId(), poi.getName(), poi.getDescription(), poi.getMotivations(), poi.getHobbies(),
-                poi.getThemes(), poi.getAddress());
+                poi.getThemes(), poi.getAddress(), poi.getStatus());
     }
 
     @Transactional(readOnly = true)
     public Page<POIDTO> findAll(Pageable pageable) {
         Page<POI> list = poiRepository.findAll(pageable);
         return list.map(x -> new POIDTO(x.getId(), x.getName(), x.getDescription(), x.getMotivations(), x.getHobbies(),
-                x.getThemes(), x.getAddress()));
+                x.getThemes(), x.getAddress(), x.getStatus()));
     }
 
     @Transactional(readOnly = true)
@@ -67,7 +67,7 @@ public class POIService {
         POI poi = poiRepository.findById(id)
                 .orElseThrow(() -> new GeneralException("POI not found, id does not exist: " + id));
         return new POIDTO(poi.getId(), poi.getName(), poi.getDescription(), poi.getMotivations(), poi.getHobbies(),
-                poi.getThemes(), poi.getAddress());
+                poi.getThemes(), poi.getAddress(), poi.getStatus());
     }
 
     @Transactional
@@ -122,6 +122,9 @@ public class POIService {
         if (dto.getThemes() != null && !dto.getThemes().isEmpty()) {
             poiToUpdate.getThemes().clear();
             poiToUpdate.getThemes().addAll(dto.getThemes());
+        }
+        if (dto.getStatus() != null) {
+            poiToUpdate.setStatus(dto.getStatus());
         }
         poiRepository.save(poiToUpdate);
     }

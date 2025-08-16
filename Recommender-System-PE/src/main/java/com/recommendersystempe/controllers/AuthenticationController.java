@@ -15,6 +15,7 @@ import com.recommendersystempe.controllers.exception.StandardError;
 import com.recommendersystempe.controllers.exception.ValidationError;
 import com.recommendersystempe.dtos.AuthenticationDTO;
 import com.recommendersystempe.dtos.UserLoginDTO;
+import com.recommendersystempe.enums.Status;
 import com.recommendersystempe.models.User;
 import com.recommendersystempe.service.TokenService;
 
@@ -54,6 +55,10 @@ public class AuthenticationController {
 
                 // Gerando o token
                 User loggedUser = (User) authentication.getPrincipal();
+
+                if(loggedUser.getStatus() != Status.ACTIVE) {
+                        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+                }
 
                 String token = tokenService.generateToken(loggedUser);
 

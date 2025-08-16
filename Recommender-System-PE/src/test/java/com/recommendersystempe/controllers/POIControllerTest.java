@@ -149,7 +149,7 @@ public class POIControllerTest {
                                 "50000000");
 
                 poi = new POI("Parque da Cidade", "Um grande parque urbano com áreas verdes, trilhas e lagos.",
-                                MOTIVATIONS, HOBBIES, THEMES, poiAddress);
+                                MOTIVATIONS, HOBBIES, THEMES, poiAddress, Status.);
 
                 ReflectionTestUtils.setField(poi, "id", 1L);
 

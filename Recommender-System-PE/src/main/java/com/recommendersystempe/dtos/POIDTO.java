@@ -6,6 +6,7 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.recommendersystempe.enums.Hobbies;
 import com.recommendersystempe.enums.Motivations;
+import com.recommendersystempe.enums.Status;
 import com.recommendersystempe.enums.Themes;
 import com.recommendersystempe.models.Address;
 
@@ -70,6 +71,10 @@ public class POIDTO {
     @Valid
     private Address address;
 
+    @Getter @Setter
+    @Schema(description = "Status of a POI", required = true)
+    private Status status;
+
     public POIDTO(Long id, String name, String description) {
         this.id = id;
         this.name = name;
@@ -83,13 +88,14 @@ public class POIDTO {
         this.address = poiAddress;
     }
 
-    public POIDTO(String name, String description, List<Motivations> motivations, List<Hobbies> hobbies,
+    public POIDTO(Long id, String name, String description, List<Motivations> motivations, List<Hobbies> hobbies,
             List<Themes> themes, Address poiAddress) {
         this.name = name;
         this.description = description;
         this.motivations.addAll(motivations);
         this.hobbies.addAll(hobbies);
         this.themes.addAll(themes);
+        this.address = poiAddress;
         this.address = poiAddress;
     }
 

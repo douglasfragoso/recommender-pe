@@ -6,6 +6,7 @@ import org.hibernate.validator.constraints.br.CPF;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.recommendersystempe.enums.Roles;
+import com.recommendersystempe.enums.Status;
 import com.recommendersystempe.models.Address;
 
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -82,5 +83,9 @@ public class UserDTOUpdate {
     @Schema(description = "Address of a user. Can be partially updated.", required = false)
     @Valid 
     private Address address;
+
+    @Getter @Setter
+    @Schema(description = "Status of a user", required = true)
+    private Status status;
 
 }

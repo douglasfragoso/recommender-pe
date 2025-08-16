@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.recommendersystempe.enums.Roles;
+import com.recommendersystempe.enums.Status;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
@@ -21,7 +22,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
-import jakarta.validation.constraints.*;
+import jakarta.validation.constraints.Email;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -93,6 +94,12 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "user")
     private List<Recommendation> recommendations = new ArrayList<>();
 
+    @Getter @Setter
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status")
+    private Status status;
+
+
     public User(String firstName, String lastName, LocalDate birthDate, String gender, String cpf, String phone, String email, String userPassword, Address address, Roles role) {
         this.firstName = firstName;
         this.lastName = lastName;
@@ -104,6 +111,7 @@ public class User implements UserDetails {
         this.userPassword = userPassword;
         this.address = address;
         this.role = role;
+        this.status = Status.ACTIVE;
     }
 
     @Override

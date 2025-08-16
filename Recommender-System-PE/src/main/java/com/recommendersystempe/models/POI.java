@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.recommendersystempe.enums.Hobbies;
 import com.recommendersystempe.enums.Motivations;
+import com.recommendersystempe.enums.Status;
 import com.recommendersystempe.enums.Themes;
 
 import jakarta.persistence.CollectionTable;
@@ -85,13 +86,19 @@ public class POI {
     @OneToMany(mappedBy = "poi")
     private List<Score> scores = new ArrayList<>();
 
+    @Getter @Setter
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status")
+    private Status status;
+
     public POI(String name, String descripition, List<Motivations> motivations, List<Hobbies> hobbies,
-            List<Themes> themes, Address address) {
+            List<Themes> themes, Address address, Status status) {
         this.name = name;
         this.description = descripition;
         this.motivations = motivations;
         this.hobbies = hobbies;
         this.themes = themes;
+        this.status = Status.ACTIVE;
         this.address = address;
     }
 
