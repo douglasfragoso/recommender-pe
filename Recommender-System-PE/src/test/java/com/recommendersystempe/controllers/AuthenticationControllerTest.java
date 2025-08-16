@@ -20,6 +20,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import com.recommendersystempe.configs.SecurityConfig;
 import com.recommendersystempe.enums.Roles;
+import com.recommendersystempe.enums.Status;
 import com.recommendersystempe.models.Address;
 import com.recommendersystempe.models.User;
 import com.recommendersystempe.repositories.UserRepository;
@@ -62,26 +63,25 @@ public class AuthenticationControllerTest {
 
     private User createUser(String email, String password) {
         return new User(
-                "Richard", 
+                "Richard",
                 "Fragoso",
-                LocalDate.of(1990, 12, 5), 
+                LocalDate.of(1990, 12, 5),
                 "Masculino",
-                "12345678909", 
+                "12345678909",
                 "81-98765-4321",
-                email, 
+                email,
                 password,
-                address, 
-                Roles.MASTER 
-        );
+                address,
+                Roles.MASTER);
     }
 
     private String createLoginRequest(String email, String password) {
         return String.format("""
-            {
-                "email": "%s",
-                "userPassword": "%s"
-            }
-            """, email, password);
+                {
+                    "email": "%s",
+                    "userPassword": "%s"
+                }
+                """, email, password);
     }
 
     @Test
@@ -91,7 +91,7 @@ public class AuthenticationControllerTest {
 
         when(authenticationManager.authenticate(any(UsernamePasswordAuthenticationToken.class)))
                 .thenReturn(new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities()));
-        //when / act
+        // when / act
         when(tokenService.generateToken(any(User.class))).thenReturn("mocked-jwt-token");
         // then / assert
         mockMvc.perform(post("/auth/v1/login")
@@ -111,13 +111,34 @@ public class AuthenticationControllerTest {
         // given / arrange
         String jsonRequest = createLoginRequest("wrong@example.com", "WrongPassword");
         when(authenticationManager.authenticate(any(UsernamePasswordAuthenticationToken.class)))
-            .thenThrow(new BadCredentialsException("Invalid credentials"));
-        //then / assert
+                .thenThrow(new BadCredentialsException("Invalid credentials"));
+        // then / assert
         mockMvc.perform(post("/auth/v1/login")
                 .contentType("application/json")
                 .content(jsonRequest))
                 .andExpect(status().isUnauthorized());
     }
-}
 
-    
+    @Test
+    void testClientLoginWithInactiveStatus() throws Exception {
+        // given / arrange
+        String jsonRequest = createLoginRequest(USER_EMAIL, USER_PASSWORD);
+
+        User inactiveUser = createUser(USER_EMAIL, USER_PASSWORD);
+        inactiveUser.setStatus(Status.INACTIVE);
+
+        when(authenticationManager.authenticate(any(UsernamePasswordAuthenticationToken.class)))
+                .thenThrow(new BadCredentialsException("User is not active"));
+
+        // when / act + then / assert
+        mockMvc.perform(post("/auth/v1/login")
+                .contentType("application/json")
+                .content(jsonRequest))
+                .andExpect(status().isUnauthorized())
+                .andExpect(jsonPath("$.error").value("Invalid credentials"))
+                .andExpect(jsonPath("$.message").value("User is not active"));
+
+        verify(authenticationManager).authenticate(any(UsernamePasswordAuthenticationToken.class));
+        verify(tokenService, never()).generateToken(any(User.class));
+    }
+}
