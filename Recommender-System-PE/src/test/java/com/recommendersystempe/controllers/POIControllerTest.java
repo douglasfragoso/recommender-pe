@@ -7,6 +7,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -32,6 +33,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.recommendersystempe.configs.SecurityConfig;
 import com.recommendersystempe.dtos.POIDTO;
+import com.recommendersystempe.dtos.POIDTOUpdate;
 import com.recommendersystempe.enums.Hobbies;
 import com.recommendersystempe.enums.Motivations;
 import com.recommendersystempe.enums.Roles;
@@ -56,7 +58,7 @@ public class POIControllerTest {
         private static final User USER = new User(
                         "Richard",
                         "Fragoso",
-                        30,
+                        LocalDate.of(1990, 12, 5),
                         "Masculino",
                         "12345678909",
                         "81-98765-4321",
@@ -220,36 +222,31 @@ public class POIControllerTest {
         }
 
         @Test
-        void testGivenPOIDTO_whenUpdateReturnString() throws JsonProcessingException, Exception {
+        void testGivenPOIDTOUpdate_whenUpdateReturnString() throws JsonProcessingException, Exception {
                 // given / arrange
                 poiAddress = new Address("Rua Exemplo", 100, "Apto 202", "Boa Viagem", "Recife", "PE", "Brasil",
                                 "50000000");
 
-                poi = new POI("Parque da Cidade", "Um grande parque urbano com áreas verdes, trilhas e lagos.",
-                                MOTIVATIONS, HOBBIES, THEMES, poiAddress);
-
                 Long poiId = 1L;
-                ReflectionTestUtils.setField(poi, "id", poiId);
 
-                POIDTO poiDTO = new POIDTO(poiId, "Parque da Cidade2",
-                                "Um grande parque urbano com áreas verdes, trilhas e lagos.",
+                POIDTOUpdate poiDTOUpdate = new POIDTOUpdate(poiId, "Parque da Cidade Atualizado",
+                                "Descrição atualizada do parque urbano com áreas verdes, trilhas e lagos.",
                                 MOTIVATIONS, HOBBIES, THEMES, poiAddress);
 
-                // Corrigido: usar matchers para todos os argumentos
-                willDoNothing().given(poiService).update(eq(poiId), any(POIDTO.class));
+                willDoNothing().given(poiService).update(eq(poiId), any(POIDTOUpdate.class));
 
                 // when / act
-                ResultActions response = mockMvc.perform(put("/poi/id/{id}", poiId) // Corrigido: incluir ID no path
+                ResultActions response = mockMvc.perform(patch("/poi/id/{id}", poiId)
                                 .with(user(USER.getEmail()).password(USER.getPassword()).roles("MASTER"))
                                 .contentType("application/json")
-                                .content(objectMapper.writeValueAsString(poiDTO)));
+                                .content(objectMapper.writeValueAsString(poiDTOUpdate)));
 
                 // then / assert
                 response.andDo(print())
                                 .andExpect(status().isOk())
                                 .andExpect(content().string("POI updated successfully"));
 
-                // Corrigido: usar matchers consistentes na verificação
-                verify(poiService).update(eq(poiId), any(POIDTO.class));
+                verify(poiService).update(eq(poiId), any(POIDTOUpdate.class));
         }
+
 }

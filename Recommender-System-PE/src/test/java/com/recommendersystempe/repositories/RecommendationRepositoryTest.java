@@ -2,6 +2,7 @@ package com.recommendersystempe.repositories;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -63,7 +64,7 @@ public class RecommendationRepositoryTest {
         user = new User(
                 "Mariana",
                 "Silva",
-                28,
+                LocalDate.of(1990, 12, 5),
                 "Feminino",
                 "98765432100",
                 "11-99876-5432",

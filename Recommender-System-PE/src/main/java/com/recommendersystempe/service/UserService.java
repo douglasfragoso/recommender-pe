@@ -38,7 +38,8 @@ public class UserService {
 
     @Transactional
     public UserDTO insert(UserDTO dto) {
-        // Verificando se já existe um usuário com o CPF, Email ou Telefone informado - Checking if there is already a user with the informed CPF, Email or Phone
+        // Verificando se já existe um usuário com o CPF, Email ou Telefone informado -
+        // Checking if there is already a user with the informed CPF, Email or Phone
         if (userRepository.existsByCpf(dto.getCpf())) {
             throw new GeneralException("CPF already registered");
         }
@@ -53,7 +54,7 @@ public class UserService {
         User user = new User();
         user.setFirstName(dto.getFirstName());
         user.setLastName(dto.getLastName());
-        user.setAge(dto.getAge());
+        user.setBirthDate(dto.getBirthDate());
         user.setGender(dto.getGender());
         user.setCpf(dto.getCpf());
         user.setPhone(dto.getPhone());
@@ -69,27 +70,27 @@ public class UserService {
         // Mapeando AddressDTO para Address - Mapping AddressDTO to Address
         Address address = dto.getAddress();
         Set<jakarta.validation.ConstraintViolation<Address>> violations = validator.validate(address);
-            if (!violations.isEmpty()) {
-                String messages = violations.stream()
-                        .map(v -> v.getPropertyPath() + " " + v.getMessage())
-                        .collect(Collectors.joining(", "));
-                throw new jakarta.validation.ConstraintViolationException(
-                        "Invalid address: " + messages, violations);
-            }
+        if (!violations.isEmpty()) {
+            String messages = violations.stream()
+                    .map(v -> v.getPropertyPath() + " " + v.getMessage())
+                    .collect(Collectors.joining(", "));
+            throw new jakarta.validation.ConstraintViolationException(
+                    "Invalid address: " + messages, violations);
+        }
         user.setAddress(address);
 
         // Salvando User - Saving User
         user = userRepository.saveAndFlush(user);
 
         // Mapeando User para UserDTO - Mapping User to UserDTO
-        return new UserDTO(user.getId(), user.getFirstName(), user.getLastName(), user.getAge(), user.getGender(),
+        return new UserDTO(user.getId(), user.getFirstName(), user.getLastName(), user.getBirthDate(), user.getGender(),
                 user.getCpf(), user.getPhone(), user.getEmail(), user.getAddress(), user.getRole());
     }
 
     @Transactional(readOnly = true)
     public Page<UserDTO> findAll(Pageable pageable) {
         Page<User> list = userRepository.findAll(pageable);
-        return list.map(x -> new UserDTO(x.getId(), x.getFirstName(), x.getLastName(), x.getAge(), x.getGender(),
+        return list.map(x -> new UserDTO(x.getId(), x.getFirstName(), x.getLastName(), x.getBirthDate(), x.getGender(),
                 x.getCpf(), x.getPhone(), x.getEmail(), x.getAddress(), x.getRole()));
     }
 
@@ -97,25 +98,103 @@ public class UserService {
     public UserDTO findById(Long id) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new GeneralException("User not found, id does not exist: " + id));
-        return new UserDTO(user.getId(), user.getFirstName(), user.getLastName(), user.getAge(), user.getGender(),
+        return new UserDTO(user.getId(), user.getFirstName(), user.getLastName(), user.getBirthDate(), user.getGender(),
                 user.getCpf(), user.getPhone(), user.getEmail(), user.getAddress(), user.getRole());
     }
 
     @Transactional
-    public void update(Long id, UserDTOUpdate dto) {
-        User user = searchUser();
-        Long idUser = user.getId();
+    public void updateOwnProfile(UserDTOUpdate dto) {
+        User currentUser = searchUser();
 
-        userRepository.update(idUser, dto.getFirstName(), dto.getLastName(), dto.getAge(), dto.getGender(),
-                dto.getPhone(), user.getEmail());
+        if (dto.getPhone() != null && userRepository.existsByPhoneAndIdNot(dto.getPhone(), currentUser.getId())) {
+            throw new GeneralException("Phone already registered by another user");
+        }
+        if (dto.getFirstName() != null) {
+            currentUser.setFirstName(dto.getFirstName());
+        }
+        if (dto.getLastName() != null) {
+            currentUser.setLastName(dto.getLastName());
+        }
+        if (dto.getBirthDate() != null) {
+            currentUser.setBirthDate(dto.getBirthDate());
+        }
+        if (dto.getGender() != null) {
+            currentUser.setGender(dto.getGender());
+        }
+        if (dto.getPhone() != null) {
+            currentUser.setPhone(dto.getPhone());
+        }
+
+        if (dto.getAddress() != null) {
+            Address addressToUpdate = currentUser.getAddress();
+
+            if (dto.getAddress().getStreet() != null) {
+                addressToUpdate.setStreet(dto.getAddress().getStreet());
+            }
+            if (dto.getAddress().getNumber() != null) {
+                addressToUpdate.setNumber(dto.getAddress().getNumber());
+            }
+            if (dto.getAddress().getComplement() != null) {
+                addressToUpdate.setComplement(dto.getAddress().getComplement());
+            }
+            if (dto.getAddress().getNeighborhood() != null) {
+                addressToUpdate.setNeighborhood(dto.getAddress().getNeighborhood());
+            }
+            if (dto.getAddress().getCity() != null) {
+                addressToUpdate.setCity(dto.getAddress().getCity());
+            }
+            if (dto.getAddress().getState() != null) {
+                addressToUpdate.setState(dto.getAddress().getState());
+            }
+            if (dto.getAddress().getZipCode() != null) {
+                addressToUpdate.setZipCode(dto.getAddress().getZipCode());
+            }
+        }
+
+        userRepository.save(currentUser);
     }
 
     @Transactional
-    public void updateRole(Long id) {
+    public void updateUserById(Long id, UserDTOUpdate dto) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new GeneralException("User not found, id does not exist: " + id));
-        user.setRole(Roles.ADMIN);
-        userRepository.saveAndFlush(user);
+
+        if (dto.getEmail() != null && userRepository.existsByEmailAndIdNot(dto.getEmail(), id)) {
+            throw new GeneralException("Email already registered by another user");
+        }
+        if (dto.getPhone() != null && userRepository.existsByPhoneAndIdNot(dto.getPhone(), id)) {
+            throw new GeneralException("Phone already registered by another user");
+        }
+        if (dto.getCpf() != null && userRepository.existsByCpfAndIdNot(dto.getCpf(), id)) {
+            throw new GeneralException("CPF already registered by another user");
+        }
+
+        if (dto.getFirstName() != null) {
+            user.setFirstName(dto.getFirstName());
+        }
+        if (dto.getLastName() != null) {
+            user.setLastName(dto.getLastName());
+        }
+        if (dto.getBirthDate() != null) {
+            user.setBirthDate(dto.getBirthDate());
+        }
+        if (dto.getGender() != null) {
+            user.setGender(dto.getGender());
+        }
+        if (dto.getCpf() != null) {
+            user.setCpf(dto.getCpf());
+        }
+        if (dto.getPhone() != null) {
+            user.setPhone(dto.getPhone());
+        }
+        if (dto.getEmail() != null) {
+            user.setEmail(dto.getEmail());
+        }
+        if (dto.getRole() != null) {
+            user.setRole(dto.getRole());
+        }
+
+        userRepository.save(user);
     }
 
     @Transactional

@@ -8,6 +8,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -63,7 +64,7 @@ public class RecommendationControllerTest {
         private static final User USER = new User(
                         "Richard",
                         "Fragoso",
-                        30,
+                        LocalDate.of(1990, 12, 5),
                         "Masculino",
                         "12345678909",
                         "81-98765-4321",

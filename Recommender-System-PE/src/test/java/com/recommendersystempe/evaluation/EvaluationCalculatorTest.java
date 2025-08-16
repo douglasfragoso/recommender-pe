@@ -3,6 +3,7 @@ package com.recommendersystempe.evaluation;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.lang.reflect.Method;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -74,7 +75,7 @@ public class EvaluationCalculatorTest {
         public void testCalculateUserMetrics() {
                 // given / arrange
                 User user = new User(
-                                "Mariana", "Silva", 28, "Feminino", "98765432100",
+                                "Mariana", "Silva", LocalDate.of(1990, 12, 5), "Feminino", "98765432100",
                                 "11-99876-5432", "mariana@example.com", "Segura456*",
                                 ADDRESS, Roles.USER);
                 user = userRepository.save(user);
@@ -121,12 +122,12 @@ public class EvaluationCalculatorTest {
         public void testCalculateGlobalMetrics() {
                 // given / arrange
                 User user = userRepository.save(new User(
-                                "Mariana", "Silva", 28, "Feminino", "98765432100",
+                                "Mariana", "Silva", LocalDate.of(1990, 12, 5), "Feminino", "98765432100",
                                 "11-99876-5432", "mariana@example.com", "Segura456*",
                                 ADDRESS, Roles.USER));
 
                 User user2 = userRepository.save(new User(
-                                "Richard", "Fragoso", 30, "Masculino", "11783576430",
+                                "Richard", "Fragoso", LocalDate.of(1990, 12, 5),"Masculino", "11783576430",
                                 "81-98765-4325", "richard@example.com", "Senha123*",
                                 ADDRESS, Roles.USER));
 
@@ -290,7 +291,7 @@ public class EvaluationCalculatorTest {
         void testCalculateGlobalMetricsWithSingleUser() {
                 // given / arrange
                 User user = userRepository.save(new User(
-                                "Single", "User", 25, "Feminino", "98765432100", // CPF válido
+                                "Single", "User", LocalDate.of(1990, 12, 5), "Feminino", "98765432100", 
                                 "11-91234-5678", "single@example.com", "Password123*",
                                 ADDRESS, Roles.USER));
 

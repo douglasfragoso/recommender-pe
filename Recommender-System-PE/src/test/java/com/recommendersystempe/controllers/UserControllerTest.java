@@ -7,6 +7,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+import java.time.LocalDate;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -51,7 +52,7 @@ public class UserControllerTest {
         private static final User USER = new User(
                         "Richard",
                         "Fragoso",
-                        30,
+                        LocalDate.of(1990, 12, 5),
                         "Masculino",
                         "12345678909",
                         "81-98765-4321",
@@ -94,7 +95,7 @@ public class UserControllerTest {
                 UserDTO userDTO = new UserDTO(
                                 "Richard",
                                 "Fragoso",
-                                30,
+                                LocalDate.of(1990, 12, 5),
                                 "Masculino",
                                 "98765432100",
                                 "11998765432",
@@ -105,7 +106,7 @@ public class UserControllerTest {
                 Map<String, Object> requestBody = new HashMap<>();
                 requestBody.put("firstName", userDTO.getFirstName());
                 requestBody.put("lastName", userDTO.getLastName());
-                requestBody.put("age", userDTO.getAge());
+                requestBody.put("birthDate", userDTO.getBirthDate());
                 requestBody.put("gender", userDTO.getGender());
                 requestBody.put("cpf", userDTO.getCpf());
                 requestBody.put("phone", userDTO.getPhone());
@@ -140,19 +141,19 @@ public class UserControllerTest {
                 Address address1 = new Address("Rua Exemplo1", 101, "Apto 203", "Boa Viagem", "Recife", "PE", "Brasil",
                                 "50000003");
 
-                UserDTO userDTO1 = new UserDTO("Richard", "Fragoso", 30, "Masculino", "12345678900", "81-98765-4321",
+                UserDTO userDTO1 = new UserDTO("Richard", "Fragoso", LocalDate.of(1990, 12, 5), "Masculino", "12345678900", "81-98765-4321",
                                 "richard@example.com", "Senha123*", ADDRESS);
-                UserDTO userDTO2 = new UserDTO("Lucas", "Fragoso", 30, "Masculino", "12345678901", "81-98765-4322",
+                UserDTO userDTO2 = new UserDTO("Lucas", "Fragoso", LocalDate.of(1990, 12, 5), "Masculino", "12345678901", "81-98765-4322",
                                 "lucas@example.com", "Senha123*", address1);
 
                 Pageable pageable = PageRequest.of(0, 10);
                 List<UserDTO> userDTOList = List.of(
-                                new UserDTO(userDTO1.getFirstName(), userDTO1.getLastName(), userDTO1.getAge(),
+                                new UserDTO(userDTO1.getFirstName(), userDTO1.getLastName(), userDTO1.getBirthDate(),
                                                 userDTO1.getGender(),
                                                 userDTO1.getCpf(), userDTO1.getPhone(), userDTO1.getEmail(),
                                                 userDTO1.getUserPassword(),
                                                 userDTO1.getAddress()),
-                                new UserDTO(userDTO2.getFirstName(), userDTO2.getLastName(), userDTO2.getAge(),
+                                new UserDTO(userDTO2.getFirstName(), userDTO2.getLastName(), userDTO2.getBirthDate(),
                                                 userDTO2.getGender(), userDTO2.getCpf(), userDTO2.getPhone(),
                                                 userDTO2.getEmail(),
                                                 userDTO2.getUserPassword(), userDTO2.getAddress()));
@@ -176,7 +177,7 @@ public class UserControllerTest {
         @Test
         void testGivenUserId_whenFindbyIdReturnUser() throws JsonProcessingException, Exception {
                 // given / arrange
-                UserDTO userDTO = new UserDTO("Richard", "Fragoso", 30, "Masculino", "12345678900", "81-98765-4321",
+                UserDTO userDTO = new UserDTO("Richard", "Fragoso", LocalDate.of(1990, 12, 5), "Masculino", "12345678900", "81-98765-4321",
                                 "richard@example.com", "Senha123*", ADDRESS);
 
                 Long id = 1L;
@@ -215,52 +216,51 @@ public class UserControllerTest {
 
         // Em UserControllerTest.java
 
-        @Test
-        void testGivenUserDTOUpdate_whenUpdateReturnString() throws JsonProcessingException, Exception {
+                @Test
+        void testGivenUserDTOUpdate_whenUpdateOwnProfileReturnString() throws JsonProcessingException, Exception {
                 // given / arrange
-                Long userId = 1L;
+                UserDTOUpdate userDTOUpdate = new UserDTOUpdate();
+                userDTOUpdate.setFirstName("Richard Updated");
+                userDTOUpdate.setPhone("81999999999");
 
-                UserDTOUpdate validUserDTO = new UserDTOUpdate(
-                                userId,
-                                "John",
-                                "Doe",
-                                32,
-                                "Feminino",
-                                "12345678909", 
-                                "81987654322", 
-                                "johndoe@example.com"
-                );
-
-                
-                willDoNothing().given(userService).update(eq(userId), any(UserDTOUpdate.class));
+                willDoNothing().given(userService).updateOwnProfile(any(UserDTOUpdate.class));
 
                 // when / act
-                ResultActions response = mockMvc.perform(put("/user/id/{id}", userId)
+                ResultActions response = mockMvc.perform(patch("/user/profile/me")
                                 .with(user(USER.getEmail()).password(USER.getPassword()).roles("MASTER"))
                                 .contentType("application/json")
-                                .content(objectMapper.writeValueAsString(validUserDTO))); // Use o DTO válido
-
-                // then / assert
-                response.andDo(print())
-                                .andExpect(status().isOk()) 
-                                .andExpect(content().string("Profile updated successfully"));
-        }
-
-        @Test
-        void testGivenUserId_whenUpdateRoleReturnString() throws JsonProcessingException, Exception {
-                // given / arrange
-                Long id = 2L;
-                willDoNothing().given(userService).updateRole(id);
-
-                // when / act
-                ResultActions response = mockMvc.perform(put("/user/roles/id/{id}", id)
-                                .with(user(USER.getEmail()).password(USER.getPassword()).roles("MASTER"))
-                                .contentType("application/json"));
+                                .content(objectMapper.writeValueAsString(userDTOUpdate)));
 
                 // then / assert
                 response.andDo(print())
                                 .andExpect(status().isOk())
-                                .andExpect(content().string("Role updated successfully"));
+                                .andExpect(content().string("Profile updated successfully"));
+
+                verify(userService).updateOwnProfile(any(UserDTOUpdate.class));
+        }
+
+        @Test
+        void testGivenUserIdAndUserDTOUpdate_whenUpdateUserByIdReturnString() throws JsonProcessingException, Exception {
+                // given / arrange
+                Long userId = 1L;
+                UserDTOUpdate userDTOUpdate = new UserDTOUpdate();
+                userDTOUpdate.setFirstName("John Updated");
+                userDTOUpdate.setEmail("john.updated@example.com");
+
+                willDoNothing().given(userService).updateUserById(eq(userId), any(UserDTOUpdate.class));
+
+                // when / act
+                ResultActions response = mockMvc.perform(patch("/user/id/{id}", userId)
+                                .with(user(USER.getEmail()).password(USER.getPassword()).roles("MASTER"))
+                                .contentType("application/json")
+                                .content(objectMapper.writeValueAsString(userDTOUpdate)));
+
+                // then / assert
+                response.andDo(print())
+                                .andExpect(status().isOk())
+                                .andExpect(content().string("Profile updated successfully"));
+
+                verify(userService).updateUserById(eq(userId), any(UserDTOUpdate.class));
         }
 
 }

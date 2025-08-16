@@ -4,7 +4,9 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.BDDMockito.*;
 
+
 import java.time.Instant;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -90,7 +92,7 @@ public class RecommendationServiceTest {
                 user = new User(
                                 "Mariana",
                                 "Silva",
-                                28,
+                                LocalDate.of(1990, 12, 5),
                                 "Feminino",
                                 "98765432100",
                                 "11-99876-5432",

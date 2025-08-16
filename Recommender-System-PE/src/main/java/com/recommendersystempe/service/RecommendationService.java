@@ -74,7 +74,6 @@ public class RecommendationService {
         RealVector userVector = TFIDF.toTFIDFVector(userFeatures, allPoiFeatures, terms);
         userVector = SimilarityCalculator.normalize(userVector);
 
-        // Novo mapa para armazenar todas as métricas detalhadas
         Map<POI, SimilarityMetric> metricsMap = new HashMap<>();
 
         Map<POI, Double> poiScores = new HashMap<>();
@@ -83,7 +82,6 @@ public class RecommendationService {
             RealVector poiVector = TFIDF.toTFIDFVector(allPoiFeatures.get(i), allPoiFeatures, terms);
             poiVector = SimilarityCalculator.normalize(poiVector);
 
-            // Calcular métricas individuais
             double cosine = SimilarityCalculator.cosineSimilarity(userVector, poiVector);
             double euclidean = SimilarityCalculator.euclideanSimilarity(userVector, poiVector);
             double pearson = SimilarityCalculator.pearsonSimilarity(userVector, poiVector);
@@ -101,7 +99,6 @@ public class RecommendationService {
                         "Invalid similarity metric: " + messages, violations);
             }
 
-            // Armazenar métricas no mapa
             metricsMap.put(poi, metric);
             poiScores.put(poi, average);
         }
@@ -117,7 +114,6 @@ public class RecommendationService {
         recommendation.setUser(user);
         recommendation.getPois().addAll(top5Pois);
 
-        // Adicionar as métricas à recomendação
         top5Pois.forEach(poi -> {
             SimilarityMetric metric = metricsMap.get(poi);
             if (metric != null) {

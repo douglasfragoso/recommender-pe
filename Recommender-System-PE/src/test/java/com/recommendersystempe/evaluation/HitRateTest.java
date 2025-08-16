@@ -2,6 +2,7 @@ package com.recommendersystempe.evaluation;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -70,12 +71,12 @@ public class HitRateTest {
         public void testHitRate() {
                 // given / arrange
                 User user = userRepository.save(new User(
-                                "Mariana", "Silva", 28, "Feminino", "98765432100",
+                                "Mariana", "Silva", LocalDate.of(1990, 12, 5), "Feminino", "98765432100",
                                 "11-99876-5432", "mariana@example.com", "Segura456*",
                                 ADDRESS, Roles.USER));
 
                 User user2 = userRepository.save(new User(
-                                "Richard", "Fragoso", 30, "Masculino", "11783576430",
+                                "Richard", "Fragoso", LocalDate.of(1990, 12, 5), "Masculino", "11783576430",
                                 "81-98765-4328", "richard@example.com", "Senha123*",
                                 ADDRESS, Roles.USER));
 

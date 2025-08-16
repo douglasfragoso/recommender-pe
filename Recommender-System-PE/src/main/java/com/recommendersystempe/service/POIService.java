@@ -9,9 +9,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.recommendersystempe.dtos.POIDTO;
+import com.recommendersystempe.dtos.POIDTOUpdate;
 import com.recommendersystempe.enums.Hobbies;
 import com.recommendersystempe.enums.Motivations;
 import com.recommendersystempe.enums.Themes;
+import com.recommendersystempe.models.Address;
 import com.recommendersystempe.models.POI;
 import com.recommendersystempe.repositories.POIRepository;
 import com.recommendersystempe.service.exception.GeneralException;
@@ -45,7 +47,8 @@ public class POIService {
         List<Themes> themes = dto.getThemes();
         poi.addTheme(themes);
 
-        // Salvando as alterações após adicionar as listas - Saving the changes after adding the lists
+        // Salvando as alterações após adicionar as listas - Saving the changes after
+        // adding the lists
         poiRepository.save(poi);
 
         return new POIDTO(poi.getId(), poi.getName(), poi.getDescription(), poi.getMotivations(), poi.getHobbies(),
@@ -68,10 +71,59 @@ public class POIService {
     }
 
     @Transactional
-    public void update(Long id, POIDTO dto) {
-        poiRepository.findById(id)
+    public void update(Long id, POIDTOUpdate dto) {
+        POI poiToUpdate = poiRepository.findById(id)
                 .orElseThrow(() -> new GeneralException("POI not found, id does not exist: " + id));
-        poiRepository.update(id, dto.getName(), dto.getDescription());
+
+        if (dto.getName() != null && poiRepository.existsByNameAndIdNot(dto.getName(), id)) {
+            throw new GeneralException("POI name already in use by another record.");
+        }
+
+        if (dto.getName() != null) {
+            poiToUpdate.setName(dto.getName());
+        }
+        if (dto.getDescription() != null) {
+            poiToUpdate.setDescription(dto.getDescription());
+        }
+        if (dto.getAddress() != null) {
+            Address addressToUpdate = poiToUpdate.getAddress();
+
+            if (dto.getAddress().getStreet() != null) {
+                addressToUpdate.setStreet(dto.getAddress().getStreet());
+            }
+            if (dto.getAddress().getNumber() != null) {
+                addressToUpdate.setNumber(dto.getAddress().getNumber());
+            }
+            if (dto.getAddress().getComplement() != null) {
+                addressToUpdate.setComplement(dto.getAddress().getComplement());
+            }
+            if (dto.getAddress().getNeighborhood() != null) {
+                addressToUpdate.setNeighborhood(dto.getAddress().getNeighborhood());
+            }
+            if (dto.getAddress().getCity() != null) {
+                addressToUpdate.setCity(dto.getAddress().getCity());
+            }
+            if (dto.getAddress().getState() != null) {
+                addressToUpdate.setState(dto.getAddress().getState());
+            }
+            if (dto.getAddress().getZipCode() != null) {
+                addressToUpdate.setZipCode(dto.getAddress().getZipCode());
+            }
+        }
+
+        if (dto.getMotivations() != null && !dto.getMotivations().isEmpty()) {
+            poiToUpdate.getMotivations().clear();
+            poiToUpdate.getMotivations().addAll(dto.getMotivations());
+        }
+        if (dto.getHobbies() != null && !dto.getHobbies().isEmpty()) {
+            poiToUpdate.getHobbies().clear();
+            poiToUpdate.getHobbies().addAll(dto.getHobbies());
+        }
+        if (dto.getThemes() != null && !dto.getThemes().isEmpty()) {
+            poiToUpdate.getThemes().clear();
+            poiToUpdate.getThemes().addAll(dto.getThemes());
+        }
+        poiRepository.save(poiToUpdate);
     }
 
 }

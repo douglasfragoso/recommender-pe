@@ -1,5 +1,6 @@
 package com.recommendersystempe.models;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -48,15 +49,16 @@ public class User implements UserDetails {
     private String lastName;
    
     @Getter @Setter
-    @Column(name = "age") //date
-    private Integer age;
+    @JsonFormat(pattern = "dd/MM/yyyy")
+    @Column(name = "birth_date")
+    private LocalDate birthDate;
 
     @Getter @Setter
     @Column(name = "gender", length = 9)
     private String gender;
 
     @Getter @Setter
-    @Column(name = "cpf", length = 11, unique = true, updatable = false)
+    @Column(name = "cpf", length = 11, unique = true)
     @JsonFormat(pattern = "^\\d{11}$")
     private String cpf;
 
@@ -91,10 +93,10 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "user")
     private List<Recommendation> recommendations = new ArrayList<>();
 
-    public User(String firstName, String lastName, Integer age, String gender, String cpf, String phone, String email, String userPassword, Address address, Roles role) {
+    public User(String firstName, String lastName, LocalDate birthDate, String gender, String cpf, String phone, String email, String userPassword, Address address, Roles role) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.age = age;
+        this.birthDate = birthDate;
         this.gender = gender;
         this.cpf = cpf;
         this.phone = phone;

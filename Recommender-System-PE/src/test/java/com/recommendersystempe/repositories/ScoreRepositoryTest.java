@@ -2,6 +2,7 @@ package com.recommendersystempe.repositories;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -66,7 +67,7 @@ public class ScoreRepositoryTest {
         user = new User(
                 "João",
                 "Silva",
-                30,
+                LocalDate.of(1990, 12, 5),
                 "Masculino",
                 "12345678909",
                 "11-98765-4321",

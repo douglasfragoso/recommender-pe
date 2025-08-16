@@ -9,9 +9,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.recommendersystempe.controllers.exception.StandardError;
 import com.recommendersystempe.controllers.exception.ValidationError;
 import com.recommendersystempe.dtos.POIDTO;
+import com.recommendersystempe.dtos.POIDTOUpdate;
 import com.recommendersystempe.service.POIService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -75,7 +76,7 @@ public class POIController {
     }
 
     @PreAuthorize("hasAnyRole('ADMIN', 'MASTER')")
-    @PutMapping("/id/{id}")
+    @PatchMapping("/id/{id}")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Successfully update", content = @Content(schema = @Schema(implementation = String.class))),
             @ApiResponse(responseCode = "400", description = "Invalid request", content = @Content(schema = @Schema(implementation = ValidationError.class))),
@@ -83,7 +84,7 @@ public class POIController {
             @ApiResponse(responseCode = "404", description = "Not found", content = @Content(schema = @Schema(implementation = StandardError.class))) })
     @Operation(summary = "Update POI", description = "Update POI, only for Admin and Master", tags = {
         "POI" })
-    public ResponseEntity<String> update(@PathVariable("id") Long id, @Valid @RequestBody POIDTO dto) {
+    public ResponseEntity<String> update(@PathVariable("id") Long id, @Valid @RequestBody POIDTOUpdate dto) {
         poiService.update(id, dto);
         return ResponseEntity.status(HttpStatus.OK).body("POI updated successfully");
     }

@@ -5,6 +5,7 @@ import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.BDDMockito.*;
 
 import java.time.Instant;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -57,7 +58,7 @@ public class PreferencesServiceTest {
                         "Rua Exemplo", 100, "Apto 202", "Boa Viagem", "Recife",
                         "PE", "Brasil", "50000000");
         private static final User USER = new User(
-                        "Richard", "Fragoso", 30, "Masculino", "12345678900", "81-98765-4321",
+                        "Richard", "Fragoso", LocalDate.of(1990, 12, 5), "Masculino", "12345678900", "81-98765-4321",
                         "richard@example.com", "Senha123*", ADDRESS, Roles.USER);
 
         @Mock

@@ -1,5 +1,7 @@
 package com.recommendersystempe.dtos;
 
+import java.time.LocalDate;
+
 import org.hibernate.validator.constraints.br.CPF;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -7,11 +9,11 @@ import com.recommendersystempe.enums.Roles;
 import com.recommendersystempe.models.Address;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
@@ -42,11 +44,10 @@ public class UserDTO {
 
     @Getter
     @Setter
-    @Schema(description = "Age of a user", example = "25", required = true)
-    @NotNull(message = "The field age is required")
-    @Min(value = 1, message = "Age must be at least 1")
-    @Max(value = 120, message = "Age must be at most 120")
-    private Integer age;
+    @Schema(description = "Date of birth of a user", example = "1998-05-20", required = true)
+    @NotNull(message = "The field date of birth is required")
+    @Past(message = "Birth date must be in the past")
+    private LocalDate birthDate;
 
     @Getter
     @Setter
@@ -93,17 +94,19 @@ public class UserDTO {
     @Setter
     @Schema(description = "Address of a user", required = true)
     @NotNull(message = "The field address is required")
+    @Valid
     private Address address;
 
     @Setter
     @Getter
+    @Schema(description = "Role of a user", required = false)
     private Roles role;
 
-    public UserDTO(String firstName, String lastName, Integer age, String gender, String cpf, String phone,
+    public UserDTO(String firstName, String lastName, LocalDate birthDate, String gender, String cpf, String phone,
             String email, String userPassword, Address address) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.age = age;
+        this.birthDate = birthDate;
         this.gender = gender;
         this.cpf = cpf;
         this.phone = phone;
@@ -112,12 +115,12 @@ public class UserDTO {
         this.address = address;
     }
 
-    public UserDTO(Long id, String firstName, String lastName, Integer age, String gender, String cpf, String phone,
+    public UserDTO(Long id, String firstName, String lastName, LocalDate birthDate, String gender, String cpf, String phone,
             String email, Address address, Roles role) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.age = age;
+        this.birthDate = birthDate;
         this.gender = gender;
         this.cpf = cpf;
         this.phone = phone;
@@ -125,5 +128,4 @@ public class UserDTO {
         this.address = address;
         this.role = role;
     }
-
 }

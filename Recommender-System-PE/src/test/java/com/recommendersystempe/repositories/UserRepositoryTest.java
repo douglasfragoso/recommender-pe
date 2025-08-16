@@ -2,6 +2,7 @@ package com.recommendersystempe.repositories;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,8 +15,6 @@ import com.recommendersystempe.enums.Roles;
 import com.recommendersystempe.models.Address;
 import com.recommendersystempe.models.User;
 
-import jakarta.persistence.EntityManager;
-
 @DataJpaTest
 public class UserRepositoryTest {
 
@@ -25,9 +24,6 @@ public class UserRepositoryTest {
 
     @Autowired
     private UserRepository userRepository;
-
-    @Autowired
-    private EntityManager entityManager;
 
     private User user;
 
@@ -39,7 +35,7 @@ public class UserRepositoryTest {
         user = new User(
                 "Mariana",
                 "Silva",
-                28,
+                LocalDate.of(1990, 12, 5),
                 "Feminino",
                 "98765432100",
                 "11-99876-5432",
@@ -69,7 +65,7 @@ public class UserRepositoryTest {
                 "Rua Exemplo1", 101, "Apto 203", "Boa Viagem", "Recife",
                 "PE", "Brasil", "50000003");
 
-        User user1 = new User("Lucas", "Fragoso", 30, "Masculino", "12345678909", "81-98765-4322", "lucas@example.com",
+        User user1 = new User("Lucas", "Fragoso", LocalDate.of(1990, 12, 5), "Masculino", "12345678909", "81-98765-4322", "lucas@example.com",
                 "senha123", address1, Roles.USER);
 
         userRepository.save(user);
@@ -126,28 +122,6 @@ public class UserRepositoryTest {
 
         // then / assert
         assertTrue(user1.isEmpty(), "User must be deleted");
-    }
-
-    @Test
-    void testGivenPersonList_whenUpdateReturnNothing() {
-        // given / arrange
-        userRepository.save(user);
-
-        // when / act
-
-        userRepository.update(user.getId(), "Lucas", "Fragoso1", 31, "Feminino", "81-98765-4322", "richard@example.com");
-
-        // Clear the persistence context, causing all managed entities to become
-        // detached
-        entityManager.clear();
-
-        User updatedUser = userRepository.findById(user.getId()).orElseThrow();
-
-        // then / assert
-        assertAll(
-                () -> assertNotNull(updatedUser, "User must not be null"),
-                () -> assertEquals("Lucas", updatedUser.getFirstName(), "User first name must be Lucas"),
-                () -> assertEquals("Feminino", updatedUser.getGender(), "User gender must be Feminino"));
     }
 
     @Test
@@ -211,5 +185,89 @@ public class UserRepositoryTest {
 
         // then / assert
         assertFalse(exists, "User with given phone number should not exist in the database");
+    }
+
+    @Test
+    void testGivenUser_whenExistsByCpfAndIdNot_thenReturnTrue() {
+        // given / arrange
+        User savedUser1 = userRepository.save(user);
+        User user2 = new User(
+                "Carlos",
+                "Santos",
+                LocalDate.of(1990, 12, 5),
+                "Masculino",
+                "12345678909",
+                "11-98888-7777",
+                "carlos@example.com",
+                "Senha123*",
+                ADDRESS,
+                Roles.USER);
+        userRepository.save(user2);
+
+        // when / act
+        boolean exists = userRepository.existsByCpfAndIdNot(user2.getCpf(), savedUser1.getId());
+
+        // then / assert
+        assertTrue(exists, "User with given CPF and different ID should exist in the database");
+    }
+
+    @Test
+    void testGivenUser_whenExistsByCpfAndIdNotWithSameId_thenReturnFalse() {
+        // given / arrange
+        User savedUser = userRepository.save(user);
+
+        // when / act
+        boolean exists = userRepository.existsByCpfAndIdNot(savedUser.getCpf(), savedUser.getId());
+
+        // then / assert
+        assertFalse(exists, "User with same CPF and ID should not be considered as existing");
+    }
+
+    @Test
+    void testGivenUser_whenExistsByEmailAndIdNot_thenReturnTrue() {
+        // given / arrange
+        User savedUser1 = userRepository.save(user);
+        User user2 = new User(
+                "Ana",
+                "Oliveira",
+                LocalDate.of(1990, 12, 5),
+                "Feminino",
+                "98765432109",
+                "11-97777-6666",
+                "ana@example.com",
+                "Senha456*",
+                ADDRESS,
+                Roles.USER);
+        userRepository.save(user2);
+
+        // when / act
+        boolean exists = userRepository.existsByEmailAndIdNot(user2.getEmail(), savedUser1.getId());
+
+        // then / assert
+        assertTrue(exists, "User with given email and different ID should exist in the database");
+    }
+
+    @Test
+    void testGivenUser_whenExistsByPhoneAndIdNot_thenReturnTrue() {
+        // given / arrange
+        User savedUser1 = userRepository.save(user);
+        User user2 = new User(
+                "Pedro",
+                "Souza",
+                LocalDate.of(1983, 5, 15),
+                "Masculino",
+                "12345678901",
+                "11-96666-5555",
+                "pedro@example.com",
+                "Senha789*",
+                ADDRESS,
+                Roles.USER);
+        userRepository.save(user2);
+
+        // when / act
+        boolean exists = userRepository.existsByPhoneAndIdNot(user2.getPhone(), savedUser1.getId());
+
+        // then / assert
+        assertTrue(exists, "User with given phone and different ID should exist in the database");
     }
 }

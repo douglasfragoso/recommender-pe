@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.BDDMockito.*;
 
+import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.*;
 
@@ -53,7 +54,7 @@ class EvaluationServiceTest {
 
         private User createUser(Long id, String email) {
                 User user = new User(
-                                "TestUser", "Silva", 30, "Masculino",
+                                "TestUser", "Silva", LocalDate.of(1990, 12, 5), "Masculino",
                                 "12345678900", "81-98765-4321", email,
                                 "Password123*", ADDRESS, Roles.USER);
                 ReflectionTestUtils.setField(user, "id", id);

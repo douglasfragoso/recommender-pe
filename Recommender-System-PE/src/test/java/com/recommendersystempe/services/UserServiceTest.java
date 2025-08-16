@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.BDDMockito.*;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -40,11 +41,11 @@ public class UserServiceTest {
             "PE", "Brasil", "01000000");
 
     private static final UserDTO USER_DTO = new UserDTO(
-            "Richard", "Fragoso", 30, "Masculino", "12345678900", "81-98765-4321",
+            "Richard", "Fragoso", LocalDate.of(1990, 12, 5), "Masculino", "12345678900", "81-98765-4321",
             "richard@example.com", "senha123", ADDRESS);
 
     private static final User USER = new User(
-            "Richard", "Fragoso", 30, "Masculino", "12345678900", "81-98765-4321",
+            "Richard", "Fragoso", LocalDate.of(1990, 12, 5), "Masculino", "12345678900", "81-98765-4321",
             "richard@example.com", "senha123", ADDRESS, Roles.USER);
 
     @Mock
@@ -59,9 +60,9 @@ public class UserServiceTest {
     @InjectMocks
     private UserService userService;
 
-    private User createUser(Long id, String firstName, String lastName, int age, String gender, String cpf,
+    private User createUser(Long id, String firstName, String lastName, LocalDate birthDate, String gender, String cpf,
             String phone, String email, String password, Address address, Roles role) {
-        User user = new User(firstName, lastName, age, gender, cpf, phone, email, password, address, role);
+        User user = new User(firstName, lastName, birthDate, gender, cpf, phone, email, password, address, role);
         ReflectionTestUtils.setField(user, "id", id);
         return user;
     }
@@ -145,52 +146,56 @@ public class UserServiceTest {
                 () -> assertEquals(USER.getEmail(), result.getEmail(), "Email must be the same"));
     }
 
-    @Test
-    void testUpdateUser_ShouldUpdateUserDetails() {
+        @Test
+    void testUpdateOwnProfile_ShouldUpdateUserDetails() {
         // given / arrange
-        User user = createUser(1L, "Richard", "Fragoso", 30, "Masculino", "12345678900", "81-98765-4321",
+        User currentUser = createUser(1L, "Richard", "Fragoso", LocalDate.of(1990, 12, 5), "Masculino", "12345678900", "81-98765-4321",
                 "richard@example.com", "senha123", ADDRESS, Roles.USER);
 
         Authentication auth = mock(Authentication.class);
         when(auth.getName()).thenReturn("richard@example.com");
         SecurityContextHolder.getContext().setAuthentication(auth);
 
-        given(userRepository.findByEmail("richard@example.com")).willReturn(user);
+        given(userRepository.findByEmail("richard@example.com")).willReturn(currentUser);
+        given(userRepository.existsByPhoneAndIdNot(anyString(), anyLong())).willReturn(false);
+        given(userRepository.save(any(User.class))).willAnswer(invocation -> invocation.getArgument(0));
 
-        UserDTOUpdate userDTO = new UserDTOUpdate(1L, "John", "Doe", 32, "Feminino", "12345678900", "81-98765-4322",
-                "richard@example.com");
+        UserDTOUpdate userDTOUpdate = new UserDTOUpdate();
+        userDTOUpdate.setFirstName("Richard Updated");
+        userDTOUpdate.setPhone("81999999999");
 
         // when / act
-        userService.update(null, userDTO);
+        userService.updateOwnProfile(userDTOUpdate);
 
         // then / assert
-        verify(userRepository, times(1)).update(
-                1L,
-                "John",
-                "Doe",
-                32,
-                "Feminino",
-                "81-98765-4322",
-                "richard@example.com");
+        verify(userRepository, times(1)).save(any(User.class));
+        assertEquals("Richard Updated", currentUser.getFirstName());
+        assertEquals("81999999999", currentUser.getPhone());
     }
 
     @Test
-    void testUpdateUserRole_ShouldUpdateRole() {
+    void testUpdateUserById_ShouldUpdateUserDetails() {
         // given / arrange
-        User user = createUser(1L, "Richard", "Fragoso", 30, "Masculino", "12345678900", "81-98765-4321",
-                "richard@example.com", "senha123", ADDRESS, Roles.USER);
+        Long userId = 1L;
+        User existingUser = createUser(userId, "John", "Doe", LocalDate.of(1990, 12, 5), "Masculino", "12345678900", "81-98765-4321",
+                "john@example.com", "senha123", ADDRESS, Roles.USER);
 
-        given(userRepository.findById(1L)).willReturn(Optional.of(user));
-        given(userRepository.saveAndFlush(any(User.class))).willReturn(user);
+        UserDTOUpdate userDTOUpdate = new UserDTOUpdate();
+        userDTOUpdate.setFirstName("John Updated");
+        userDTOUpdate.setEmail("john.updated@example.com");
+
+        given(userRepository.findById(userId)).willReturn(Optional.of(existingUser));;
+        given(userRepository.save(any(User.class))).willAnswer(invocation -> invocation.getArgument(0));
 
         // when / act
-        userService.updateRole(1L);
+        userService.updateUserById(userId, userDTOUpdate);
 
         // then / assert
-        assertAll(
-                () -> assertEquals(Roles.ADMIN, user.getRole(), "Role must be ADMIN"),
-                () -> verify(userRepository, times(1)).saveAndFlush(user));
+        verify(userRepository, times(1)).save(any(User.class));
+        assertEquals("John Updated", existingUser.getFirstName());
+        assertEquals("john.updated@example.com", existingUser.getEmail());
     }
+
 
     @Test
     void testDeleteUserById_ShouldDeleteUser() {

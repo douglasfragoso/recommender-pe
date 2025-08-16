@@ -10,9 +10,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -77,31 +77,31 @@ public class UserController {
     }
 
     @PreAuthorize("hasAnyRole('ADMIN', 'MASTER', 'USER')")
-    @PutMapping("/id/{id}")
+    @PatchMapping("/profile/me")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Successfully update", content = @Content(schema = @Schema(implementation = String.class))),
             @ApiResponse(responseCode = "400", description = "Invalid request", content = @Content(schema = @Schema(implementation = ValidationError.class))),
             @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content(schema = @Schema(implementation = StandardError.class))),
             @ApiResponse(responseCode = "404", description = "Not found", content = @Content(schema = @Schema(implementation = StandardError.class))) })
-    @Operation(summary = "Update User", description = "Update User, only for Admin and Master", tags = {
+    @Operation(summary = "Update User", description = "Update User. Accessible to everyone.", tags = {
             "User" })
-    public ResponseEntity<String> update(@PathVariable("id") Long id, @Valid @RequestBody UserDTOUpdate dto) {
-        userService.update(id, dto);
+    public ResponseEntity<String> updateOwnProfile(@Valid @RequestBody UserDTOUpdate dto) {
+        userService.updateOwnProfile(dto);
         return ResponseEntity.status(HttpStatus.OK).body("Profile updated successfully");
     }
 
-    @PreAuthorize("hasRole('MASTER')")
-    @PutMapping("/roles/id/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'MASTER')")
+    @PatchMapping("/id/{id}")
     @ApiResponses({
         @ApiResponse(responseCode = "200", description = "Successfully update", content = @Content(schema = @Schema(implementation = String.class))),
         @ApiResponse(responseCode = "400", description = "Invalid request", content = @Content(schema = @Schema(implementation = ValidationError.class))),
         @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content(schema = @Schema(implementation = StandardError.class))),
         @ApiResponse(responseCode = "404", description = "Not found", content = @Content(schema = @Schema(implementation = StandardError.class))) })
-    @Operation(summary = "Update Role", description = "Update Role, only for Master", tags = {
+    @Operation(summary = "Update Full User", description = "Update Full User, only for Admin and Master", tags = {
         "User" })
-    public ResponseEntity<String> updateRole(@PathVariable("id") Long id) {
-        userService.updateRole(id);
-        return ResponseEntity.status(HttpStatus.OK).body("Role updated successfully");
+    public ResponseEntity<String> updateUserById(@PathVariable("id") Long id, @Valid @RequestBody UserDTOUpdate dto) {
+        userService.updateUserById(id, dto);
+        return ResponseEntity.status(HttpStatus.OK).body("Profile updated successfully");
     }
 
     @PreAuthorize("hasAnyRole('ADMIN', 'MASTER')")

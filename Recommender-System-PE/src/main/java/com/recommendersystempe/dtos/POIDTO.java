@@ -4,13 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.recommendersystempe.enums.Hobbies;
 import com.recommendersystempe.enums.Motivations;
 import com.recommendersystempe.enums.Themes;
 import com.recommendersystempe.models.Address;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -19,7 +19,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY) // Ignora listas vazias - Ignore empty lists
 @NoArgsConstructor
 @AllArgsConstructor
 @Schema(description = "Represents the POIDTO in the system")
@@ -68,6 +67,7 @@ public class POIDTO {
     @Setter
     @Schema(description = "Address of a POI", required = true)
     @NotNull(message = "The field address is required")
+    @Valid
     private Address address;
 
     public POIDTO(Long id, String name, String description) {

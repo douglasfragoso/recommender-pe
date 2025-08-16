@@ -5,6 +5,8 @@ import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+import java.time.LocalDate;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,7 +64,7 @@ public class AuthenticationControllerTest {
         return new User(
                 "Richard", 
                 "Fragoso",
-                30, 
+                LocalDate.of(1990, 12, 5), 
                 "Masculino",
                 "12345678909", 
                 "81-98765-4321",

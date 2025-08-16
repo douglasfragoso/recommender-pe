@@ -5,6 +5,7 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+import java.time.LocalDate;
 import java.util.Collections;
 import java.util.Map;
 
@@ -47,7 +48,7 @@ public class EvaluationControllerTest {
         private static final User USER = new User(
                         "Richard",
                         "Fragoso",
-                        30,
+                        LocalDate.of(1990, 12, 5),
                         "Masculino",
                         "12345678909",
                         "81-98765-4321",
