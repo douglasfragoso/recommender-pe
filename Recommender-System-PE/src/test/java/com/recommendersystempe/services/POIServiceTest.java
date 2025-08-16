@@ -44,7 +44,7 @@ public class POIServiceTest {
         private static final Address ADDRESS = new Address(
                         "Avenida Central", 250, "Casa 5", "Boa Viagem", "Recife",
                         "PE", "Brasil", "01000000");
-        private static final POIDTO POI_DTO = new POIDTO(
+        private static final POIDTO POI_DTO = new POIDTO(1L,
                         "Parque da Cidade", "Um grande parque urbano com áreas verdes, trilhas e lagos.",
                         MOTIVATIONS, HOBBIES, THEMES, ADDRESS);
 
@@ -131,7 +131,7 @@ public class POIServiceTest {
                                 MOTIVATIONS, HOBBIES, THEMES, ADDRESS);
                 ReflectionTestUtils.setField(poi, "id", 1L);
                 POIDTOUpdate poiDTO = new POIDTOUpdate(1L, "Parque da Cidade2",
-                                "Um grande parque urbano com áreas verdes, trilhas e lagos.", null, null, null, null);
+                                "Um grande parque urbano com áreas verdes, trilhas e lagos.", null, null, null, null, null);
 
                 given(poiRepository.findById(1L)).willReturn(Optional.of(poi));
 

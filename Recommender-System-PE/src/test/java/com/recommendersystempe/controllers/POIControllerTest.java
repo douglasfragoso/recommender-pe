@@ -37,6 +37,7 @@ import com.recommendersystempe.dtos.POIDTOUpdate;
 import com.recommendersystempe.enums.Hobbies;
 import com.recommendersystempe.enums.Motivations;
 import com.recommendersystempe.enums.Roles;
+import com.recommendersystempe.enums.Status;
 import com.recommendersystempe.enums.Themes;
 import com.recommendersystempe.models.Address;
 import com.recommendersystempe.models.POI;
@@ -100,7 +101,6 @@ public class POIControllerTest {
         @MockitoBean
         private POIRepository poiRepository;
 
-        private POIDTO poiDTO;
         private POI poi;
         private Address poiAddress;
 
@@ -119,8 +119,15 @@ public class POIControllerTest {
                 poiAddress = new Address("Rua Exemplo", 100, "Apto 202", "Boa Viagem", "Recife", "PE", "Brasil",
                                 "50000000");
 
-                poiDTO = new POIDTO("Parque da Cidade", "Um grande parque urbano com áreas verdes, trilhas e lagos.",
-                                MOTIVATIONS, HOBBIES, THEMES, poiAddress);
+                POIDTO poiDTO = new POIDTO();
+                poiDTO.setName("Parque da Cidade");
+                poiDTO.setDescription(
+                                "Um grande parque urbano com áreas verdes, trilhas e lagos. Descrição longa o suficiente para passar na validação.");
+                poiDTO.addMotivation(MOTIVATIONS);
+                poiDTO.addHobbie(HOBBIES);
+                poiDTO.addTheme(THEMES);
+                poiDTO.setAddress(poiAddress);
+                poiDTO.setStatus(Status.ACTIVE);
 
                 given(poiService.insert(any(POIDTO.class)))
                                 .willAnswer((invocation) -> invocation.getArgument(0));
@@ -149,7 +156,7 @@ public class POIControllerTest {
                                 "50000000");
 
                 poi = new POI("Parque da Cidade", "Um grande parque urbano com áreas verdes, trilhas e lagos.",
-                                MOTIVATIONS, HOBBIES, THEMES, poiAddress, Status.);
+                                MOTIVATIONS, HOBBIES, THEMES, poiAddress);
 
                 ReflectionTestUtils.setField(poi, "id", 1L);
 
@@ -231,7 +238,7 @@ public class POIControllerTest {
 
                 POIDTOUpdate poiDTOUpdate = new POIDTOUpdate(poiId, "Parque da Cidade Atualizado",
                                 "Descrição atualizada do parque urbano com áreas verdes, trilhas e lagos.",
-                                MOTIVATIONS, HOBBIES, THEMES, poiAddress);
+                                MOTIVATIONS, HOBBIES, THEMES, poiAddress, Status.ACTIVE);
 
                 willDoNothing().given(poiService).update(eq(poiId), any(POIDTOUpdate.class));
 

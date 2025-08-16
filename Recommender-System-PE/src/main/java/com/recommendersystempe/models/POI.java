@@ -92,7 +92,7 @@ public class POI {
     private Status status;
 
     public POI(String name, String descripition, List<Motivations> motivations, List<Hobbies> hobbies,
-            List<Themes> themes, Address address, Status status) {
+            List<Themes> themes, Address address) {
         this.name = name;
         this.description = descripition;
         this.motivations = motivations;
