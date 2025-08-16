@@ -49,7 +49,7 @@ public class User implements UserDetails {
     private String lastName;
    
     @Getter @Setter
-    @JsonFormat(pattern = "dd/MM/yyyy")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     @Column(name = "birth_date")
     private LocalDate birthDate;
 

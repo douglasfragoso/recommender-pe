@@ -4,6 +4,7 @@ import java.time.LocalDate;
 
 import org.hibernate.validator.constraints.br.CPF;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.recommendersystempe.enums.Roles;
 import com.recommendersystempe.models.Address;
 
@@ -41,6 +42,7 @@ public class UserDTOUpdate {
     @Setter
     @Schema(description = "Date of birth of a user", example = "1998-05-20", required = true)
     @Past(message = "Birth date must be in the past")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate birthDate;
 
     @Getter
