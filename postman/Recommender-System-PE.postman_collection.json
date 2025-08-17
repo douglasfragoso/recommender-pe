@@ -7,13 +7,43 @@
 	},
 	"item": [
 		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"richard@example.com\",\r\n    \"userPassword\": \"Senha123*\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/auth/v1/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"auth",
+						"v1",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "User",
 			"request": {
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n        \"firstName\": \"Mariana\",\r\n        \"lastName\": \"Silva\",\r\n        \"age\": 28,\r\n        \"gender\": \"Feminino\",\r\n        \"cpf\": \"98765432100\",\r\n        \"phone\": \"11-99876-5432\",\r\n        \"email\": \"mariana@example.com\",\r\n        \"userPassword\": \"Segura456*\",\r\n        \"address\": {\r\n            \"street\": \"Avenida Central\",\r\n            \"number\": 250,\r\n            \"complement\": \"Casa 5\",\r\n            \"neighborhood\": \"Centro\",\r\n            \"state\": \"SP\",\r\n            \"country\": \"Brasil\",\r\n            \"zipCode\": \"01000000\"\r\n        }\r\n    }",
+					"raw": "{\r\n    \"firstName\": \"Mariana\",\r\n    \"lastName\": \"Silva\",\r\n    \"birthDate\": \"1995-08-10\",\r\n    \"gender\": \"Feminino\",\r\n    \"cpf\": \"98765432100\",\r\n    \"phone\": \"11998765432\",\r\n    \"email\": \"mariana@example.com\",\r\n    \"userPassword\": \"Segura456*\",\r\n    \"address\": {\r\n        \"street\": \"Avenida Central\",\r\n        \"number\": 250,\r\n        \"complement\": \"Casa 5\",\r\n        \"neighborhood\": \"Centro\",\r\n        \"city\": \"SP\",\r\n        \"state\": \"SP\",\r\n        \"country\": \"Brasil\",\r\n        \"zipCode\": \"01000000\"\r\n    }\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -37,25 +67,22 @@
 		},
 		{
 			"name": "User",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
 			"request": {
 				"auth": {
 					"type": "bearer",
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzcHJpbmdib290ZXhwZXJ0LXJlc3QtYXBpIiwic3ViIjoiZG91Z2xhc0BleGFtcGxlLmNvbSIsImV4cCI6MTczOTU4NTMyOCwiaWQiOjF9.PL56IBWCTr9cafK2sX1vLZT-4s6faH8wmFEeJrD7G1w",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJyZWNvbW1lbmRlcnBlLWFwaSIsInN1YiI6Im1hcmlhbmFAZXhhbXBsZS5jb20iLCJleHAiOjE3NTU0NjI5MjYsImlkIjoxLCJyb2xlIjoiVVNFUiJ9.L9YxmqWaoYTq48l5Eba6zYqU0SpMoqNQE8WnNEZgKPo",
 							"type": "string"
 						}
 					]
 				},
-				"method": "GET",
+				"method": "PATCH",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"firstName\": \"Richard\",\r\n    \"lastName\": \"Fragoso\",\r\n    \"age\": 30,\r\n    \"gender\": \"Masculino\",\r\n    \"CPF\": \"12345678900\",\r\n    \"phone\": \"81-98765-4321\",\r\n    \"email\": \"richard@example.com\",\r\n    \"userPassword\": \"senha123\",\r\n    \"address\": {\r\n        \"street\": \"Rua Exemplo\",\r\n        \"number\": 100,\r\n        \"complement\": \"Apto 202\",\r\n        \"neighborhood\": \"Boa Viagem\",\r\n        \"state\": \"PE\",\r\n        \"country\": \"Brasil\",\r\n        \"zipCode\": \"50000000\"\r\n    }\r\n}",
+					"raw": "{\r\n  \"firstName\": \"Jhon\",\r\n  \"lastName\": \"Doe\",\r\n  \"birthDate\": null,\r\n  \"gender\": \"\",\r\n  \"phone\": \"\",\r\n  \"address\": {\r\n    \"street\": \"\",\r\n    \"number\": \"\",\r\n    \"complement\": \"\",\r\n    \"neighborhood\": \"\",\r\n    \"city\": \"\",\r\n    \"state\": \"\",\r\n    \"country\": \"\",\r\n    \"zipCode\": \"\"\r\n  }\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -63,14 +90,56 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/user",
+					"raw": "http://localhost:8080/user/profile/me",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
-						"user"
+						"user",
+						"profile",
+						"me"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User By Id",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJyZWNvbW1lbmRlcnBlLWFwaSIsInN1YiI6InJpY2hhcmRAZXhhbXBsZS5jb20iLCJleHAiOjE3NTU0NjM0NzEsImlkIjoyLCJyb2xlIjoiTUFTVEVSIn0.TKxKoBT8LTZ8NrlefKTdKHqgpO_ZTJK3E_3BpgNjrEE",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": 1,\r\n  \"firstName\": \"Douglas\",\r\n  \"lastName\": \"Fragoso\",\r\n  \"birthDate\": \"1995-08-10\",\r\n  \"gender\": \"Masculino\",\r\n  \"cpf\": null,\r\n  \"phone\": \"\",\r\n  \"email\": \"\",\r\n  \"role\": \"ADMIN\",\r\n  \"status\": null\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/user/id/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user",
+						"id",
+						"1"
 					]
 				}
 			},
@@ -78,83 +147,6 @@
 		},
 		{
 			"name": "User",
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzcHJpbmdib290ZXhwZXJ0LXJlc3QtYXBpIiwic3ViIjoiZG91Z2xhc0BleGFtcGxlLmNvbSIsImV4cCI6MTczOTU4NDY1MSwiaWQiOjF9.u-C4a2T1kfLE1kivtPFiZ9awv_ra9Fr6J9Ez0kwhI5M",
-							"type": "string"
-						}
-					]
-				},
-				"method": "PUT",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"firstName\": \"Richard\",\r\n    \"lastName\": \"Fragoso\",\r\n    \"age\": 30,\r\n    \"gender\": \"Masculino\",\r\n    \"CPF\": \"12345678900\",\r\n    \"phone\": \"81-98765-4321\",\r\n    \"email\": \"richard@example.com\",\r\n    \"userPassword\": \"senha123\",\r\n    \"address\": {\r\n        \"street\": \"Rua Exemplo\",\r\n        \"number\": 100,\r\n        \"complement\": \"Apto 202\",\r\n        \"neighborhood\": \"Boa Viagem\",\r\n        \"state\": \"PE\",\r\n        \"country\": \"Brasil\",\r\n        \"zipCode\": \"50000000\"\r\n    }\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost:8080/user",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"user"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "User Roles",
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzcHJpbmdib290ZXhwZXJ0LXJlc3QtYXBpIiwic3ViIjoiZG91Z2xhc0BleGFtcGxlLmNvbSIsImV4cCI6MTczOTU4NzM2MSwiaWQiOjF9.yb9Q5tZboCgrR5o8SJjNlciaQEKwJTgT6pL1fS5RHAg",
-							"type": "string"
-						}
-					]
-				},
-				"method": "PUT",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"id\": 2,\r\n    \"roles\": \"ADMIN\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost:8080/user/roles",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"user",
-						"roles"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "User By ID",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
@@ -164,7 +156,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzcHJpbmdib290ZXhwZXJ0LXJlc3QtYXBpIiwic3ViIjoiZG91Z2xhc0BleGFtcGxlLmNvbSIsImV4cCI6MTczOTQ5MjQyOCwiaWQiOjF9.7SJ0TLJN1WnH-nkxJ36knP0cWMMYAurVCWpCjVVVFXo",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJyZWNvbW1lbmRlcnBlLWFwaSIsInN1YiI6InJpY2hhcmRAZXhhbXBsZS5jb20iLCJleHAiOjE3NTU0NjYyNzgsImlkIjoxLCJyb2xlIjoiTUFTVEVSIn0.0D5YBa9IFycI2KrMQ_K4VXp3ww3zA2x4IZlHalQaXvw",
 							"type": "string"
 						}
 					]
@@ -173,7 +165,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"firstName\": \"Richard\",\r\n    \"lastName\": \"Fragoso\",\r\n    \"age\": 30,\r\n    \"gender\": \"Masculino\",\r\n    \"CPF\": \"12345678900\",\r\n    \"phone\": \"81-98765-4321\",\r\n    \"email\": \"richard@example.com\",\r\n    \"userPassword\": \"senha123\",\r\n    \"address\": {\r\n        \"street\": \"Rua Exemplo\",\r\n        \"number\": 100,\r\n        \"complement\": \"Apto 202\",\r\n        \"neighborhood\": \"Boa Viagem\",\r\n        \"state\": \"PE\",\r\n        \"country\": \"Brasil\",\r\n        \"zipCode\": \"50000000\"\r\n    }\r\n}",
+					"raw": "",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -196,22 +188,25 @@
 		},
 		{
 			"name": "User By ID",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
 			"request": {
 				"auth": {
 					"type": "bearer",
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzcHJpbmdib290ZXhwZXJ0LXJlc3QtYXBpIiwic3ViIjoiZG91Z2xhc0BleGFtcGxlLmNvbSIsImV4cCI6MTczOTQ5MjQyOCwiaWQiOjF9.7SJ0TLJN1WnH-nkxJ36knP0cWMMYAurVCWpCjVVVFXo",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJyZWNvbW1lbmRlcnBlLWFwaSIsInN1YiI6InJpY2hhcmRAZXhhbXBsZS5jb20iLCJleHAiOjE3NTU0NjYyNzgsImlkIjoxLCJyb2xlIjoiTUFTVEVSIn0.0D5YBa9IFycI2KrMQ_K4VXp3ww3zA2x4IZlHalQaXvw",
 							"type": "string"
 						}
 					]
 				},
-				"method": "DELETE",
+				"method": "GET",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"firstName\": \"Richard\",\r\n    \"lastName\": \"Fragoso\",\r\n    \"age\": 30,\r\n    \"gender\": \"Masculino\",\r\n    \"CPF\": \"12345678900\",\r\n    \"phone\": \"81-98765-4321\",\r\n    \"email\": \"richard@example.com\",\r\n    \"userPassword\": \"senha123\",\r\n    \"address\": {\r\n        \"street\": \"Rua Exemplo\",\r\n        \"number\": 100,\r\n        \"complement\": \"Apto 202\",\r\n        \"neighborhood\": \"Boa Viagem\",\r\n        \"state\": \"PE\",\r\n        \"country\": \"Brasil\",\r\n        \"zipCode\": \"50000000\"\r\n    }\r\n}",
+					"raw": "",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -219,7 +214,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/user/id/2",
+					"raw": "http://localhost:8080/user/id/1",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -228,338 +223,7 @@
 					"path": [
 						"user",
 						"id",
-						"2"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Preferences",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzcHJpbmdib290ZXhwZXJ0LXJlc3QtYXBpIiwic3ViIjoiZG91Z2xhc0BleGFtcGxlLmNvbSIsImV4cCI6MTc0MjE3OTM0MSwiaWQiOjF9.-Rm0p1gW5MKnveJu-p2R313FbawcLOSz4lzffQq2fG0",
-							"type": "string"
-						}
-					]
-				},
-				"method": "GET",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"firstName\": \"Richard\",\r\n    \"lastName\": \"Fragoso\",\r\n    \"age\": 30,\r\n    \"gender\": \"Masculino\",\r\n    \"CPF\": \"12345678900\",\r\n    \"phone\": \"81-98765-4321\",\r\n    \"email\": \"richard@example.com\",\r\n    \"userPassword\": \"senha123\",\r\n    \"address\": {\r\n        \"street\": \"Rua Exemplo\",\r\n        \"number\": 100,\r\n        \"complement\": \"Apto 202\",\r\n        \"neighborhood\": \"Boa Viagem\",\r\n        \"state\": \"PE\",\r\n        \"country\": \"Brasil\",\r\n        \"zipCode\": \"50000000\"\r\n    }\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost:8080/preferences",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"preferences"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Preferences By ID",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzcHJpbmdib290ZXhwZXJ0LXJlc3QtYXBpIiwic3ViIjoiZG91Z2xhc0BleGFtcGxlLmNvbSIsImV4cCI6MTc0MjE3OTM0MSwiaWQiOjF9.-Rm0p1gW5MKnveJu-p2R313FbawcLOSz4lzffQq2fG0",
-							"type": "string"
-						}
-					]
-				},
-				"method": "GET",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"firstName\": \"Richard\",\r\n    \"lastName\": \"Fragoso\",\r\n    \"age\": 30,\r\n    \"gender\": \"Masculino\",\r\n    \"CPF\": \"12345678900\",\r\n    \"phone\": \"81-98765-4321\",\r\n    \"email\": \"richard@example.com\",\r\n    \"userPassword\": \"senha123\",\r\n    \"address\": {\r\n        \"street\": \"Rua Exemplo\",\r\n        \"number\": 100,\r\n        \"complement\": \"Apto 202\",\r\n        \"neighborhood\": \"Boa Viagem\",\r\n        \"state\": \"PE\",\r\n        \"country\": \"Brasil\",\r\n        \"zipCode\": \"50000000\"\r\n    }\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost:8080/preferences/id/1",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"preferences",
-						"id",
 						"1"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Recommendation",
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJyZWNvbW1lbmRlcnBlLWFwaSIsInN1YiI6InJpY2FyZG8ubm9ndWVpcmFAZXhhbXBsZS5jb20iLCJleHAiOjE3NDUxMDU4MzgsImlkIjoyNH0.Fv5z6mMqe1nWuZnP1Zyiv7K6pLNfpzeyqTK3ki-fjhc",
-							"type": "string"
-						}
-					]
-				},
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"motivations\": [\"CULTURE\", \"HERITAGE\", \"APPRECIATION\", \"EXPLORATION\", \"CREATIVITY\"],\r\n    \"hobbies\": [\"PHOTOGRAPHY\", \"HIKING\", \"TRAVELING\", \"ART\", \"LEARNING\"],\r\n    \"themes\": [\"HISTORY\", \"CULTURAL\", \"COLONIAL\", \"NATURE\", \"ADVENTURE\"],\r\n    \"currentLocation\": {\r\n        \"street\": \"Rua das Flores\",\r\n        \"number\": 123,\r\n        \"complement\": \"Casa 5\",\r\n        \"neighborhood\": \"Centro\",\r\n        \"state\": \"SP\",\r\n        \"country\": \"Brasil\",\r\n        \"zipCode\": \"01000000\"\r\n    }\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost:8080/recommendation",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"recommendation"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Recommendation",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJyZWNvbW1lbmRlcnBlLWFwaSIsInN1YiI6ImZlcm5hbmRhLmNvc3RhQGV4YW1wbGUuY29tIiwiZXhwIjoxNzQ0OTQxMDY4LCJpZCI6NH0.b4CqTMSU56bhoLO9li0CEILzvkAQtbGRZQ0cd7eIwxE",
-							"type": "string"
-						}
-					]
-				},
-				"method": "GET",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"motivations\": [\r\n        \"CULTURE\",\r\n        \"RELAXATION\"\r\n    ],\r\n    \"hobbies\": [\r\n        \"TRAVELING\",\r\n        \"READING\",\r\n        \"PHOTOGRAPHY\"\r\n    ],\r\n    \"themes\": [\r\n        \"ADVENTURE\",\r\n        \"NATURE\",\r\n        \"CULTURAL\"\r\n    ],\r\n    \"currentLocation\": {\r\n        \"street\": \"Rua das Flores\",\r\n        \"number\": 123,\r\n        \"complement\": \"Casa 5\",\r\n        \"neighborhood\": \"Centro\",\r\n        \"state\": \"SP\",\r\n        \"country\": \"Brasil\",\r\n        \"zipCode\": \"01000000\"\r\n    }\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost:8080/recommendation",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"recommendation"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Recommendation By User",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzcHJpbmdib290ZXhwZXJ0LXJlc3QtYXBpIiwic3ViIjoiZG91Z2xhc0BleGFtcGxlLmNvbSIsImV4cCI6MTc0MjE3OTE2MywiaWQiOjF9.aBOw6jNYXGEz8f2P7aAXYwwCUm7kS8n33JwSuui9heE",
-							"type": "string"
-						}
-					]
-				},
-				"method": "GET",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"motivations\": [\r\n        \"CULTURE\",\r\n        \"RELAXATION\"\r\n    ],\r\n    \"hobbies\": [\r\n        \"TRAVELING\",\r\n        \"READING\",\r\n        \"PHOTOGRAPHY\"\r\n    ],\r\n    \"themes\": [\r\n        \"ADVENTURE\",\r\n        \"NATURE\",\r\n        \"CULTURAL\"\r\n    ],\r\n    \"currentLocation\": {\r\n        \"street\": \"Rua das Flores\",\r\n        \"number\": 123,\r\n        \"complement\": \"Casa 5\",\r\n        \"neighborhood\": \"Centro\",\r\n        \"state\": \"SP\",\r\n        \"country\": \"Brasil\",\r\n        \"zipCode\": \"01000000\"\r\n    }\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost:8080/recommendation/user",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"recommendation",
-						"user"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Recommendation By ID",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzcHJpbmdib290ZXhwZXJ0LXJlc3QtYXBpIiwic3ViIjoiZG91Z2xhc0BleGFtcGxlLmNvbSIsImV4cCI6MTc0MjE3OTE2MywiaWQiOjF9.aBOw6jNYXGEz8f2P7aAXYwwCUm7kS8n33JwSuui9heE",
-							"type": "string"
-						}
-					]
-				},
-				"method": "GET",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"motivations\": [\r\n        \"CULTURE\",\r\n        \"RELAXATION\"\r\n    ],\r\n    \"hobbies\": [\r\n        \"TRAVELING\",\r\n        \"READING\",\r\n        \"PHOTOGRAPHY\"\r\n    ],\r\n    \"themes\": [\r\n        \"ADVENTURE\",\r\n        \"NATURE\",\r\n        \"CULTURAL\"\r\n    ],\r\n    \"currentLocation\": {\r\n        \"street\": \"Rua das Flores\",\r\n        \"number\": 123,\r\n        \"complement\": \"Casa 5\",\r\n        \"neighborhood\": \"Centro\",\r\n        \"state\": \"SP\",\r\n        \"country\": \"Brasil\",\r\n        \"zipCode\": \"01000000\"\r\n    }\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost:8080/recommendation/id/1",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"recommendation",
-						"id",
-						"1"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Similarities By Recommendation ID",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzcHJpbmdib290ZXhwZXJ0LXJlc3QtYXBpIiwic3ViIjoiZG91Z2xhc0BleGFtcGxlLmNvbSIsImV4cCI6MTc0MjE3OTE2MywiaWQiOjF9.aBOw6jNYXGEz8f2P7aAXYwwCUm7kS8n33JwSuui9heE",
-							"type": "string"
-						}
-					]
-				},
-				"method": "GET",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"motivations\": [\r\n        \"CULTURE\",\r\n        \"RELAXATION\"\r\n    ],\r\n    \"hobbies\": [\r\n        \"TRAVELING\",\r\n        \"READING\",\r\n        \"PHOTOGRAPHY\"\r\n    ],\r\n    \"themes\": [\r\n        \"ADVENTURE\",\r\n        \"NATURE\",\r\n        \"CULTURAL\"\r\n    ],\r\n    \"currentLocation\": {\r\n        \"street\": \"Rua das Flores\",\r\n        \"number\": 123,\r\n        \"complement\": \"Casa 5\",\r\n        \"neighborhood\": \"Centro\",\r\n        \"state\": \"SP\",\r\n        \"country\": \"Brasil\",\r\n        \"zipCode\": \"01000000\"\r\n    }\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost:8080/recommendation/id/1",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"recommendation",
-						"id",
-						"1"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Score",
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJyZWNvbW1lbmRlcnBlLWFwaSIsInN1YiI6ImRvdWdsYXNAZXhhbXBsZS5jb20iLCJleHAiOjE3NDUwOTQ4OTUsImlkIjoxfQ.wXxEkm9NmsRQaUIzez-eNs3kUryhb7zIrYOawciLJE8",
-							"type": "string"
-						}
-					]
-				},
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "[\r\n    {\r\n        \"poiId\": 2,\r\n        \"scoreValue\": 1\r\n    },\r\n    {\r\n        \"poiId\": 20,\r\n        \"scoreValue\": 1\r\n    },\r\n    {\r\n        \"poiId\": 8,\r\n        \"scoreValue\": 1\r\n    },\r\n    {\r\n        \"poiId\": 3,\r\n        \"scoreValue\": 1\r\n    },\r\n    {\r\n        \"poiId\": 36,\r\n        \"scoreValue\": 0\r\n    }\r\n]",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost:8080/recommendation/1/score",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"recommendation",
-						"1",
-						"score"
 					]
 				}
 			},
@@ -573,7 +237,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzcHJpbmdib290ZXhwZXJ0LXJlc3QtYXBpIiwic3ViIjoiZG91Z2xhc0BleGFtcGxlLmNvbSIsImV4cCI6MTc0MjE3ODEzNywiaWQiOjF9.hMloUfO61K63nBFXkMec7eM2lMAGsrwZ3DzYUXH53Ys",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJyZWNvbW1lbmRlcnBlLWFwaSIsInN1YiI6InJpY2hhcmRAZXhhbXBsZS5jb20iLCJleHAiOjE3NTU0NjUyMDUsImlkIjoxLCJyb2xlIjoiTUFTVEVSIn0.Az5sIzWMg1Z1eyMZlNO70lBJi0g--jMSGbipNWf2gH8",
 							"type": "string"
 						}
 					]
@@ -582,7 +246,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"name\": \"Parque Ecológico\",\r\n    \"description\": \"Reserva natural com trilhas e observatório de pássaros. Um local ideal para relaxar e conectar-se com a natureza.\",\r\n    \"motivations\": [\r\n        \"RELAXATION\",\r\n        \"FAMILY\",\r\n        \"CULTURE\",\r\n        \"ENTERTAINMENT\",\r\n        \"EXPLORATION\"\r\n    ],\r\n    \"hobbies\": [\r\n        \"HIKING\",\r\n        \"BIRD_WATCHING\",\r\n        \"PHOTOGRAPHY\",\r\n        \"GARDENING\",\r\n        \"TRAVELING\"\r\n    ],\r\n    \"themes\": [\r\n        \"ADVENTURE\",\r\n        \"NATURE\",\r\n        \"CULTURAL\",\r\n        \"FAMILY_FRIENDLY\",\r\n        \"HISTORY\"\r\n    ],\r\n    \"address\": {\r\n        \"street\": \"Rua das Araucárias\",\r\n        \"number\": 450,\r\n        \"complement\": \"Entrada principal\",\r\n        \"neighborhood\": \"Zona Rural\",\r\n        \"state\": \"PR\",\r\n        \"country\": \"Brasil\",\r\n        \"zipCode\": \"83455000\"\r\n    }\r\n}",
+					"raw": "{\r\n    \"name\": \"Parque Ecológico\",\r\n    \"description\": \"Reserva natural com trilhas e observatório de pássaros. Um local ideal para relaxar e conectar-se com a natureza.\",\r\n    \"motivations\": [\r\n        \"RELAXATION\",\r\n        \"FAMILY\",\r\n        \"CULTURE\",\r\n        \"ENTERTAINMENT\",\r\n        \"EXPLORATION\"\r\n    ],\r\n    \"hobbies\": [\r\n        \"HIKING\",\r\n        \"LEARNING\",\r\n        \"PHOTOGRAPHY\",\r\n        \"GARDENING\",\r\n        \"TRAVELING\"\r\n    ],\r\n    \"themes\": [\r\n        \"ADVENTURE\",\r\n        \"NATURE\",\r\n        \"CULTURAL\",\r\n        \"FAMILY_FRIENDLY\",\r\n        \"HISTORY\"\r\n    ],\r\n    \"address\": {\r\n        \"street\": \"Rua das Araucárias\",\r\n        \"number\": 450,\r\n        \"complement\": \"Entrada principal\",\r\n        \"neighborhood\": \"Zona Rural\",\r\n        \"city\": \"Recife\",\r\n        \"state\": \"PR\",\r\n        \"country\": \"Brasil\",\r\n        \"zipCode\": \"83455000\"\r\n    }\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -605,26 +269,23 @@
 			"response": []
 		},
 		{
-			"name": "POI By ID",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
+			"name": "POI",
 			"request": {
 				"auth": {
 					"type": "bearer",
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzcHJpbmdib290ZXhwZXJ0LXJlc3QtYXBpIiwic3ViIjoiZG91Z2xhc0BleGFtcGxlLmNvbSIsImV4cCI6MTc0MjE3OTE2MywiaWQiOjF9.aBOw6jNYXGEz8f2P7aAXYwwCUm7kS8n33JwSuui9heE",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzcHJpbmdib290ZXhwZXJ0LXJlc3QtYXBpIiwic3ViIjoiZG91Z2xhc0BleGFtcGxlLmNvbSIsImV4cCI6MTc0MjE3ODEzNywiaWQiOjF9.hMloUfO61K63nBFXkMec7eM2lMAGsrwZ3DzYUXH53Ys",
 							"type": "string"
 						}
 					]
 				},
-				"method": "GET",
+				"method": "PATCH",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"firstName\": \"Richard\",\r\n    \"lastName\": \"Fragoso\",\r\n    \"age\": 30,\r\n    \"gender\": \"Masculino\",\r\n    \"CPF\": \"12345678900\",\r\n    \"phone\": \"81-98765-4321\",\r\n    \"email\": \"richard@example.com\",\r\n    \"userPassword\": \"senha123\",\r\n    \"address\": {\r\n        \"street\": \"Rua Exemplo\",\r\n        \"number\": 100,\r\n        \"complement\": \"Apto 202\",\r\n        \"neighborhood\": \"Boa Viagem\",\r\n        \"state\": \"PE\",\r\n        \"country\": \"Brasil\",\r\n        \"zipCode\": \"50000000\"\r\n    }\r\n}",
+					"raw": "{\r\n    \"name\": \"Parque Ecológico\",\r\n    \"description\": \"Reserva natural com trilhas e observatório de pássaros. Um local ideal para relaxar e conectar-se com a natureza.\",\r\n    \"motivations\": [\r\n        \"RELAXATION\",\r\n        \"FAMILY\",\r\n        \"CULTURE\",\r\n        \"ENTERTAINMENT\",\r\n        \"EXPLORATION\"\r\n    ],\r\n    \"hobbies\": [\r\n        \"HIKING\",\r\n        \"BIRD_WATCHING\",\r\n        \"PHOTOGRAPHY\",\r\n        \"GARDENING\",\r\n        \"TRAVELING\"\r\n    ],\r\n    \"themes\": [\r\n        \"ADVENTURE\",\r\n        \"NATURE\",\r\n        \"CULTURAL\",\r\n        \"FAMILY_FRIENDLY\",\r\n        \"HISTORY\"\r\n    ],\r\n    \"address\": {\r\n        \"street\": \"Rua das Araucárias\",\r\n        \"number\": 450,\r\n        \"complement\": \"Entrada principal\",\r\n        \"neighborhood\": \"Zona Rural\",\r\n        \"state\": \"PR\",\r\n        \"country\": \"Brasil\",\r\n        \"zipCode\": \"83455000\"\r\n    }\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -658,7 +319,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzcHJpbmdib290ZXhwZXJ0LXJlc3QtYXBpIiwic3ViIjoiZG91Z2xhc0BleGFtcGxlLmNvbSIsImV4cCI6MTc0MjE3OTE2MywiaWQiOjF9.aBOw6jNYXGEz8f2P7aAXYwwCUm7kS8n33JwSuui9heE",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJyZWNvbW1lbmRlcnBlLWFwaSIsInN1YiI6InJpY2hhcmRAZXhhbXBsZS5jb20iLCJleHAiOjE3NTU0NjYyNzgsImlkIjoxLCJyb2xlIjoiTUFTVEVSIn0.0D5YBa9IFycI2KrMQ_K4VXp3ww3zA2x4IZlHalQaXvw",
 							"type": "string"
 						}
 					]
@@ -667,7 +328,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"firstName\": \"Richard\",\r\n    \"lastName\": \"Fragoso\",\r\n    \"age\": 30,\r\n    \"gender\": \"Masculino\",\r\n    \"CPF\": \"12345678900\",\r\n    \"phone\": \"81-98765-4321\",\r\n    \"email\": \"richard@example.com\",\r\n    \"userPassword\": \"senha123\",\r\n    \"address\": {\r\n        \"street\": \"Rua Exemplo\",\r\n        \"number\": 100,\r\n        \"complement\": \"Apto 202\",\r\n        \"neighborhood\": \"Boa Viagem\",\r\n        \"state\": \"PE\",\r\n        \"country\": \"Brasil\",\r\n        \"zipCode\": \"50000000\"\r\n    }\r\n}",
+					"raw": "",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -690,22 +351,25 @@
 		},
 		{
 			"name": "POI By ID",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
 			"request": {
 				"auth": {
 					"type": "bearer",
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzcHJpbmdib290ZXhwZXJ0LXJlc3QtYXBpIiwic3ViIjoiZG91Z2xhc0BleGFtcGxlLmNvbSIsImV4cCI6MTc0MDAxMzYwOSwiaWQiOjF9.J9d_ky2_ZhGoJirHLLEjCKGuiU02NzS4zZyAPLIzbqs",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJyZWNvbW1lbmRlcnBlLWFwaSIsInN1YiI6InJpY2hhcmRAZXhhbXBsZS5jb20iLCJleHAiOjE3NTU0NjYyNzgsImlkIjoxLCJyb2xlIjoiTUFTVEVSIn0.0D5YBa9IFycI2KrMQ_K4VXp3ww3zA2x4IZlHalQaXvw",
 							"type": "string"
 						}
 					]
 				},
-				"method": "DELETE",
+				"method": "GET",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"firstName\": \"Richard\",\r\n    \"lastName\": \"Fragoso\",\r\n    \"age\": 30,\r\n    \"gender\": \"Masculino\",\r\n    \"CPF\": \"12345678900\",\r\n    \"phone\": \"81-98765-4321\",\r\n    \"email\": \"richard@example.com\",\r\n    \"userPassword\": \"senha123\",\r\n    \"address\": {\r\n        \"street\": \"Rua Exemplo\",\r\n        \"number\": 100,\r\n        \"complement\": \"Apto 202\",\r\n        \"neighborhood\": \"Boa Viagem\",\r\n        \"state\": \"PE\",\r\n        \"country\": \"Brasil\",\r\n        \"zipCode\": \"50000000\"\r\n    }\r\n}",
+					"raw": "",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -723,6 +387,254 @@
 						"poi",
 						"id",
 						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Recommendation",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJyZWNvbW1lbmRlcnBlLWFwaSIsInN1YiI6InJpY2hhcmRAZXhhbXBsZS5jb20iLCJleHAiOjE3NTU0NjU3MjQsImlkIjoxLCJyb2xlIjoiTUFTVEVSIn0.MNiK08QwXNIBbPkHgCCwujLuf3l61oAQYLw9VWIPC-Q",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"motivations\": [\"EXPLORATION\", \"ENTERTAINMENT\", \"IDENTITY\", \"SOCIAL\", \"TRADITION\"],\r\n    \"hobbies\": [\"TRAVELING\", \"MUSIC\", \"LEARNING\", \"THEATER\", \"TECH\"],\r\n    \"themes\": [\"URBAN_ART\", \"HISTORY\", \"MODERN\", \"NATURE\", \"AFRO_BRAZILIAN\"]\r\n,\r\n    \"currentLocation\": {\r\n        \"street\": \"Rua das Flores\",\r\n        \"number\": 123,\r\n        \"complement\": \"Casa 5\",\r\n        \"neighborhood\": \"Centro\",\r\n        \"state\": \"SP\",\r\n        \"country\": \"Brasil\",\r\n        \"zipCode\": \"01000000\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/recommendation",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"recommendation"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Score",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJyZWNvbW1lbmRlcnBlLWFwaSIsInN1YiI6ImthaW8uaGVucmlxdWVAZXhhbXBsZS5jb20iLCJleHAiOjE3NDUxODQwNzYsImlkIjo1MH0.obHNhDOwpFjgaF45_pUm2LbZJT-wLoFrJ6nu5l7RU9w",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n    {\r\n        \"poiId\": 5,\r\n        \"scoreValue\": 1\r\n    },\r\n    {\r\n        \"poiId\": 4,\r\n        \"scoreValue\": 1\r\n    },\r\n    {\r\n        \"poiId\": 35,\r\n        \"scoreValue\": 0\r\n    },\r\n    {\r\n        \"poiId\": 9,\r\n        \"scoreValue\": 1\r\n    },\r\n    {\r\n        \"poiId\": 24,\r\n        \"scoreValue\": 1\r\n    }\r\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/recommendation/51/score",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"recommendation",
+						"51",
+						"score"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Recommendation",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJyZWNvbW1lbmRlcnBlLWFwaSIsInN1YiI6InJpY2hhcmRAZXhhbXBsZS5jb20iLCJleHAiOjE3NTU0NjYyNzgsImlkIjoxLCJyb2xlIjoiTUFTVEVSIn0.0D5YBa9IFycI2KrMQ_K4VXp3ww3zA2x4IZlHalQaXvw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/recommendation",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"recommendation"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Recommendation By ID",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJyZWNvbW1lbmRlcnBlLWFwaSIsInN1YiI6InJpY2hhcmRAZXhhbXBsZS5jb20iLCJleHAiOjE3NTU0NjYyNzgsImlkIjoxLCJyb2xlIjoiTUFTVEVSIn0.0D5YBa9IFycI2KrMQ_K4VXp3ww3zA2x4IZlHalQaXvw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/recommendation/id/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"recommendation",
+						"id",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Recommendation By User",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJyZWNvbW1lbmRlcnBlLWFwaSIsInN1YiI6InJpY2hhcmRAZXhhbXBsZS5jb20iLCJleHAiOjE3NTU0NjYyNzgsImlkIjoxLCJyb2xlIjoiTUFTVEVSIn0.0D5YBa9IFycI2KrMQ_K4VXp3ww3zA2x4IZlHalQaXvw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/recommendation/user",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"recommendation",
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Similarities By Recommendation ID",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJyZWNvbW1lbmRlcnBlLWFwaSIsInN1YiI6InJpY2hhcmRAZXhhbXBsZS5jb20iLCJleHAiOjE3NTU0NjYyNzgsImlkIjoxLCJyb2xlIjoiTUFTVEVSIn0.0D5YBa9IFycI2KrMQ_K4VXp3ww3zA2x4IZlHalQaXvw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/recommendation/id/1/similarities",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"recommendation",
+						"id",
+						"1",
+						"similarities"
 					]
 				}
 			},
@@ -772,6 +684,90 @@
 			"response": []
 		},
 		{
+			"name": "Preferences",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJyZWNvbW1lbmRlcnBlLWFwaSIsInN1YiI6InJpY2hhcmRAZXhhbXBsZS5jb20iLCJleHAiOjE3NTU0NjYyNzgsImlkIjoxLCJyb2xlIjoiTUFTVEVSIn0.0D5YBa9IFycI2KrMQ_K4VXp3ww3zA2x4IZlHalQaXvw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/preferences",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"preferences"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Preferences By ID",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJyZWNvbW1lbmRlcnBlLWFwaSIsInN1YiI6InJpY2hhcmRAZXhhbXBsZS5jb20iLCJleHAiOjE3NTU0NjYyNzgsImlkIjoxLCJyb2xlIjoiTUFTVEVSIn0.0D5YBa9IFycI2KrMQ_K4VXp3ww3zA2x4IZlHalQaXvw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/preferences/id/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"preferences",
+						"id",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Evaluation Global",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
@@ -782,7 +778,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJyZWNvbW1lbmRlcnBlLWFwaSIsInN1YiI6ImRvdWdsYXNAZXhhbXBsZS5jb20iLCJleHAiOjE3NTIwMzUxMDcsImlkIjoxLCJyb2xlIjoiTUFTVEVSIn0.qclUbAT5IzcqaniCCn3sOx6gI7AvI_wMDtlAksi8cTY",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJyZWNvbW1lbmRlcnBlLWFwaSIsInN1YiI6ImRvdWdsYXNAZXhhbXBsZS5jb20iLCJleHAiOjE3NTI4MDMyNzgsImlkIjoxLCJyb2xlIjoiTUFTVEVSIn0.TwR6KYwDLRKX0GRE4bnfPS2ag841cH3T7z_LV6iHO0k",
 							"type": "string"
 						}
 					]
@@ -814,13 +810,26 @@
 			"response": []
 		},
 		{
-			"name": "Login",
+			"name": "Evaluation By User",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
 			"request": {
-				"method": "POST",
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJyZWNvbW1lbmRlcnBlLWFwaSIsInN1YiI6ImRvdWdsYXNAZXhhbXBsZS5jb20iLCJleHAiOjE3NTI4MDMyNzgsImlkIjoxLCJyb2xlIjoiTUFTVEVSIn0.TwR6KYwDLRKX0GRE4bnfPS2ag841cH3T7z_LV6iHO0k",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"email\": \"richard@example.com\",\r\n    \"userPassword\": \"Senha123*\"\r\n}",
+					"raw": "",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -828,16 +837,16 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/auth/v1/login",
+					"raw": "http://localhost:8080/evaluation/user/1",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
-						"auth",
-						"v1",
-						"login"
+						"evaluation",
+						"user",
+						"1"
 					]
 				}
 			},
