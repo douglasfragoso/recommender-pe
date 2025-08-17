@@ -84,7 +84,7 @@ public class UserService {
 
         // Mapeando User para UserDTO - Mapping User to UserDTO
         return new UserDTO(user.getId(), user.getFirstName(), user.getLastName(), user.getBirthDate(), user.getGender(),
-                user.getCpf(), user.getPhone(), user.getEmail(), user.getAddress(), user.getRole());
+                user.getCpf(), user.getPhone(), user.getEmail(), user.getAddress(), user.getRole(), user.getStatus());
     }
 
     @Transactional(readOnly = true)
@@ -106,47 +106,49 @@ public class UserService {
     public void updateOwnProfile(UserDTOUpdate dto) {
         User currentUser = searchUser();
 
-        if (dto.getPhone() != null && userRepository.existsByPhoneAndIdNot(dto.getPhone(), currentUser.getId())) {
+        if (dto.getPhone() != null && !dto.getPhone().isEmpty() &&
+                userRepository.existsByPhoneAndIdNot(dto.getPhone(), currentUser.getId())) {
             throw new GeneralException("Phone already registered by another user");
         }
-        if (dto.getFirstName() != null) {
+
+        if (dto.getFirstName() != null && !dto.getFirstName().isEmpty()) {
             currentUser.setFirstName(dto.getFirstName());
         }
-        if (dto.getLastName() != null) {
+        if (dto.getLastName() != null && !dto.getLastName().isEmpty()) {
             currentUser.setLastName(dto.getLastName());
         }
-        if (dto.getBirthDate() != null) {
+        if (dto.getBirthDate() != null) { // LocalDate can't be empty string
             currentUser.setBirthDate(dto.getBirthDate());
         }
-        if (dto.getGender() != null) {
+        if (dto.getGender() != null && !dto.getGender().isEmpty()) {
             currentUser.setGender(dto.getGender());
         }
-        if (dto.getPhone() != null) {
+        if (dto.getPhone() != null && !dto.getPhone().isEmpty()) {
             currentUser.setPhone(dto.getPhone());
         }
 
         if (dto.getAddress() != null) {
             Address addressToUpdate = currentUser.getAddress();
 
-            if (dto.getAddress().getStreet() != null) {
+            if (dto.getAddress().getStreet() != null && !dto.getAddress().getStreet().isEmpty()) {
                 addressToUpdate.setStreet(dto.getAddress().getStreet());
             }
-            if (dto.getAddress().getNumber() != null) {
+            if (dto.getAddress().getNumber() != null && !dto.getAddress().getNumber().equals(0)) {
                 addressToUpdate.setNumber(dto.getAddress().getNumber());
             }
-            if (dto.getAddress().getComplement() != null) {
+            if (dto.getAddress().getComplement() != null && !dto.getAddress().getComplement().isEmpty()) {
                 addressToUpdate.setComplement(dto.getAddress().getComplement());
             }
-            if (dto.getAddress().getNeighborhood() != null) {
+            if (dto.getAddress().getNeighborhood() != null && !dto.getAddress().getNeighborhood().isEmpty()) {
                 addressToUpdate.setNeighborhood(dto.getAddress().getNeighborhood());
             }
-            if (dto.getAddress().getCity() != null) {
+            if (dto.getAddress().getCity() != null && !dto.getAddress().getCity().isEmpty()) {
                 addressToUpdate.setCity(dto.getAddress().getCity());
             }
-            if (dto.getAddress().getState() != null) {
+            if (dto.getAddress().getState() != null && !dto.getAddress().getState().isEmpty()) {
                 addressToUpdate.setState(dto.getAddress().getState());
             }
-            if (dto.getAddress().getZipCode() != null) {
+            if (dto.getAddress().getZipCode() != null && !dto.getAddress().getZipCode().isEmpty()) {
                 addressToUpdate.setZipCode(dto.getAddress().getZipCode());
             }
         }
@@ -159,35 +161,38 @@ public class UserService {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new GeneralException("User not found, id does not exist: " + id));
 
-        if (dto.getEmail() != null && userRepository.existsByEmailAndIdNot(dto.getEmail(), id)) {
+        if (dto.getEmail() != null && !dto.getEmail().isEmpty() &&
+                userRepository.existsByEmailAndIdNot(dto.getEmail(), id)) {
             throw new GeneralException("Email already registered by another user");
         }
-        if (dto.getPhone() != null && userRepository.existsByPhoneAndIdNot(dto.getPhone(), id)) {
+        if (dto.getPhone() != null && !dto.getPhone().isEmpty() &&
+                userRepository.existsByPhoneAndIdNot(dto.getPhone(), id)) {
             throw new GeneralException("Phone already registered by another user");
         }
-        if (dto.getCpf() != null && userRepository.existsByCpfAndIdNot(dto.getCpf(), id)) {
+        if (dto.getCpf() != null && !dto.getCpf().isEmpty() &&
+                userRepository.existsByCpfAndIdNot(dto.getCpf(), id)) {
             throw new GeneralException("CPF already registered by another user");
         }
 
-        if (dto.getFirstName() != null) {
+        if (dto.getFirstName() != null && !dto.getFirstName().isEmpty()) {
             user.setFirstName(dto.getFirstName());
         }
-        if (dto.getLastName() != null) {
+        if (dto.getLastName() != null && !dto.getLastName().isEmpty()) {
             user.setLastName(dto.getLastName());
         }
         if (dto.getBirthDate() != null) {
             user.setBirthDate(dto.getBirthDate());
         }
-        if (dto.getGender() != null) {
+        if (dto.getGender() != null && !dto.getGender().isEmpty()) {
             user.setGender(dto.getGender());
         }
-        if (dto.getCpf() != null) {
+        if (dto.getCpf() != null && !dto.getCpf().isEmpty()) {
             user.setCpf(dto.getCpf());
         }
-        if (dto.getPhone() != null) {
+        if (dto.getPhone() != null && !dto.getPhone().isEmpty()) {
             user.setPhone(dto.getPhone());
         }
-        if (dto.getEmail() != null) {
+        if (dto.getEmail() != null && !dto.getEmail().isEmpty()) {
             user.setEmail(dto.getEmail());
         }
         if (dto.getRole() != null) {

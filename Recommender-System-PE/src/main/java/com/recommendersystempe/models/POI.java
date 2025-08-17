@@ -89,7 +89,7 @@ public class POI {
     @Getter @Setter
     @Enumerated(EnumType.STRING)
     @Column(name = "poi_status")
-    private Status status;
+    private Status status = Status.ACTIVE;
 
     public POI(String name, String descripition, List<Motivations> motivations, List<Hobbies> hobbies,
             List<Themes> themes, Address address) {
@@ -98,7 +98,6 @@ public class POI {
         this.motivations = motivations;
         this.hobbies = hobbies;
         this.themes = themes;
-        this.status = Status.ACTIVE;
         this.address = address;
     }
 

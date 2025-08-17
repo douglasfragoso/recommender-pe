@@ -97,7 +97,7 @@ public class User implements UserDetails {
     @Getter @Setter
     @Enumerated(EnumType.STRING)
     @Column(name = "user_status")
-    private Status status;
+    private Status status = Status.ACTIVE;
 
 
     public User(String firstName, String lastName, LocalDate birthDate, String gender, String cpf, String phone, String email, String userPassword, Address address, Roles role) {
@@ -111,7 +111,6 @@ public class User implements UserDetails {
         this.userPassword = userPassword;
         this.address = address;
         this.role = role;
-        this.status = Status.ACTIVE;
     }
 
     @Override

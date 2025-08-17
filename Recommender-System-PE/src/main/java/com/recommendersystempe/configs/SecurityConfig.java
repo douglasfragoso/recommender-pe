@@ -35,6 +35,7 @@ public class SecurityConfig {
                     customizer.requestMatchers(HttpMethod.POST, "/user/register").permitAll();
                     customizer.requestMatchers(HttpMethod.GET, "/h2-console/**").permitAll();
                     customizer.requestMatchers(HttpMethod.POST, "/h2-console/**").permitAll();
+                    customizer.requestMatchers(HttpMethod.PATCH,"/user/profile/me").authenticated();
                     customizer.anyRequest().authenticated();
                 })
                 .headers(headers -> headers.frameOptions(options -> options.sameOrigin())) // Permite o uso do H2 - iframe

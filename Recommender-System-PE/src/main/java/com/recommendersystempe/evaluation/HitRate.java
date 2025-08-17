@@ -38,6 +38,24 @@ public class HitRate {
                 usersWithHit++;
         }
         double hitRate = (double) usersWithHit / allRecommendations.size();
-        return Math.round(hitRate * 100.0) / 100.0; 
+        return Math.round(hitRate * 100.0) / 100.0;
     }
+
+    public static double userHitRateAtK(List<POI> recommended, Set<POI> relevant, int k) {
+        if (recommended.isEmpty() || k <= 0)
+            return 0.0;
+
+        int topK = Math.min(k, recommended.size());
+        boolean hasHit = false;
+
+        for (int i = 0; i < topK; i++) {
+            if (relevant.contains(recommended.get(i))) {
+                hasHit = true;
+                break;
+            }
+        }
+
+        return hasHit ? 1.0 : 0.0; // 1 = acertou pelo menos 1 item, 0 = nenhum acerto
+    }
+
 }

@@ -111,7 +111,7 @@ public class EvaluationControllerTest {
                 Long userId = USER.getId();
                 int k = 5;
 
-                UserEvaluationMetricsDTO mockMetrics = new UserEvaluationMetricsDTO(0.2, 0.3, 0.4);
+                UserEvaluationMetricsDTO mockMetrics = new UserEvaluationMetricsDTO(0.2, 0.3);
                 // when / act
                 given(evaluationService.evaluateUserRecommendations(userId, k))
                                 .willReturn(mockMetrics);

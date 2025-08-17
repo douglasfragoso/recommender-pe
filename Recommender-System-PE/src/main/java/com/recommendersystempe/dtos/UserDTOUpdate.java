@@ -10,10 +10,8 @@ import com.recommendersystempe.enums.Status;
 import com.recommendersystempe.models.Address;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Past;
-import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -30,13 +28,13 @@ public class UserDTOUpdate {
     @Getter
     @Setter
     @Schema(description = "Firstname of a user", example = "Jhon", required = true)
-    @Size(min = 3, max = 20, message = "The field firstname must be between 3 and 20 characters")
+    @Size(min = 0, max = 20, message = "The field firstname must be between 3 and 20 characters")
     private String firstName;
 
     @Getter
     @Setter
     @Schema(description = "Lastname of a user", example = "Doe", required = true)
-    @Size(min = 3, max = 20, message = "The field lastname must be between 3 and 20 characters")
+    @Size(min = 0, max = 20, message = "The field lastname must be between 3 and 20 characters")
     private String lastName;
 
     @Getter
@@ -49,8 +47,6 @@ public class UserDTOUpdate {
     @Getter
     @Setter
     @Schema(description = "Gender of a user", example = "Male", required = true)
-    @Size(min = 5, max = 9, message = "The field gender must be between 5 and 9 characters")
-    @Pattern(regexp = "^(Masculino|Feminino|Outro)$", message = "Gender must be Male, Female, or Other")
     private String gender;
 
     @Getter
@@ -63,7 +59,6 @@ public class UserDTOUpdate {
     @Getter
     @Setter
     @Schema(description = "Phone number of a user", example = "11-98765-4321", required = true)
-    @Pattern(regexp = "^\\d{10,11}$", message = "Phone number must be between 10 and 11 characters")
     private String phone;
 
     @Getter
@@ -81,11 +76,20 @@ public class UserDTOUpdate {
     @Getter
     @Setter
     @Schema(description = "Address of a user. Can be partially updated.", required = false)
-    @Valid 
     private Address address;
 
     @Getter @Setter
-    @Schema(description = "Status of a user", required = true)
+    @Schema(description = "Status of a user", required = false)
     private Status status;
 
+    public UserDTOUpdate(String firstName, String lastName, LocalDate birthDate, String gender, String cpf, String phone, String email, Address address) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.birthDate = birthDate;
+        this.gender = gender;
+        this.cpf = cpf;
+        this.phone = phone;
+        this.email = email;
+        this.address = address;
+    }
 }

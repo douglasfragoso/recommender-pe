@@ -85,28 +85,28 @@ public class POIService {
         if (dto.getDescription() != null) {
             poiToUpdate.setDescription(dto.getDescription());
         }
-        if (dto.getAddress() != null) {
+         if (dto.getAddress() != null) {
             Address addressToUpdate = poiToUpdate.getAddress();
 
-            if (dto.getAddress().getStreet() != null) {
+            if (dto.getAddress().getStreet() != null && !dto.getAddress().getStreet().isEmpty()) {
                 addressToUpdate.setStreet(dto.getAddress().getStreet());
             }
-            if (dto.getAddress().getNumber() != null) {
+            if (dto.getAddress().getNumber() != null && !dto.getAddress().getNumber().equals(0)) {
                 addressToUpdate.setNumber(dto.getAddress().getNumber());
             }
-            if (dto.getAddress().getComplement() != null) {
+            if (dto.getAddress().getComplement() != null && !dto.getAddress().getComplement().isEmpty()) {
                 addressToUpdate.setComplement(dto.getAddress().getComplement());
             }
-            if (dto.getAddress().getNeighborhood() != null) {
+            if (dto.getAddress().getNeighborhood() != null && !dto.getAddress().getNeighborhood().isEmpty()) {
                 addressToUpdate.setNeighborhood(dto.getAddress().getNeighborhood());
             }
-            if (dto.getAddress().getCity() != null) {
+            if (dto.getAddress().getCity() != null && !dto.getAddress().getCity().isEmpty()) {
                 addressToUpdate.setCity(dto.getAddress().getCity());
             }
-            if (dto.getAddress().getState() != null) {
+            if (dto.getAddress().getState() != null && !dto.getAddress().getState().isEmpty()) {
                 addressToUpdate.setState(dto.getAddress().getState());
             }
-            if (dto.getAddress().getZipCode() != null) {
+            if (dto.getAddress().getZipCode() != null && !dto.getAddress().getZipCode().isEmpty()) {
                 addressToUpdate.setZipCode(dto.getAddress().getZipCode());
             }
         }

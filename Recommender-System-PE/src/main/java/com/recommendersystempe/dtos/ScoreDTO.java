@@ -15,8 +15,6 @@ import lombok.NoArgsConstructor;
 public class ScoreDTO {
 
     @Schema(description = "Recommendation Id", example = "1", required = true)
-    @NotNull(message = "The field recommendationId is required")
-    @Min(value = 1, message = "Recommendation Id must be at least 1")
     private Long recommendationId;
 
     @Schema(description = "POI Id", example = "1", required = true)

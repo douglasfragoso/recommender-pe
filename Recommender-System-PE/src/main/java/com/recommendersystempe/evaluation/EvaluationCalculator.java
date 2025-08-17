@@ -19,12 +19,11 @@ public class EvaluationCalculator {
         int k
     ) {
         double precisionAtK = calculatePrecisionAtK(recommendedPois, relevantItems, k);
-        double intraListSimilarity = IntraListSimilarity.calculate(recommendedPois);
-        
+        double hitRateAtK = HitRate.userHitRateAtK(recommendedPois, relevantItems, k);
+
         return new UserEvaluationMetricsDTO(
             precisionAtK,
-            0, // HitRate será calculado separadamente
-            intraListSimilarity
+            hitRateAtK
         );
     }
 

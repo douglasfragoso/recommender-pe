@@ -17,6 +17,4 @@ public class UserEvaluationMetricsDTO {
     @Schema(description = "HitRate@K", example = "0.90")
     private double hitRateAtK;
 
-    @Schema(description = "Intra List", example = "0.70")
-    private double intraListSimilarity;
 }

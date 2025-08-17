@@ -22,16 +22,16 @@ public class RecommendationDTO {
 
     @Getter
     @Schema(description = "List of POIs associated with the recommendation", required = true)
-    private List<POIDTO> pois = new ArrayList<>();
+    private List<RecommendationPOIDTO> pois = new ArrayList<>();
 
     public void addPOI(List<POI> pois) {
         this.pois.addAll(pois.stream()
-                .map(this::convertToDTO)
+                .map(this::convertToRecommendationDTO)
                 .collect(Collectors.toList()));
     }
 
-    private POIDTO convertToDTO(POI poi) {
-        return new POIDTO(
+    private RecommendationPOIDTO convertToRecommendationDTO(POI poi) {
+        return new RecommendationPOIDTO(
                 poi.getId(),
                 poi.getName(),
                 poi.getDescription(),

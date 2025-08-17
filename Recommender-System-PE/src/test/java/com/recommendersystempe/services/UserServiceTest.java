@@ -146,10 +146,11 @@ public class UserServiceTest {
                 () -> assertEquals(USER.getEmail(), result.getEmail(), "Email must be the same"));
     }
 
-        @Test
+    @Test
     void testUpdateOwnProfile_ShouldUpdateUserDetails() {
         // given / arrange
-        User currentUser = createUser(1L, "Richard", "Fragoso", LocalDate.of(1990, 12, 5), "Masculino", "12345678900", "81-98765-4321",
+        User currentUser = createUser(1L, "Richard", "Fragoso", LocalDate.of(1990, 12, 5), "Masculino", "12345678900",
+                "81-98765-4321",
                 "richard@example.com", "senha123", ADDRESS, Roles.USER);
 
         Authentication auth = mock(Authentication.class);
@@ -177,14 +178,16 @@ public class UserServiceTest {
     void testUpdateUserById_ShouldUpdateUserDetails() {
         // given / arrange
         Long userId = 1L;
-        User existingUser = createUser(userId, "John", "Doe", LocalDate.of(1990, 12, 5), "Masculino", "12345678900", "81-98765-4321",
+        User existingUser = createUser(userId, "John", "Doe", LocalDate.of(1990, 12, 5), "Masculino", "12345678900",
+                "81-98765-4321",
                 "john@example.com", "senha123", ADDRESS, Roles.USER);
 
         UserDTOUpdate userDTOUpdate = new UserDTOUpdate();
         userDTOUpdate.setFirstName("John Updated");
         userDTOUpdate.setEmail("john.updated@example.com");
 
-        given(userRepository.findById(userId)).willReturn(Optional.of(existingUser));;
+        given(userRepository.findById(userId)).willReturn(Optional.of(existingUser));
+        ;
         given(userRepository.save(any(User.class))).willAnswer(invocation -> invocation.getArgument(0));
 
         // when / act
@@ -195,7 +198,6 @@ public class UserServiceTest {
         assertEquals("John Updated", existingUser.getFirstName());
         assertEquals("john.updated@example.com", existingUser.getEmail());
     }
-
 
     @Test
     void testDeleteUserById_ShouldDeleteUser() {

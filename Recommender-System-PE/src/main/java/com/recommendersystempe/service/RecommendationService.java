@@ -18,8 +18,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.recommendersystempe.dtos.POIDTO;
 import com.recommendersystempe.dtos.RecommendationDTO;
+import com.recommendersystempe.dtos.RecommendationPOIDTO;
 import com.recommendersystempe.dtos.ScoreDTO;
 import com.recommendersystempe.dtos.SimilarityMetricDTO;
 import com.recommendersystempe.models.POI;
@@ -227,7 +227,7 @@ public class RecommendationService {
     }
 
     private RecommendationDTO convertToDTO(Recommendation recommendation) {
-        List<POIDTO> poiDTOs = recommendation.getPois().stream()
+        List<RecommendationPOIDTO> poiDTOs = recommendation.getPois().stream()
                 .map(this::convertPOIDTO)
                 .collect(Collectors.toList());
 
@@ -236,8 +236,8 @@ public class RecommendationService {
                 poiDTOs);
     }
 
-    private POIDTO convertPOIDTO(POI poi) {
-        return new POIDTO(
+    private RecommendationPOIDTO convertPOIDTO(POI poi) {
+        return new RecommendationPOIDTO(
                 poi.getId(),
                 poi.getName(),
                 poi.getDescription(),
