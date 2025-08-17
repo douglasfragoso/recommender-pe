@@ -1,6 +1,6 @@
 USE db_recommenderpe;
 -- POI ID 1
-INSERT INTO tb_pois (id, poi_name, poi_description, street, house_number, complement, neighborhood, city, states, country, zip_code) 
+INSERT INTO tb_pois (id, poi_name, poi_description, street, house_number, complement, neighborhood, city, states, country, zip_code, poi_status) 
 VALUES (
   1, 
   'Basílica Nossa Senhora do Carmo', 
@@ -12,7 +12,8 @@ VALUES (
   'Recife', 
   'PE', 
   'Brasil', 
-  '50020000'
+  '50020000',
+  'ACTIVE'
 );
 
 INSERT INTO pois_motivations (poi_id, motivation) VALUES (1, 'HERITAGE'), (1, 'SPIRITUALITY'), (1, 'CULTURE'), (1, 'ARTISTIC_VALUE'), (1, 'EXPLORATION');
@@ -20,7 +21,7 @@ INSERT INTO pois_hobbies (poi_id, hobbies) VALUES (1, 'ART'), (1, 'PHOTOGRAPHY')
 INSERT INTO pois_themes (poi_id, theme) VALUES (1, 'CULTURAL'), (1, 'RELIGIOUS'), (1, 'HISTORY'), (1, 'COLONIAL'), (1, 'BAROQUE');
 
 -- POI ID 2
-INSERT INTO tb_pois (id, poi_name, poi_description, street, house_number, complement, neighborhood, city, states, country, zip_code) 
+INSERT INTO tb_pois (id, poi_name, poi_description, street, house_number, complement, neighborhood, city, states, country, zip_code, poi_status) 
 VALUES (
   2, 
   'Bistrô Negra Linda', 
@@ -32,7 +33,8 @@ VALUES (
   'Recife', 
   'PE', 
   'Brasil', 
-  '52070000'
+  '52070000',
+  'ACTIVE'
 );
 
 INSERT INTO pois_motivations (poi_id, motivation) VALUES (2, 'ARTISTIC_VALUE'), (2, 'IMMERSIVE_EXPERIENCE'), (2, 'SOCIAL'), (2, 'GASTRONOMY'), (2, 'ENTERTAINMENT');
@@ -40,7 +42,7 @@ INSERT INTO pois_hobbies (poi_id, hobbies) VALUES (2, 'GASTRONOMY'), (2, 'SOCIAL
 INSERT INTO pois_themes (poi_id, theme) VALUES (2, 'GASTRONOMIC'), (2, 'CULTURAL'), (2, 'FAMILY_FRIENDLY'), (2, 'MODERN'), (2, 'NATURE');
 
 -- POI ID 3
-INSERT INTO tb_pois (id, poi_name, poi_description, street, house_number, complement, neighborhood, city, states, country, zip_code) 
+INSERT INTO tb_pois (id, poi_name, poi_description, street, house_number, complement, neighborhood, city, states, country, zip_code, poi_status) 
 VALUES (
   3, 
   'Cachaçaria Carvalheira', 
@@ -52,7 +54,8 @@ VALUES (
   'Recife', 
   'PE', 
   'Brasil', 
-  '50770011'
+  '50770011',
+  'ACTIVE'
 );
 
 INSERT INTO pois_motivations (poi_id, motivation) VALUES (3, 'GASTRONOMY'), (3, 'TRADITION'), (3, 'IMMERSIVE_EXPERIENCE'), (3, 'ARTISTIC_VALUE'), (3, 'EXPLORATION');
@@ -60,7 +63,7 @@ INSERT INTO pois_hobbies (poi_id, hobbies) VALUES (3, 'LEARNING'), (3, 'ART'), (
 INSERT INTO pois_themes (poi_id, theme) VALUES (3, 'GASTRONOMIC'), (3, 'CULTURAL'), (3, 'HISTORY'), (3, 'NATURE'), (3, 'ARCHITECTURAL_STYLE');
 
 -- POI ID 4
-INSERT INTO tb_pois (id, poi_name, poi_description, street, house_number, complement, neighborhood, city, states, country, zip_code) 
+INSERT INTO tb_pois (id, poi_name, poi_description, street, house_number, complement, neighborhood, city, states, country, zip_code, poi_status) 
 VALUES (
   4, 
   'Cais do Sertão', 
@@ -72,7 +75,8 @@ VALUES (
   'Recife', 
   'PE', 
   'Brasil', 
-  '50030150'
+  '50030150',
+  'ACTIVE'
 );
 
 INSERT INTO pois_motivations (poi_id, motivation) VALUES (4, 'CULTURE'), (4, 'EXPLORATION'), (4, 'CREATIVITY'), (4, 'IDENTITY'), (4, 'SOCIAL');
@@ -80,7 +84,7 @@ INSERT INTO pois_hobbies (poi_id, hobbies) VALUES (4, 'LEARNING'), (4, 'ART'), (
 INSERT INTO pois_themes (poi_id, theme) VALUES (4, 'CULTURAL'), (4, 'MODERN'), (4, 'HISTORY'), (4, 'FAMILY_FRIENDLY'), (4, 'FOLKLORE');
 
 -- POI ID 5
-INSERT INTO tb_pois (id, poi_name, poi_description, street, house_number, complement, neighborhood, city, states, country, zip_code) 
+INSERT INTO tb_pois (id, poi_name, poi_description, street, house_number, complement, neighborhood, city, states, country, zip_code, poi_status) 
 VALUES (
   5, 
   'Caixa Cultural', 
@@ -92,7 +96,8 @@ VALUES (
   'Recife', 
   'PE', 
   'Brasil', 
-  '50030150'
+  '50030150',
+  'ACTIVE'
 );
 
 INSERT INTO pois_motivations (poi_id, motivation) VALUES (5, 'CULTURE'), (5, 'ENTERTAINMENT'), (5, 'SOCIAL'), (5, 'ARTISTIC_VALUE'), (5, 'EXPLORATION');
@@ -100,7 +105,7 @@ INSERT INTO pois_hobbies (poi_id, hobbies) VALUES (5, 'ART'), (5, 'THEATER'), (5
 INSERT INTO pois_themes (poi_id, theme) VALUES (5, 'CULTURAL'), (5, 'HISTORY'), (5, 'MODERN'), (5, 'FAMILY_FRIENDLY'), (5, 'URBAN_ART');
 
 -- POI ID 6
-INSERT INTO tb_pois (id, poi_name, poi_description, street, house_number, complement, neighborhood, city, states, country, zip_code) 
+INSERT INTO tb_pois (id, poi_name, poi_description, street, house_number, complement, neighborhood, city, states, country, zip_code, poi_status) 
 VALUES (
   6, 
   'Capela Dourada', 
@@ -112,7 +117,8 @@ VALUES (
   'Recife', 
   'PE', 
   'Brasil', 
-  '50010240'
+  '50010240',
+  'ACTIVE'
 );
 
 INSERT INTO pois_motivations (poi_id, motivation) VALUES (6, 'HERITAGE'), (6, 'SPIRITUALITY'), (6, 'ARTISTIC_VALUE'), (6, 'EXPLORATION'), (6, 'TRADITION');
@@ -120,7 +126,7 @@ INSERT INTO pois_hobbies (poi_id, hobbies) VALUES (6, 'ART'), (6, 'PHOTOGRAPHY')
 INSERT INTO pois_themes (poi_id, theme) VALUES (6, 'CULTURAL'), (6, 'RELIGIOUS'), (6, 'HISTORY'), (6, 'BAROQUE'), (6, 'COLONIAL');
 
 -- POI ID 7
-INSERT INTO tb_pois (id, poi_name, poi_description, street, house_number, complement, neighborhood, city, states, country, zip_code) 
+INSERT INTO tb_pois (id, poi_name, poi_description, street, house_number, complement, neighborhood, city, states, country, zip_code, poi_status) 
 VALUES (
   7, 
   'Casa da Cultura', 
@@ -132,7 +138,8 @@ VALUES (
   'Recife', 
   'PE', 
   'Brasil', 
-  '50020060'
+  '50020060',
+  'ACTIVE'
 );
 
 INSERT INTO pois_motivations (poi_id, motivation) VALUES (7, 'HERITAGE'), (7, 'EDUCATION'), (7, 'EXPLORATION'), (7, 'ARTISTIC_VALUE'), (7, 'CULTURE');
@@ -140,7 +147,7 @@ INSERT INTO pois_hobbies (poi_id, hobbies) VALUES (7, 'ART'), (7, 'READING'), (7
 INSERT INTO pois_themes (poi_id, theme) VALUES (7, 'CULTURAL'), (7, 'HISTORY'), (7, 'MODERN'), (7, 'FAMILY_FRIENDLY'), (7, 'URBAN_ART');
 
 -- POI ID 8
-INSERT INTO tb_pois (id, poi_name, poi_description, street, house_number, complement, neighborhood, city, states, country, zip_code) 
+INSERT INTO tb_pois (id, poi_name, poi_description, street, house_number, complement, neighborhood, city, states, country, zip_code, poi_status) 
 VALUES (
   8, 
   'Catamaran Tours', 
@@ -152,7 +159,8 @@ VALUES (
   'Recife', 
   'PE', 
   'Brasil', 
-  '50020360'
+  '50020360',
+  'ACTIVE'
 );
 
 INSERT INTO pois_motivations (poi_id, motivation) VALUES (8, 'ENTERTAINMENT'), (8, 'EXPLORATION'), (8, 'CULTURE'), (8, 'SOCIAL'), (8, 'RELAXATION');
@@ -160,7 +168,7 @@ INSERT INTO pois_hobbies (poi_id, hobbies) VALUES (8, 'ADVENTURE'), (8, 'TRAVELI
 INSERT INTO pois_themes (poi_id, theme) VALUES (8, 'ADVENTURE'), (8, 'CULTURAL'), (8, 'FAMILY_FRIENDLY'), (8, 'NATURE'), (8, 'MODERN');
 
 -- POI ID 9
-INSERT INTO tb_pois (id, poi_name, poi_description, street, house_number, complement, neighborhood, city, states, country, zip_code) 
+INSERT INTO tb_pois (id, poi_name, poi_description, street, house_number, complement, neighborhood, city, states, country, zip_code, poi_status) 
 VALUES (
   9, 
   'Centro de Artesanato de Pernambuco', 
@@ -172,7 +180,8 @@ VALUES (
   'Recife', 
   'PE', 
   'Brasil', 
-  '50030150'
+  '50030150',
+  'ACTIVE'
 );
 
 INSERT INTO pois_motivations (poi_id, motivation) VALUES (9, 'CULTURE'), (9, 'ARTISTIC_VALUE'), (9, 'TRADITION'), (9, 'EXPLORATION'), (9, 'SOCIAL');
@@ -180,7 +189,7 @@ INSERT INTO pois_hobbies (poi_id, hobbies) VALUES (9, 'ART'), (9, 'READING'), (9
 INSERT INTO pois_themes (poi_id, theme) VALUES (9, 'CULTURAL'), (9, 'FAMILY_FRIENDLY'), (9, 'MODERN'), (9, 'NATURE'), (9, 'URBAN_ART');
 
 -- POI ID 10
-INSERT INTO tb_pois (id, poi_name, poi_description, street, house_number, complement, neighborhood, city, states, country, zip_code) 
+INSERT INTO tb_pois (id, poi_name, poi_description, street, house_number, complement, neighborhood, city, states, country, zip_code, poi_status) 
 VALUES (
   10, 
   'Concatedral de São Pedro dos Clérigos', 
@@ -192,7 +201,8 @@ VALUES (
   'Recife', 
   'PE', 
   'Brasil', 
-  '50020240'
+  '50020240',
+  'ACTIVE'
 );
 
 INSERT INTO pois_motivations (poi_id, motivation) VALUES (10, 'HERITAGE'), (10, 'SPIRITUALITY'), (10, 'TRADITION'), (10, 'ARTISTIC_VALUE'), (10, 'EXPLORATION');
@@ -200,7 +210,7 @@ INSERT INTO pois_hobbies (poi_id, hobbies) VALUES (10, 'ART'), (10, 'PHOTOGRAPHY
 INSERT INTO pois_themes (poi_id, theme) VALUES (10, 'RELIGIOUS'), (10, 'CULTURAL'), (10, 'HISTORY'), (10, 'BAROQUE'), (10, 'COLONIAL');
 
 -- POI ID 11
-INSERT INTO tb_pois (id, poi_name, poi_description, street, house_number, complement, neighborhood, city, states, country, zip_code) 
+INSERT INTO tb_pois (id, poi_name, poi_description, street, house_number, complement, neighborhood, city, states, country, zip_code, poi_status) 
 VALUES (
   11, 
   'Embaixada Pernambuco', 
@@ -212,7 +222,8 @@ VALUES (
   'Recife', 
   'PE', 
   'Brasil', 
-  '50030220'
+  '50030220',
+  'ACTIVE'
 );
 
 INSERT INTO pois_motivations (poi_id, motivation) VALUES (11, 'CULTURE'), (11, 'ENTERTAINMENT'), (11, 'TRADITION'), (11, 'ARTISTIC_VALUE'), (11, 'IDENTITY');
@@ -220,7 +231,7 @@ INSERT INTO pois_hobbies (poi_id, hobbies) VALUES (11, 'ART'), (11, 'DANCING'), 
 INSERT INTO pois_themes (poi_id, theme) VALUES (11, 'CULTURAL'), (11, 'MODERN'), (11, 'FAMILY_FRIENDLY'), (11, 'HISTORY'), (11, 'ADVENTURE');
 
 -- POI ID 12
-INSERT INTO tb_pois (id, poi_name, poi_description, street, house_number, complement, neighborhood, city, states, country, zip_code) 
+INSERT INTO tb_pois (id, poi_name, poi_description, street, house_number, complement, neighborhood, city, states, country, zip_code, poi_status) 
 VALUES (
   12, 
   'Embaixada dos Bonecos Gigantes', 
@@ -232,7 +243,8 @@ VALUES (
   'Recife', 
   'PE', 
   'Brasil', 
-  '50030170'
+  '50030170',
+  'ACTIVE'
 );
 
 INSERT INTO pois_motivations (poi_id, motivation) VALUES (12, 'CULTURE'), (12, 'ENTERTAINMENT'), (12, 'TRADITION'), (12, 'ARTISTIC_VALUE'), (12, 'SOCIAL');
@@ -240,7 +252,7 @@ INSERT INTO pois_hobbies (poi_id, hobbies) VALUES (12, 'ART'), (12, 'PHOTOGRAPHY
 INSERT INTO pois_themes (poi_id, theme) VALUES (12, 'CULTURAL'), (12, 'FAMILY_FRIENDLY'), (12, 'HISTORY'), (12, 'FOLKLORE'), (12, 'ADVENTURE');
 
 -- POI ID 13
-INSERT INTO tb_pois (id, poi_name, poi_description, street, house_number, complement, neighborhood, city, states, country, zip_code) 
+INSERT INTO tb_pois (id, poi_name, poi_description, street, house_number, complement, neighborhood, city, states, country, zip_code, poi_status) 
 VALUES (
   13, 
   'Forte das Cinco Pontas', 
@@ -252,7 +264,8 @@ VALUES (
   'Recife', 
   'PE', 
   'Brasil', 
-  '50020500'
+  '50020500',
+  'ACTIVE'
 );
 
 INSERT INTO pois_motivations (poi_id, motivation) VALUES (13, 'HERITAGE'), (13, 'EDUCATION'), (13, 'ARTISTIC_VALUE'), (13, 'EXPLORATION'), (13, 'TRADITION');
@@ -260,7 +273,7 @@ INSERT INTO pois_hobbies (poi_id, hobbies) VALUES (13, 'LEARNING'), (13, 'PHOTOG
 INSERT INTO pois_themes (poi_id, theme) VALUES (13, 'HISTORY'), (13, 'CULTURAL'), (13, 'FAMILY_FRIENDLY'), (13, 'MODERN'), (13, 'COLONIAL');
 
 -- POI ID 14
-INSERT INTO tb_pois (id, poi_name, poi_description, street, house_number, complement, neighborhood, city, states, country, zip_code)
+INSERT INTO tb_pois (id, poi_name, poi_description, street, house_number, complement, neighborhood, city, states, country, zip_code, poi_status)
 VALUES (
 14,
 'Forte do Brum',
@@ -272,7 +285,8 @@ NULL,
 'Recife',
 'PE',
 'Brasil',
-'50030270'
+'50030270',
+'ACTIVE'
 );
 
 INSERT INTO pois_motivations (poi_id, motivation) VALUES (14, 'CULTURE'), (14, 'HERITAGE'), (14, 'SPIRITUALITY'), (14, 'ARTISTIC_VALUE'), (14, 'EXPLORATION');
@@ -280,7 +294,7 @@ INSERT INTO pois_hobbies (poi_id, hobbies) VALUES (14, 'ADVENTURE'), (14, 'LEARN
 INSERT INTO pois_themes (poi_id, theme) VALUES (14, 'HISTORY'), (14, 'CULTURAL'), (14, 'ADVENTURE'), (14, 'RELIGIOUS'), (14, 'COLONIAL');
 
 -- POI ID 15
-INSERT INTO tb_pois (id, poi_name, poi_description, street, house_number, complement, neighborhood, city, states, country, zip_code)
+INSERT INTO tb_pois (id, poi_name, poi_description, street, house_number, complement, neighborhood, city, states, country, zip_code, poi_status)
 VALUES (
 15,
 'Fundação Gilberto Freyre',
@@ -292,7 +306,8 @@ NULL,
 'Recife',
 'PE',
 'Brasil',
-'52071440'
+'52071440',
+'ACTIVE'
 );
 
 INSERT INTO pois_motivations (poi_id, motivation) VALUES (15, 'CULTURE'), (15, 'EDUCATION'), (15, 'ARTISTIC_VALUE'), (15, 'EXPLORATION'), (15, 'TRADITION');
@@ -300,7 +315,7 @@ INSERT INTO pois_hobbies (poi_id, hobbies) VALUES (15, 'LEARNING'), (15, 'READIN
 INSERT INTO pois_themes (poi_id, theme) VALUES (15, 'CULTURAL'), (15, 'HISTORY'), (15, 'MODERN'), (15, 'FAMILY_FRIENDLY'), (15, 'COLONIAL');
 
 -- POI ID 16
-INSERT INTO tb_pois (id, poi_name, poi_description, street, house_number, complement, neighborhood, city, states, country, zip_code)
+INSERT INTO tb_pois (id, poi_name, poi_description, street, house_number, complement, neighborhood, city, states, country, zip_code, poi_status)
 VALUES (
   16,
   'Igreja de Santa Tereza D Avila',
@@ -312,7 +327,8 @@ VALUES (
   'Recife',
   'PE',
   'Brasil',
-  '50020230'
+  '50020230',
+  'ACTIVE'
 );
 
 INSERT INTO pois_motivations (poi_id, motivation) VALUES (16, 'HERITAGE'), (16, 'SPIRITUALITY'), (16, 'ARTISTIC_VALUE'), (16, 'TRADITION'), (16, 'EXPLORATION');
@@ -320,7 +336,7 @@ INSERT INTO pois_hobbies (poi_id, hobbies) VALUES (16, 'ART'), (16, 'PHOTOGRAPHY
 INSERT INTO pois_themes (poi_id, theme) VALUES (16, 'RELIGIOUS'), (16, 'CULTURAL'), (16, 'HISTORY'), (16, 'BAROQUE'), (16, 'COLONIAL');
 
 -- POI ID 17
-INSERT INTO tb_pois (id, poi_name, poi_description, street, house_number, complement, neighborhood, city, states, country, zip_code)
+INSERT INTO tb_pois (id, poi_name, poi_description, street, house_number, complement, neighborhood, city, states, country, zip_code, poi_status)
 VALUES (
 17,
 'Igreja Madre de Deus',
@@ -332,7 +348,8 @@ NULL,
 'Recife',
 'PE',
 'Brasil',
-'50030100'
+'50030100',
+'ACTIVE'
 );
 
 INSERT INTO pois_motivations (poi_id, motivation) VALUES (17, 'HERITAGE'), (17, 'SPIRITUALITY'), (17, 'ARTISTIC_VALUE'), (17, 'TRADITION'), (17, 'EXPLORATION');
@@ -340,7 +357,7 @@ INSERT INTO pois_hobbies (poi_id, hobbies) VALUES (17, 'ART'), (17, 'PHOTOGRAPHY
 INSERT INTO pois_themes (poi_id, theme) VALUES (17, 'RELIGIOUS'), (17, 'CULTURAL'), (17, 'HISTORY'), (17, 'BAROQUE'), (17, 'COLONIAL');
 
 -- POI ID 18
-INSERT INTO tb_pois (id, poi_name, poi_description, street, house_number, complement, neighborhood, city, states, country, zip_code)
+INSERT INTO tb_pois (id, poi_name, poi_description, street, house_number, complement, neighborhood, city, states, country, zip_code, poi_status)
 VALUES (
 18,
 'Igreja Nossa Senhora do Rosário dos Homens Pretos',
@@ -352,7 +369,8 @@ NULL,
 'Recife',
 'PE',
 'Brasil',
-'50010140'
+'50010140',
+'ACTIVE'
 );
 
 INSERT INTO pois_motivations (poi_id, motivation) VALUES (18, 'CULTURE'), (18, 'TRADITION'), (18, 'SPIRITUALITY'), (18, 'ARTISTIC_VALUE'), (18, 'IDENTITY');
@@ -360,7 +378,7 @@ INSERT INTO pois_hobbies (poi_id, hobbies) VALUES (18, 'ART'), (18, 'DANCING'), 
 INSERT INTO pois_themes (poi_id, theme) VALUES (18, 'CULTURAL'), (18, 'RELIGIOUS'), (18, 'HISTORY'), (18, 'FAMILY_FRIENDLY'), (18, 'AFRO_BRAZILIAN');
 
 -- POI ID 19
-INSERT INTO tb_pois (id, poi_name, poi_description, street, house_number, complement, neighborhood, city, states, country, zip_code)
+INSERT INTO tb_pois (id, poi_name, poi_description, street, house_number, complement, neighborhood, city, states, country, zip_code, poi_status)
 VALUES (
 19,
 'Instituto Ricardo Brennand',
@@ -372,7 +390,8 @@ NULL,
 'Recife',
 'PE',
 'Brasil',
-'50741904'
+'50741904',
+'ACTIVE'
 );
 
 INSERT INTO pois_motivations (poi_id, motivation) VALUES (19, 'HERITAGE'), (19, 'ARTISTIC_VALUE'), (19, 'EXPLORATION'), (19, 'EDUCATION'), (19, 'TRADITION');
@@ -380,7 +399,7 @@ INSERT INTO pois_hobbies (poi_id, hobbies) VALUES (19, 'ART'), (19, 'READING'), 
 INSERT INTO pois_themes (poi_id, theme) VALUES (19, 'CULTURAL'), (19, 'HISTORY'), (19, 'BAROQUE'), (19, 'COLONIAL'), (19, 'NATURE');
 
 -- POI ID 20
-INSERT INTO tb_pois (id, poi_name, poi_description, street, house_number, complement, neighborhood, city, states, country, zip_code)
+INSERT INTO tb_pois (id, poi_name, poi_description, street, house_number, complement, neighborhood, city, states, country, zip_code, poi_status)
 VALUES (
 20,
 'Jardim Botânico do Recife',
@@ -392,7 +411,8 @@ NULL,
 'Recife',
 'PE',
 'Brasil',
-'50791540'
+'50791540',
+'ACTIVE'
 );
 
 INSERT INTO pois_motivations (poi_id, motivation) VALUES (20, 'EXPLORATION'), (20, 'RELAXATION'), (20, 'FAMILY'), (20, 'ARTISTIC_VALUE'), (20, 'EDUCATION');
@@ -400,7 +420,7 @@ INSERT INTO pois_hobbies (poi_id, hobbies) VALUES (20, 'GARDENING'), (20, 'HIKIN
 INSERT INTO pois_themes (poi_id, theme) VALUES (20, 'NATURE'), (20, 'FAMILY_FRIENDLY'), (20, 'CULTURAL'), (20, 'MODERN'), (20, 'ADVENTURE');
 
 -- POI ID 21
-INSERT INTO tb_pois (id, poi_name, poi_description, street, house_number, complement, neighborhood, city, states, country, zip_code)
+INSERT INTO tb_pois (id, poi_name, poi_description, street, house_number, complement, neighborhood, city, states, country, zip_code, poi_status)
 VALUES (
 21,
 'Museu da Abolição',
@@ -412,7 +432,8 @@ NULL,
 'Recife',
 'PE',
 'Brasil',
-'50720001'
+'50720001',
+'ACTIVE'
 );
 
 INSERT INTO pois_motivations (poi_id, motivation) VALUES (21, 'CULTURE'), (21, 'EDUCATION'), (21, 'TRADITION'), (21, 'ARTISTIC_VALUE'), (21, 'IDENTITY');
@@ -420,7 +441,7 @@ INSERT INTO pois_hobbies (poi_id, hobbies) VALUES (21, 'LEARNING'), (21, 'READIN
 INSERT INTO pois_themes (poi_id, theme) VALUES (21, 'AFRO_BRAZILIAN'), (21, 'COLONIAL'), (21, 'CULTURAL'), (21, 'HISTORY'), (21, 'FAMILY_FRIENDLY');
 
 -- POI ID 22
-INSERT INTO tb_pois (id, poi_name, poi_description, street, house_number, complement, neighborhood, city, states, country, zip_code)
+INSERT INTO tb_pois (id, poi_name, poi_description, street, house_number, complement, neighborhood, city, states, country, zip_code, poi_status)
 VALUES (
 22,
 'Museu de Arte Moderna Aloísio Magalhães',
@@ -432,7 +453,8 @@ NULL,
 'Recife',
 'PE',
 'Brasil',
-'50060010'
+'50060010',
+'ACTIVE'
 );
 
 INSERT INTO pois_motivations (poi_id, motivation) VALUES (22, 'CULTURE'), (22, 'ARTISTIC_VALUE'), (22, 'EDUCATION'), (22, 'EXPLORATION'), (22, 'CREATIVITY');
@@ -440,7 +462,7 @@ INSERT INTO pois_hobbies (poi_id, hobbies) VALUES (22, 'ART'), (22, 'PHOTOGRAPHY
 INSERT INTO pois_themes (poi_id, theme) VALUES (22, 'CULTURAL'), (22, 'MODERN'), (22, 'HISTORY'), (22, 'URBAN_ART'), (22, 'FAMILY_FRIENDLY');
 
 -- POI ID 23
-INSERT INTO tb_pois (id, poi_name, poi_description, street, house_number, complement, neighborhood, city, states, country, zip_code)
+INSERT INTO tb_pois (id, poi_name, poi_description, street, house_number, complement, neighborhood, city, states, country, zip_code, poi_status)
 VALUES (
 23,
 'Museu do Estado de Pernambuco',
@@ -452,7 +474,8 @@ NULL,
 'Recife',
 'PE',
 'Brasil',
-'52050000'
+'52050000',
+'ACTIVE'
 );
 
 INSERT INTO pois_motivations (poi_id, motivation) VALUES (23, 'HERITAGE'), (23, 'EDUCATION'), (23, 'ARTISTIC_VALUE'), (23, 'EXPLORATION'), (23, 'TRADITION');
@@ -460,7 +483,7 @@ INSERT INTO pois_hobbies (poi_id, hobbies) VALUES (23, 'ART'), (23, 'READING'), 
 INSERT INTO pois_themes (poi_id, theme) VALUES (23, 'CULTURAL'), (23, 'HISTORY'), (23, 'FAMILY_FRIENDLY'), (23, 'COLONIAL'), (23, 'NATURE');
 
 -- POI ID 24
-INSERT INTO tb_pois (id, poi_name, poi_description, street, house_number, complement, neighborhood, city, states, country, zip_code)
+INSERT INTO tb_pois (id, poi_name, poi_description, street, house_number, complement, neighborhood, city, states, country, zip_code, poi_status)
 VALUES (
 24,
 'Museu do Homem do Nordeste',
@@ -472,7 +495,8 @@ NULL,
 'Recife',
 'PE',
 'Brasil',
-'52061540'
+'52061540',
+'ACTIVE'
 );
 
 INSERT INTO pois_motivations (poi_id, motivation) VALUES (24, 'CULTURE'), (24, 'EDUCATION'), (24, 'TRADITION'), (24, 'ARTISTIC_VALUE'), (24, 'IDENTITY');
@@ -480,7 +504,7 @@ INSERT INTO pois_hobbies (poi_id, hobbies) VALUES (24, 'ART'), (24, 'LEARNING'),
 INSERT INTO pois_themes (poi_id, theme) VALUES (24, 'CULTURAL'), (24, 'HISTORY'), (24, 'FAMILY_FRIENDLY'), (24, 'MODERN'), (24, 'NATURE');
 
 -- POI ID 25
-INSERT INTO tb_pois (id, poi_name, poi_description, street, house_number, complement, neighborhood, city, states, country, zip_code)
+INSERT INTO tb_pois (id, poi_name, poi_description, street, house_number, complement, neighborhood, city, states, country, zip_code, poi_status)
 VALUES (
 25,
 'Museu do Trem',
@@ -492,7 +516,8 @@ NULL,
 'Recife',
 'PE',
 'Brasil',
-'50020060'
+'50020060',
+'ACTIVE'
 );
 
 INSERT INTO pois_motivations (poi_id, motivation) VALUES (25, 'HERITAGE'), (25, 'EXPLORATION'), (25, 'EDUCATION'), (25, 'ARTISTIC_VALUE'), (25, 'TRADITION');
@@ -500,7 +525,7 @@ INSERT INTO pois_hobbies (poi_id, hobbies) VALUES (25, 'READING'), (25, 'LEARNIN
 INSERT INTO pois_themes (poi_id, theme) VALUES (25, 'CULTURAL'), (25, 'HISTORY'), (25, 'MODERN'), (25, 'FAMILY_FRIENDLY'), (25, 'COLONIAL');
 
 -- POI ID 26
-INSERT INTO tb_pois (id, poi_name, poi_description, street, house_number, complement, neighborhood, city, states, country, zip_code)
+INSERT INTO tb_pois (id, poi_name, poi_description, street, house_number, complement, neighborhood, city, states, country, zip_code, poi_status)
 VALUES (
 26,
 'Museu Murilo La Greca',
@@ -512,7 +537,8 @@ NULL,
 'Recife',
 'PE',
 'Brasil',
-'52060030'
+'52060030',
+'ACTIVE'
 );
 
 INSERT INTO pois_motivations (poi_id, motivation) VALUES (26, 'CULTURE'), (26, 'ARTISTIC_VALUE'), (26, 'EDUCATION'), (26, 'EXPLORATION'), (26, 'CREATIVITY');
@@ -520,7 +546,7 @@ INSERT INTO pois_hobbies (poi_id, hobbies) VALUES (26, 'ART'), (26, 'PHOTOGRAPHY
 INSERT INTO pois_themes (poi_id, theme) VALUES (26, 'CULTURAL'), (26, 'HISTORY'), (26, 'URBAN_ART'), (26, 'FAMILY_FRIENDLY'), (26, 'MODERN');
 
 -- POI ID 27
-INSERT INTO tb_pois (id, poi_name, poi_description, street, house_number, complement, neighborhood, city, states, country, zip_code)
+INSERT INTO tb_pois (id, poi_name, poi_description, street, house_number, complement, neighborhood, city, states, country, zip_code, poi_status)
 VALUES (
 27,
 'Oficina Francisco Brennand',
@@ -532,7 +558,8 @@ NULL,
 'Recife',
 'PE',
 'Brasil',
-'50740970'
+'50740970',
+'ACTIVE'
 );
 
 INSERT INTO pois_motivations (poi_id, motivation) VALUES (27, 'CULTURE'), (27, 'ARTISTIC_VALUE'), (27, 'EXPLORATION'), (27, 'IMMERSIVE_EXPERIENCE'), (27, 'CREATIVITY');
@@ -540,7 +567,7 @@ INSERT INTO pois_hobbies (poi_id, hobbies) VALUES (27, 'ART'), (27, 'PHOTOGRAPHY
 INSERT INTO pois_themes (poi_id, theme) VALUES (27, 'CULTURAL'), (27, 'MODERN'), (27, 'NATURE'), (27, 'URBAN_ART'), (27, 'ADVENTURE');
 
 -- POI ID 28
-INSERT INTO tb_pois (id, poi_name, poi_description, street, house_number, complement, neighborhood, city, states, country, zip_code)
+INSERT INTO tb_pois (id, poi_name, poi_description, street, house_number, complement, neighborhood, city, states, country, zip_code, poi_status)
 VALUES (
 28,
 'Paço do Frevo',
@@ -552,7 +579,8 @@ NULL,
 'Recife',
 'PE',
 'Brasil',
-'50030360'
+'50030360',
+'ACTIVE'
 );
 
 INSERT INTO pois_motivations (poi_id, motivation) VALUES (28, 'CULTURE'), (28, 'ENTERTAINMENT'), (28, 'TRADITION'), (28, 'SOCIAL'), (28, 'IDENTITY');
@@ -560,7 +588,7 @@ INSERT INTO pois_hobbies (poi_id, hobbies) VALUES (28, 'DANCING'), (28, 'MUSIC')
 INSERT INTO pois_themes (poi_id, theme) VALUES (28, 'CULTURAL'), (28, 'HISTORY'), (28, 'FOLKLORE'), (28, 'FAMILY_FRIENDLY'), (28, 'ADVENTURE');
 
 -- POI ID 29
-INSERT INTO tb_pois (id, poi_name, poi_description, street, house_number, complement, neighborhood, city, states, country, zip_code)
+INSERT INTO tb_pois (id, poi_name, poi_description, street, house_number, complement, neighborhood, city, states, country, zip_code, poi_status)
 VALUES (
 29,
 'Palácio da Justiça',
@@ -572,7 +600,8 @@ NULL,
 'Recife',
 'PE',
 'Brasil',
-'50010040'
+'50010040',
+'ACTIVE'
 );
 
 INSERT INTO pois_motivations (poi_id, motivation) VALUES (29, 'HERITAGE'), (29, 'ARTISTIC_VALUE'), (29, 'EXPLORATION'), (29, 'TRADITION'), (29, 'EDUCATION');
@@ -580,7 +609,7 @@ INSERT INTO pois_hobbies (poi_id, hobbies) VALUES (29, 'ART'), (29, 'PHOTOGRAPHY
 INSERT INTO pois_themes (poi_id, theme) VALUES (29, 'CULTURAL'), (29, 'HISTORY'), (29, 'ARCHITECTURAL_STYLE'), (29, 'COLONIAL'), (29, 'FAMILY_FRIENDLY');
 
 -- POI ID 30
-INSERT INTO tb_pois (id, poi_name, poi_description, street, house_number, complement, neighborhood, city, states, country, zip_code)
+INSERT INTO tb_pois (id, poi_name, poi_description, street, house_number, complement, neighborhood, city, states, country, zip_code, poi_status)
 VALUES (
 30,
 'Palácio do Campo das Princesas',
@@ -592,7 +621,8 @@ NULL,
 'Recife',
 'PE',
 'Brasil',
-'50010928'
+'50010928',
+'ACTIVE'
 );
 
 INSERT INTO pois_motivations (poi_id, motivation) VALUES (30, 'HERITAGE'), (30, 'ARTISTIC_VALUE'), (30, 'EXPLORATION'), (30, 'TRADITION'), (30, 'EDUCATION');
@@ -600,7 +630,7 @@ INSERT INTO pois_hobbies (poi_id, hobbies) VALUES (30, 'ART'), (30, 'PHOTOGRAPHY
 INSERT INTO pois_themes (poi_id, theme) VALUES (30, 'CULTURAL'), (30, 'HISTORY'), (30, 'ARCHITECTURAL_STYLE'), (30, 'COLONIAL'), (30, 'FAMILY_FRIENDLY');
 
 -- POI ID 31
-INSERT INTO tb_pois (id, poi_name, poi_description, street, house_number, complement, neighborhood, city, states, country, zip_code)
+INSERT INTO tb_pois (id, poi_name, poi_description, street, house_number, complement, neighborhood, city, states, country, zip_code, poi_status)
 VALUES (
 31,
 'Pracinha de Boa Viagem',
@@ -612,7 +642,8 @@ NULL,
 'Recife',
 'PE',
 'Brasil',
-'51020010'
+'51020010',
+'ACTIVE'
 );
 
 INSERT INTO pois_motivations (poi_id, motivation) VALUES (31, 'CULTURE'), (31, 'TRADITION'), (31, 'IMMERSIVE_EXPERIENCE'), (31, 'EXPLORATION'), (31, 'SOCIAL');
@@ -620,7 +651,7 @@ INSERT INTO pois_hobbies (poi_id, hobbies) VALUES (31, 'ART'), (31, 'GARDENING')
 INSERT INTO pois_themes (poi_id, theme) VALUES (31, 'CULTURAL'), (31, 'HISTORY'), (31, 'FAMILY_FRIENDLY'), (31, 'RELIGIOUS'), (31, 'NATURE');
 
 -- POI ID 32
-INSERT INTO tb_pois (id, poi_name, poi_description, street, house_number, complement, neighborhood, city, states, country, zip_code)
+INSERT INTO tb_pois (id, poi_name, poi_description, street, house_number, complement, neighborhood, city, states, country, zip_code, poi_status)
 VALUES (
 32,
 'Sede do Galo da Madrugada',
@@ -632,7 +663,8 @@ NULL,
 'Recife',
 'PE',
 'Brasil',
-'50020050'
+'50020050',
+'ACTIVE'
 );
 
 INSERT INTO pois_motivations (poi_id, motivation) VALUES (32, 'CULTURE'), (32, 'TRADITION'), (32, 'ENTERTAINMENT'), (32, 'SOCIAL'), (32, 'IDENTITY');
@@ -640,7 +672,7 @@ INSERT INTO pois_hobbies (poi_id, hobbies) VALUES (32, 'DANCING'), (32, 'MUSIC')
 INSERT INTO pois_themes (poi_id, theme) VALUES (32, 'CULTURAL'), (32, 'FAMILY_FRIENDLY'), (32, 'HISTORY'), (32, 'FOLKLORE'), (32, 'ADVENTURE');
 
 -- POI ID 33
-INSERT INTO tb_pois (id, poi_name, poi_description, street, house_number, complement, neighborhood, city, states, country, zip_code)
+INSERT INTO tb_pois (id, poi_name, poi_description, street, house_number, complement, neighborhood, city, states, country, zip_code, poi_status)
 VALUES (
 33,
 'Sinagoga Kahal Zur Israel',
@@ -652,7 +684,8 @@ NULL,
 'Recife',
 'PE',
 'Brasil',
-'50030170'
+'50030170',
+'ACTIVE'
 );
 
 INSERT INTO pois_motivations (poi_id, motivation) VALUES (33, 'HERITAGE'), (33, 'EDUCATION'), (33, 'SPIRITUALITY'), (33, 'TRADITION'), (33, 'EDUCATION');
@@ -660,7 +693,7 @@ INSERT INTO pois_hobbies (poi_id, hobbies) VALUES (33, 'LEARNING'), (33, 'READIN
 INSERT INTO pois_themes (poi_id, theme) VALUES (33, 'CULTURAL'), (33, 'RELIGIOUS'), (33, 'HISTORY'), (33, 'COLONIAL'), (33, 'FAMILY_FRIENDLY');
 
 -- POI ID 34
-INSERT INTO tb_pois (id, poi_name, poi_description, street, house_number, complement, neighborhood, city, states, country, zip_code)
+INSERT INTO tb_pois (id, poi_name, poi_description, street, house_number, complement, neighborhood, city, states, country, zip_code, poi_status)
 VALUES (
 34,
 'Teatro de Santa Isabel',
@@ -672,7 +705,8 @@ NULL,
 'Recife',
 'PE',
 'Brasil',
-'50010040'
+'50010040',
+'ACTIVE'
 );
 
 INSERT INTO pois_motivations (poi_id, motivation) VALUES (34, 'CULTURE'), (34, 'ENTERTAINMENT'), (34, 'EDUCATION'), (34, 'ARTISTIC_VALUE'), (34, 'HERITAGE');
@@ -680,7 +714,7 @@ INSERT INTO pois_hobbies (poi_id, hobbies) VALUES (34, 'ART'), (34, 'THEATER'), 
 INSERT INTO pois_themes (poi_id, theme) VALUES (34, 'CULTURAL'), (34, 'HISTORY'), (34, 'ARCHITECTURAL_STYLE'), (34, 'ROMANTIC'), (34, 'COLONIAL');
 
 -- POI ID 35
-INSERT INTO tb_pois (id, poi_name, poi_description, street, house_number, complement, neighborhood, city, states, country, zip_code)
+INSERT INTO tb_pois (id, poi_name, poi_description, street, house_number, complement, neighborhood, city, states, country, zip_code, poi_status)
 VALUES (
 35,
 'Teatro do Parque',
@@ -692,7 +726,8 @@ NULL,
 'Recife',
 'PE',
 'Brasil',
-'50060080'
+'50060080',
+'ACTIVE'
 );
 
 INSERT INTO pois_motivations (poi_id, motivation) VALUES (35, 'CULTURE'), (35, 'ENTERTAINMENT'), (35, 'ARTISTIC_VALUE'), (35, 'EXPLORATION'), (35, 'CREATIVITY');
@@ -700,7 +735,7 @@ INSERT INTO pois_hobbies (poi_id, hobbies) VALUES (35, 'THEATER'), (35, 'ART'), 
 INSERT INTO pois_themes (poi_id, theme) VALUES (35, 'CULTURAL'), (35, 'HISTORY'), (35, 'NATURE'), (35, 'URBAN_ART'), (35, 'FAMILY_FRIENDLY');
 
 -- POI ID 36
-INSERT INTO tb_pois (id, poi_name, poi_description, street, house_number, complement, neighborhood, city, states, country, zip_code) 
+INSERT INTO tb_pois (id, poi_name, poi_description, street, house_number, complement, neighborhood, city, states, country, zip_code, poi_status) 
 VALUES (
   36, 
   'Torre Malakoff', 
@@ -712,7 +747,8 @@ VALUES (
   'Recife', 
   'PE', 
   'Brasil', 
-  '50030350'
+  '50030350',
+  'ACTIVE'
 );
 
 INSERT INTO pois_motivations (poi_id, motivation) VALUES (36, 'CULTURE'), (36, 'EXPLORATION'), (36, 'EDUCATION'), (36, 'IMMERSIVE_EXPERIENCE'), (36, 'HERITAGE');

@@ -88,7 +88,7 @@ public class POI {
 
     @Getter @Setter
     @Enumerated(EnumType.STRING)
-    @Column(name = "status")
+    @Column(name = "poi_status")
     private Status status;
 
     public POI(String name, String descripition, List<Motivations> motivations, List<Hobbies> hobbies,

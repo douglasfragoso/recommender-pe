@@ -96,7 +96,7 @@ public class User implements UserDetails {
 
     @Getter @Setter
     @Enumerated(EnumType.STRING)
-    @Column(name = "status")
+    @Column(name = "user_status")
     private Status status;
 
 
