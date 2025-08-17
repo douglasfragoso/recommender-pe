@@ -22,6 +22,7 @@ import com.recommendersystempe.dtos.RecommendationDTO;
 import com.recommendersystempe.dtos.RecommendationPOIDTO;
 import com.recommendersystempe.dtos.ScoreDTO;
 import com.recommendersystempe.dtos.SimilarityMetricDTO;
+import com.recommendersystempe.enums.Status;
 import com.recommendersystempe.models.POI;
 import com.recommendersystempe.models.Preferences;
 import com.recommendersystempe.models.Recommendation;
@@ -62,7 +63,7 @@ public class RecommendationService {
         User user = searchUser();
 
         List<String> userFeatures = getFeaturesFromPreferences(userPreferences);
-        List<POI> allPois = poiRepository.findAll();
+         List<POI> allPois = poiRepository.findByStatus(Status.ACTIVE);
         List<List<String>> allPoiFeatures = allPois.stream()
                 .map(this::getFeaturesFromPOI)
                 .collect(Collectors.toList());
