@@ -91,7 +91,7 @@ public class UserService {
     public Page<UserDTO> findAll(Pageable pageable) {
         Page<User> list = userRepository.findAll(pageable);
         return list.map(x -> new UserDTO(x.getId(), x.getFirstName(), x.getLastName(), x.getBirthDate(), x.getGender(),
-                x.getCpf(), x.getPhone(), x.getEmail(), x.getAddress(), x.getRole()));
+                x.getCpf(), x.getPhone(), x.getEmail(), x.getAddress(), x.getRole(), x.getStatus()));
     }
 
     @Transactional(readOnly = true)
@@ -99,7 +99,7 @@ public class UserService {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new GeneralException("User not found, id does not exist: " + id));
         return new UserDTO(user.getId(), user.getFirstName(), user.getLastName(), user.getBirthDate(), user.getGender(),
-                user.getCpf(), user.getPhone(), user.getEmail(), user.getAddress(), user.getRole());
+                user.getCpf(), user.getPhone(), user.getEmail(), user.getAddress(), user.getRole(), user.getStatus());
     }
 
     @Transactional
