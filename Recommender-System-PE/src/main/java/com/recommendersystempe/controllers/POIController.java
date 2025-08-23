@@ -50,12 +50,11 @@ public class POIController {
         return ResponseEntity.status(HttpStatus.CREATED).body(poiService.insert(dto));
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN', 'MASTER')")
     @GetMapping
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Successfully find all", content = @Content(schema = @Schema(implementation = POIDTO.class))),
             @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content(schema = @Schema(implementation = StandardError.class))) })
-    @Operation(summary = "Find All POI", description = "Retrieve a paginated list of all POI. Only accessible by ADMIN and MASTER roles.", tags = {
+    @Operation(summary = "Find All POI", description = "Retrieve a paginated list of all POI. Accessible to everyone.", tags = {
             "POI" })
     public ResponseEntity<Page<POIDTO>> findAll(
             @PageableDefault(size = 10, page = 0, sort = { "id" }, direction = Direction.ASC) Pageable peageable) {
