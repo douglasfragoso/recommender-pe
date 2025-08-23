@@ -102,6 +102,12 @@ public class UserService {
                 user.getCpf(), user.getPhone(), user.getEmail(), user.getAddress(), user.getRole(), user.getStatus());
     }
 
+    @Transactional(readOnly = true)
+    public UserDTO getOwnProfile() {
+        User user = searchUser();
+        return new UserDTO(user.getId(), user.getFirstName(), user.getLastName(), user.getBirthDate(), user.getGender(), user.getPhone(), user.getAddress());
+    }
+
     @Transactional
     public void updateOwnProfile(UserDTOUpdate dto) {
         User currentUser = searchUser();

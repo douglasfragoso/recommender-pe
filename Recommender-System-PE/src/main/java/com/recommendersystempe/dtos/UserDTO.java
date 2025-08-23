@@ -123,20 +123,6 @@ public class UserDTO {
     }
 
     public UserDTO(Long id, String firstName, String lastName, LocalDate birthDate, String gender, String cpf, String phone,
-            String email, Address address, Roles role) {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.birthDate = birthDate;
-        this.gender = gender;
-        this.cpf = cpf;
-        this.phone = phone;
-        this.email = email;
-        this.address = address;
-        this.role = role;
-    }
-
-    public UserDTO(Long id, String firstName, String lastName, LocalDate birthDate, String gender, String cpf, String phone,
             String email, Address address, Roles role, Status status) {
         this.id = id;
         this.firstName = firstName;
@@ -149,5 +135,16 @@ public class UserDTO {
         this.address = address;
         this.role = role;
         this.status = status;
+    }
+
+    public UserDTO(Long id, String firstName, String lastName, LocalDate birthDate, String gender, String phone, Address address) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.birthDate = birthDate;
+        this.gender = gender;
+        this.phone = phone;
+        this.address = address;
+       
     }
 }

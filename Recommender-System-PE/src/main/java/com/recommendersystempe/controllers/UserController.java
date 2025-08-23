@@ -77,6 +77,20 @@ public class UserController {
     }
 
     @PreAuthorize("hasAnyRole('ADMIN', 'MASTER', 'USER')")
+    @GetMapping("/profile/me")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Successfully find profile", content = @Content(schema = @Schema(implementation = UserDTO.class))),
+            @ApiResponse(responseCode = "400", description = "Invalid request", content = @Content(schema = @Schema(implementation = StandardError.class))),
+            @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content(schema = @Schema(implementation = StandardError.class))),
+            @ApiResponse(responseCode = "404", description = "Not found", content = @Content(schema = @Schema(implementation = StandardError.class)))
+    })
+    @Operation(summary = "Find by user id", description = "Retrieve profile. Accessible to everyone.", tags = {
+            "User" })
+    public ResponseEntity<UserDTO> getOwnProfile() {
+        return ResponseEntity.status(HttpStatus.OK).body(userService.getOwnProfile());
+    }
+
+    @PreAuthorize("hasAnyRole('ADMIN', 'MASTER', 'USER')")
     @PatchMapping("/profile/me")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Successfully update", content = @Content(schema = @Schema(implementation = String.class))),
@@ -93,12 +107,12 @@ public class UserController {
     @PreAuthorize("hasAnyRole('ADMIN', 'MASTER')")
     @PatchMapping("/id/{id}")
     @ApiResponses({
-        @ApiResponse(responseCode = "200", description = "Successfully update", content = @Content(schema = @Schema(implementation = String.class))),
-        @ApiResponse(responseCode = "400", description = "Invalid request", content = @Content(schema = @Schema(implementation = ValidationError.class))),
-        @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content(schema = @Schema(implementation = StandardError.class))),
-        @ApiResponse(responseCode = "404", description = "Not found", content = @Content(schema = @Schema(implementation = StandardError.class))) })
+            @ApiResponse(responseCode = "200", description = "Successfully update", content = @Content(schema = @Schema(implementation = String.class))),
+            @ApiResponse(responseCode = "400", description = "Invalid request", content = @Content(schema = @Schema(implementation = ValidationError.class))),
+            @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content(schema = @Schema(implementation = StandardError.class))),
+            @ApiResponse(responseCode = "404", description = "Not found", content = @Content(schema = @Schema(implementation = StandardError.class))) })
     @Operation(summary = "Update Full User", description = "Update Full User, only for Admin and Master", tags = {
-        "User" })
+            "User" })
     public ResponseEntity<String> updateUserById(@PathVariable("id") Long id, @Valid @RequestBody UserDTOUpdate dto) {
         userService.updateUserById(id, dto);
         return ResponseEntity.status(HttpStatus.OK).body("Profile updated successfully");
@@ -112,7 +126,7 @@ public class UserController {
             @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content(schema = @Schema(implementation = StandardError.class))),
             @ApiResponse(responseCode = "404", description = "Not found", content = @Content(schema = @Schema(implementation = StandardError.class))) })
     @Operation(summary = "Delete User", description = "Delete a user by its ID. Only accessible by ADMIN and MASTER roles.", tags = {
-        "User" })
+            "User" })
     public ResponseEntity<String> deleteById(@PathVariable("id") Long id) {
         userService.deleteById(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body("User deleted successfully");
