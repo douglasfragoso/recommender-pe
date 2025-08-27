@@ -109,7 +109,7 @@ public class RecommendationController {
             @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content(schema = @Schema(implementation = StandardError.class))),
             @ApiResponse(responseCode = "404", description = "Not found", content = @Content(schema = @Schema(implementation = StandardError.class)))
     })
-    @Operation(summary = "Find all similarities", description = "Retrieve a paginated list of all recommendation similarities. Accessible to everyone.", tags = {
+    @Operation(summary = "Find all recommendation by User", description = "Retrieve a paginated list of all recommendations by User. Accessible to everyone.", tags = {
             "Recommendation" })
     public ResponseEntity<Page<RecommendationDTO>> findAllByUser(
             @PageableDefault(size = 10, page = 0, sort = { "id" }, direction = Direction.ASC) Pageable peageable) {
