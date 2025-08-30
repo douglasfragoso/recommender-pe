@@ -63,7 +63,7 @@ public class RecommendationService {
         User user = searchUser();
 
         List<String> userFeatures = getFeaturesFromPreferences(userPreferences);
-         List<POI> allPois = poiRepository.findByStatus(Status.ACTIVE);
+        List<POI> allPois = poiRepository.findByStatus(Status.ACTIVE);
         List<List<String>> allPoiFeatures = allPois.stream()
                 .map(this::getFeaturesFromPOI)
                 .collect(Collectors.toList());
@@ -89,7 +89,7 @@ public class RecommendationService {
             double jaccard = SimilarityCalculator.jaccardSimilarity(userVector, poiVector);
             double average = SimilarityCalculator.combinedSimilarity(userVector, poiVector);
 
-            SimilarityMetric metric = new SimilarityMetric(null, poi, cosine, euclidean, pearson, jaccard);
+            SimilarityMetric metric = new SimilarityMetric(poi, cosine, euclidean, pearson, jaccard);
 
             Set<jakarta.validation.ConstraintViolation<SimilarityMetric>> violations = validator.validate(metric);
             if (!violations.isEmpty()) {
@@ -113,13 +113,15 @@ public class RecommendationService {
 
         Recommendation recommendation = new Recommendation();
         recommendation.setUser(user);
-        recommendation.getPois().addAll(top5Pois);
+
+        for (POI poi : top5Pois) {
+            recommendation.addPOI(poi);
+        };
 
         top5Pois.forEach(poi -> {
             SimilarityMetric metric = metricsMap.get(poi);
             if (metric != null) {
-                metric.setRecommendation(recommendation);
-                recommendation.addSimilarityMetric(metric);
+                recommendation.addSimilarityMetric(metric); 
             }
         });
 

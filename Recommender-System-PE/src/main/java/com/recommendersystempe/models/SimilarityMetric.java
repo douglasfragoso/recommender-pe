@@ -71,4 +71,15 @@ public class SimilarityMetric {
         this.jaccard = jaccard;
         this.average = (cosine + euclidean + pearson + jaccard) / 4;
     }
+
+    public SimilarityMetric(POI poi, 
+                           double cosine, double euclidean, 
+                           double pearson, double jaccard) {
+        this.poi = poi;
+        this.cosine = cosine;
+        this.euclidean = euclidean;
+        this.pearson = pearson;
+        this.jaccard = jaccard;
+        this.average = (cosine + euclidean + pearson + jaccard) / 4;
+    }
 }

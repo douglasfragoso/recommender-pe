@@ -4,7 +4,6 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.BDDMockito.*;
 
-
 import java.time.Instant;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -30,6 +29,7 @@ import com.recommendersystempe.dtos.ScoreDTO;
 import com.recommendersystempe.enums.Hobbies;
 import com.recommendersystempe.enums.Motivations;
 import com.recommendersystempe.enums.Roles;
+import com.recommendersystempe.enums.Status;
 import com.recommendersystempe.enums.Themes;
 import com.recommendersystempe.models.Address;
 import com.recommendersystempe.models.POI;
@@ -130,7 +130,7 @@ public class RecommendationServiceTest {
         void testRecommendation_ShouldReturnTop5Pois() {
                 // given / arrange 
                 mockAuthenticatedUser(user);
-                given(poiRepository.findAll()).willReturn(poiList);
+               given(poiRepository.findByStatus(Status.ACTIVE)).willReturn(poiList);
 
                 // when / act
                 RecommendationDTO result = recommendationService.recommendation(preferences);

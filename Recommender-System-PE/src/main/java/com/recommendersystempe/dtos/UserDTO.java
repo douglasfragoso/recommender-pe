@@ -57,7 +57,7 @@ public class UserDTO {
     @Schema(description = "Gender of a user", example = "Male", required = true)
     @NotBlank(message = "The field gender is required")
     @Size(min = 5, max = 9, message = "The field gender must be between 5 and 9 characters")
-    @Pattern(regexp = "^(Masculino|Feminino|Outro)$", message = "Gender must be Male, Female, or Other")
+    @Pattern(regexp = "^(Male|Female|Other)$", message = "Gender must be Male, Female, or Other")
     private String gender;
 
     @Getter
